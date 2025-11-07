@@ -203,7 +203,7 @@
 <li><a href="https://htmx.org/attributes/hx-push-url/">HTMX reference: <code>hx-push-url</code></a> and <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a></li>
 <li><a href="https://pebbletemplates.io/wiki/tag/extends/">Pebble template inheritance</a> and include syntax</li>
 </ul>
-<p>Keep the <a href="/references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="/references/htmx-patterns.html">HTMX Patterns</a> open for reference.</p>
+<p>Keep the <a href="../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="../references/htmx-patterns.html">HTMX Patterns</a> open for reference.</p>
 <hr />
 <h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
 <h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
@@ -217,7 +217,7 @@
 <li>Documented trade-offs in server-side vs client-side filtering</li>
 </ul>
 <h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="/references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO5</strong>: Create interface prototypes — evidenced by HTMX partials implementation</li>
 <li><strong>LO7</strong>: Analyse design constraints — evidenced by pagination trade-offs document</li>
@@ -231,15 +231,25 @@
 <p>Keep these references handy while you work:</p>
 <ul>
 <li><a href="references/pebble-cheatsheet.html">Pebble Cheatsheet</a></li>
-<li><code>/references/template-map-week8.md</code> (visual map of the partials you are about to create)</li>
-<li><code>/references/htmx-pattern-cheatsheet.md</code> (Active Search, OOB status, indicators)</li>
+<li><code>../references/template-map-week8.md</code> (visual map of the partials you are about to create)</li>
+<li><code>../references/htmx-pattern-cheatsheet.md</code> (Active Search, OOB status, indicators)</li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Navigation_and_orienting#pagination">MDN: Accessible Pagination Patterns</a></li>
 </ul>
 <blockquote>
 <p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
 </blockquote>
-<p>{{#include /references/visuals/template-hierarchy.md}}</p>
-<p><small>Full legend in <a href="/references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
+<pre class="mermaid">graph TD
+  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
+  Base --&gt; Index[tasks/index.peb]
+  Index --&gt; List[tasks/_list.peb]
+  List --&gt; Item[tasks/_item.peb]
+  Index --&gt; Pager[tasks/_pager.peb]
+  Item --&gt;|Forms| Routes[(Ktor routes)]
+  Pager --&gt;|Links| Routes
+  Routes --&gt; HTMX[HTMX fragment responses]
+  Routes --&gt; PRG[Full-page PRG responses]
+</pre>
+<p><small>Full legend in <a href="../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
 <h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
 <p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
 <pre><code class="language-html">&lt;form action="/tasks" method="get"
@@ -301,7 +311,7 @@
     └── _pager.peb      ← Partial: pagination nav
 </code></pre>
 </blockquote>
-<p>We want a structure like the one in <code>/references/template-map-week8.md</code>.</p>
+<p>We want a structure like the one in <code>../references/template-map-week8.md</code>.</p>
 <h3 id="11-base-layout"><a class="header" href="#11-base-layout">1.1 Base layout</a></h3>
 <p>Create <code>templates/_layout/base.peb</code> with the shared head, status region, skip link, Pico CSS, HTMX script, and utility classes. This keeps accessibility hooks (live region, focus outline, visually hidden class) in a single place.</p>
 <h3 id="12-task-item-partial"><a class="header" href="#12-task-item-partial">1.2 Task item partial</a></h3>
