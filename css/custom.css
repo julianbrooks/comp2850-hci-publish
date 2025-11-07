@@ -103,3 +103,12 @@ hr + ul li::before {
     margin-right: 0.5em;
     font-weight: bold;
 }
+
+/* Hide theme picker button */
+#theme-toggle {
+    display: none !important;
+}
+
+.theme-popup {
+    display: none !important;
+}
