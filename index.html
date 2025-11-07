@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Home - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/admonish.css">
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="css/retro-theme.css">
+        <link rel="stylesheet" href="./mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="comp2850--human-computer-interaction"><a class="header" href="#comp2850--human-computer-interaction">COMP2850 • Human-Computer Interaction</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/University-Leeds-green" alt="University of Leeds" />
+<img src="https://img.shields.io/badge/Year-2025%2F26-orange" alt="Academic Year" /></p>
+<hr />
+<h2 id="welcome"><a class="header" href="#welcome">Welcome</a></h2>
+<p>This is the <strong>HCI (Human-Computer Interaction)</strong> component of <strong>COMP2850</strong>, running from <strong>Week 6 to Week 11</strong>. You'll build <strong>inclusive web interfaces</strong> using <strong>HTML as your UI layer</strong> (no React/Vue/Angular). We follow the <strong><a href="https://hypermedia.systems/">hypermedia systems</a></strong> approach—dynamic, accessible UIs built with server-rendered HTML and progressive enhancement.</p>
+<p><strong>Core approaches</strong>:</p>
+<ul>
+<li><strong><a href="references/htmx-patterns.html">Hypermedia-driven interfaces (HTMX)</a></strong> - Dynamic HTML UIs without JavaScript frameworks</li>
+<li><strong><a href="references/accessibility-testing.html">Accessibility-first design</a></strong> - WCAG 2.2 AA compliance, screen reader testing, keyboard navigation</li>
+<li><strong><a href="references/htmx-patterns.html">Progressive enhancement</a></strong> - No-JS baseline, HTMX enhancements layered on top</li>
+<li><strong><a href="references/server-first.html">Server-rendered HTML</a></strong> - Kotlin/Ktor + Pebble templates generate complete pages</li>
+<li><strong><a href="references/privacy-by-design.html">Privacy by design</a></strong> - UK GDPR compliance, anonymous instrumentation</li>
+<li><strong><a href="references/evaluation-guide.html">Evidence-based iteration</a></strong> - Task-based evaluation, metrics analysis, data-driven redesign</li>
+</ul>
+<p><strong>New to these terms?</strong> See the <strong><a href="references/glossary.html">Glossary</a></strong> for definitions of HTMX, AJAX, ARIA, WCAG, and 80+ other terms.</p>
+<hr />
+<h2 id="module-structure-for-semester-1"><a class="header" href="#module-structure-for-semester-1">Module Structure for Semester 1</a></h2>
+<h3 id="weeks-1-5-object-oriented-programming-oop"><a class="header" href="#weeks-1-5-object-oriented-programming-oop">Weeks 1-5: Object-Oriented Programming (OOP)</a></h3>
+<p>Foundation in Kotlin, classes, inheritance, interfaces. See <a href="https://python33r.github.io/comp2850-kotlin/index.html">OOP mdBook</a>.</p>
+<h3 id="weeks-6-11-human-computer-interaction-hci"><a class="header" href="#weeks-6-11-human-computer-interaction-hci">Weeks 6-11: Human-Computer Interaction (HCI)</a></h3>
+<p><strong><a href="wk06/src/wk6-lab1-html-css-htmx.html">Week 6</a></strong> — Intro: Server-first foundations + needs-finding</p>
+<p><strong><a href="wk07/src/wk7-lab1-ethics-inline-edit.html">Week 7</a></strong> — Ethics in practice + accessibility audit</p>
+<p><strong><a href="wk08/src/wk8-lab1-prototyping-constraints.html">Week 8</a></strong> — Prototyping, constraints, no-JS parity</p>
+<p><strong><a href="wk09/src/wk9-lab1-eval-plan-instrumentation.html">Week 9</a></strong> — Evaluation planning + instrumentation</p>
+<p><strong><a href="wk10/src/wk10-lab1-analysis-prioritisation.html">Week 10</a></strong> — Analysis, prioritisation, redesign</p>
+<p><strong><a href="wk11/src/wk11-lab1-studio-crit.html">Week 11</a></strong> — Studio critique + portfolio wrap-up</p>
+<h3 id="semester-flow-weeks-6-11"><a class="header" href="#semester-flow-weeks-6-11">Semester Flow (Weeks 6-11)</a></h3>
+<pre class="mermaid">graph LR
+  W6[Week 6&lt;br/&gt;Server-first&lt;br/&gt;Needs-finding]
+  W7[Week 7&lt;br/&gt;Ethics&lt;br/&gt;Accessibility]
+  W8[Week 8&lt;br/&gt;Prototyping&lt;br/&gt;Constraints]
+  W9[Week 9&lt;br/&gt;Evaluation&lt;br/&gt;Pilots]
+  W10[Week 10&lt;br/&gt;Analysis&lt;br/&gt;Redesign]
+  W11[Week 11&lt;br/&gt;Studio Crit&lt;br/&gt;Portfolio]
+
+  W6 --&gt; W7
+  W7 --&gt; W8
+  W8 --&gt; W9
+  W9 --&gt; W10
+  W10 --&gt; W11
+</pre>
+<p><small>See <a href="references/process-visuals.html#semester-flow">Process Visuals</a> for captions and alternative formats.</small></p>
+<hr />
+<h2 id="assessment"><a class="header" href="#assessment">Assessment</a></h2>
+<p>Two evidence-based tasks assess all 13 HCI Learning Outcomes:</p>
+<h3 id="task-1-evaluation--findings"><a class="header" href="#task-1-evaluation--findings">Task 1: Evaluation &amp; Findings</a></h3>
+<ul>
+<li><strong>Launch</strong>: Week 8 Lab 2</li>
+<li><strong>Submit</strong>: Week 9 Lab 2 (Gradescope)</li>
+<li>Design and execute task-based peer pilots (n=4+), collect quantitative and qualitative data, synthesise findings with evidence chains</li>
+<li><strong>Learning Outcomes</strong>: LO1, LO2, LO6, LO8, LO11, LO12, LO13</li>
+</ul>
+<h3 id="task-2-redesign--verification"><a class="header" href="#task-2-redesign--verification">Task 2: Redesign &amp; Verification</a></h3>
+<ul>
+<li><strong>Launch</strong>: Week 10 Lab 1</li>
+<li><strong>Submit</strong>: Week 11 Lab 2 (Gradescope)</li>
+<li>Implement inclusive redesign based on Task 1 findings, verify via regression testing (30+ checks) and re-pilots (n=2+), analyse societal impacts</li>
+<li><strong>Learning Outcomes</strong>: LO3, LO4, LO5, LO6, LO7, LO9, LO10, LO12, LO13</li>
+</ul>
+<p><strong>See <a href="assessment/overview.html">Assessment Overview</a> for full details</strong>, timelines, templates, marking criteria, and FAQs.</p>
+<p><strong>Weighting</strong>: See Minerva for grade breakdown.</p>
+<hr />
+<h2 id="key-principles"><a class="header" href="#key-principles">Key Principles</a></h2>
+<h3 id="1-people-centred-language"><a class="header" href="#1-people-centred-language">1. People-Centred Language</a></h3>
+<p>We use "<strong>person navigating with a screen reader</strong>" (not "blind user"), "<strong>person navigating by keyboard</strong>" (not
+"disabled user"), or "participant" in evaluation contexts.<br />
+<strong>Why this matters:</strong><br />
+Disability arises from barriers in the environment—inaccessible design, missing features,
+exclusionary assumptions—not from individual impairment.<br />
+People-first language centres the person, not a diagnostic label.</p>
+<h3 id="2-privacy-by-design"><a class="header" href="#2-privacy-by-design">2. Privacy by Design</a></h3>
+<p>No personal data collected. Anonymous session IDs only. UK GDPR compliant (Data Protection Act 2018).</p>
+<h3 id="3-progressive-enhancement"><a class="header" href="#3-progressive-enhancement">3. Progressive Enhancement</a></h3>
+<p>Start with semantic HTML. Add JavaScript sparingly. Ensure all features work without JS.</p>
+<h3 id="4-evidence-led-design"><a class="header" href="#4-evidence-led-design">4. Evidence-Led Design</a></h3>
+<p>Every claim must be backed by data (pilot metrics, quotes, WCAG audits). No assumptions.</p>
+<hr />
+<h2 id="tools--technologies"><a class="header" href="#tools--technologies">Tools &amp; Technologies</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><strong>HTMX</strong></td><td>Dynamic updates without full page reload</td></tr>
+<tr><td><strong>Kotlin/Ktor</strong></td><td>Server-side routing, template rendering</td></tr>
+<tr><td><strong>Pebble</strong></td><td>HTML templating (server-rendered)</td></tr>
+<tr><td><strong>axe DevTools</strong></td><td>Accessibility auditing (WCAG 2.2)</td></tr>
+<tr><td><strong>NVDA / VoiceOver</strong></td><td>Screen reader testing</td></tr>
+<tr><td><strong>Colour Contrast Analyser</strong></td><td>WCAG 1.4.3 compliance</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="module-aims"><a class="header" href="#module-aims">Module Aims</a></h2>
+<p>This module aims to enable you to:</p>
+<ol>
+<li>Apply HCI principles to design inclusive interfaces</li>
+<li>Evaluate accessibility and ethics in interactive systems</li>
+<li>Implement server-first architecture with progressive enhancement</li>
+<li>Communicate design decisions with evidence</li>
+</ol>
+<p>These aims are achieved through <strong>13 specific Learning Outcomes</strong> detailed across Weeks 6-11. See the <strong><a href="references/learning-outcomes.html">Learning Outcomes Reference</a></strong> for mappings to weeks, labs, and assessment tasks.</p>
+<hr />
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
+<ol>
+<li><strong>Read Week 6 Lab 1</strong>: <a href="wk06/src/wk6-lab1-html-css-htmx.html">Server-first foundations with HTMX</a></li>
+<li><strong>Clone starter pack</strong>: <code>git clone [repo URL]</code> (see Minerva for link)</li>
+<li><strong>Install/setup tools</strong>: JDK 17+, Gradle 8+, axe DevTools, IntelliJ IDEA (or) VSCode (or) Codespaces - choose one</li>
+<li><strong>Attend lab sessions</strong>: Bragg 2.05 Main Lab (check your timetable for days/times)</li>
+<li><strong>Independent Study</strong>: We expect you to manage your time and complete all module requirements</li>
+</ol>
+<hr />
+<h2 id="support"><a class="header" href="#support">Support</a></h2>
+<ul>
+<li><strong>Lab sessions</strong>: Staff on hand for questions (2-hour taught labs &amp; open lab sessions with TA's available)</li>
+<li><strong>Office hours</strong>: Contact teaching team for availability</li>
+<li><strong>Discussion board</strong>: MS Teams COMP2850 forum for all module peer/staff questions</li>
+<li><strong>Personal issues</strong>: Contact via Teams DM or email module staff directly</li>
+</ul>
+<hr />
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><strong>HTMX</strong>: <a href="https://hypermedia.systems/">hypermedia.systems</a> (Carson Gross et al., 2023)</li>
+<li><strong>WCAG 2.2</strong>: <a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C Quick Reference</a></li>
+<li><strong>GOV.UK Design System</strong>: <a href="https://design-system.service.gov.uk/">Patterns &amp; Components</a></li>
+<li><strong>Privacy by Design</strong>: <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO Guidance</a></li>
+</ul>
+<hr />
+<p><strong>Module Lead</strong>: [Amy Brereton]
+<strong>Teaching Team</strong>: [Ban Adil Naji Al-Jassani, Amy Brereton, Julian Brooks, Nick Efford, Will Kingdon, Ping Lu, David
+Ofili, Jonathan Pickering, Xiao Wang]
+<strong>Academic Year</strong>: 25/26
+<strong>Department</strong>: School of Computer Science, University of Leeds</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="wk06/src/wk6-lab1-html-css-htmx.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="wk06/src/wk6-lab1-html-css-htmx.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

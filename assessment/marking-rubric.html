@@ -1,0 +1,697 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Marking Rubric - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="marking-rubric"><a class="header" href="#marking-rubric">Marking Rubric</a></h1>
+<p><img src="https://img.shields.io/badge/Rubric-Transparent-blue" alt="Rubric" />
+<img src="https://img.shields.io/badge/Standards-Evidence_Based-green" alt="Standards" /></p>
+<hr />
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>This rubric shows <strong>exactly how tasks are marked</strong>. We assess <strong>HCI process competence</strong>, not code quality or writing style.</p>
+<p><strong>Key principles</strong>:</p>
+<ul>
+<li><strong>Evidence over eloquence</strong>: Tables, metrics, and code diffs matter more than prose</li>
+<li><strong>Process over product</strong>: We mark your method (protocol, testing, analysis), not your app</li>
+<li><strong>Honesty over perfection</strong>: Reporting limitations honestly scores higher than hiding problems</li>
+<li><strong>Rigour over scope</strong>: One fix done thoroughly beats three fixes done poorly</li>
+</ul>
+<hr />
+<h2 id="grading-bands"><a class="header" href="#grading-bands">Grading Bands</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Band</th><th>Descriptor</th><th>Typical %range</th></tr></thead><tbody>
+<tr><td><strong>Excellent</strong></td><td>Exceeds expectations</td><td>70-100%</td></tr>
+<tr><td><strong>Good</strong></td><td>Meets expectations with minor gaps</td><td>60-69%</td></tr>
+<tr><td><strong>Satisfactory</strong></td><td>Meets minimum requirements</td><td>50-59%</td></tr>
+<tr><td><strong>Needs Work</strong></td><td>Significant gaps, incomplete</td><td>40-49%</td></tr>
+<tr><td><strong>Fail</strong></td><td>Critical failures, academic integrity issues</td><td>0-39%</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="task-1-evaluation--findings"><a class="header" href="#task-1-evaluation--findings">Task 1: Evaluation &amp; Findings</a></h2>
+<p><strong>Total</strong>: 100 marks (see Minerva for weighting within overall COMP2850 grade)</p>
+<h3 id="evidence-quality-30-marks"><a class="header" href="#evidence-quality-30-marks">Evidence Quality (30 marks)</a></h3>
+<h4 id="excellent-21-30-marks"><a class="header" href="#excellent-21-30-marks">Excellent (21-30 marks)</a></h4>
+<ul>
+<li>✅ Complete quantitative data (<code>04-results.csv</code> with all columns, n≥4 participants)</li>
+<li>✅ Rich qualitative data (pilot notes with timestamps, direct quotes, specific observations)</li>
+<li>✅ Traceable evidence chains (every finding links to data: file path, line number, session ID)</li>
+<li>✅ No PII in any file (screenshots cropped, session IDs anonymous)</li>
+<li>✅ Multiple data sources converge (metrics + quotes + screenshots all tell same story)</li>
+</ul>
+<h4 id="good-18-20-marks"><a class="header" href="#good-18-20-marks">Good (18-20 marks)</a></h4>
+<ul>
+<li>✅ Complete quantitative data (n=4, all columns present)</li>
+<li>✅ Adequate qualitative data (pilot notes present, some quotes)</li>
+<li>✅ Most findings have evidence chains (1-2 minor gaps)</li>
+<li>✅ No PII violations</li>
+<li>⚠️ Evidence chains occasionally vague ("some participants struggled" without specifics)</li>
+</ul>
+<h4 id="satisfactory-15-17-marks"><a class="header" href="#satisfactory-15-17-marks">Satisfactory (15-17 marks)</a></h4>
+<ul>
+<li>✅ Quantitative data present (n=4 minimum met)</li>
+<li>⚠️ Thin qualitative data (pilot notes brief, few quotes)</li>
+<li>⚠️ Evidence chains incomplete (findings asserted without clear data links)</li>
+<li>✅ No PII violations</li>
+<li>⚠️ Data sources sometimes contradict (metrics say 100% completion, notes say "struggled")</li>
+</ul>
+<h4 id="needs-work-12-14-marks"><a class="header" href="#needs-work-12-14-marks">Needs Work (12-14 marks)</a></h4>
+<ul>
+<li>⚠️ Incomplete quantitative data (missing sessions, columns incomplete)</li>
+<li>⚠️ Minimal qualitative data (pilot notes cursory or missing)</li>
+<li>❌ Evidence chains absent (claims without data)</li>
+<li>⚠️ Minor PII issues (session IDs identifiable, screenshots not scrubbed)</li>
+</ul>
+<h4 id="fail-0-11-marks"><a class="header" href="#fail-0-11-marks">Fail (0-11 marks)</a></h4>
+<ul>
+<li>❌ Fabricated data (markers can detect unrealistic patterns)</li>
+<li>❌ n&lt;4 participants (minimum not met)</li>
+<li>❌ Major PII violations (names, emails visible)</li>
+<li>❌ No evidence chains (entire findings section unsupported)</li>
+</ul>
+<hr />
+<h3 id="method-rigour-25-marks"><a class="header" href="#method-rigour-25-marks">Method Rigour (25 marks)</a></h3>
+<h4 id="excellent-18-25-marks"><a class="header" href="#excellent-18-25-marks">Excellent (18-25 marks)</a></h4>
+<ul>
+<li>✅ Protocol includes consent script, right to withdraw, ethical safeguards</li>
+<li>✅ Tasks realistic, measurable, independent (clear success criteria)</li>
+<li>✅ Appropriate variants tested (keyboard, no-JS, screen reader)</li>
+<li>✅ Link to Week 6 needs-finding demonstrated (LO2: job stories → task design)</li>
+<li>✅ Pilot execution follows protocol (facilitator neutral, observer notes structured)</li>
+</ul>
+<h4 id="good-15-17-marks"><a class="header" href="#good-15-17-marks">Good (15-17 marks)</a></h4>
+<ul>
+<li>✅ Protocol includes consent and ethical safeguards</li>
+<li>✅ Tasks measurable and realistic</li>
+<li>✅ Minimum 3 variants tested</li>
+<li>⚠️ Needs-finding link present but superficial (brief mention, not integrated)</li>
+<li>✅ Protocol mostly followed</li>
+</ul>
+<h4 id="satisfactory-13-14-marks"><a class="header" href="#satisfactory-13-14-marks">Satisfactory (13-14 marks)</a></h4>
+<ul>
+<li>✅ Basic protocol present (consent mentioned)</li>
+<li>⚠️ Tasks vague (success criteria unclear)</li>
+<li>✅ 2-3 variants tested (minimum met)</li>
+<li>⚠️ Needs-finding link weak or missing</li>
+<li>⚠️ Protocol execution inconsistent (some pilots rushed)</li>
+</ul>
+<h4 id="needs-work-10-12-marks"><a class="header" href="#needs-work-10-12-marks">Needs Work (10-12 marks)</a></h4>
+<ul>
+<li>⚠️ Protocol incomplete (consent unclear, no right to withdraw)</li>
+<li>❌ Tasks poorly designed (not measurable or independent)</li>
+<li>⚠️ Limited variants (only standard, no keyboard/no-JS)</li>
+<li>❌ No link to needs-finding (LO2 not addressed)</li>
+</ul>
+<h4 id="fail-0-9-marks"><a class="header" href="#fail-0-9-marks">Fail (0-9 marks)</a></h4>
+<ul>
+<li>❌ No consent protocol (ethical violation)</li>
+<li>❌ Tasks not suitable for evaluation</li>
+<li>❌ Only 1-2 pilots conducted</li>
+<li>❌ Protocol not followed (leading questions, no observer notes)</li>
+</ul>
+<hr />
+<h3 id="analysis-depth-25-marks"><a class="header" href="#analysis-depth-25-marks">Analysis Depth (25 marks)</a></h3>
+<h4 id="excellent-18-25-marks-1"><a class="header" href="#excellent-18-25-marks-1">Excellent (18-25 marks)</a></h4>
+<ul>
+<li>✅ Quantitative analysis correct (median/MAD calculated, error rates accurate)</li>
+<li>✅ Qualitative synthesis identifies patterns across participants</li>
+<li>✅ WCAG violations cited with specific criteria (4.1.3, 3.3.1, etc.)</li>
+<li>✅ Inclusion impact articulated (who is excluded, how, why)</li>
+<li>✅ Prioritisation uses formula: (Impact + Inclusion) – Effort with justification</li>
+<li>✅ Limitations acknowledged (sample size, diversity, context)</li>
+</ul>
+<h4 id="good-15-17-marks-1"><a class="header" href="#good-15-17-marks-1">Good (15-17 marks)</a></h4>
+<ul>
+<li>✅ Quantitative analysis mostly correct (minor calculation errors)</li>
+<li>✅ Qualitative synthesis present, some patterns identified</li>
+<li>✅ WCAG violations cited (may lack specific criteria numbers)</li>
+<li>✅ Inclusion impact mentioned (SR users, keyboard users)</li>
+<li>⚠️ Prioritisation present but formula not applied consistently</li>
+<li>⚠️ Limitations briefly mentioned</li>
+</ul>
+<h4 id="satisfactory-13-14-marks-1"><a class="header" href="#satisfactory-13-14-marks-1">Satisfactory (13-14 marks)</a></h4>
+<ul>
+<li>⚠️ Quantitative analysis basic (completion rates calculated, but no MAD/median)</li>
+<li>⚠️ Qualitative synthesis superficial (lists issues without patterns)</li>
+<li>⚠️ WCAG references generic ("accessibility issues" not specific criteria)</li>
+<li>⚠️ Inclusion impact vague ("helps disabled people")</li>
+<li>⚠️ Prioritisation arbitrary (no formula, unclear rationale)</li>
+<li>❌ Limitations not discussed</li>
+</ul>
+<h4 id="needs-work-10-12-marks-1"><a class="header" href="#needs-work-10-12-marks-1">Needs Work (10-12 marks)</a></h4>
+<ul>
+<li>❌ Quantitative analysis incorrect or missing</li>
+<li>❌ Qualitative synthesis absent (just lists observations)</li>
+<li>❌ No WCAG references</li>
+<li>❌ Inclusion impact not discussed</li>
+<li>❌ No prioritisation</li>
+</ul>
+<h4 id="fail-0-9-marks-1"><a class="header" href="#fail-0-9-marks-1">Fail (0-9 marks)</a></h4>
+<ul>
+<li>❌ No analysis (raw data dumped without interpretation)</li>
+<li>❌ Findings fabricated or unsupported</li>
+<li>❌ No evidence of understanding WCAG or accessibility concepts</li>
+</ul>
+<hr />
+<h3 id="professional-presentation-20-marks"><a class="header" href="#professional-presentation-20-marks">Professional Presentation (20 marks)</a></h3>
+<h4 id="excellent-15-20-marks"><a class="header" href="#excellent-15-20-marks">Excellent (15-20 marks)</a></h4>
+<ul>
+<li>✅ Clear, well-structured documentation (all 6 files present, organised)</li>
+<li>✅ Honest reporting (limitations acknowledged, unexpected results explained)</li>
+<li>✅ Complete submission (directory structure matches specification)</li>
+<li>✅ UK spelling and grammar throughout</li>
+<li>✅ Proper Markdown formatting (tables render, headings hierarchical)</li>
+<li>✅ Evidence organised (screenshots annotated, pilot notes templated)</li>
+</ul>
+<h4 id="good-12-14-marks"><a class="header" href="#good-12-14-marks">Good (12-14 marks)</a></h4>
+<ul>
+<li>✅ Documentation clear and complete</li>
+<li>✅ Honest reporting</li>
+<li>✅ Submission complete</li>
+<li>⚠️ Minor spelling/grammar issues (1-2 Americanisms)</li>
+<li>⚠️ Formatting mostly correct (1-2 tables malformed)</li>
+<li>✅ Evidence organised</li>
+</ul>
+<h4 id="satisfactory-10-11-marks"><a class="header" href="#satisfactory-10-11-marks">Satisfactory (10-11 marks)</a></h4>
+<ul>
+<li>⚠️ Documentation adequate but could be clearer</li>
+<li>✅ Reporting mostly honest</li>
+<li>⚠️ 1 file missing or incomplete</li>
+<li>⚠️ Spelling/grammar errors present</li>
+<li>⚠️ Formatting issues (some tables don't render)</li>
+<li>⚠️ Evidence somewhat disorganised</li>
+</ul>
+<h4 id="needs-work-8-9-marks"><a class="header" href="#needs-work-8-9-marks">Needs Work (8-9 marks)</a></h4>
+<ul>
+<li>❌ Documentation unclear or disorganised</li>
+<li>⚠️ Reporting hides problems (only positive results shown)</li>
+<li>❌ 2+ files missing</li>
+<li>❌ Poor spelling/grammar</li>
+<li>❌ Formatting broken (Markdown errors)</li>
+</ul>
+<h4 id="fail-0-7-marks"><a class="header" href="#fail-0-7-marks">Fail (0-7 marks)</a></h4>
+<ul>
+<li>❌ Submission incomplete (half the files missing)</li>
+<li>❌ Dishonest reporting (fabricates data, hides failures)</li>
+<li>❌ Plagiarism or academic integrity violation</li>
+</ul>
+<hr />
+<h2 id="task-2-redesign--verification"><a class="header" href="#task-2-redesign--verification">Task 2: Redesign &amp; Verification</a></h2>
+<p><strong>Total</strong>: 100 marks (see Minerva for weighting within overall COMP2850 grade)</p>
+<h3 id="problem-clarity-20-marks"><a class="header" href="#problem-clarity-20-marks">Problem Clarity (20 marks)</a></h3>
+<h4 id="excellent-15-20-marks-1"><a class="header" href="#excellent-15-20-marks-1">Excellent (15-20 marks)</a></h4>
+<ul>
+<li>✅ Problem statement grounded in Task 1 data (specific findings cited: file + section)</li>
+<li>✅ Measurable goals with targets (completion rate, error rate, median time, SR accessibility)</li>
+<li>✅ WCAG violations referenced with specific criteria (4.1.3, 3.3.1, etc.)</li>
+<li>✅ Prioritisation justified using (Impact + Inclusion) – Effort formula</li>
+</ul>
+<h4 id="good-12-14-marks-1"><a class="header" href="#good-12-14-marks-1">Good (12-14 marks)</a></h4>
+<ul>
+<li>✅ Problem grounded in Task 1 (findings cited)</li>
+<li>✅ Goals measurable</li>
+<li>⚠️ WCAG references generic (criteria numbers missing)</li>
+<li>⚠️ Prioritisation mentioned but formula not applied</li>
+</ul>
+<h4 id="satisfactory-10-11-marks-1"><a class="header" href="#satisfactory-10-11-marks-1">Satisfactory (10-11 marks)</a></h4>
+<ul>
+<li>⚠️ Problem references Task 1 (vague link)</li>
+<li>⚠️ Goals present but not fully measurable</li>
+<li>❌ No WCAG references</li>
+<li>❌ Prioritisation arbitrary</li>
+</ul>
+<h4 id="needs-work--fail-0-9-marks"><a class="header" href="#needs-work--fail-0-9-marks">Needs Work / Fail (0-9 marks)</a></h4>
+<ul>
+<li>❌ Problem not grounded in Task 1</li>
+<li>❌ Goals missing or unmeasurable</li>
+<li>❌ No prioritisation</li>
+</ul>
+<hr />
+<h3 id="fix-effectiveness-30-marks"><a class="header" href="#fix-effectiveness-30-marks">Fix Effectiveness (30 marks)</a></h3>
+<h4 id="excellent-22-30-marks"><a class="header" href="#excellent-22-30-marks">Excellent (22-30 marks)</a></h4>
+<ul>
+<li>✅ WCAG 2.2 AA compliance verified (regression checklist complete, axe DevTools clean)</li>
+<li>✅ Measurable improvement demonstrated (before/after metrics show gains)</li>
+<li>✅ No-JS parity maintained (traditional path tested, works identically)</li>
+<li>✅ No regressions introduced (30-check checklist all PASS)</li>
+<li>✅ Fixes target high inclusion impact (WCAG violations, SR/keyboard barriers)</li>
+</ul>
+<h4 id="good-18-21-marks"><a class="header" href="#good-18-21-marks">Good (18-21 marks)</a></h4>
+<ul>
+<li>✅ WCAG AA compliance verified (1-2 minor issues remain)</li>
+<li>✅ Improvement demonstrated</li>
+<li>✅ No-JS parity maintained</li>
+<li>⚠️ 1-2 minor regressions (documented and explained)</li>
+<li>✅ Fixes target inclusion</li>
+</ul>
+<h4 id="satisfactory-15-17-marks-1"><a class="header" href="#satisfactory-15-17-marks-1">Satisfactory (15-17 marks)</a></h4>
+<ul>
+<li>⚠️ WCAG AA mostly compliant (some gaps)</li>
+<li>⚠️ Modest improvement (metrics improve slightly)</li>
+<li>⚠️ No-JS parity mostly maintained (1 minor break)</li>
+<li>⚠️ Some regressions not caught</li>
+<li>⚠️ Fixes address some accessibility issues</li>
+</ul>
+<h4 id="needs-work-12-14-marks-1"><a class="header" href="#needs-work-12-14-marks-1">Needs Work (12-14 marks)</a></h4>
+<ul>
+<li>❌ WCAG violations remain (regression checklist incomplete)</li>
+<li>❌ No measurable improvement (metrics unchanged or worse)</li>
+<li>❌ No-JS parity broken</li>
+<li>❌ Multiple regressions introduced</li>
+</ul>
+<h4 id="fail-0-11-marks-1"><a class="header" href="#fail-0-11-marks-1">Fail (0-11 marks)</a></h4>
+<ul>
+<li>❌ Fixes don't work or introduce major accessibility issues</li>
+<li>❌ No regression testing performed</li>
+<li>❌ No-JS completely broken</li>
+<li>❌ Academic integrity issues (fixes copied without understanding)</li>
+</ul>
+<hr />
+<h3 id="societal-impact-analysis-lo10-20-marks"><a class="header" href="#societal-impact-analysis-lo10-20-marks">Societal Impact Analysis (LO10) (20 marks)</a></h3>
+<h4 id="excellent-15-20-marks-2"><a class="header" href="#excellent-15-20-marks-2">Excellent (15-20 marks)</a></h4>
+<ul>
+<li>✅ Systemic barriers identified (beyond individual inconvenience: employment, education, civic participation)</li>
+<li>✅ Exclusion patterns analysed (who is excluded, how, why—not just "disabled people")</li>
+<li>✅ Universal design distinguished from accommodation (fix benefits all users, not just workaround)</li>
+<li>✅ Ethical considerations addressed (privacy, autonomy, dignity)</li>
+<li>✅ Long-term implications discussed (if pattern adopted widely, societal change)</li>
+<li>✅ Critical depth: 300-500 words of analysis (not description)</li>
+</ul>
+<h4 id="good-12-14-marks-2"><a class="header" href="#good-12-14-marks-2">Good (12-14 marks)</a></h4>
+<ul>
+<li>✅ Systemic barriers mentioned (some analysis beyond individual)</li>
+<li>✅ Exclusion patterns identified (specific groups)</li>
+<li>⚠️ Universal design vs accommodation touched on (not deeply explored)</li>
+<li>⚠️ Ethical considerations brief</li>
+<li>⚠️ Long-term implications mentioned (not analysed)</li>
+<li>⚠️ 200-300 words</li>
+</ul>
+<h4 id="satisfactory-10-11-marks-2"><a class="header" href="#satisfactory-10-11-marks-2">Satisfactory (10-11 marks)</a></h4>
+<ul>
+<li>⚠️ Barriers mentioned but not systemic (individual inconvenience)</li>
+<li>⚠️ Exclusion generic ("disabled people" without specifics)</li>
+<li>❌ No distinction between universal design and accommodation</li>
+<li>❌ Ethics not discussed</li>
+<li>❌ No long-term analysis</li>
+<li>⚠️ 150-250 words</li>
+</ul>
+<h4 id="needs-work-8-9-marks-1"><a class="header" href="#needs-work-8-9-marks-1">Needs Work (8-9 marks)</a></h4>
+<ul>
+<li>❌ Superficial ("helps disabled people" without analysis)</li>
+<li>❌ No systemic thinking</li>
+<li>❌ &lt;150 words or missing</li>
+</ul>
+<h4 id="fail-0-7-marks-1"><a class="header" href="#fail-0-7-marks-1">Fail (0-7 marks)</a></h4>
+<ul>
+<li>❌ Section missing or completely inadequate</li>
+<li>❌ Shows no understanding of LO10</li>
+</ul>
+<hr />
+<h3 id="evidence-chains-20-marks"><a class="header" href="#evidence-chains-20-marks">Evidence Chains (20 marks)</a></h3>
+<h4 id="excellent-15-20-marks-3"><a class="header" href="#excellent-15-20-marks-3">Excellent (15-20 marks)</a></h4>
+<ul>
+<li>✅ Every fix links to Task 1 finding (file + section reference)</li>
+<li>✅ Before/after metrics comparison complete (pre/analysis.csv vs post/postchange.csv)</li>
+<li>✅ Code diffs complete for all changes (before/after snippets with annotations)</li>
+<li>✅ Screenshots annotated (alt text + context)</li>
+<li>✅ Regression tests documented (30 checks complete, notes for each)</li>
+</ul>
+<h4 id="good-12-14-marks-3"><a class="header" href="#good-12-14-marks-3">Good (12-14 marks)</a></h4>
+<ul>
+<li>✅ Most fixes link to Task 1 (1-2 minor gaps)</li>
+<li>✅ Metrics comparison complete</li>
+<li>⚠️ Code diffs mostly complete (1-2 changes lack snippets)</li>
+<li>⚠️ Screenshots present (annotations brief)</li>
+<li>✅ Regression tests complete</li>
+</ul>
+<h4 id="satisfactory-10-11-marks-3"><a class="header" href="#satisfactory-10-11-marks-3">Satisfactory (10-11 marks)</a></h4>
+<ul>
+<li>⚠️ Some fixes link to Task 1 (gaps present)</li>
+<li>⚠️ Metrics comparison incomplete (only 1-2 metrics compared)</li>
+<li>⚠️ Code diffs superficial (claims changed but minimal evidence)</li>
+<li>⚠️ Screenshots present but not annotated</li>
+<li>⚠️ Regression checklist incomplete (blanks, N/As)</li>
+</ul>
+<h4 id="needs-work--fail-0-9-marks-1"><a class="header" href="#needs-work--fail-0-9-marks-1">Needs Work / Fail (0-9 marks)</a></h4>
+<ul>
+<li>❌ No link to Task 1</li>
+<li>❌ No before/after comparison</li>
+<li>❌ No code diffs</li>
+<li>❌ Regression checklist absent or mostly blank</li>
+</ul>
+<hr />
+<h3 id="professional-presentation-10-marks"><a class="header" href="#professional-presentation-10-marks">Professional Presentation (10 marks)</a></h3>
+<h4 id="excellent-8-10-marks"><a class="header" href="#excellent-8-10-marks">Excellent (8-10 marks)</a></h4>
+<ul>
+<li>✅ Clear, well-structured documentation (all 6 files + directories)</li>
+<li>✅ Honest reporting (if metrics didn't improve, explains why)</li>
+<li>✅ Complete submission (matches specification exactly)</li>
+<li>✅ UK spelling and grammar</li>
+<li>✅ Proper Markdown formatting</li>
+</ul>
+<h4 id="good-6-7-marks"><a class="header" href="#good-6-7-marks">Good (6-7 marks)</a></h4>
+<ul>
+<li>✅ Documentation clear</li>
+<li>✅ Honest reporting</li>
+<li>⚠️ 1 minor file/directory missing</li>
+<li>⚠️ Minor spelling/grammar issues</li>
+<li>⚠️ Minor formatting issues</li>
+</ul>
+<h4 id="satisfactory--needs-work-4-5-marks"><a class="header" href="#satisfactory--needs-work-4-5-marks">Satisfactory / Needs Work (4-5 marks)</a></h4>
+<ul>
+<li>⚠️ Documentation adequate</li>
+<li>⚠️ Reporting hides some issues</li>
+<li>❌ 2+ files missing</li>
+<li>❌ Spelling/grammar errors</li>
+</ul>
+<h4 id="fail-0-3-marks"><a class="header" href="#fail-0-3-marks">Fail (0-3 marks)</a></h4>
+<ul>
+<li>❌ Submission incomplete</li>
+<li>❌ Dishonest reporting</li>
+<li>❌ Plagiarism or academic integrity violation</li>
+</ul>
+<hr />
+<h2 id="academic-integrity"><a class="header" href="#academic-integrity">Academic Integrity</a></h2>
+<h3 id="automatic-fail-triggers"><a class="header" href="#automatic-fail-triggers">Automatic Fail Triggers</a></h3>
+<p>The following result in <strong>immediate zero marks</strong> and referral to Academic Integrity Office:</p>
+<p>❌ <strong>Fabricated pilot data</strong> (markers can detect unrealistic patterns: too perfect, identical times, no variation)</p>
+<p>❌ <strong>Plagiarism</strong> (code/analysis copied from peers or internet without attribution)</p>
+<p>❌ <strong>Contract cheating</strong> (someone else did the work)</p>
+<p>❌ <strong>Falsified evidence</strong> (screenshots doctored, metrics invented, consent not obtained)</p>
+<p>❌ <strong>No actual pilots conducted</strong> (claims 4 pilots but only did 1-2, or none)</p>
+<h3 id="serious-penalties"><a class="header" href="#serious-penalties">Serious Penalties</a></h3>
+<p>The following result in <strong>major mark deductions</strong> (30-50% penalty):</p>
+<p>⚠️ <strong>Major PII violations</strong> (participant names/emails visible, identifiable session IDs)</p>
+<p>⚠️ <strong>No consent obtained</strong> (pilots conducted without ethical protocol)</p>
+<p>⚠️ <strong>Significant plagiarism</strong> (substantial sections copied, inadequate attribution)</p>
+<hr />
+<h2 id="common-misconceptions"><a class="header" href="#common-misconceptions">Common Misconceptions</a></h2>
+<h3 id="-i-need-perfect-code-to-get-high-marks"><a class="header" href="#-i-need-perfect-code-to-get-high-marks">❌ "I need perfect code to get high marks"</a></h3>
+<p><strong>No</strong>. We don't mark code quality. We mark <strong>HCI process</strong>. You can have bugs in your app and still get Excellent if your evaluation/redesign method is rigorous.</p>
+<h3 id="-i-need-to-write-3000-words-to-get-good-marks"><a class="header" href="#-i-need-to-write-3000-words-to-get-good-marks">❌ "I need to write 3000 words to get good marks"</a></h3>
+<p><strong>No</strong>. We prefer <strong>concise tables and metrics over verbose prose</strong>. A 1200-word findings doc with strong evidence beats a 3000-word essay with weak data.</p>
+<h3 id="-if-my-redesign-doesnt-improve-metrics-ill-fail"><a class="header" href="#-if-my-redesign-doesnt-improve-metrics-ill-fail">❌ "If my redesign doesn't improve metrics, I'll fail"</a></h3>
+<p><strong>No</strong>. We mark <strong>honest analysis</strong>. If metrics don't improve, explain why (small n? wrong fix? need more iteration?). Shows LO12 (professionalism).</p>
+<h3 id="-i-need-to-fix-all-issues-found-in-task-1"><a class="header" href="#-i-need-to-fix-all-issues-found-in-task-1">❌ "I need to fix all issues found in Task 1"</a></h3>
+<p><strong>No</strong>. We mark <strong>prioritisation and thoroughness</strong>. 2 fixes done rigorously (WCAG verified, regression tested, re-piloted) beats 10 fixes done superficially.</p>
+<h3 id="-i-cant-get-excellent-if-i-find-problems-in-my-work"><a class="header" href="#-i-cant-get-excellent-if-i-find-problems-in-my-work">❌ "I can't get Excellent if I find problems in my work"</a></h3>
+<p><strong>No</strong>. <strong>Reporting limitations honestly</strong> is a mark of professionalism (LO12). Hiding problems loses marks; acknowledging them gains marks.</p>
+<hr />
+<h2 id="how-to-self-assess-before-submission"><a class="header" href="#how-to-self-assess-before-submission">How to Self-Assess Before Submission</a></h2>
+<h3 id="task-1-checklist"><a class="header" href="#task-1-checklist">Task 1 Checklist</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Evidence</strong>: Every finding has file path, line number, or session ID reference?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>n=4 minimum</strong>: At least 4 participants piloted?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Variants</strong>: At least 3 variants tested (standard, keyboard, no-JS)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Needs-finding link</strong>: Connected evaluation to Week 6 job stories (LO2)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Consent</strong>: Protocol includes consent script and right to withdraw?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No PII</strong>: All screenshots cropped, session IDs anonymous?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>WCAG</strong>: Specific criteria cited (4.1.3, 3.3.1, etc.)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Honest</strong>: Limitations acknowledged, unexpected results explained?</li>
+</ul>
+<h3 id="task-2-checklist"><a class="header" href="#task-2-checklist">Task 2 Checklist</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Grounded</strong>: Problem links to specific Task 1 findings (file + section)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>WCAG AA</strong>: Regression checklist complete (all 30 checks PASS)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Before/after</strong>: Metrics comparison shows improvement?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No-JS parity</strong>: Traditional path tested and works?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Societal impact</strong>: 300-500 words analysing systemic barriers (LO10)?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Code diffs</strong>: Before/after snippets for all changes?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Re-pilots</strong>: n≥2 conducted using same protocol as Task 1?</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Honest</strong>: If metrics didn't improve, explained why?</li>
+</ul>
+<hr />
+<h2 id="faqs"><a class="header" href="#faqs">FAQs</a></h2>
+<p><strong>Q: What if I can only recruit 3 participants?</strong>
+A: Minimum 4 required. Start earlier, use lab sessions to find peers. n=3 loses marks in Evidence Quality.</p>
+<p><strong>Q: Can I use mean instead of median?</strong>
+A: Median is more robust (less affected by outliers). Using mean is acceptable but justify why.</p>
+<p><strong>Q: What if my regression testing finds new issues?</strong>
+A: Fix them before re-pilots. That's why regression testing exists. Document in notes.</p>
+<p><strong>Q: Do I need to implement screen reader fixes?</strong>
+A: Not mandatory, but WCAG violations affecting SR users are high inclusion impact (prioritise these).</p>
+<p><strong>Q: What if my fix breaks no-JS parity?</strong>
+A: That's a fail in Fix Effectiveness. Test traditional path after every change.</p>
+<p><strong>Q: Can I get Excellent without Task 1→Task 2 evidence chains?</strong>
+A: No. Evidence chains are core to Evidence Chains criterion (20 marks). Every fix must link to Task 1 finding.</p>
+<p><strong>Q: How detailed should code diffs be?</strong>
+A: Show enough to understand the change (5-15 lines before/after). Full files not needed.</p>
+<p><strong>Q: What if I find no WCAG violations in Task 1?</strong>
+A: Unlikely if you tested with axe DevTools + keyboard + SR. Revisit Week 7 audit. If genuinely compliant, document that honestly.</p>
+<hr />
+<h2 id="summary-what-gets-high-marks"><a class="header" href="#summary-what-gets-high-marks">Summary: What Gets High Marks?</a></h2>
+<p>✅ <strong>Evidence trails</strong>: Every claim traceable to data
+✅ <strong>Method rigour</strong>: Consent, variants, systematic testing
+✅ <strong>WCAG knowledge</strong>: Specific criteria cited, compliance verified
+✅ <strong>Critical thinking</strong>: Systemic barriers analysed, not just "helps disabled people"
+✅ <strong>Honest reporting</strong>: Limitations acknowledged, problems not hidden
+✅ <strong>Process over product</strong>: Evaluation/redesign method matters, not code elegance</p>
+<p><strong>Focus on demonstrating HCI competence, not software engineering mastery.</strong></p>
+<hr />
+<p><a href="overview.html">← Back to Assessment Overview</a> | <a href="task1.html">Task 1 Details →</a> | <a href="task2.html">Task 2 Details →</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assessment/task2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/glossary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assessment/task2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/glossary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

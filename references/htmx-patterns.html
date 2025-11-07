@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>HTMX Patterns &amp; Progressive Enhancement - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="htmx-patterns--progressive-enhancement"><a class="header" href="#htmx-patterns--progressive-enhancement">HTMX Patterns &amp; Progressive Enhancement</a></h1>
+<h2 id="what-is-htmx"><a class="header" href="#what-is-htmx">What is HTMX?</a></h2>
+<p><strong>HTMX</strong> is a JavaScript library that lets you build <strong>dynamic web interfaces</strong> using <strong>HTML attributes</strong> instead of writing JavaScript code. It extends HTML with attributes like <code>hx-get</code>, <code>hx-post</code>, <code>hx-target</code>, and <code>hx-swap</code> that trigger <a href="glossary.html#ajax">AJAX</a> requests and update parts of the page.</p>
+<p><strong>Key idea</strong>: The server sends <strong><a href="glossary.html#fragment">HTML fragments</a></strong> (not <a href="glossary.html#json">JSON</a>), and HTMX swaps them into the page. You write normal HTML forms and links, add a few <code>hx-*</code> attributes, and suddenly they work dynamically without page reloads.</p>
+<p><strong>Core text</strong>: <a href="https://hypermedia.systems/">Hypermedia Systems</a> by Carson Gross, Adam Stepinski, and Deniz Akşimşek (2023) - read Chapters 1-6 for foundations.</p>
+<h2 id="why-htmx-for-hci"><a class="header" href="#why-htmx-for-hci">Why HTMX for HCI?</a></h2>
+<ol>
+<li><strong><a href="glossary.html#accessibility">Accessibility</a> by default</strong> - Server controls HTML structure, ensuring <a href="glossary.html#semantic-html">semantic markup</a>, <a href="glossary.html#aria">ARIA</a> roles, and <a href="glossary.html#screen-reader">screen reader</a> compatibility</li>
+<li><strong><a href="glossary.html#progressive-enhancement">Progressive enhancement</a></strong> - Everything works without JavaScript; HTMX enhances the experience when available</li>
+<li><strong>Simplicity</strong> - No build tools, no client-side state management, no framework complexity</li>
+<li><strong><a href="glossary.html#hypermedia">Hypermedia</a>-driven</strong> - Follows <a href="glossary.html#rest">REST</a>/<a href="glossary.html#hateoas">HATEOAS</a> principles - the server tells the client what to display (HTML) and what actions are available (links/forms)</li>
+</ol>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
+<ol>
+<li><strong>Human interaction</strong> - Click a button, submit a form, type in a search box</li>
+<li><strong>HTMX sends AJAX request</strong> - Adds <code>HX-Request: true</code> <a href="glossary.html#request-headers">header</a> so server knows it's AJAX</li>
+<li><strong>Server responds with HTML</strong> - Returns a <a href="glossary.html#fragment">fragment</a> (e.g., <code>&lt;li&gt;New item&lt;/li&gt;</code>) not a full page</li>
+<li><strong>HTMX swaps the fragment</strong> - Updates the target element (append, replace, etc.)</li>
+<li><strong>Screen readers announce</strong> - <a href="glossary.html#aria-live-region">ARIA live regions</a> announce changes automatically</li>
+</ol>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-html">&lt;button hx-get="/tasks/123" hx-target="#content"&gt;Load Task&lt;/button&gt;
+</code></pre>
+<ul>
+<li>Click → AJAX GET to <code>/tasks/123</code></li>
+<li>Server returns HTML: <code>&lt;div&gt;Task details...&lt;/div&gt;</code></li>
+<li>HTMX replaces <code>#content</code> with the response</li>
+<li>No page reload, no JavaScript written by you</li>
+</ul>
+<h2 id="core-attributes"><a class="header" href="#core-attributes">Core Attributes</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Attribute</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>hx-get</code></td><td>HTTP GET request</td><td><code>&lt;button hx-get="/tasks"&gt;</code></td></tr>
+<tr><td><code>hx-post</code></td><td>HTTP POST request</td><td><code>&lt;form hx-post="/tasks"&gt;</code></td></tr>
+<tr><td><code>hx-target</code></td><td>Where to insert response</td><td><code>hx-target="#task-list"</code></td></tr>
+<tr><td><code>hx-swap</code></td><td>How to insert (replace/append/etc.)</td><td><code>hx-swap="beforeend"</code></td></tr>
+<tr><td><code>hx-trigger</code></td><td>What event triggers request</td><td><code>hx-trigger="keyup changed delay:300ms"</code></td></tr>
+<tr><td><code>hx-swap-oob</code></td><td>Update element outside target</td><td><code>&lt;div id="status" hx-swap-oob="true"&gt;</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="progressive-enhancement-pattern"><a class="header" href="#progressive-enhancement-pattern">Progressive Enhancement Pattern</a></h2>
+<p>Every HTMX feature must have a <strong><a href="glossary.html#no-js-parity">no-JS fallback</a></strong>:</p>
+<pre><code class="language-html">&lt;!-- Works WITHOUT JavaScript (full page POST-Redirect-GET) --&gt;
+&lt;!-- Works WITH JavaScript (HTMX AJAX, fragment swap) --&gt;
+&lt;form action="/tasks" method="post"
+      hx-post="/tasks"
+      hx-target="#task-list"
+      hx-swap="beforeend"&gt;
+  &lt;input name="title" required&gt;
+  &lt;button type="submit"&gt;Add Task&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p><strong>Server detects HTMX</strong>:</p>
+<pre><code class="language-kotlin">if (call.request.headers["HX-Request"] == "true") {
+    // Return fragment for HTMX
+    call.respondText("&lt;li&gt;New task&lt;/li&gt;", ContentType.Text.Html)
+} else {
+    // Return full page or redirect for no-JS
+    call.respondRedirect("/tasks")
+}
+</code></pre>
+<hr />
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<p>Use these canonical patterns repeatedly across Weeks 6–10. Each snippet assumes the server exposes matching routes and keeps the no-JS fallback intact.</p>
+<h2 id="1-active-search--filter"><a class="header" href="#1-active-search--filter">1. Active Search / Filter</a></h2>
+<p><strong>📖 Reference</strong>: <a href="https://hypermedia.systems/more-htmx-patterns/#_active_search">Hypermedia Systems, Ch. 6: More HTMX Patterns</a></p>
+<p>Filter results as people type, with history support and a live status update.</p>
+<pre><code class="language-html">&lt;form action="/tasks" method="get"
+      hx-get="/tasks/fragment"
+      hx-target="#task-area"
+      hx-trigger="keyup changed delay:300ms, submit from:closest(form)"
+      hx-push-url="true"&gt;
+  &lt;label for="q"&gt;Filter tasks&lt;/label&gt;
+  &lt;input id="q" name="q" type="search" aria-describedby="q-hint"&gt;
+  &lt;small id="q-hint"&gt;Type to filter. Works without JavaScript.&lt;/small&gt;
+  &lt;button type="submit"&gt;Apply&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;div id="task-area" hx-indicator="#loading"&gt;
+  &lt;progress id="loading" class="visually-hidden" aria-hidden="true"&gt;&lt;/progress&gt;
+  {% include "tasks/_list.peb" %}
+  {% include "tasks/_pager.peb" %}
+&lt;/div&gt;
+</code></pre>
+<p>Server path (return list + pager + status when HX request):</p>
+<pre><code class="language-kotlin">get("/tasks/fragment") {
+    val q = call.request.queryParameters["q"].orEmpty()
+    val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+    val data = repo.search(q, page)
+    val list = PebbleRender.render("tasks/_list.peb", mapOf("page" to data, "q" to q))
+    val pager = PebbleRender.render("tasks/_pager.peb", mapOf("page" to data, "q" to q))
+    val status = """&lt;div id="status" hx-swap-oob="true"&gt;Found ${data.total} tasks.&lt;/div&gt;"""
+    call.respondText(list + pager + status, ContentType.Text.Html)
+}
+</code></pre>
+<h2 id="2-oob-out-of-band-status-messages"><a class="header" href="#2-oob-out-of-band-status-messages">2. OOB (Out-of-Band) Status Messages</a></h2>
+<p><strong>📖 Reference</strong>: <a href="https://htmx.org/attributes/hx-swap-oob/">HTMX Docs: hx-swap-oob</a> | <a href="https://hypermedia.systems/hypermedia-on-the-web/#_practical_patterns">Hypermedia Systems, Ch. 9</a></p>
+<p>Announce changes without touching focus.</p>
+<pre><code class="language-html">&lt;p id="status" role="status" aria-live="polite" class="visually-hidden"&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="language-kotlin">val status = """&lt;div id="status" hx-swap-oob="true"&gt;Added "${task.title}".&lt;/div&gt;"""
+call.respondText(fragment + status, ContentType.Text.Html)
+</code></pre>
+<h2 id="3-inline-edit-click-to-edit"><a class="header" href="#3-inline-edit-click-to-edit">3. Inline Edit (Click to Edit)</a></h2>
+<p><strong>📖 Reference</strong>: <a href="https://hypermedia.systems/htmx-patterns/#_click_to_edit">Hypermedia Systems, Ch. 5: HTMX Patterns</a></p>
+<p>Swap a container after a PATCH-like request (inline editing).</p>
+<pre><code class="language-html">&lt;form action="/tasks/{{ task.id }}/edit" method="post"
+      hx-post="/tasks/{{ task.id }}/edit"
+      hx-target="#task-{{ task.id }}"
+      hx-swap="outerHTML"&gt;
+  &lt;!-- label + input + button --&gt;
+&lt;/form&gt;
+</code></pre>
+<h2 id="4-deferred-swap-after-swap-delay"><a class="header" href="#4-deferred-swap-after-swap-delay">4. Deferred Swap (after swap delay)</a></h2>
+<p>Useful for optimistic UI (e.g. show success, then clear form).</p>
+<pre><code class="language-html">&lt;div hx-target="this"
+     hx-swap="outerHTML settle:1s"&gt;
+  &lt;p class="success"&gt;Saved!&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="5-multi-target-updates"><a class="header" href="#5-multi-target-updates">5. Multi-target updates</a></h2>
+<p>Use <code>hx-swap-oob</code> to update multiple DOM nodes from one response.</p>
+<pre><code class="language-html">&lt;div id="summary" hx-swap-oob="true"&gt;…&lt;/div&gt;
+&lt;li id="task-3"&gt;…&lt;/li&gt;
+</code></pre>
+<h2 id="6-indicators--disabled-states"><a class="header" href="#6-indicators--disabled-states">6. Indicators &amp; Disabled States</a></h2>
+<pre><code class="language-html">&lt;form hx-post="/tasks" hx-target="#task-list" hx-disabled-elt="[data-disable]"&gt;
+  &lt;button data-disable&gt;Save&lt;/button&gt;
+  &lt;div class="spinner" hx-indicator&gt;&lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+<h2 id="7-confirmcancel-actions"><a class="header" href="#7-confirmcancel-actions">7. Confirm/Cancel Actions</a></h2>
+<pre><code class="language-html">&lt;button hx-delete="/tasks/{{ task.id }}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Delete this task?"&gt;
+  Delete
+&lt;/button&gt;
+</code></pre>
+<h2 id="8-lazy-loading"><a class="header" href="#8-lazy-loading">8. Lazy Loading</a></h2>
+<p><strong>📖 Reference</strong>: <a href="https://hypermedia.systems/more-htmx-patterns/#_lazy_loading">Hypermedia Systems, Ch. 6: More HTMX Patterns</a></p>
+<p>Lazy load content</p>
+<pre><code class="language-html">&lt;div hx-get="/tasks/details/{{ task.id }}"
+     hx-trigger="revealed"&gt;
+  Loading…
+&lt;/div&gt;
+</code></pre>
+<p>Keep parity: every pattern must have a server-rendered fallback so the same request works without HTMX attributes present.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../references/pebble-cheatsheet.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/accessibility-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../references/pebble-cheatsheet.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/accessibility-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

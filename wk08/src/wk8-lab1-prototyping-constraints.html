@@ -1,0 +1,713 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Partials, pagination, filtering constraints - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-8--lab-1--prototyping-with-constraints-partials-pagination-filtering"><a class="header" href="#week-8--lab-1--prototyping-with-constraints-partials-pagination-filtering">Week 8 • Lab 1 — Prototyping with Constraints: Partials, Pagination, Filtering</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-8-orange" alt="Week 8" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<blockquote>
+<p>We keep saying “server-first for everyone, HTMX for enhancement.” Scaling that pattern to dozens or hundreds of tasks introduces new constraints. Today you will factor templates, add filtering and pagination, and document the trade-offs you are making.</p>
+</blockquote>
+<hr />
+<h2 id="why-this-lab-matters"><a class="header" href="#why-this-lab-matters">Why this lab matters</a></h2>
+<ul>
+<li>Template partials reduce duplication and keep accessibility fixes in one place.</li>
+<li>Pagination and filtering control cognitive load and network cost when lists grow.</li>
+<li>History (<code>hx-push-url</code>) and live status updates maintain web affordances (back button, result count) for all participants.</li>
+<li>Documented trade-offs help you justify design decisions in critiques and assessments.</li>
+</ul>
+<p>This lab feeds directly into Week 8 Lab 2 (no-JS parity verification) and sets up metrics collection in Week 9.</p>
+<hr />
+<h2 id="pre-lab-reading-15-min"><a class="header" href="#pre-lab-reading-15-min">Pre-lab reading (15 min)</a></h2>
+<ul>
+<li><a href="../../references/template-map-week8.html">Template Map for Week 8</a> (structure overview of the partials you will build)</li>
+<li><a href="https://hypermedia.systems/active-search/">hypermedia.systems — Active Search</a></li>
+<li><a href="https://htmx.org/attributes/hx-push-url/">HTMX reference: <code>hx-push-url</code></a> and <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a></li>
+<li><a href="https://pebbletemplates.io/wiki/guide/extending/">Pebble template inheritance</a> and include syntax</li>
+</ul>
+<p>Keep the <a href="../../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> open for copy/paste snippets.</p>
+<hr />
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Factored the tasks page into reusable Pebble partials (<code>_layout</code>, <code>_list</code>, <code>_item</code>, <code>_pager</code>)</li>
+<li>Added production-ready UI with header, navigation, and footer partials</li>
+<li>Implemented filtering + pagination with a dual-path architecture (full-page and HTMX fragment routes)</li>
+<li>Maintained accessible result announcements (<code>aria-describedby</code>) and predictable focus</li>
+<li>Used <code>hx-push-url</code> so history and bookmarking work across pages</li>
+<li>Documented trade-offs in server-side vs client-side filtering</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO5</strong>: Create interface prototypes — evidenced by HTMX partials implementation</li>
+<li><strong>LO7</strong>: Analyse design constraints — evidenced by pagination trade-offs document</li>
+<li><strong>LO13</strong>: Integrate HCI with SE — evidenced by server-rendered fragments</li>
+</ul>
+<hr />
+<hr />
+<h2 id="background-inclusive-prototyping-at-scale"><a class="header" href="#background-inclusive-prototyping-at-scale">Background: Inclusive prototyping at scale</a></h2>
+<p>Why refactor now? As lists grow, duplication becomes dangerous: accessibility fixes, aria hooks, and HTMX attributes drift if they live in multiple places. Partials keep the source of truth in one file so every flow (full page and fragment) inherits the same semantics.</p>
+<p>Pagination and filtering are not just performance tricks; they control cognitive load, especially for screen-reader participants who would otherwise wade through hundreds of list items. Implement them with inclusive defaults: predictable focus, result announcements, and URLs that respect the back button.</p>
+<p>Keep these references handy while you work:</p>
+<ul>
+<li><a href="references/pebble-cheatsheet.html">Pebble Cheatsheet</a></li>
+<li><code>../../references/template-map-week8.md</code> (visual map of the partials you are about to create)</li>
+<li><code>../../references/htmx-pattern-cheatsheet.md</code> (Active Search, OOB status, indicators)</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Navigation_and_orienting#pagination">MDN: Accessible Pagination Patterns</a></li>
+</ul>
+<blockquote>
+<p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
+</blockquote>
+<pre class="mermaid">graph TD
+  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
+  Base --&gt; Index[tasks/index.peb]
+  Index --&gt; List[tasks/_list.peb]
+  List --&gt; Item[tasks/_item.peb]
+  Index --&gt; Pager[tasks/_pager.peb]
+  Item --&gt;|Forms| Routes[(Ktor routes)]
+  Pager --&gt;|Links| Routes
+  Routes --&gt; HTMX[HTMX fragment responses]
+  Routes --&gt; PRG[Full-page PRG responses]
+</pre>
+<p><small>Full legend in <a href="../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
+<h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
+<p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
+<pre><code class="language-html">&lt;form action="/tasks" method="get"
+      hx-get="/tasks/fragment"
+      hx-target="#task-area"
+      hx-trigger="keyup changed delay:300ms, submit from:closest(form)"
+      hx-push-url="true"&gt;
+  &lt;label for="q"&gt;Filter tasks&lt;/label&gt;
+  &lt;input id="q" name="q" value="{{ query|default('') }}" type="search"
+         aria-describedby="q-hint"&gt;
+  &lt;small id="q-hint"&gt;Type to filter; works without JavaScript.&lt;/small&gt;
+  &lt;button type="submit"&gt;Apply&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<ul>
+<li><strong>HTMX path</strong>: typing triggers <code>/tasks/fragment</code>, which returns <code>_list</code> + <code>_pager</code> + a status update (<code>Found X tasks</code>). <code>hx-push-url"true"</code> keeps the URL in sync so back/forward works.</li>
+<li><strong>No-JS path</strong>: pressing Enter submits the form to <code>/tasks</code>; the full page renders using the same partials. Because labels and hints live in the partial, accessibility remains intact in both cases.</li>
+</ul>
+<p>When verifying parity, disable JS and watch the address bar: URLs should still reflect the current query and page so participants can bookmark or share the state.</p>
+<hr />
+<h2 id="0-baseline-check-5-min"><a class="header" href="#0-baseline-check-5-min">0. Baseline check (5 min)</a></h2>
+<p>Run <code>./gradlew run</code> and load <code>http://localhost:8080/tasks</code>:</p>
+<ul>
+<li>Confirm add/edit/delete from Week 7 still work with JS on.</li>
+<li>Disable JavaScript and re-run the same flows to ensure parity.</li>
+<li>If anything regressed, fix it before adding complexity.</li>
+</ul>
+<hr />
+<h2 id="1-factor-templates-into-partials-40-min"><a class="header" href="#1-factor-templates-into-partials-40-min">1. Factor templates into partials (40 min)</a></h2>
+<blockquote>
+<p><strong>💡 Template Naming Convention: Underscore Prefix</strong></p>
+<p>Starting in Week 8, we adopt a <strong>underscore prefix</strong> (<code>_</code>) for <strong>partial templates</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>index.peb</code></td><td><strong>Full page</strong></td><td>Complete HTML document (extends base)</td><td><code>tasks/index.peb</code></td></tr>
+<tr><td><code>_item.peb</code></td><td><strong>Partial</strong></td><td>Fragment included in other templates</td><td><code>tasks/_item.peb</code></td></tr>
+<tr><td><code>_list.peb</code></td><td><strong>Partial</strong></td><td>Reusable component (used multiple times)</td><td><code>tasks/_list.peb</code></td></tr>
+<tr><td><code>_layout/base.peb</code></td><td><strong>Layout</strong></td><td>Shared page structure</td><td><code>_layout/base.peb</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>Why the underscore?</strong></p>
+<ul>
+<li><strong>Visual distinction</strong>: Instantly recognizable as a partial (not a standalone page)</li>
+<li><strong>Common convention</strong>: Used by Rails, Jekyll, Sass, and other template systems</li>
+<li><strong>Prevent direct access</strong>: In some frameworks, <code>_</code> files are not served directly</li>
+</ul>
+<p><strong>Rule of thumb</strong>:</p>
+<ul>
+<li><strong>No underscore</strong> = Full page that can be rendered directly (e.g., <code>/tasks</code> → <code>tasks/index.peb</code>)</li>
+<li><strong>Underscore</strong> = Fragment included via <code>{% include %}</code> or HTMX <code>hx-get</code></li>
+</ul>
+<p><strong>This week's structure</strong>:</p>
+<pre><code>templates/
+├── _layout/
+│   └── base.peb        ← Shared layout (underscore because it's a partial)
+└── tasks/
+    ├── index.peb       ← Full page (no underscore)
+    ├── _item.peb       ← Partial: single task &lt;li&gt;
+    ├── _list.peb       ← Partial: task list &lt;ul&gt;
+    └── _pager.peb      ← Partial: pagination nav
+</code></pre>
+</blockquote>
+<p>We want a structure like the one in <code>../../references/template-map-week8.md</code>.</p>
+<h3 id="11-base-layout"><a class="header" href="#11-base-layout">1.1 Base layout</a></h3>
+<p>Create <code>templates/_layout/base.peb</code> with the shared head, status region, skip link, Pico CSS, HTMX script, and utility classes. This keeps accessibility hooks (live region, focus outline, visually hidden class) in a single place.</p>
+<h3 id="12-task-item-partial"><a class="header" href="#12-task-item-partial">1.2 Task item partial</a></h3>
+<p>Create <code>templates/tasks/_item.peb</code> that renders a single <code>&lt;li&gt;</code> with:</p>
+<ul>
+<li>Stable id <code>task-{{ t.id }}</code>.</li>
+<li>The title and the Edit/Delete forms from Week 7 (keep ARIA labels and dual attributes).</li>
+<li>No inline business logic—just markup and data from the model.</li>
+</ul>
+<h3 id="13-task-list-partial"><a class="header" href="#13-task-list-partial">1.3 Task list partial</a></h3>
+<p>Create <code>templates/tasks/_list.peb</code> containing:</p>
+<pre><code class="language-pebble">&lt;ul id="task-list" aria-describedby="result-count"&gt;
+  {% for task in page.items %}
+    {% include "tasks/_item.peb" with t=task %}
+  {% endfor %}
+&lt;/ul&gt;
+&lt;p id="result-count" class="visually-hidden"&gt;
+  Showing {{ page.items|length }} of {{ page.total }} tasks{% if query %} matching "{{ query }}"{% endif %}
+&lt;/p&gt;
+</code></pre>
+<p>This ensures screen readers hear the result count whenever the list changes.</p>
+<h3 id="14-update-index-page"><a class="header" href="#14-update-index-page">1.4 Update index page</a></h3>
+<p>Modify <code>templates/tasks/index.peb</code> so it extends <code>_layout/base.peb</code>, renders the add form, and includes <code>_list.peb</code> and <code>_pager.peb</code> inside a <code>&lt;div id="task-area"&gt;</code> container (we will populate <code>_pager.peb</code> shortly).</p>
+<p>✋ <strong>Checkpoint</strong>: restart the server and confirm the tasks page renders exactly as before (no functionality has changed yet). If anything broke, inspect your partials and template paths.</p>
+<h3 id="15-add-production-ready-ui-with-headernavfooter-partials-15-min"><a class="header" href="#15-add-production-ready-ui-with-headernavfooter-partials-15-min">1.5 Add production-ready UI with header/nav/footer partials (15 min)</a></h3>
+<p>Now that you understand the partial pattern, let's apply it to create a more polished, production-ready UI. We'll factor the base layout into reusable header, navigation, and footer components.</p>
+<p><strong>Why add this now?</strong></p>
+<ul>
+<li><strong>Maintainability</strong>: Accessibility features (skip links, ARIA live regions) stay in one place</li>
+<li><strong>Reusability</strong>: Header and footer will be consistent across all pages</li>
+<li><strong>Professionalism</strong>: Navigation and session info help users understand context</li>
+<li><strong>Best practice</strong>: Industry-standard template organization (header/nav/footer separation)</li>
+</ul>
+<p><strong>What you're building:</strong></p>
+<pre><code>templates/_layout/
+├── base.peb         ← Updated to include partials
+├── _header.peb      ← Skip link, ARIA live region, includes nav
+├── _nav.peb         ← Site branding, main navigation links
+└── _footer.peb      ← University branding, helpful links, session info
+</code></pre>
+<h4 id="151-create-header-partial"><a class="header" href="#151-create-header-partial">1.5.1 Create header partial</a></h4>
+<p>Create <code>templates/_layout/_header.peb</code>:</p>
+<pre><code class="language-pebble">{# Header partial with navigation and branding #}
+{# WCAG 2.4.1: Skip link for keyboard navigation #}
+&lt;a class="skip-link" href="#main"&gt;Skip to main content&lt;/a&gt;
+
+{# WCAG 4.1.3: ARIA live region for dynamic status announcements #}
+{# Polite: non-interrupting announcements after current speech finishes #}
+&lt;div id="status" role="status" aria-live="polite" aria-atomic="true" class="visually-hidden"&gt;&lt;/div&gt;
+
+&lt;header&gt;
+  {% include "_layout/_nav.peb" %}
+&lt;/header&gt;
+</code></pre>
+<p><strong>Key accessibility features:</strong></p>
+<ul>
+<li><strong>Skip link</strong>: Keyboard users can jump directly to main content (WCAG 2.4.1)</li>
+<li><strong>Live region</strong>: Screen readers announce status updates without interrupting navigation (WCAG 4.1.3)</li>
+<li><strong>Semantic <code>&lt;header&gt;</code></strong>: Screen readers identify site header as a landmark</li>
+</ul>
+<h4 id="152-create-navigation-partial"><a class="header" href="#152-create-navigation-partial">1.5.2 Create navigation partial</a></h4>
+<p>Create <code>templates/_layout/_nav.peb</code>:</p>
+<pre><code class="language-pebble">{# Navigation partial with site branding and main menu #}
+{# WCAG 1.3.1: Semantic nav element for screen readers #}
+&lt;nav aria-label="Main navigation"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;COMP2850 Task Manager&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/tasks"&gt;Tasks&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/health"&gt;Health&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p><strong>Pico CSS pattern</strong>: Pico's <code>&lt;nav&gt;</code> styling automatically creates a horizontal navigation bar with the first <code>&lt;ul&gt;</code> on the left (branding) and second <code>&lt;ul&gt;</code> on the right (links).</p>
+<p><strong>Why <code>aria-label</code>?</strong>: If you have multiple <code>&lt;nav&gt;</code> elements on a page, labels like <code>aria-label="Main navigation"</code> help screen reader users distinguish between them.</p>
+<h4 id="153-create-footer-partial"><a class="header" href="#153-create-footer-partial">1.5.3 Create footer partial</a></h4>
+<p>Create <code>templates/_layout/_footer.peb</code>:</p>
+<pre><code class="language-pebble">{# Footer partial with helpful links and session info #}
+{# WCAG 1.3.1: Semantic footer element #}
+&lt;footer&gt;
+  &lt;div class="container"&gt;
+    &lt;p&gt;
+      &lt;small&gt;
+        COMP2850 HCI &amp;bull; Server-first architecture &amp;bull;
+        &lt;a href="https://htmx.org/docs/" target="_blank" rel="noopener"&gt;HTMX Docs&lt;/a&gt; &amp;bull;
+        &lt;a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener"&gt;WCAG 2.2&lt;/a&gt;
+      &lt;/small&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;small&gt;
+        Session: {{ sessionId | default('N/A') }} &amp;bull;
+        Mode: {% if isHtmx %}HTMX{% else %}No-JS{% endif %}
+      &lt;/small&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+<p><strong>What the footer provides:</strong></p>
+<ul>
+<li><strong>Context links</strong>: Quick access to HTMX and WCAG documentation</li>
+<li><strong>Session visibility</strong>: Helps with debugging (which session is active?)</li>
+<li><strong>Mode indicator</strong>: Shows whether HTMX is working (useful for verifying parity)</li>
+</ul>
+<p><strong>Security note</strong>: <code>target="_blank"</code> requires <code>rel="noopener"</code> to prevent the new page from accessing <code>window.opener</code>.</p>
+<h4 id="154-update-base-layout-to-use-partials"><a class="header" href="#154-update-base-layout-to-use-partials">1.5.4 Update base layout to use partials</a></h4>
+<p>Now update <code>templates/_layout/base.peb</code> to include these partials. Replace your current base.peb with:</p>
+<pre><code class="language-pebble">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;{% block title %}COMP2850 Task Manager{% endblock %}&lt;/title&gt;
+
+  {# Pico CSS for baseline accessible styles (WCAG 2.2 AA compliant) #}
+  &lt;link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2/css/pico.min.css"&gt;
+
+  {# HTMX for progressive enhancement #}
+  &lt;script src="https://unpkg.com/htmx.org@1.9.12"&gt;&lt;/script&gt;
+
+  &lt;style&gt;
+    /* Visually hidden but accessible to screen readers (WCAG 1.3.1) */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+    }
+
+    /* Skip link for keyboard navigation (WCAG 2.4.1) */
+    .skip-link {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      background: #1976d2;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 9999;
+    }
+
+    /* Pagination styles */
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  {# Include header with navigation and accessibility features #}
+  {% include "_layout/_header.peb" %}
+
+  {# Main landmark for screen readers (WCAG 1.3.1) #}
+  {# tabindex="-1" allows programmatic focus for skip link #}
+  &lt;main id="main" class="container" tabindex="-1"&gt;
+    {% block content %}
+    {# Page-specific content goes here #}
+    {% endblock %}
+  &lt;/main&gt;
+
+  {# Include footer with helpful links and session info #}
+  {% include "_layout/_footer.peb" %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>What changed:</strong></p>
+<ul>
+<li>Moved skip link and live region to <code>_header.peb</code></li>
+<li>Added navigation via <code>_nav.peb</code></li>
+<li>Added footer with helpful links and session info</li>
+<li>Enhanced CSS for skip link visibility on focus</li>
+<li>Added <code>{% block title %}</code> so pages can customize the <code>&lt;title&gt;</code> tag</li>
+</ul>
+<h4 id="155-update-route-handlers-to-pass-session-data"><a class="header" href="#155-update-route-handlers-to-pass-session-data">1.5.5 Update route handlers to pass session data</a></h4>
+<p>For the footer to display session info, update your route handlers to include <code>sessionId</code> and <code>isHtmx</code> in the template model:</p>
+<pre><code class="language-kotlin">get("/tasks") {
+    val query = call.request.queryParameters["q"].orEmpty()
+    val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+    val data = repo.search(query = query, page = page, size = 10)
+
+    // Add session info for footer
+    val sessionId = call.sessions.get&lt;UserSession&gt;()?.id ?: "guest"
+    val isHtmx = call.request.headers["HX-Request"]?.equals("true", ignoreCase = true) == true
+
+    val model = mapOf(
+        "title" to "Tasks",
+        "page" to data,
+        "query" to query,
+        "sessionId" to sessionId,
+        "isHtmx" to isHtmx
+    )
+    call.respondHtml(PebbleRender.render("tasks/index.peb", model))
+}
+</code></pre>
+<p><strong>Note</strong>: If you don't have session support yet, you can pass a placeholder value like <code>"dev-session"</code> for now.</p>
+<p>✋ <strong>Checkpoint</strong>: restart the server and verify:</p>
+<ul>
+<li><strong>Navigation bar</strong> appears at the top with "COMP2850 Task Manager" branding and Tasks/Health links</li>
+<li><strong>Skip link</strong> becomes visible when you press Tab (test keyboard navigation)</li>
+<li><strong>Footer</strong> shows at the bottom with helpful links and session info</li>
+<li><strong>All existing functionality</strong> still works (add/edit/delete tasks)</li>
+<li><strong>Accessibility</strong>: Skip link works, navigation is keyboard-accessible, footer links open in new tabs</li>
+</ul>
+<p><strong>Benefits of this refactoring:</strong></p>
+<ul>
+<li>🎨 <strong>Professional appearance</strong>: Navigation and branding make it look like a real web app</li>
+<li>♿ <strong>Accessibility maintained</strong>: Skip links and ARIA regions still work</li>
+<li>🔧 <strong>Easier maintenance</strong>: Update navigation in one place, all pages inherit it</li>
+<li>📚 <strong>Learning transfer</strong>: This pattern applies to any server-rendered web app</li>
+</ul>
+<hr />
+<h2 id="2-add-pagination-and-filtering-35-min"><a class="header" href="#2-add-pagination-and-filtering-35-min">2. Add pagination and filtering (35 min)</a></h2>
+<h3 id="21-repository-paging-helper"><a class="header" href="#21-repository-paging-helper">2.1 Repository paging helper</a></h3>
+<p>Add a <code>Page&lt;T&gt;</code> data class and a <code>search(query, page, size)</code> helper in your repository or service layer so routes can request paged data. Keep the page number clamped (<code>coerceIn</code>) to valid bounds.</p>
+<h3 id="22-pager-partial"><a class="header" href="#22-pager-partial">2.2 Pager partial</a></h3>
+<p>Create <code>templates/tasks/_pager.peb</code>:</p>
+<pre><code class="language-pebble">&lt;nav aria-label="Pagination"&gt;
+  &lt;ul class="pagination"&gt;
+    {% if page.page &gt; 1 %}
+      &lt;li&gt;
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
+           hx-target="#task-area"
+           hx-push-url="true"&gt;
+          Previous
+        &lt;/a&gt;
+      &lt;/li&gt;
+    {% endif %}
+    &lt;li aria-current="page"&gt;Page {{ page.page }} of {{ page.pages }}&lt;/li&gt;
+    {% if page.page &lt; page.pages %}
+      &lt;li&gt;
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
+           hx-target="#task-area"
+           hx-push-url="true"&gt;
+          Next
+        &lt;/a&gt;
+      &lt;/li&gt;
+    {% endif %}
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>Dual attributes guarantee the pager works both with and without HTMX.</p>
+<h3 id="23-filter-form"><a class="header" href="#23-filter-form">2.3 Filter form</a></h3>
+<p>Above the task area add a filter form:</p>
+<pre><code class="language-pebble">&lt;form action="/tasks" method="get"
+      hx-get="/tasks/fragment"
+      hx-target="#task-area"
+      hx-trigger="keyup changed delay:300ms, submit from:closest(form)"
+      hx-push-url="true"&gt;
+  &lt;label for="q"&gt;Filter tasks&lt;/label&gt;
+  &lt;input id="q" name="q" value="{{ query|default('') }}" type="search"
+         aria-describedby="q-hint"&gt;
+  &lt;small id="q-hint"&gt;Type to filter; works without JavaScript.&lt;/small&gt;
+  &lt;button type="submit"&gt;Apply&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>The visible submit button provides the no-JS fallback; HTMX enhances with Active Search. Use the indicator pattern from the cheat sheet if you want to show loading state.</p>
+<h3 id="24-routes"><a class="header" href="#24-routes">2.4 Routes</a></h3>
+<p>Add two GET handlers in your Ktor routing block:</p>
+<pre><code class="language-kotlin">get("/tasks") {
+    val query = call.request.queryParameters["q"].orEmpty()
+    val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+    val data = repo.search(query = query, page = page, size = 10)
+    val model = mapOf("title" to "Tasks", "page" to data, "query" to query)
+    call.respondHtml(PebbleRender.render("tasks/index.peb", model))
+}
+
+get("/tasks/fragment") {
+    val query = call.request.queryParameters["q"].orEmpty()
+    val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+    val data = repo.search(query = query, page = page, size = 10)
+    val list = PebbleRender.render("tasks/_list.peb", mapOf("page" to data, "query" to query))
+    val pager = PebbleRender.render("tasks/_pager.peb", mapOf("page" to data, "query" to query))
+    val status = """&lt;div id="status" hx-swap-oob="true"&gt;Found ${data.total} tasks.&lt;/div&gt;"""
+    call.respondText(list + pager + status, ContentType.Text.Html)
+}
+</code></pre>
+<p><code>/tasks</code> handles full-page renders. <code>/tasks/fragment</code> returns fragments + an out-of-band status update for HTMX.</p>
+<p>✋ <strong>Checkpoint</strong>:</p>
+<ul>
+<li>Filter form updates the list as you type (HTMX) and on submit (no-JS).</li>
+<li>Pager links update the list and URL with HTMX; back/forward work.</li>
+<li>Live region announces “Found X tasks.”</li>
+<li>With JavaScript disabled, the filter submits and redraws the whole page; pager links still navigate correctly.</li>
+</ul>
+<hr />
+<h2 id="3-test-with-assistive-technology-10-min"><a class="header" href="#3-test-with-assistive-technology-10-min">3. Test with assistive technology (10 min)</a></h2>
+<p>Use the checklist:</p>
+<ul>
+<li>Keyboard-only: Tab through filter form, pagination links, and tasks. Focus order should make sense and remain visible.</li>
+<li>Screen reader: Trigger a filter change and ensure the result count is announced. Navigate the pager links; confirm <code>aria-current</code> is read out.</li>
+<li>No-JS parity: Disable JS and confirm filtering/paging still work via full-page loads.</li>
+<li>History: After filtering, use the back button—does the list revert? If not, check <code>hx-push-url</code> and your full-page route.</li>
+</ul>
+<p>Record outcomes in <code>wk08/docs/prototyping-constraints.md</code> under an “Accessibility verification” section.</p>
+<hr />
+<h2 id="4-document-trade-offs-15-min"><a class="header" href="#4-document-trade-offs-15-min">4. Document trade-offs (15 min)</a></h2>
+<p>Open <code>wk08/docs/prototyping-constraints.starter.md</code> (or create <code>prototyping-constraints.md</code>) and note:</p>
+<ul>
+<li>Rendering splits (full page vs fragments).</li>
+<li>Accessibility hooks (result count, live region, focus handling).</li>
+<li>State management decisions (query parameter naming, page size choices).</li>
+<li>Risks you introduced (duplicate HTML fragments, maintaining <code>_list</code> and <code>_pager</code>, potential 404 on out-of-range pages).</li>
+</ul>
+<p>This documentation is evidence for Week 10 prioritisation and helps staff review your implementation quickly.</p>
+<hr />
+<h2 id="commit-guidance"><a class="header" href="#commit-guidance">Commit guidance</a></h2>
+<pre><code class="language-bash">git add templates/_layout/base.peb templates/tasks/_*.peb templates/tasks/index.peb src/main/kotlin wk08/docs/prototyping-constraints.md
+
+git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
+</code></pre>
+<p>Suggested commit body:</p>
+<pre><code>- factored tasks templates into base layout, list, item, pager partials
+- added search form with dual-path (HTMX + full-page) handling
+- implemented pagination routes returning fragments + status announcements
+- verified keyboard, screen reader, JS-off parity
+- documented rendering splits and trade-offs in wk08/docs/prototyping-constraints.md
+</code></pre>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What’s next?</a></h2>
+<p>Week 8 Lab 2 focuses on wiring additional routes, error handling, and no-JS verification scripts. Keep your server running and your documentation open—we will extend the same patterns immediately.</p>
+<p>Optional stretch this week: add a “mark complete” flow using the same partials and log any accessibility considerations.</p>
+<hr />
+<h2 id="further-resources"><a class="header" href="#further-resources">Further resources</a></h2>
+<ul>
+<li><code>../../references/template-map-week8.md</code></li>
+<li><code>../../references/htmx-pattern-cheatsheet.md</code></li>
+<li><a href="https://hypermedia.systems/active-search/">Hypermedia Systems — Active Search</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Navigation_and_orienting#pagination">MDN — Accessible Pagination Patterns</a></li>
+</ul>
+<p>You now have a scalable, accessible list structure ready for deeper evaluation and instrumentation.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../wk08/src/wk8-lab2-routing-nojs-tradeoffs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../wk08/src/wk8-lab2-routing-nojs-tradeoffs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

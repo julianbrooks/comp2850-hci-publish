@@ -1,0 +1,1155 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Accessibility audit, backlog, inclusive fix - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-7--lab-2-accessibility-audit-backlog--inclusive-fix"><a class="header" href="#week-7--lab-2-accessibility-audit-backlog--inclusive-fix">Week 7 • Lab 2: Accessibility Audit, Backlog &amp; Inclusive Fix</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-7-orange" alt="Week 7" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<hr />
+<h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
+<p><strong>Essential</strong></p>
+<ul>
+<li>Ensure your Week 7 starter repo clone is up to date (inline edit changes committed)</li>
+<li><a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C (2024). WCAG 2.2 Quick Reference</a></li>
+<li><a href="https://www.deque.com/axe/devtools/">axe DevTools Documentation</a></li>
+<li><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/making-your-service-accessible-an-introduction">GOV.UK: Making Your Service Accessible</a></li>
+<li><a href="../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide)</li>
+</ul>
+<p><strong>Recommended</strong></p>
+<ul>
+<li><a href="https://webaim.org/standards/wcag/checklist">WebAIM: WCAG 2 Checklist</a></li>
+<li><a href="https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/">Nielsen, J. (1994). "Heuristic Evaluation"</a></li>
+<li><a href="https://www.cs.umd.edu/~ben/">Shneiderman et al. (2016). <em>Designing the User Interface</em>, Ch. 3: Guidelines</a></li>
+</ul>
+<hr />
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<h3 id="context"><a class="header" href="#context">Context</a></h3>
+<p>In <strong>Week 7 Lab 1</strong> you implemented accessible inline edit with dual-path support (HTMX + no-JS), ARIA error identification, and status message announcements. You tested with keyboard and screen reader (NVDA/VoiceOver) and collected evidence.</p>
+<p><strong>Now you'll audit the entire application systematically</strong> using:</p>
+<ol>
+<li><strong>WCAG 2.2 AA checklist</strong> (technical compliance)</li>
+<li><strong>Heuristics</strong> (Nielsen's 10 Usability Heuristics + Shneiderman's Golden Rules)</li>
+<li><strong>Assistive technology testing</strong> (keyboard, screen reader, no-JS, zoom)</li>
+</ol>
+<p>You'll log findings in your inclusive backlog (from Week 6), prioritise using <em>severity × inclusion risk</em>, and
+<strong>implement one high-priority fix end-to-end</strong> (code → verification → evidence).</p>
+<p>This lab directly feeds <strong>Gradescope Task 1</strong> (evaluation &amp; findings) and sets up <strong>Task 2</strong> (redesign &amp; verification).</p>
+<h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
+<p><strong>Professionally</strong>, accessibility audits are standard practice:</p>
+<ul>
+<li><strong>GOV.UK</strong> mandates WCAG 2.2 AA compliance before launch</li>
+<li><strong>BBC</strong> runs quarterly audits with assistive tech users</li>
+<li><strong>Microsoft</strong> uses automated (axe) + manual (SR) testing in CI/CD pipeline</li>
+</ul>
+<p><strong>Academically</strong>, this lab teaches:</p>
+<ul>
+<li><strong>Systematic evaluation</strong>: Structured checklists reduce bias (vs. ad-hoc testing)</li>
+<li><strong>Triangulation</strong>: Automated tools + manual testing + user feedback</li>
+<li><strong>Evidence-based prioritisation</strong>: Data (backlog scores) beats intuition</li>
+</ul>
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Conducted a structured accessibility audit using WCAG 2.2 AA criteria</li>
+<li>Run axe DevTools audit and documented 5+ WCAG violations</li>
+<li>Mapped violations to WCAG 2.2 success criteria</li>
+<li>Populated inclusive backlog with severity + inclusion risk scores</li>
+<li>Implemented one priority accessibility fix with regression testing</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO4</strong>: Evaluate for accessibility — evidenced by axe audit + WCAG mapping</li>
+<li><strong>LO6</strong>: Apply iterative design — evidenced by fix implementation</li>
+<li><strong>LO9</strong>: Apply inclusive design — evidenced by WCAG 2.2 AA compliance</li>
+<li><strong>LO12</strong>: Demonstrate professionalism — evidenced by documentation + testing</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="1-accessibility-audit-levels"><a class="header" href="#1-accessibility-audit-levels">1. Accessibility Audit Levels</a></h3>
+<p><strong>Level 1: Automated testing</strong> (20-30% of WCAG issues)</p>
+<ul>
+<li>Tools: axe DevTools, WAVE, Lighthouse</li>
+<li>Fast, repeatable, catches low-hanging fruit</li>
+<li><strong>Limitations</strong>: Can't detect non-semantic HTML, focus order issues, SR announcements</li>
+</ul>
+<p><strong>Level 2: Manual testing</strong> (keyboard, screen reader)</p>
+<ul>
+<li>Catches 50-60% of issues</li>
+<li>Time-consuming, requires expertise</li>
+<li><strong>Essential for</strong>: Focus management, ARIA announcements, keyboard traps</li>
+</ul>
+<p><strong>Level 3: User testing</strong> (people with disabilities)</p>
+<ul>
+<li>Catches 90%+ of issues</li>
+<li>Gold standard, but expensive and slow</li>
+<li><strong>Week 9</strong>: You'll run task-based pilots (mini user tests)</li>
+</ul>
+<p><strong>COMP2850 approach</strong>: Levels 1 + 2 in Labs 7-8; Level 3 in Week 9.</p>
+<h3 id="2-wcag-22-conformance-levels"><a class="header" href="#2-wcag-22-conformance-levels">2. WCAG 2.2 Conformance Levels</a></h3>
+<p><strong>Level A</strong> (minimum, legal requirement in many jurisdictions):</p>
+<ul>
+<li>Examples: 1.3.1 Info and Relationships, 2.1.1 Keyboard, 3.3.1 Error Identification</li>
+</ul>
+<p><strong>Level AA</strong> (target for most organisations):</p>
+<ul>
+<li>Examples: 1.4.3 Contrast (Minimum), 2.4.7 Focus Visible, 4.1.3 Status Messages</li>
+</ul>
+<p><strong>Level AAA</strong> (enhanced, not always achievable):</p>
+<ul>
+<li>Examples: 1.4.6 Contrast (Enhanced, 7:1), 2.1.3 Keyboard (No Exception)</li>
+</ul>
+<p><strong>COMP2850 target</strong>: AA compliance (industry standard).</p>
+<h3 id="3-severity-scoring-comp2850-framework"><a class="header" href="#3-severity-scoring-comp2850-framework">3. Severity Scoring (COMP2850 Framework)</a></h3>
+<p><strong>High (3 points)</strong>:</p>
+<ul>
+<li>Blocks task completion entirely (e.g., form unsubmittable via keyboard)</li>
+<li>Excludes entire group (e.g., no screen reader access)</li>
+<li>WCAG Level A failure</li>
+</ul>
+<p><strong>Medium (2 points)</strong>:</p>
+<ul>
+<li>Makes task significantly harder (e.g., poor contrast, slow to navigate)</li>
+<li>Affects multiple groups (e.g., keyboard + screen reader)</li>
+<li>WCAG Level AA failure</li>
+</ul>
+<p><strong>Low (1 point)</strong>:</p>
+<ul>
+<li>Minor friction (e.g., missing hint text, suboptimal label)</li>
+<li>Affects niche scenario (e.g., rare browser/AT combination)</li>
+<li>WCAG AAA or best practice (not required)</li>
+</ul>
+<h3 id="4-inclusion-risk-tagging"><a class="header" href="#4-inclusion-risk-tagging">4. Inclusion Risk Tagging</a></h3>
+<p><strong>Tags</strong> identify who's affected:</p>
+<ul>
+<li><strong>SR</strong> (Screen reader): NVDA, JAWS, VoiceOver, TalkBack</li>
+<li><strong>Keyboard</strong>: Keyboard-only users, motor impairments, RSI</li>
+<li><strong>Cognitive</strong>: ADHD, dyslexia, memory impairments</li>
+<li><strong>Low vision</strong>: Magnification users, high contrast needs</li>
+<li><strong>Motor</strong>: Tremor, limited dexterity, switch users</li>
+<li><strong>Hearing</strong>: Caption/transcript needs (not applicable to this project yet)</li>
+<li><strong>Situational</strong>: Bright light, broken mouse, noisy environment</li>
+</ul>
+<p><strong>Example</strong>: "Delete button lacks keyboard access" = <strong>Keyboard + Motor</strong> tags.</p>
+<h3 id="5-nielsens-10-usability-heuristics-applied-to-accessibility"><a class="header" href="#5-nielsens-10-usability-heuristics-applied-to-accessibility">5. Nielsen's 10 Usability Heuristics (Applied to Accessibility)</a></h3>
+<ol>
+<li><strong>Visibility of system status</strong>: Screen readers announce state changes</li>
+<li><strong>Match between system and real world</strong>: Plain language (not jargon)</li>
+<li><strong>User control and freedom</strong>: Undo, cancel actions</li>
+<li><strong>Consistency and standards</strong>: Follow ARIA patterns, GOV.UK conventions</li>
+<li><strong>Error prevention</strong>: Validation before submission</li>
+<li><strong>Recognition rather than recall</strong>: Labels visible (not just placeholders)</li>
+<li><strong>Flexibility and efficiency of use</strong>: Keyboard shortcuts for power users</li>
+<li><strong>Aesthetic and minimalist design</strong>: No clutter (easier for SR/cognitive users)</li>
+<li><strong>Help people recognise, diagnose, and recover from errors</strong>: Specific error messages</li>
+<li><strong>Help and documentation</strong>: Context-sensitive help text</li>
+</ol>
+<hr />
+<h2 id="activity-1-automated-audit-with-axe-devtools"><a class="header" href="#activity-1-automated-audit-with-axe-devtools">Activity 1: Automated Audit with axe DevTools</a></h2>
+<p><strong>Time</strong>: 20 minutes
+<strong>Materials</strong>: Chrome/Firefox with axe DevTools extension</p>
+<h3 id="step-1-install-axe-devtools"><a class="header" href="#step-1-install-axe-devtools">Step 1: Install axe DevTools</a></h3>
+<p><strong>Chrome</strong>:</p>
+<ol>
+<li>Visit <a href="https://chrome.google.com/webstore">Chrome Web Store</a></li>
+<li>Search "axe DevTools"</li>
+<li>Install extension</li>
+</ol>
+<p><strong>Firefox</strong>:</p>
+<ol>
+<li>Visit <a href="https://addons.mozilla.org/">Firefox Add-ons</a></li>
+<li>Search "axe DevTools"</li>
+<li>Install add-on</li>
+</ol>
+<h3 id="step-2-run-automated-scan"><a class="header" href="#step-2-run-automated-scan">Step 2: Run Automated Scan</a></h3>
+<ol>
+<li><strong>Open http://localhost:8080/tasks</strong> (ensure server running)</li>
+<li><strong>Open DevTools</strong> (F12)</li>
+<li><strong>Navigate to "axe DevTools" tab</strong></li>
+<li><strong>Click "Scan ALL of my page"</strong></li>
+<li><strong>Wait 5-10 seconds</strong> for results</li>
+</ol>
+<h3 id="step-3-review-findings"><a class="header" href="#step-3-review-findings">Step 3: Review Findings</a></h3>
+<p>axe categorises issues:</p>
+<div class="table-wrapper"><table><thead><tr><th>Category</th><th>Severity</th><th>Action</th></tr></thead><tbody>
+<tr><td><strong>Critical</strong></td><td>Blocks access (Level A failures)</td><td>Must fix</td></tr>
+<tr><td><strong>Serious</strong></td><td>Major barriers (Level A/AA failures)</td><td>Should fix</td></tr>
+<tr><td><strong>Moderate</strong></td><td>Noticeable issues (Level AA/AAA)</td><td>Consider fixing</td></tr>
+<tr><td><strong>Minor</strong></td><td>Best practice violations</td><td>Low priority</td></tr>
+</tbody></table>
+</div>
+<h3 id="step-4-document-automated-findings"><a class="header" href="#step-4-document-automated-findings">Step 4: Document Automated Findings</a></h3>
+<p>Create <code>wk07/audit/axe-report.md</code>:</p>
+<pre><code class="language-markdown"># axe DevTools Audit Report — Week 7
+
+**Date**: [YYYY-MM-DD]
+**URL**: http://localhost:8080/tasks
+**Tool**: axe DevTools 4.x
+**Scope**: Full page scan (add form + task list)
+
+---
+
+## Summary
+- **Critical**: 0
+- **Serious**: 2
+- **Moderate**: 1
+- **Minor**: 3
+- **Total**: 6 issues
+
+---
+
+## Critical Issues
+None detected.
+
+---
+
+## Serious Issues
+
+### Issue 1: Form label missing (Serious)
+**Element**: `&lt;input id="title" name="title"&gt;`
+**Rule**: `label` (WCAG 1.3.1, 4.1.2)
+**Description**: Form element does not have an associated label.
+**Impact**: Screen readers don't know what the input is for.
+**Fix**: Ensure `&lt;label for="title"&gt;Title&lt;/label&gt;` exists and is visible (not visually-hidden).
+**Status**: ❌ **FALSE POSITIVE** — Label exists in template. Possible axe bug or dynamic rendering issue. Verify manually.
+
+### Issue 2: Insufficient color contrast (Serious)
+**Element**: `&lt;button type="submit"&gt;Delete&lt;/button&gt;`
+**Rule**: `color-contrast` (WCAG 1.4.3)
+**Description**: Text color #6c757d on white background = 4.2:1 (fails AA 4.5:1)
+**Impact**: People with low vision struggle to read button text.
+**Fix**: Change button color to #495057 (darker gray, 7:1 contrast).
+**Status**: ✅ **CONFIRMED** — Add to backlog as High severity.
+
+---
+
+## Moderate Issues
+
+### Issue 3: Skip link not keyboard-accessible (Moderate)
+**Element**: `&lt;a href="#main" class="skip-link"&gt;`
+**Rule**: `skip-link` (best practice)
+**Description**: Skip link exists but positioned off-screen; unclear if focus visible.
+**Impact**: Keyboards may not discover skip link.
+**Fix**: Ensure `:focus` pseudo-class makes skip link visible (already implemented in CSS, but verify).
+**Status**: ✅ **VERIFIED** — Tab reveals skip link. No action needed.
+
+---
+
+## Minor Issues
+
+### Issue 4-6: [Document remaining minor issues]
+[Low priority, defer to Semester 2]
+
+---
+
+## Actions
+1. **False positive (Issue 1)**: Verify label exists with manual inspection
+2. **High priority (Issue 2)**: Fix contrast ratio → Add to backlog
+3. **Verified (Issue 3)**: No action needed
+
+---
+
+**Next step**: Manual testing to catch issues axe misses (focus order, SR announcements, keyboard traps).
+</code></pre>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ axe scan completed</li>
+<li>✅ Findings documented in <code>axe-report.md</code></li>
+<li>✅ At least 1 serious issue identified (contrast, label, etc.)</li>
+</ul>
+<hr />
+<h2 id="activity-2-manual-wcag-checklist"><a class="header" href="#activity-2-manual-wcag-checklist">Activity 2: Manual WCAG Checklist</a></h2>
+<p><strong>Time</strong>: 30 minutes
+<strong>Materials</strong>: WCAG 2.2 Quick Reference, keyboard, screen reader</p>
+<h3 id="step-1-create-wcag-checklist-template"><a class="header" href="#step-1-create-wcag-checklist-template">Step 1: Create WCAG Checklist Template</a></h3>
+<p>Create <code>wk07/audit/wcag-checklist.md</code>:</p>
+<pre><code class="language-markdown"># WCAG 2.2 AA Checklist — Week 7
+
+**Date**: [YYYY-MM-DD]
+**Scope**: Task manager (add, edit, delete flows)
+**Tester**: [Your Name]
+
+---
+
+## Perceivable (Principle 1)
+
+### 1.1 Text Alternatives
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 1.1.1 Non-text Content | A | N/A | No images yet | Will add in Week 8 |
+
+### 1.3 Adaptable
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 1.3.1 Info and Relationships | A | ✅ Pass | `&lt;label for="title"&gt;` links to input | Semantic HTML (`&lt;main&gt;`, `&lt;section&gt;`, `&lt;ul&gt;`) |
+| 1.3.2 Meaningful Sequence | A | ✅ Pass | Tab order: skip link → add form → task list | Logical reading order |
+
+### 1.4 Distinguishable
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 1.4.3 Contrast (Minimum) | AA | ❌ Fail | Delete button #6c757d = 4.2:1 | Needs 4.5:1 (AA) |
+| 1.4.11 Non-text Contrast | AA | ✅ Pass | Focus outline 3px solid #1976d2 | Sufficient contrast |
+
+---
+
+## Operable (Principle 2)
+
+### 2.1 Keyboard Accessible
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 2.1.1 Keyboard | A | ✅ Pass | All features accessible via Tab/Enter/Space | Tested: add, edit, delete, cancel |
+| 2.1.2 No Keyboard Trap | A | ✅ Pass | No traps detected | Can Tab out of all forms |
+
+### 2.4 Navigable
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 2.4.1 Bypass Blocks | A | ✅ Pass | Skip link appears on Tab, jumps to #main | Tested with keyboard |
+| 2.4.3 Focus Order | A | ✅ Pass | Tab order: Edit → Title → Save → Cancel | Logical sequence |
+| 2.4.7 Focus Visible | AA | ⚠️ Partial | Pico.css default outline visible, but faint | Consider custom outline (3px solid) |
+
+---
+
+## Understandable (Principle 3)
+
+### 3.2 Predictable
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 3.2.1 On Focus | A | ✅ Pass | No context change on focus | Only explicit button clicks trigger actions |
+| 3.2.2 On Input | A | ✅ Pass | No auto-submit on input change | Form submits only on button click |
+
+### 3.3 Input Assistance
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 3.3.1 Error Identification | A | ✅ Pass | Error: "Title is required. Please enter at least one character." | Specific, actionable |
+| 3.3.2 Labels or Instructions | A | ✅ Pass | All inputs have `&lt;label&gt;` + hint text | `aria-describedby` links to hint |
+| 3.3.3 Error Suggestion | AA | ✅ Pass | Error message includes correction hint | "Please enter at least one character" |
+
+---
+
+## Robust (Principle 4)
+
+### 4.1 Compatible
+| Criterion | Level | Status | Evidence | Notes |
+|-----------|-------|--------|----------|-------|
+| 4.1.2 Name, Role, Value | A | ✅ Pass | All buttons have accessible names | `aria-label="Edit task: Buy milk"` |
+| 4.1.3 Status Messages | AA | ✅ Pass | `&lt;div role="status" aria-live="polite"&gt;` | Tested with NVDA |
+
+---
+
+## Summary
+- **Total criteria evaluated**: 18
+- **Pass**: 15
+- **Fail**: 1 (1.4.3 Contrast)
+- **Partial**: 1 (2.4.7 Focus Visible)
+- **N/A**: 1
+
+---
+
+## High-Priority Failures
+1. **1.4.3 Contrast (Minimum, AA)**: Delete button text fails 4.5:1 ratio
+   - **Action**: Change Pico.css button color or add custom CSS
+
+2. **2.4.7 Focus Visible (AA, Partial)**: Default outline may be too faint
+   - **Action**: Add custom `:focus` styles (3px solid #1976d2)
+
+---
+
+**Next**: Add these findings to backlog with severity scores.
+</code></pre>
+<h3 id="step-2-test-each-criterion"><a class="header" href="#step-2-test-each-criterion">Step 2: Test Each Criterion</a></h3>
+<p><strong>Keyboard testing</strong> (2.1.1, 2.1.2, 2.4.3):</p>
+<ol>
+<li>Tab through entire page</li>
+<li>Activate all buttons with Enter/Space</li>
+<li>Check for keyboard traps (can you Tab out of forms?)</li>
+</ol>
+<p><strong>Screen reader testing</strong> (4.1.2, 4.1.3):</p>
+<ol>
+<li>Start NVDA/VoiceOver</li>
+<li>Navigate to each form field (listen for labels + hints)</li>
+<li>Trigger error (listen for <code>role="alert"</code> announcement)</li>
+<li>Save successfully (listen for status message)</li>
+</ol>
+<p><strong>Contrast testing</strong> (1.4.3):</p>
+<ol>
+<li>Open DevTools → Inspect element</li>
+<li>Check computed color values</li>
+<li>Use <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a>
+<ul>
+<li>Foreground: #6c757d</li>
+<li>Background: #ffffff</li>
+<li><strong>Result</strong>: 4.2:1 (fails AA)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Focus visible testing</strong> (2.4.7):</p>
+<ol>
+<li>Tab to each interactive element</li>
+<li>Can you clearly see which element has focus?</li>
+<li>Take screenshot of focus indicator</li>
+</ol>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ WCAG checklist completed (at least 15 criteria)</li>
+<li>✅ Pass/Fail status recorded</li>
+<li>✅ Evidence cited (screenshot, manual test, tool output)</li>
+</ul>
+<hr />
+<h2 id="activity-3-heuristic-evaluation"><a class="header" href="#activity-3-heuristic-evaluation">Activity 3: Heuristic Evaluation</a></h2>
+<p><strong>Time</strong>: 20 minutes
+<strong>Materials</strong>: Nielsen's heuristics, Shneiderman's Golden Rules</p>
+<h3 id="step-1-apply-nielsens-heuristics"><a class="header" href="#step-1-apply-nielsens-heuristics">Step 1: Apply Nielsen's Heuristics</a></h3>
+<p>Create <code>wk07/audit/heuristics.md</code>:</p>
+<pre><code class="language-markdown"># Heuristic Evaluation — Week 7
+
+**Evaluator**: [Your Name]
+**Date**: [YYYY-MM-DD]
+**Method**: Nielsen's 10 Usability Heuristics + Shneiderman's Golden Rules
+
+---
+
+## Nielsen's Heuristics
+
+### 1. Visibility of System Status
+**Rating**: 4/5 (Good)
+**Evidence**:
+- ✅ Status messages announce add/delete/edit actions
+- ✅ ARIA live region updates (`role="status"`)
+- ⚠️ No loading indicator for HTMX requests (instant for now, but could be slow on poor network)
+
+**Accessibility implication**: Screen readers get confirmation via live region (WCAG 4.1.3).
+
+**Issue identified**: None (meets WCAG). Enhancement: Add `hx-indicator` for slow requests.
+
+---
+
+### 2. Match Between System and Real World
+**Rating**: 5/5 (Excellent)
+**Evidence**:
+- ✅ Plain language: "Add Task", "Edit", "Delete" (not technical jargon)
+- ✅ Confirmation messages in natural language: "Task 'Buy milk' added successfully"
+
+**Accessibility implication**: Simple language benefits cognitive disabilities, low digital literacy.
+
+**Issue identified**: None.
+
+---
+
+### 3. Customer Control and Freedom
+**Rating**: 4/5 (Good)
+**Evidence**:
+- ✅ Cancel button in edit mode (escape hatch)
+- ❌ No undo for delete (permanent action)
+
+**Accessibility implication**: People with motor impairments may accidentally trigger delete.
+
+**Issue identified**: **Medium severity** — Add confirmation dialog or undo feature for delete.
+
+---
+
+### 4. Consistency and Standards
+**Rating**: 5/5 (Excellent)
+**Evidence**:
+- ✅ Semantic HTML (`&lt;button&gt;`, not `&lt;div onclick&gt;`)
+- ✅ Follows ARIA patterns (errors use `role="alert"`)
+- ✅ Consistent with GOV.UK patterns (error summary, hints)
+
+**Accessibility implication**: Consistency reduces learning curve for AT.
+
+**Issue identified**: None.
+
+---
+
+### 5. Error Prevention
+**Rating**: 3/5 (Fair)
+**Evidence**:
+- ✅ Client-side `required` attribute prevents blank submission
+- ⚠️ Server-side validation catches blank titles (good), but no prevention of accidental delete
+
+**Accessibility implication**: BenefitS from preventing errors before they happen.
+
+**Issue identified**: **Medium severity** — Delete button too easy to trigger accidentally (no confirmation).
+
+---
+
+### 6. Recognition Rather Than Recall
+**Rating**: 4/5 (Good)
+**Evidence**:
+- ✅ Labels always visible (not just placeholders)
+- ✅ Hint text persists below input (`aria-describedby`)
+- ⚠️ Error message only appears after submission (could preview validation on blur)
+
+**Accessibility implication**: Persistent labels help cognitive disabilities, memory impairments.
+
+**Issue identified**: None (meets WCAG). Enhancement: Live validation on blur.
+
+---
+
+### 7. Flexibility and Efficiency of Use
+**Rating**: 3/5 (Fair)
+**Evidence**:
+- ✅ Keyboard shortcuts work (Enter submits, Escape cancels in some browsers)
+- ❌ No custom shortcuts (e.g., Ctrl+E to edit first task)
+
+**Accessibility implication**: Power keyboard users could benefit from shortcuts.
+
+**Issue identified**: **Low severity** — Add keyboard shortcuts (defer to Semester 2).
+
+---
+
+### 8. Aesthetic and Minimalist Design
+**Rating**: 5/5 (Excellent)
+**Evidence**:
+- ✅ No clutter (only essential fields shown)
+- ✅ Edit form appears inline (progressive disclosure)
+- ✅ Status messages dismiss automatically (don't accumulate)
+
+**Accessibility implication**: Minimalism reduces cognitive load, SR navigation time.
+
+**Issue identified**: None.
+
+---
+
+### 9. Help People Recognise, Diagnose, and Recover from Errors
+**Rating**: 5/5 (Excellent)
+**Evidence**:
+- ✅ Error message specific: "Title is required. Please enter at least one character."
+- ✅ Error programmatically associated (`aria-describedby`, `role="alert"`)
+- ✅ Recovery path clear (fix input, resubmit)
+
+**Accessibility implication**: Meets WCAG 3.3.1 (Error Identification, A) and 3.3.3 (Error Suggestion, AA).
+
+**Issue identified**: None.
+
+---
+
+### 10. Help and Documentation
+**Rating**: 2/5 (Poor)
+**Evidence**:
+- ❌ No help text beyond inline hints
+- ❌ No "What is this?" links for fields
+
+**Accessibility implication**: Cognitive users, first-time users may struggle without documentation.
+
+**Issue identified**: **Low severity** — Add help tooltips or links to docs (defer to Semester 2).
+
+---
+
+## Summary of Issues
+
+| Heuristic | Issue | Severity | Inclusion Risk |
+|-----------|-------|----------|----------------|
+| 3 (Control &amp; Freedom) | No undo for delete | Medium | Motor, Cognitive |
+| 5 (Error Prevention) | Delete lacks confirmation | Medium | Motor, Cognitive |
+| 7 (Flexibility) | No keyboard shortcuts | Low | Keyboard (power users) |
+| 10 (Help) | No help documentation | Low | Cognitive, Low digital literacy |
+
+---
+
+**Next**: Add these to backlog.
+</code></pre>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Heuristic evaluation completed (10 heuristics)</li>
+<li>✅ Ratings assigned (1-5 scale)</li>
+<li>✅ Issues identified with severity</li>
+</ul>
+<hr />
+<h2 id="activity-4-update-inclusive-backlog"><a class="header" href="#activity-4-update-inclusive-backlog">Activity 4: Update Inclusive Backlog</a></h2>
+<p><strong>Time</strong>: 25 minutes
+<strong>Materials</strong>: <code>wk06/backlog/backlog.csv</code>, audit findings</p>
+<h3 id="step-1-consolidate-findings"><a class="header" href="#step-1-consolidate-findings">Step 1: Consolidate Findings</a></h3>
+<p>Merge findings from:</p>
+<ul>
+<li>axe DevTools (<code>axe-report.md</code>)</li>
+<li>WCAG checklist (<code>wcag-checklist.md</code>)</li>
+<li>Heuristics (<code>heuristics.md</code>)</li>
+<li>Week 6 needs-finding interviews</li>
+</ul>
+<h3 id="step-2-add-new-backlog-items"><a class="header" href="#step-2-add-new-backlog-items">Step 2: Add New Backlog Items</a></h3>
+<p>Edit <code>wk06/backlog/backlog.csv</code>:</p>
+<pre><code class="language-csv">id,title,story_ref,story_type,need,type,severity,inclusion_risk,evidence,notes,candidate_fix
+9,Delete button text contrast 4.2:1 (fails AA),wk07/audit/axe-report.md#Issue2,WCAG violation,Visibility,Accessibility,High,"Low vision,Situational","axe: color-contrast; WCAG 1.4.3","Pico.css default gray #6c757d on white = 4.2:1; needs 4.5:1",true
+10,Focus outline too faint (Pico.css default),wk07/audit/wcag-checklist.md#2.4.7,WCAG partial,Visibility,Accessibility,Medium,Keyboard,"Manual test: outline visible but faint","Add custom :focus { outline: 3px solid #1976d2; }",true
+11,No confirmation for delete action,wk07/audit/heuristics.md#H3,Heuristic violation,Error prevention,Usability,Medium,"Motor,Cognitive","Nielsen H3 + H5","Accidental clicks cause permanent deletion; add confirmation dialog",false
+12,No undo feature for delete,wk07/audit/heuristics.md#H3,Heuristic violation,Customer control,Usability,Low,"Motor,
+Cognitive","Nielsen H3","Defer to Semester 2; requires state management",false
+13,No help documentation or tooltips,wk07/audit/heuristics.md#H10,Heuristic violation,Learning support,Usability,Low,Cognitive,"Nielsen H10","Defer to Semester 2; low priority",false
+</code></pre>
+<h3 id="step-3-prioritise-with-scoring"><a class="header" href="#step-3-prioritise-with-scoring">Step 3: Prioritise with Scoring</a></h3>
+<p><strong>Formula</strong>: <code>Priority = (Severity × 2) + (Inclusion Weight) + (WCAG Bonus)</code></p>
+<ul>
+<li><strong>Severity</strong>: High=3, Medium=2, Low=1 (×2 weighting)</li>
+<li><strong>Inclusion Weight</strong>: +1 per group affected (max +3)</li>
+<li><strong>WCAG Bonus</strong>: Level A failure=+2, Level AA failure=+1</li>
+</ul>
+<p><strong>Example (Item 9: Contrast)</strong>:</p>
+<ul>
+<li>Severity: High (3) × 2 = 6</li>
+<li>Inclusion: Low vision + Situational = +2</li>
+<li>WCAG: Level AA (1.4.3) = +1</li>
+<li><strong>Total</strong>: 6 + 2 + 1 = <strong>9 (highest priority)</strong></li>
+</ul>
+<p><strong>Example (Item 11: Delete confirmation)</strong>:</p>
+<ul>
+<li>Severity: Medium (2) × 2 = 4</li>
+<li>Inclusion: Motor + Cognitive = +2</li>
+<li>WCAG: N/A = 0</li>
+<li><strong>Total</strong>: 4 + 2 + 0 = <strong>6 (medium priority)</strong></li>
+</ul>
+<h3 id="step-4-select-candidate-fix"><a class="header" href="#step-4-select-candidate-fix">Step 4: Select Candidate Fix</a></h3>
+<p>Mark <strong>1-2 items</strong> with <code>candidate_fix=true</code>. Criteria:</p>
+<ul>
+<li>Highest priority score</li>
+<li>Fixable in 30-40 minutes (lab time constraint)</li>
+<li>Clear success criteria (WCAG pass = verifiable)</li>
+</ul>
+<p><strong>Recommended fixes</strong>:</p>
+<ol>
+<li><strong>Item 9</strong> (Contrast): Change button color in CSS (10 min fix)</li>
+<li><strong>Item 10</strong> (Focus outline): Add custom <code>:focus</code> styles (15 min fix)</li>
+</ol>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Backlog updated with 5+ new items from audits</li>
+<li>✅ Priority scores calculated</li>
+<li>✅ 1-2 items marked <code>candidate_fix=true</code></li>
+</ul>
+<hr />
+<h2 id="activity-5-implement-one-priority-fix"><a class="header" href="#activity-5-implement-one-priority-fix">Activity 5: Implement One Priority Fix</a></h2>
+<p><strong>Time</strong>: 35 minutes
+<strong>Materials</strong>: Backlog, code editor</p>
+<h3 id="step-1-choose-fix-target"><a class="header" href="#step-1-choose-fix-target">Step 1: Choose Fix Target</a></h3>
+<p><strong>Selected</strong>: Item 9 (Delete button contrast)</p>
+<p><strong>Why</strong>: Highest priority (WCAG AA failure), quick fix, measurable success.</p>
+<h3 id="step-2-create-fix-plan"><a class="header" href="#step-2-create-fix-plan">Step 2: Create Fix Plan</a></h3>
+<p>Create <code>wk07/fixes/fix09-contrast.md</code>:</p>
+<pre><code class="language-markdown"># Fix 09: Delete Button Contrast (WCAG 1.4.3)
+
+**Backlog ID**: 9
+**WCAG Criterion**: 1.4.3 Contrast (Minimum, Level AA)
+**Priority**: 9 (highest)
+
+---
+
+## Problem Statement
+Delete button text color (#6c757d) on white background (#ffffff) = 4.2:1 contrast ratio.
+**Fails**: WCAG AA requires 4.5:1 for normal text.
+
+**Evidence**:
+- axe DevTools: color-contrast (Serious)
+- WebAIM Contrast Checker: 4.2:1 (Fail AA)
+- Screenshot: `wk07/evidence/contrast-before.png`
+
+---
+
+## Target State
+Contrast ratio ≥ 4.5:1 (AA) or ≥ 7:1 (AAA).
+
+---
+
+## Solution
+Override Pico.css button color with darker gray or custom color.
+
+**Option A**: Darker gray (#495057 = 7:1 contrast, passes AAA)
+**Option B**: Custom blue (#1976d2 = 5.2:1 contrast, passes AA)
+
+**Chosen**: Option A (darker gray) for consistency with Pico theme.
+
+---
+
+## Implementation
+
+### Before (Current CSS)
+Pico.css default:
+```css
+button {
+  color: #6c757d; /* 4.2:1 contrast */
+}
+</code></pre>
+<h3 id="after-custom-css"><a class="header" href="#after-custom-css">After (Custom CSS)</a></h3>
+<p>Add to <code>base.peb</code> <code>&lt;style&gt;</code>:</p>
+<pre><code class="language-css">button[type="submit"],
+button {
+  color: #495057 !important; /* 7:1 contrast (AAA) */
+}
+</code></pre>
+<hr />
+<h2 id="verification"><a class="header" href="#verification">Verification</a></h2>
+<h3 id="step-1-visual-inspection"><a class="header" href="#step-1-visual-inspection">Step 1: Visual Inspection</a></h3>
+<ul>
+<li>Load http://localhost:8080/tasks</li>
+<li>Inspect "Delete" button</li>
+<li>Confirm text appears darker</li>
+</ul>
+<h3 id="step-2-contrast-check"><a class="header" href="#step-2-contrast-check">Step 2: Contrast Check</a></h3>
+<ul>
+<li>Use WebAIM Contrast Checker</li>
+<li>Foreground: #495057</li>
+<li>Background: #ffffff</li>
+<li><strong>Expected</strong>: 7:1 (Pass AAA)</li>
+</ul>
+<h3 id="step-3-re-run-axe"><a class="header" href="#step-3-re-run-axe">Step 3: Re-run axe</a></h3>
+<ul>
+<li>Open axe DevTools</li>
+<li>Scan page</li>
+<li><strong>Expected</strong>: color-contrast issue resolved</li>
+</ul>
+<h3 id="step-4-screenshot"><a class="header" href="#step-4-screenshot">Step 4: Screenshot</a></h3>
+<ul>
+<li>Save <code>wk07/evidence/contrast-after.png</code></li>
+<li>Show button with new color</li>
+</ul>
+<hr />
+<h2 id="evidence"><a class="header" href="#evidence">Evidence</a></h2>
+<ul>
+<li>Before: <code>wk07/evidence/contrast-before.png</code></li>
+<li>After: <code>wk07/evidence/contrast-after.png</code></li>
+<li>axe report: <code>wk07/evidence/axe-after.png</code> (0 serious issues)</li>
+</ul>
+<hr />
+<h2 id="commit"><a class="header" href="#commit">Commit</a></h2>
+<p><code>git commit -m "Fix #9: Increase button contrast to 7:1 (WCAG 1.4.3 AAA)"</code></p>
+<pre><code>
+### Step 3: Implement Fix
+
+**Edit `src/main/resources/templates/base.peb`**:
+
+Add inside `&lt;style&gt;` block:
+
+```css
+/* Override Pico.css button color for WCAG 1.4.3 AA compliance */
+button[type="submit"],
+button {
+  color: #495057 !important; /* 7:1 contrast (passes AAA) */
+}
+</code></pre>
+<p><strong>Reload page</strong>, inspect button:</p>
+<ul>
+<li><strong>Before</strong>: #6c757d (light gray)</li>
+<li><strong>After</strong>: #495057 (dark gray)</li>
+</ul>
+<h3 id="step-4-verify-fix"><a class="header" href="#step-4-verify-fix">Step 4: Verify Fix</a></h3>
+<p><strong>1. Visual check</strong>:</p>
+<pre><code class="language-bash"># Reload http://localhost:8080/tasks
+# Confirm button text darker
+</code></pre>
+<p><strong>2. Contrast calculator</strong>:</p>
+<ul>
+<li>Visit <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a></li>
+<li>Foreground: #495057</li>
+<li>Background: #ffffff</li>
+<li><strong>Result</strong>: 7.0:1 (Pass AAA) ✅</li>
+</ul>
+<p><strong>3. Re-run axe</strong>:</p>
+<ul>
+<li>Open axe DevTools</li>
+<li>Scan page</li>
+<li><strong>Expected</strong>: 0 serious issues (contrast resolved)</li>
+</ul>
+<p><strong>4. Screenshot</strong>:</p>
+<pre><code class="language-bash"># Save screenshot to wk07/evidence/contrast-after.png
+</code></pre>
+<h3 id="step-5-document-verification"><a class="header" href="#step-5-document-verification">Step 5: Document Verification</a></h3>
+<p>Create <code>wk07/fixes/verification.md</code>:</p>
+<pre><code class="language-markdown"># Verification Log — Fix 09
+
+**Date**: [YYYY-MM-DD]
+**Fix**: Delete button contrast (WCAG 1.4.3)
+
+---
+
+## Before State
+- **Color**: #6c757d (Pico.css default)
+- **Contrast**: 4.2:1 (Fail AA)
+- **axe**: 1 serious issue (color-contrast)
+
+## After State
+- **Color**: #495057 (custom override)
+- **Contrast**: 7.0:1 (Pass AAA)
+- **axe**: 0 serious issues
+
+---
+
+## Tests Performed
+
+### Test 1: Contrast Calculation
+**Tool**: WebAIM Contrast Checker
+**Foreground**: #495057
+**Background**: #ffffff
+**Result**: ✅ 7.0:1 (Pass AAA)
+
+### Test 2: Visual Inspection
+**Action**: Loaded http://localhost:8080/tasks, inspected "Delete" button
+**Result**: ✅ Text noticeably darker, easier to read
+
+### Test 3: Automated Re-scan
+**Tool**: axe DevTools 4.x
+**Result**: ✅ 0 critical, 0 serious (contrast issue resolved)
+
+### Test 4: Regression Check
+**Action**: Tested add, edit, delete flows
+**Result**: ✅ No regressions, all features work
+
+---
+
+## Evidence
+- Before screenshot: `wk07/evidence/contrast-before.png`
+- After screenshot: `wk07/evidence/contrast-after.png`
+- Contrast checker result: `wk07/evidence/webaim-contrast-7-1.png`
+- axe report (after): `wk07/evidence/axe-after.png`
+
+---
+
+## WCAG Compliance
+**Criterion**: 1.4.3 Contrast (Minimum, Level AA)
+**Status**: ✅ Pass (7.0:1 exceeds 4.5:1 requirement)
+
+**Bonus**: Also passes AAA (7:1 threshold)
+
+---
+
+## Commit
+SHA: [abc123f]
+Message: "Fix #9: Increase button contrast to 7:1 (WCAG 1.4.3 AAA)"
+Files changed: `base.peb` (+3 lines)
+</code></pre>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Fix implemented (CSS change)</li>
+<li>✅ Contrast verified (7:1, Pass AAA)</li>
+<li>✅ axe re-scan shows 0 serious issues</li>
+<li>✅ Evidence collected (screenshots, verification log)</li>
+</ul>
+<hr />
+<h2 id="reflection-questions"><a class="header" href="#reflection-questions">Reflection Questions</a></h2>
+<ol>
+<li>
+<p><strong>Automated vs. manual testing</strong>: axe found the contrast issue, but did it catch the focus outline being faint? Why do we need both automated and manual testing?</p>
+</li>
+<li>
+<p><strong>Prioritisation</strong>: You had 5 new backlog items. How did the scoring formula (severity × inclusion × WCAG) change
+which one you fixed first? Would your decision differ if time wasn't limited?</p>
+</li>
+<li>
+<p><strong>Evidence chains</strong>: Trace the evidence chain for your fix: audit finding → backlog item → fix implementation → verification. What would happen if you skipped any step?</p>
+</li>
+<li>
+<p><strong>Regression risk</strong>: After fixing contrast, did you verify all buttons still work? Why is regression testing important?</p>
+</li>
+</ol>
+<hr />
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<p><strong>WCAG 2.2 &amp; auditing</strong></p>
+<ul>
+<li>W3C (2024). <em>WCAG 2.2 Quick Reference</em>. <a href="https://www.w3.org/WAI/WCAG22/quickref/">https://www.w3.org/WAI/WCAG22/quickref/</a></li>
+<li>Deque (2024). <em>axe DevTools Documentation</em>. <a href="https://www.deque.com/axe/devtools/">https://www.deque.com/axe/devtools/</a></li>
+<li>WebAIM (2024). <em>WCAG 2 Checklist</em>. <a href="https://webaim.org/standards/wcag/checklist">https://webaim.org/standards/wcag/checklist</a></li>
+</ul>
+<p><strong>Heuristic evaluation</strong></p>
+<ul>
+<li>Nielsen, J. (1994). "Heuristic Evaluation." <em>Usability Inspection Methods</em>, 25-62.</li>
+<li>Shneiderman, B. et al. (2016). <em>Designing the User Interface</em> (6th ed.), Ch. 3.</li>
+</ul>
+<p><strong>Inclusive backlogs</strong></p>
+<ul>
+<li>Cohn, M. (2004). <em>User Stories Applied</em>. Addison-Wesley.</li>
+<li>Microsoft (2024). <em>Inclusive Design Toolkit</em>. <a href="https://inclusive.microsoft.design/">https://inclusive.microsoft.design/</a></li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>Definition</th><th>Example/Context</th></tr></thead><tbody>
+<tr><td><strong>Accessibility audit</strong></td><td>Systematic evaluation against WCAG criteria</td><td>axe scan + manual keyboard/SR testing</td></tr>
+<tr><td><strong>Automated testing</strong></td><td>Tools that scan code for issues (20-30% coverage)</td><td>axe DevTools, WAVE, Lighthouse</td></tr>
+<tr><td><strong>Manual testing</strong></td><td>Human evaluation (keyboard, SR, heuristics)</td><td>Tab through page, listen with NVDA</td></tr>
+<tr><td><strong>Severity</strong></td><td>Impact on task completion (High/Medium/Low)</td><td>High = blocks; Medium = hinders; Low = cosmetic</td></tr>
+<tr><td><strong>Inclusion risk</strong></td><td>Who's affected (SR, Keyboard, Cognitive, etc.)</td><td>"Affects SR + Keyboard users"</td></tr>
+<tr><td><strong>Heuristic evaluation</strong></td><td>Expert review using usability principles</td><td>Nielsen's 10 Heuristics, Shneiderman's Golden Rules</td></tr>
+<tr><td><strong>Contrast ratio</strong></td><td>Luminance difference (text vs. background)</td><td>4.5:1 (AA), 7:1 (AAA)</td></tr>
+<tr><td><strong>Regression testing</strong></td><td>Verifying fixes don't break existing features</td><td>After contrast fix, confirm buttons still work</td></tr>
+<tr><td><strong>Evidence chain</strong></td><td>Traceable path: audit → backlog → fix → verification</td><td>Finding → Item #9 → CSS change → 7:1 verified</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="lab-checklist"><a class="header" href="#lab-checklist">Lab Checklist</a></h2>
+<p>Before leaving lab, confirm:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Automated audit completed</strong>: axe DevTools scan, report saved</li>
+<li><input disabled="" type="checkbox"/>
+<strong>WCAG checklist filled</strong>: At least 15 criteria evaluated (Pass/Fail/N/A)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Heuristic evaluation done</strong>: Nielsen's 10 applied, issues logged</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Backlog updated</strong>: 5+ new items added with severity + inclusion risk</li>
+<li><input disabled="" type="checkbox"/>
+<strong>One fix implemented</strong>: Code changed, committed</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Fix verified</strong>: Contrast/tool re-scan shows success</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Evidence collected</strong>: Before/after screenshots, verification log</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Code committed</strong>: <code>git add .</code>, <code>git commit -m "wk7-lab2: audit + fix #9 (contrast)"</code></li>
+</ul>
+<hr />
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>In <strong>Week 8 Lab 1</strong> you will:</p>
+<ol>
+<li>Add partials and pagination to task list (Pebble template patterns)</li>
+<li>Implement filtering with constraint-based design</li>
+<li>Test dual-path filtering (HTMX + no-JS)</li>
+</ol>
+<p>In <strong>Week 8 Lab 2</strong> you will:</p>
+<ol>
+<li>Verify routing parity (HTMX vs. no-JS)</li>
+<li>Document trade-offs (performance, complexity, accessibility)</li>
+<li>Run no-JS verification script</li>
+</ol>
+<p><strong>Preparation</strong>:</p>
+<ul>
+<li>Ensure backlog up-to-date with Week 7 findings</li>
+<li>Have working task manager (add, edit, delete functional)</li>
+<li>Review audit evidence (you'll reference it in Task 1)</li>
+</ul>
+<hr />
+<p><strong>Lab authored by</strong>: COMP2850 Teaching Team, University of Leeds
+<strong>Last updated</strong>: 2025-01-14
+<strong>Licence</strong>: Academic use only (not for redistribution)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../wk07/src/wk7-lab1-ethics-inline-edit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../wk07/src/wk7-lab1-ethics-inline-edit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

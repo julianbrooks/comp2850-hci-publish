@@ -1,0 +1,884 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Evidence-led studio crit - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-11--lab-1--evidence-led-studio-crit"><a class="header" href="#week-11--lab-1--evidence-led-studio-crit">Week 11 • Lab 1 — Evidence-Led Studio Crit</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-11-orange" alt="Week 11" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="before-lab-required-reading-10-mins"><a class="header" href="#before-lab-required-reading-10-mins">Before Lab: Required Reading (10 mins)</a></h2>
+<p>📖 <strong>Essential</strong>:</p>
+<ul>
+<li><a href="https://www.ideo.com/blog/design-critique">IDEO: The Art of Critique</a> (5 min)</li>
+<li>Review your Task 2 bundle (<code>wk10/gradescope/task2/</code>)</li>
+<li>Review <code>analysis/summary.md</code> (before/after metrics)</li>
+</ul>
+<p>📖 <strong>Quick reference</strong>:</p>
+<ul>
+<li><a href="../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li><a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+</ul>
+<hr />
+<h2 id="introduction-from-evidence-to-narrative"><a class="header" href="#introduction-from-evidence-to-narrative">Introduction: From Evidence to Narrative</a></h2>
+<p>You've completed the HCI design cycle: audit → pilot → analyse → redesign → verify. <strong>Today you present that work to peers</strong>.</p>
+<p><strong>This is not "show and tell"</strong>. Studio critique is:</p>
+<ul>
+<li><strong>Evidence-led</strong>: Every claim backed by data, screenshots, transcripts</li>
+<li><strong>Reflective</strong>: Acknowledge limitations, trade-offs, remaining issues</li>
+<li><strong>Actionable</strong>: Invite specific feedback, identify next steps</li>
+</ul>
+<p><strong>Why this matters</strong>:</p>
+<ul>
+<li><strong>Professional practice</strong>: Design reviews are standard in industry (Google, GOV.UK, Microsoft all use critique protocols)</li>
+<li><strong>Accreditation</strong>: External panels assess evidence chains—this is rehearsal</li>
+<li><strong>Peer learning</strong>: Seeing 5-6 different solutions to same problem builds design vocabulary</li>
+</ul>
+<p><strong>Format</strong>: 15 min per team (5 min demo, 3 min metrics, 2 min accessibility proof, 5 min Q&amp;A). Tight timing forces clarity.</p>
+<blockquote>
+<p><strong>Visual</strong>: Evidence-led critique loop</p>
+</blockquote>
+<pre class="mermaid">graph TD
+  Present[Evidence-led demo]
+  Present --&gt; Feedback[Peer &amp; staff critique]
+  Feedback --&gt; Notes[Crit notes &amp; backlog updates]
+  Notes --&gt; Portfolio[Portfolio &amp; wrap-up]
+  Portfolio --&gt; Plan[Semester 2 planning]
+  Plan --&gt; Present
+</pre>
+<p><small>See <a href="../../references/process-visuals.html#crit-loop">Process Visuals</a> for captioned steps.</small></p>
+<hr />
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Presented evidence chains clearly (problem → data → fix → verification)</li>
+<li>Demonstrated accessibility improvements (keyboard, SR, no-JS)</li>
+<li>Defended design decisions with data (before/after metrics)</li>
+<li>Given/received peer feedback using structured rubric</li>
+<li>Documented crit insights for portfolio</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO11</strong>: Collaborate in teams — evidenced by peer critique participation</li>
+<li><strong>LO12</strong>: Demonstrate professionalism — evidenced by constructive feedback + respectful critique
+Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="design-critique"><a class="header" href="#design-critique">Design Critique</a></h3>
+<blockquote>
+<p><strong>Design Critique</strong> [GLOSSARY]</p>
+<p>Structured peer review of design work. <strong>Not personal feedback</strong>—focuses on work, evidence, impact.</p>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li><strong>Specific</strong>: "Error summary not keyboard-focusable" (good) vs "errors bad" (vague)</li>
+<li><strong>Constructive</strong>: Suggest alternatives, not just problems</li>
+<li><strong>Evidence-based</strong>: Reference data, WCAG, observations (not opinions)</li>
+<li><strong>Respectful</strong>: Assume positive intent, acknowledge constraints</li>
+</ul>
+<p><strong>Format</strong> (this module):</p>
+<ul>
+<li>Presenter shows work + evidence</li>
+<li>Audience asks clarifying questions</li>
+<li>Audience offers critique: "I noticed X, have you considered Y?"</li>
+<li>Presenter notes feedback (doesn't defend in real-time)</li>
+</ul>
+<p><strong>HCI Connection</strong>: Critique improves design through <strong>external perspective</strong>—you're too close to your work to see all issues.</p>
+<p><strong>Not a critique</strong>:</p>
+<ul>
+<li>"I don't like the color" (subjective preference without rationale)</li>
+<li>"This sucks" (not constructive)</li>
+<li>"You should have..." (hindsight, not helpful)</li>
+</ul>
+<p><strong>Good critique</strong>:</p>
+<ul>
+<li>"The error message says 'Title required' but doesn't explain the max length constraint. Pilot P3 hit this—could you add that info?"</li>
+</ul>
+<p>🔗 <a href="https://dschool.stanford.edu/resources/the-art-of-critique">Design Thinking: Critique vs Criticism</a></p>
+</blockquote>
+<h3 id="evidence-led-presentation"><a class="header" href="#evidence-led-presentation">Evidence-Led Presentation</a></h3>
+<blockquote>
+<p><strong>Evidence-Led Presentation</strong> [GLOSSARY]</p>
+<p>Presentation style where every claim is backed by artifacts (data, screenshots, quotes).</p>
+<p><strong>Structure</strong>:</p>
+<ol>
+<li><strong>Problem</strong>: "T2 edit had 67% completion (0% no-JS)" ← metric</li>
+<li><strong>Root cause</strong>: "Validation errors not announced to SR" ← pilot quote + WCAG reference</li>
+<li><strong>Fix</strong>: "Added <code>role=alert</code>" ← code diff</li>
+<li><strong>Verification</strong>: "Post-change: 100% completion" ← after-metrics + screenshot</li>
+</ol>
+<p><strong>What NOT to do</strong>:</p>
+<ul>
+<li>"We made it better" (vague—better how?)</li>
+<li>"Users struggled" (who? how many? with what?)</li>
+<li>"Fixed accessibility" (which criteria? verified how?)</li>
+</ul>
+<p><strong>HCI Connection</strong>: Evidence separates <strong>opinion</strong> from <strong>fact</strong>. Stakeholders can question interpretation, but not the data.</p>
+<p><strong>Academic context</strong>: External examiners check evidence chains. Missing evidence → lower marks, even if work was good.</p>
+<p>🔗 <a href="https://gds.blog.gov.uk/2016/11/18/what-we-mean-when-we-say-show-the-thing/">GOV.UK: Show the thing</a></p>
+</blockquote>
+<h3 id="accessibility-demonstration"><a class="header" href="#accessibility-demonstration">Accessibility Demonstration</a></h3>
+<blockquote>
+<p><strong>Accessibility Demonstration</strong> [GLOSSARY]</p>
+<p>Live proof that inclusive design works. <strong>Show, don't tell</strong>.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Keyboard</strong>: Tab through form → submit error → Tab to error link → press Enter → focus lands on input</li>
+<li><strong>Screen reader</strong>: Turn on NVDA/Orca → navigate to form → submit error → SR announces "Alert. Title is required"</li>
+<li><strong>No-JS</strong>: Disable JavaScript → submit form → error summary appears and focused</li>
+</ul>
+<p><strong>Why live demo?</strong> Screenshots can be faked. Live demo proves system works right now.</p>
+<p><strong>Backup plan</strong>: If live demo fails (demo gremlins), have <strong>video recording</strong> or <strong>annotated screenshots</strong> ready.</p>
+<p><strong>What to show</strong>:</p>
+<ul>
+<li>Before state (broken or suboptimal)</li>
+<li>After state (fixed)</li>
+<li>Evidence it meets WCAG (checklist row, transcript)</li>
+</ul>
+<p><strong>Common mistakes</strong>:</p>
+<ul>
+<li>Only showing HTMX path (ignoring no-JS)</li>
+<li>Not narrating what's happening ("I'm pressing Tab, now I'm on the error link...")</li>
+<li>Assuming audience sees what you see (make focus indicators obvious, zoom in if needed)</li>
+</ul>
+<p>🔗 <a href="https://webaim.org/articles/demos/">WebAIM: Demonstrating Accessibility</a></p>
+</blockquote>
+<h3 id="constructive-feedback"><a class="header" href="#constructive-feedback">Constructive Feedback</a></h3>
+<blockquote>
+<p><strong>Constructive Feedback</strong> [GLOSSARY]</p>
+<p>Feedback that helps recipient improve. Has three parts: observation + impact + suggestion.</p>
+<p><strong>Formula</strong>:</p>
+<ol>
+<li><strong>Observation</strong>: "I noticed X" (specific, factual)</li>
+<li><strong>Impact</strong>: "This might affect Y" (consequence, not judgment)</li>
+<li><strong>Suggestion</strong>: "Have you considered Z?" (alternative, not mandate)</li>
+</ol>
+<p><strong>Example (good)</strong>:</p>
+<ul>
+<li>Observation: "Your error summary uses <code>aria-live=assertive</code>, which I saw announced in your SR demo"</li>
+<li>Impact: "In my testing, <code>assertive</code> interrupted mid-sentence when I was reading other content"</li>
+<li>Suggestion: "Have you tested with <code>aria-live=polite</code> to see if it's less disruptive? Might be a good trade-off if errors aren't time-critical."</li>
+</ul>
+<p><strong>Example (bad)</strong>:</p>
+<ul>
+<li>"You should use <code>polite</code> not <code>assertive</code>" ← prescriptive, no context</li>
+</ul>
+<p><strong>Receiving feedback</strong>:</p>
+<ul>
+<li><strong>Listen</strong>: Don't defend immediately (note it, reflect later)</li>
+<li><strong>Clarify</strong>: "Can you show me where you saw that?"</li>
+<li><strong>Thank</strong>: Even if you disagree, feedback is effort</li>
+</ul>
+<p>🔗 <a href="https://www.radicalcandor.com/">Kim Scott: Radical Candor</a> — Framework for constructive feedback</p>
+</blockquote>
+<hr />
+<h2 id="activity-a-prepare-presentation-20-min"><a class="header" href="#activity-a-prepare-presentation-20-min">Activity A: Prepare Presentation (20 min)</a></h2>
+<p><strong>Goal</strong>: Assemble evidence into clear 5-slide narrative.</p>
+<h3 id="step-1-create-presentation-outline-5-min"><a class="header" href="#step-1-create-presentation-outline-5-min">Step 1: Create presentation outline (5 min)</a></h3>
+<p><strong>Use Markdown slides</strong> (e.g., Marp) or <strong>simple slide deck</strong> (Google Slides, PowerPoint).</p>
+<p><strong>5-slide structure</strong>:</p>
+<ol>
+<li><strong>Title slide</strong>: Project name, team, date</li>
+<li><strong>Problem + Evidence</strong>: What was broken? (metrics, quotes, WCAG violations)</li>
+<li><strong>Solution</strong>: What changed? (code diff, screenshots)</li>
+<li><strong>Verification</strong>: How do we know it worked? (after-metrics, regression checklist)</li>
+<li><strong>Next Steps</strong>: What remains? (backlog, Semester 2 plans)</li>
+</ol>
+<p><strong>Example</strong>:</p>
+<p><strong>Slide 2: Problem + Evidence</strong></p>
+<pre><code># Problem: Validation Errors Not Accessible
+
+**Week 9 Findings**:
+- T2 (Edit Task): 67% completion overall, 0% completion (no-JS)
+- Pilot P3: "Gave up after 2 validation errors—couldn't find error summary"
+- Pilot P2 (NVDA): "SR didn't announce error message"
+
+**Root Cause**:
+- HTMX path: Missing `role=alert` (WCAG 4.1.3 violation)
+- No-JS path: Error summary not keyboard-focusable (WCAG 3.2.1 violation)
+
+**Impact**: Screen reader users, keyboard-only users, no-JS users excluded
+
+[Screenshot: error summary with no focus indicator]
+</code></pre>
+<h3 id="step-2-select-key-evidence-artifacts-10-min"><a class="header" href="#step-2-select-key-evidence-artifacts-10-min">Step 2: Select key evidence artifacts (10 min)</a></h3>
+<p><strong>From <code>wk10/gradescope/task2/05-evidence/</code></strong>:</p>
+<p><strong>Screenshots</strong> (3-4 max):</p>
+<ul>
+<li>Before: Error present but not accessible (no <code>role=alert</code> in devtools)</li>
+<li>After: Error with <code>role=alert</code> visible in devtools</li>
+<li>No-JS before: Error summary without focus</li>
+<li>No-JS after: Error summary with focus outline</li>
+</ul>
+<p><strong>Metrics table</strong>:</p>
+<pre><code>| Metric | Before | After | Δ |
+|--------|--------|-------|---|
+| T2 completion (no-JS) | 0% | 100% | +100% |
+| T2 completion (all) | 67% | 100% | +33% |
+| T2 error rate | 33% | 25% | -8% |
+</code></pre>
+<p><strong>Code diff</strong> (1 key change):</p>
+<pre><code class="language-diff">- val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
++ val status = """&lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
++   Title is required. Please enter at least one character.
++ &lt;/div&gt;"""
+</code></pre>
+<p><strong>SR transcript snippet</strong>:</p>
+<pre><code>Before: [form submitted, no announcement]
+After: "Alert. Title is required. Please enter at least one character."
+</code></pre>
+<h3 id="step-3-prepare-live-demo-script-5-min"><a class="header" href="#step-3-prepare-live-demo-script-5-min">Step 3: Prepare live demo script (5 min)</a></h3>
+<p><strong>Create <code>wk11/crit/demo-script.md</code></strong>:</p>
+<pre><code class="language-markdown"># Live Demo Script — Week 11 Studio Crit
+
+**Timing**: 5 minutes
+
+---
+
+## Setup (30 seconds)
+- Navigate to `/tasks`
+- Show both browser windows: one with JS enabled, one with JS disabled (or toggle DevTools setting)
+- Narrate: "I'll show the HTMX path first, then no-JS path"
+
+---
+
+## Demo 1: HTMX Error Handling (2 min)
+
+**Steps**:
+1. Click "Edit" on task "Submit invoices"
+2. Clear title field (backspace)
+3. Click "Save"
+4. **Narrate**: "Notice status message appears: 'Title is required. Please enter at least one character.'"
+5. Open DevTools Elements panel → show `&lt;div id="status" role="alert" aria-live="assertive"&gt;`
+6. **Narrate**: "The `role=alert` ensures screen readers announce this immediately"
+7. (If SR available) Turn on NVDA/Orca, repeat steps 1-3
+8. **Narrate**: "NVDA announces: 'Alert. Title is required...'"
+
+**Evidence reference**: `05-evidence/sr-transcripts/after-nvda.txt`
+
+---
+
+## Demo 2: No-JS Error Handling (2 min)
+
+**Steps**:
+1. Disable JavaScript (DevTools → Settings → Disable JavaScript, hard refresh)
+2. Click "Edit" on same task
+3. Clear title, click "Save"
+4. **Narrate**: "Page reloads. Notice error summary at top with focus outline—it's automatically focused."
+5. Press Tab → focus moves to error link ("Title is required")
+6. Press Enter → focus moves to `#title` input
+7. **Narrate**: "Keyboard-only users can now navigate to the error and fix it. Before, this wasn't possible."
+
+**Evidence reference**: `05-evidence/screenshots/after-nojs-error.png`
+
+---
+
+## Demo 3: Success Path (30 seconds)
+
+**Steps**:
+1. (Still in no-JS mode) Type new title: "Submit invoices by Friday"
+2. Click "Save"
+3. **Narrate**: "Full page reload, task updated. PRG pattern maintains history."
+4. Show updated task in list
+
+---
+
+## Backup (if demo fails)
+
+**Video**: `wk11/crit/demo-recording.mp4` (pre-recorded screen capture with narration)
+
+**Screenshots**: Walk through annotated screenshots in `05-evidence/screenshots/` with narration
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+5-slide outline complete</li>
+<li><input disabled="" type="checkbox"/>
+Evidence artifacts selected (screenshots, metrics, diffs)</li>
+<li><input disabled="" type="checkbox"/>
+Live demo script written with narration</li>
+<li><input disabled="" type="checkbox"/>
+Backup plan ready (video or annotated screenshots)</li>
+</ul>
+<hr />
+<h2 id="activity-b-studio-critique-session-60-min"><a class="header" href="#activity-b-studio-critique-session-60-min">Activity B: Studio Critique Session (60 min)</a></h2>
+<p><strong>Format</strong>: 5-6 teams × 15 min each</p>
+<h3 id="presenter-role-when-its-your-turn"><a class="header" href="#presenter-role-when-its-your-turn">Presenter Role (when it's your turn)</a></h3>
+<p><strong>Timing breakdown</strong>:</p>
+<ul>
+<li><strong>0:00-0:30</strong>: Introduce problem (1 slide)</li>
+<li><strong>0:30-5:00</strong>: Live demo (narrated, following script)</li>
+<li><strong>5:00-8:00</strong>: Show metrics + evidence (slides 2-4)</li>
+<li><strong>8:00-10:00</strong>: Accessibility proof (regression checklist, SR transcript)</li>
+<li><strong>10:00-15:00</strong>: Q&amp;A + critique</li>
+</ul>
+<p><strong>Presenting tips</strong>:</p>
+<ul>
+<li><strong>Narrate everything</strong>: "I'm pressing Tab, now I'm on the error link..."</li>
+<li><strong>Point to evidence</strong>: "This is documented in line 23 of our regression checklist..."</li>
+<li><strong>Acknowledge limitations</strong>: "We didn't have time to fix wk9-02 (filter UX)—it's in our Semester 2 backlog"</li>
+<li><strong>Invite questions</strong>: "What would you like me to clarify?"</li>
+</ul>
+<p><strong>During Q&amp;A</strong>:</p>
+<ul>
+<li><strong>Don't defend</strong>: Listen, note feedback, say "good point, I'll check that"</li>
+<li><strong>Clarify if needed</strong>: "Can you show me which screenshot you're referring to?"</li>
+<li><strong>Thank reviewers</strong>: Even if feedback stings, they're helping you improve</li>
+</ul>
+<p><strong>Note feedback</strong> in <code>wk11/crit/feedback-received.md</code>:</p>
+<pre><code class="language-markdown">## Feedback from Studio Crit — 2025-10-25
+
+### Team Alpha
+- **Q**: "Have you tested with VoiceOver (macOS) or just NVDA?"
+- **Response**: Only tested NVDA. Should add VoiceOver testing to backlog.
+- **Action**: Create backlog item wk11-01: "Verify SR compatibility with VoiceOver"
+
+### Team Beta
+- **Observation**: "Your `aria-live=assertive` interrupted my SR mid-sentence during filter demo"
+- **Suggestion**: "Try `aria-live=polite` for non-critical messages?"
+- **Response**: Good catch. Will test polite vs assertive for status messages.
+- **Action**: Update wk10/lab-wk10/docs/redesign-brief.md notes section
+
+### Staff
+- **Q**: "Why did you prioritize T2 over T1 when T1 had higher error rate?"
+- **Response**: T2 had 0% no-JS completion (complete block) vs T1 100% completion (just slower). Prioritized exclusion over efficiency.
+- **Validation**: Staff agreed with prioritization framework logic.
+</code></pre>
+<h3 id="reviewer-role-when-watching-others"><a class="header" href="#reviewer-role-when-watching-others">Reviewer Role (when watching others)</a></h3>
+<p><strong>Use <code>wk11/crit/peer-feedback-TEAM_NAME.md</code> template</strong>:</p>
+<pre><code class="language-markdown"># Peer Feedback — Team [Name]
+
+**Reviewer**: [Your name]
+**Date**: 2025-10-25
+
+---
+
+## Summary
+
+**Problem addressed**: [One sentence]
+
+**Solution**: [One sentence]
+
+**Evidence quality**: [Rating 1-5, brief justification]
+
+---
+
+## Strengths (What worked well)
+
+1. [Specific observation with evidence reference]
+2. [Specific observation with evidence reference]
+3. [Specific observation with evidence reference]
+
+**Example**:
+- Clear before/after metrics table showing 67% → 100% completion
+- Live SR demo proved `role=alert` works (heard announcement)
+- Regression checklist complete (21/22 pass—impressive)
+
+---
+
+## Questions / Concerns
+
+1. [Specific question or observation]
+2. [Specific question or observation]
+
+**Example**:
+- Q: "You mentioned error rate dropped from 33% to 25%. Is that still high? What's causing remaining errors?"
+- Concern: "Screenshot shows error summary but I didn't see it tested with keyboard in live demo. Can you Tab to it?"
+
+---
+
+## Suggestions (Constructive)
+
+Use formula: Observation + Impact + Suggestion
+
+1. [Observation] → [Impact] → [Suggestion]
+2. [Observation] → [Impact] → [Suggestion]
+
+**Example**:
+- **Observation**: Error message says "Title is required" but pilot P2 submitted blank because they didn't see the input had focus.
+- **Impact**: Focus indicator might be too subtle (low contrast).
+- **Suggestion**: Have you checked focus indicator contrast with WCAG contrast checker? Might need to increase from blue (#0000ff) to darker blue (#0000aa) for 3:1 ratio against white background.
+
+---
+
+## Backlog / Next Steps
+
+What should this team consider for Semester 2?
+
+- [Item 1]
+- [Item 2]
+
+**Example**:
+- Test with VoiceOver (macOS) and JAWS (Windows) to verify SR compatibility beyond NVDA
+- Add client-side validation hints (maxlength counter) as progressive enhancement
+- Investigate why 25% error rate persists—might be focus management issue
+
+---
+
+## Overall Assessment
+
+**Evidence chain completeness**: [Rating 1-5]
+- 5 = Complete traceability (data → analysis → fix → verification)
+- 3 = Some gaps (e.g., missing SR transcript or before metrics)
+- 1 = Weak evidence (claims not backed by data)
+
+**Inclusion impact**: [Rating 1-5]
+- 5 = Clear who benefits, why, backed by pilot observations
+- 3 = General statements ("helps disabled people") without specifics
+- 1 = No inclusion lens evident
+
+**WCAG compliance**: [Pass/Partial/Fail]
+- Pass = Demonstrated compliance (checklist, live demo)
+- Partial = Some criteria met, gaps acknowledged
+- Fail = Claims compliance but no evidence
+
+**Recommended grade** (if this were Task 2 submission): [Estimate 0-100]
+
+**Justification**: [2-3 sentences linking grade to evidence quality, inclusion impact, WCAG compliance]
+</code></pre>
+<p><strong>Reviewer tips</strong>:</p>
+<ul>
+<li><strong>Be specific</strong>: Reference line numbers, file names, WCAG criteria</li>
+<li><strong>Be kind</strong>: Assume positive intent, acknowledge constraints</li>
+<li><strong>Be useful</strong>: Suggest alternatives, not just problems</li>
+<li><strong>Be brief</strong>: They have limited time to read feedback—bullet points better than essays</li>
+</ul>
+<p>✋ <strong>Stop and check</strong> (after all presentations):</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Presented your work (or scheduled if absent)</li>
+<li><input disabled="" type="checkbox"/>
+Filled peer feedback forms for 3-5 teams</li>
+<li><input disabled="" type="checkbox"/>
+Noted feedback received in your own feedback-received.md</li>
+<li><input disabled="" type="checkbox"/>
+Identified action items for Week 11 Lab 2</li>
+</ul>
+<hr />
+<h2 id="activity-c-post-crit-reflection-and-backlog-update-15-min"><a class="header" href="#activity-c-post-crit-reflection-and-backlog-update-15-min">Activity C: Post-Crit Reflection and Backlog Update (15 min)</a></h2>
+<p><strong>Goal</strong>: Process feedback and update backlog.</p>
+<h3 id="step-1-review-feedback-received-5-min"><a class="header" href="#step-1-review-feedback-received-5-min">Step 1: Review feedback received (5 min)</a></h3>
+<p><strong>Open <code>wk11/crit/feedback-received.md</code></strong> and identify themes:</p>
+<p><strong>Categorize</strong>:</p>
+<ul>
+<li><strong>Critical</strong>: Issues that invalidate claims (e.g., "You said 100% completion but didn't test with SR")</li>
+<li><strong>High priority</strong>: Valid suggestions that would significantly improve work</li>
+<li><strong>Medium</strong>: Nice-to-haves, future work</li>
+<li><strong>Low/Out-of-scope</strong>: Interesting but not actionable this semester</li>
+</ul>
+<p><strong>Example categorization</strong>:</p>
+<pre><code class="language-markdown">## Feedback Themes
+
+### Critical (Address before Task 2 submission)
+- Team Beta: "aria-live=assertive too intrusive" → Test polite vs assertive
+- Staff: "No evidence of VoiceOver testing" → Either test or document limitation
+
+### High Priority (Semester 2)
+- Team Alpha: "Focus indicator contrast 2.8:1 (below 3:1)" → Log backlog item, fix early Sem 2
+- Team Gamma: "Error rate still 25%—why?" → Investigate root cause (focus management?)
+
+### Medium
+- Team Delta: "Add maxlength counter" → Progressive enhancement, nice-to-have
+
+### Low/Out-of-Scope
+- Team Epsilon: "Redesign entire UI with dark mode" → Out of scope for this module
+</code></pre>
+<h3 id="step-2-update-backlog-5-min"><a class="header" href="#step-2-update-backlog-5-min">Step 2: Update backlog (5 min)</a></h3>
+<p><strong>Add new items</strong> to <code>backlog/backlog.csv</code>:</p>
+<pre><code class="language-csv">wk11-01,11,high,a11y,"Verify SR compatibility with VoiceOver (macOS)",,"open","wk11/crit/feedback-received.md Team Alpha","Test with VoiceOver, document findings",false
+
+wk11-02,11,medium,a11y,"Focus indicator contrast below WCAG AAA (2.8:1)",1.4.11,open,"wk11/crit/feedback-received.md Team Beta; WCAG 2.2 Focus Appearance","Increase focus outline to darker blue (#0000aa) for 3:1 contrast",true
+
+wk11-03,11,high,ux,"Remaining 25% error rate on T2—investigate cause",,"open","wk10/gradescope/task2/03-before-after-summary.md; wk11/crit/feedback-received.md Staff","Run additional pilot focusing on error triggers, check focus management",false
+</code></pre>
+<p><strong>Mark completed feedback actions</strong>:</p>
+<pre><code class="language-csv">wk9-01,9,high,a11y,"Validation errors not announced by SR",4.1.3,fixed,"data/metrics.csv; wk10/gradescope/task2/05-evidence/sr-transcripts/after-nvda.txt","Addressed in Week 10 Lab 2: added role=alert + aria-live=assertive",true
+</code></pre>
+<h3 id="step-3-write-reflection-5-min"><a class="header" href="#step-3-write-reflection-5-min">Step 3: Write reflection (5 min)</a></h3>
+<p><strong>Update <code>wk11/reflection.md</code></strong>:</p>
+<pre><code class="language-markdown"># Week 11 Lab 1 Reflection — Studio Crit
+
+## Presentation Experience
+
+**What went well**:
+- Live demo worked smoothly (both HTMX and no-JS paths)
+- Metrics table clearly showed 67% → 100% improvement
+- Audience understood the inclusion impact (no-JS users excluded → now included)
+
+**What was challenging**:
+- Nerves made me rush through SR demo—should have slowed down to let audience hear announcement
+- Didn't anticipate VoiceOver compatibility question—assumed NVDA coverage was sufficient
+- Q&amp;A revealed gap: didn't investigate why error rate only improved to 25% (not &lt;10% as hoped)
+
+## Feedback Received
+
+**Most valuable critique**:
+Team Beta's observation about `aria-live=assertive` being too intrusive. I experienced this myself during testing but dismissed it—their feedback validated my concern. Will test `polite` alternative.
+
+**Most surprising critique**:
+Staff asked why I prioritized T2 over T1 when T1 had higher error rate. I explained: T2 had 0% no-JS completion (exclusion) vs T1 100% completion (efficiency). Staff agreed but noted I should have made this explicit in presentation. Lesson: state prioritization criteria upfront.
+
+**Hardest to hear**:
+Team Alpha noted focus indicator contrast issue (2.8:1, below 3:1). I checked this in Week 8 but forgot to fix it. Embarrassing oversight—logged wk11-02 to address.
+
+## Changes for Task 2 Submission
+
+Based on feedback:
+1. **Add VoiceOver testing note** to `02-regression-checklist.csv`: "Tested with NVDA (Windows) and Orca (Linux). VoiceOver (macOS) not tested—recommend for Semester 2."
+2. **Investigate `aria-live=polite`** alternative: Run quick test, update `01-redesign-brief.md` notes if polite works better
+3. **Document focus indicator issue**: Add note to `03-before-after-summary.md`: "Known issue: focus indicator contrast 2.8:1 (WCAG AAA). Logged wk11-02 for Semester 2 fix."
+
+## Giving Feedback
+
+**Teams I reviewed**: Alpha, Beta, Gamma
+
+**Most interesting observation**:
+Team Gamma used UMUX-Lite subjective measure (2 questions, 1-7 scale). We didn't—might add for Semester 2 to capture perceived usability alongside objective metrics.
+
+**Common pattern**:
+3/5 teams struggled with no-JS demos (forgot to disable JS, or JS disabled but cached). Reinforces importance of verification scripts like `wk08/lab-w8/scripts/nojs-check.md`.
+
+## Next Steps
+
+**Before Lab 2** (Final submissions):
+1. Test `aria-live=polite` vs `assertive` (30 min)
+2. Add VoiceOver limitation note to regression checklist (5 min)
+3. Document focus indicator issue in before-after summary (10 min)
+4. Final proofread of Task 2 bundle (30 min)
+
+**Semester 2 priorities** (based on backlog):
+- Fix focus indicator contrast (wk11-02)
+- Investigate remaining error rate (wk11-03)
+- Test VoiceOver compatibility (wk11-01)
+- Add progressive enhancement hints (maxlength counter, real-time char count)
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Feedback themes identified and categorized</li>
+<li><input disabled="" type="checkbox"/>
+Backlog updated with new items from critique</li>
+<li><input disabled="" type="checkbox"/>
+Reflection written (what went well, challenges, changes for submission)</li>
+<li><input disabled="" type="checkbox"/>
+Action items for Week 11 Lab 2 clear</li>
+</ul>
+<hr />
+<h2 id="commit--reflect-5-min"><a class="header" href="#commit--reflect-5-min">Commit &amp; Reflect (5 min)</a></h2>
+<h3 id="commit-message"><a class="header" href="#commit-message">Commit message</a></h3>
+<pre><code class="language-bash">git add wk11/crit/ backlog/backlog.csv wk11/reflection.md
+
+git commit -m "$(cat &lt;&lt;'EOF'
+wk11s1: studio crit completed, feedback processed
+
+- Presented inclusive redesign with live demo (HTMX + no-JS paths)
+- Demonstrated accessibility improvements: role=alert SR announcement, keyboard-navigable error summary
+- Showed before/after metrics: T2 completion 67% → 100%, no-JS parity restored
+- Received feedback from 3 peer teams + staff (documented in feedback-received.md)
+- Identified critical action items: test aria-live=polite, document VoiceOver limitation, note focus contrast issue
+- Provided constructive feedback to 3 peer teams (Alpha, Beta, Gamma)
+- Updated backlog with new items: wk11-01 (VoiceOver testing), wk11-02 (focus contrast), wk11-03 (error rate investigation)
+- Reflected on presentation experience and critique process
+
+Key takeaways:
+- Evidence-led presentation effective (audience understood inclusion impact from metrics)
+- Need to slow down during SR demos (rushed, hard for audience to hear)
+- Prioritization criteria should be explicit upfront (T2 exclusion vs T1 efficiency)
+- Focus indicator contrast oversight embarrassing but fixable (logged for Semester 2)
+
+Ready for Week 11 Lab 2 final refinements and submission prep.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+EOF
+)"
+</code></pre>
+<hr />
+<h2 id="looking-ahead-week-11-lab-2"><a class="header" href="#looking-ahead-week-11-lab-2">Looking Ahead: Week 11 Lab 2</a></h2>
+<p>Final session:</p>
+<ul>
+<li><strong>Polish Task 1 &amp; 2</strong> based on crit feedback</li>
+<li><strong>Assemble portfolio</strong> with evidence chains</li>
+<li><strong>Practice submission</strong> process (Gradescope upload, file check)</li>
+<li><strong>Module reflection</strong> and Semester 2 planning</li>
+</ul>
+<p><strong>Before Lab 2</strong>:</p>
+<ul>
+<li>Address critical feedback (test polite, document limitations)</li>
+<li>Final proofread all submission files</li>
+<li>Check Gradescope submission requirements (file formats, naming)</li>
+</ul>
+<hr />
+<h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
+<h3 id="essential"><a class="header" href="#essential">Essential</a></h3>
+<ul>
+<li>Review Task 2 bundle for gaps</li>
+<li><a href="https://www.ideo.com/blog/design-critique">IDEO: The Art of Critique</a></li>
+</ul>
+<h3 id="presentation-skills"><a class="header" href="#presentation-skills">Presentation Skills</a></h3>
+<ul>
+<li><a href="https://gds.blog.gov.uk/2016/11/18/what-we-mean-when-we-say-show-the-thing/">GOV.UK: Show the thing</a></li>
+<li><a href="https://www.nngroup.com/articles/presenting-findings/">Nielsen: Presenting Usability Findings</a></li>
+</ul>
+<h3 id="constructive-feedback-1"><a class="header" href="#constructive-feedback-1">Constructive Feedback</a></h3>
+<ul>
+<li><a href="https://www.radicalcandor.com/">Kim Scott: Radical Candor</a></li>
+<li><a href="https://hbr.org/2019/03/the-feedback-fallacy">Harvard Business Review: The Feedback Fallacy</a></li>
+</ul>
+<h3 id="accessibility-demonstration-1"><a class="header" href="#accessibility-demonstration-1">Accessibility Demonstration</a></h3>
+<ul>
+<li><a href="https://webaim.org/articles/demos/">WebAIM: Demonstrating Accessibility</a></li>
+<li><a href="https://www.deque.com/blog/screen-reader-demonstration-best-practices/">Deque: Screen Reader Demo Best Practices</a></li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
+<tr><td><strong>Design critique</strong></td><td>Structured peer review of design work; focuses on evidence, not person</td></tr>
+<tr><td><strong>Evidence-led presentation</strong></td><td>Every claim backed by artifacts (data, screenshots, quotes)</td></tr>
+<tr><td><strong>Accessibility demonstration</strong></td><td>Live proof that inclusive design works (show, don't tell)</td></tr>
+<tr><td><strong>Constructive feedback</strong></td><td>Observation + Impact + Suggestion (not just criticism)</td></tr>
+<tr><td><strong>Studio crit</strong></td><td>Group critique session common in design education and practice</td></tr>
+<tr><td><strong>Before/after comparison</strong></td><td>Showing improvement through quantitative metrics</td></tr>
+<tr><td><strong>Regression checklist</strong></td><td>Systematic verification that fixes didn't break other features</td></tr>
+<tr><td><strong>Evidence chain</strong></td><td>Traceability from data → analysis → fix → verification</td></tr>
+<tr><td><strong>Backlog refinement</strong></td><td>Updating backlog based on new feedback and discoveries</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Lab complete!</strong> You've presented your work with evidence, received constructive critique, and prepared for final submissions in Week 11 Lab 2.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../wk11/src/wk11-lab2-wrapup-portfolio.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../wk11/src/wk11-lab2-wrapup-portfolio.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,1034 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Needs-finding, consent &amp; backlog - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-6--lab-2-needs-finding-consent--inclusive-backlog"><a class="header" href="#week-6--lab-2-needs-finding-consent--inclusive-backlog">Week 6 • Lab 2: Needs-Finding, Consent &amp; Inclusive Backlog</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-6-orange" alt="Week 6" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<hr />
+<h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
+<p><strong>Essential</strong></p>
+<ul>
+<li>Clone/update your Week 6 starter repo (same baseline code) to ensure tasks work before research session</li>
+<li><a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). "Know Your Customers' Jobs to Be Done"</a></li>
+<li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO (2024). "Guide to Data Protection by Design and Default"</a></li>
+<li><a href="../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> (module ethics guidance)</li>
+<li><a href="../../references/privacy-by-design.html">Privacy by Design</a> (UK GDPR compliance framework)</li>
+</ul>
+<p><strong>Recommended</strong></p>
+<ul>
+<li><a href="https://inclusive.microsoft.design/">Microsoft Inclusive Design Toolkit</a></li>
+<li><a href="https://www.jpattonassociates.com/user-story-mapping/">Patton, J. (2014). <em>User Story Mapping</em>, Ch. 1-3</a></li>
+<li><a href="https://www.nngroup.com/articles/interviewing-users/">Nielsen, J. (1993). "Usability Engineering", Ch. 5: User Interviews</a></li>
+</ul>
+<hr />
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<h3 id="context"><a class="header" href="#context">Context</a></h3>
+<p>In <strong>Week 6 Lab 1</strong> you built a server-first task manager with progressive enhancement (HTMX). The scaffold is technically sound: it works without JavaScript, keyboard navigation is accessible, and ARIA live regions announce status messages.</p>
+<p><strong>But we don't yet know if it meets real people's needs.</strong></p>
+<p>This lab introduces <strong>needs-finding</strong>: a lightweight research activity to understand how people work with task managers, what frustrates them, and what inclusive features would help. You'll capture insights using <strong>job stories</strong> (a people-centred alternative to user stories), document an <strong>ethical consent protocol</strong> for peer interviews, and build an <strong>inclusive backlog</strong> that will drive your accessibility work in Weeks 7-10.</p>
+<h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
+<p><strong>Professionally</strong>, needs-finding prevents "solution looking for a problem":</p>
+<ul>
+<li><strong>Basecamp</strong> (project management) conducts customer interviews every sprint</li>
+<li><strong>GOV.UK</strong> runs user research sessions before building new services</li>
+<li><strong>GitHub</strong> uses job stories to prioritise accessibility features</li>
+</ul>
+<p>Research shows that teams who ground design decisions in <strong>evidence</strong> (pilot data, interviews, observations) build more inclusive products than teams who rely on assumptions (Norman, 2013).</p>
+<p><strong>Academically</strong>, this lab teaches:</p>
+<ul>
+<li><strong>Qualitative research methods</strong>: interviewing, note-taking, thematic coding</li>
+<li><strong>Ethics in practice</strong>: informed consent, anonymisation, right to withdraw (UK GDPR)</li>
+<li><strong>Jobs-to-Be-Done framework</strong>: understanding needs vs. specifying solutions</li>
+<li><strong>Inclusive backlog management</strong>: prioritising features by severity × inclusion risk</li>
+</ul>
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Conducted peer interviews using structured prompts and consent protocols</li>
+<li>Written 5+ job stories from needs-finding activities that represent diverse needs</li>
+<li>Designed and implemented a GDPR-compliant consent form</li>
+<li>Created a prioritised backlog linking features to user needs with severity and inclusion-risk tagging</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO1</strong>: Differentiate people-centred methods — evidenced by job story methodology</li>
+<li><strong>LO2</strong>: Design and conduct needs-finding — evidenced by structured interview + synthesis</li>
+<li><strong>LO3</strong>: Analyse ethical implications — evidenced by consent protocol and privacy audit</li>
+<li><strong>LO13</strong>: Integrate HCI with SE — evidenced by backlog with evidence chains</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="1-needs-finding-vs-requirements-gathering"><a class="header" href="#1-needs-finding-vs-requirements-gathering">1. Needs-Finding vs. Requirements Gathering</a></h3>
+<p><strong>Traditional requirements gathering</strong>:</p>
+<blockquote>
+<p>"The system shall allow users to filter tasks by status (complete/incomplete)."</p>
+</blockquote>
+<p><strong>Needs-finding</strong>:</p>
+<blockquote>
+<p>"When I'm preparing for a crit, I want to focus only on deliverable tasks so I can check I haven't missed anything, because I get anxious about deadlines."</p>
+</blockquote>
+<p><strong>Difference</strong>:</p>
+<ul>
+<li><strong>Requirements</strong> specify <em>solutions</em> ("filter by status")</li>
+<li><strong>Needs</strong> uncover <em>motivations</em> ("reduce anxiety about missed deadlines")</li>
+</ul>
+<p><strong>Why this matters</strong>: Solutions can change (filter, search, tags, AI assistant), but needs stay constant. Understanding needs lets you pivot to better solutions as technology evolves.</p>
+<h3 id="2-jobs-to-be-done-jtbd-framework"><a class="header" href="#2-jobs-to-be-done-jtbd-framework">2. Jobs-to-Be-Done (JTBD) Framework</a></h3>
+<p><strong>Job story template</strong>:</p>
+<pre><code>When [situation/context],
+I want to [motivation/goal],
+so I can [desired outcome],
+because [underlying need/constraint].
+</code></pre>
+<p><strong>Example (COMP2850 context)</strong>:</p>
+<pre><code>When I'm using a screen reader to check my task list,
+I want confirmation messages announced immediately after I delete a task,
+so I can know the action succeeded without navigating back to the list,
+because re-scanning 20 items to confirm deletion is time-consuming and error-prone.
+</code></pre>
+<p><strong>Contrast with persona-based user story</strong>:</p>
+<blockquote>
+<p>"As a blind user, I want screen reader support so I can use the app."</p>
+</blockquote>
+<p><strong>Problems with persona stories</strong>:</p>
+<ul>
+<li>Assumes all "blind users" have same needs (heterogeneity ignored)</li>
+<li>Focuses on disability label, not situational context</li>
+<li>Doesn't explain <em>why</em> the need exists</li>
+</ul>
+<p><strong>JTBD advantages</strong>:</p>
+<ul>
+<li>Situation-specific (works for temporary impairments: broken mouse, bright sunlight)</li>
+<li>Explains motivation (builds empathy)</li>
+<li>Actionable (clear what success looks like)</li>
+</ul>
+<h3 id="3-informed-consent-uk-gdpr"><a class="header" href="#3-informed-consent-uk-gdpr">3. Informed Consent (UK GDPR)</a></h3>
+<p><strong>UK GDPR principles</strong> (Data Protection Act 2018):</p>
+<ol>
+<li><strong>Lawfulness, fairness, transparency</strong>: People must know what data you collect and why</li>
+<li><strong>Purpose limitation</strong>: Only collect data needed for stated purpose</li>
+<li><strong>Data minimisation</strong>: Collect as little as possible</li>
+<li><strong>Accuracy</strong>: Keep data correct and up-to-date</li>
+<li><strong>Storage limitation</strong>: Delete when no longer needed</li>
+<li><strong>Integrity &amp; confidentiality</strong>: Protect from unauthorised access</li>
+</ol>
+<p><strong>Low-risk peer research</strong> (COMP2850 context):</p>
+<ul>
+<li><strong>No PII</strong>: Use pseudonyms ("Participant A"), not names</li>
+<li><strong>Local storage</strong>: CSV files on your machine, not cloud services</li>
+<li><strong>Opt-out</strong>: Participant can withdraw at any time</li>
+<li><strong>No recordings</strong>: Text notes only (unless explicit consent for audio)</li>
+<li><strong>Deletion plan</strong>: Delete at end of Semester 1 (or anonymise for portfolio)</li>
+</ul>
+<p><strong>Consent script elements</strong>:</p>
+<ol>
+<li>Purpose ("We're researching task manager usability")</li>
+<li>What you'll do ("5-minute interview, taking notes")</li>
+<li>Data stored ("Pseudonymised notes in local Git repo")</li>
+<li>Rights ("You can stop at any time, request deletion")</li>
+<li>Contact ("Email <module> to opt out")</li>
+</ol>
+<h3 id="4-inclusive-backlog-structure"><a class="header" href="#4-inclusive-backlog-structure">4. Inclusive Backlog Structure</a></h3>
+<p><strong>Standard backlog</strong>:</p>
+<pre><code>ID | Title | Priority | Effort
+1  | Add filter | P1 | 3
+</code></pre>
+<p><strong>Inclusive backlog</strong> (COMP2850 format):</p>
+<pre><code>ID | Title | Story Ref | Need | Type | Severity | Inclusion Risk | Evidence | Notes
+1  | Filter remembers query | stories.md#S2 | Reduce cognitive load | Accessibility | High | Cognitive, SR | P2 notes L15 | Filter resets on reload; SR users lose context
+</code></pre>
+<p><strong>Why additional columns</strong>:</p>
+<ul>
+<li><strong>Story Ref</strong>: Traceable to research evidence</li>
+<li><strong>Inclusion Risk</strong>: Tags who's affected (SR, keyboard, low-vision, cognitive, motor)</li>
+<li><strong>Evidence</strong>: Links to pilot notes, WCAG audits, screenshots</li>
+<li><strong>Severity</strong>: Impact on task completion (High = blocks, Medium = hinders, Low = cosmetic)</li>
+</ul>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Transparent prioritisation (not just "gut feel")</li>
+<li>Ensures diverse needs considered (not just mouse + sighted users)</li>
+<li>Creates evidence chain for assessments (Task 1, Task 2, studio crit)</li>
+</ul>
+<h3 id="5-thematic-coding-light-touch"><a class="header" href="#5-thematic-coding-light-touch">5. Thematic Coding (Light Touch)</a></h3>
+<p><strong>Thematic coding</strong> = systematically identifying patterns in qualitative data.</p>
+<p><strong>Example process</strong>:</p>
+<ol>
+<li><strong>Read notes</strong>: Highlight key phrases</li>
+<li><strong>Code observations</strong>: Tag with themes (e.g., <code>status_feedback</code>, <code>keyboard_nav</code>, <code>cognitive_load</code>)</li>
+<li><strong>Group codes</strong>: Cluster similar tags</li>
+<li><strong>Synthesise themes</strong>: "Participants struggle to confirm actions succeeded" → backlog item: "Add persistent confirmation messages"</li>
+</ol>
+<p><strong>Tools</strong> (COMP2850 level):</p>
+<ul>
+<li>Markdown with inline tags: <code>[status_feedback] P2 said "I didn't know if it saved"</code></li>
+<li>Spreadsheet with code column</li>
+<li>Simple frequency count (how many times each theme appears)</li>
+</ul>
+<hr />
+<h2 id="activity-1-setup--consent-protocol"><a class="header" href="#activity-1-setup--consent-protocol">Activity 1: Setup &amp; Consent Protocol</a></h2>
+<p><strong>Time</strong>: 20 minutes
+<strong>Materials</strong>: Git repo from Lab 1, consent script template</p>
+<h3 id="step-1-create-research-directories"><a class="header" href="#step-1-create-research-directories">Step 1: Create Research Directories</a></h3>
+<pre><code class="language-bash">cd comp2850-hci-starter  # Your project from Lab 1
+mkdir -p research
+mkdir -p backlog
+mkdir -p wk06/instrumentation
+
+# Create placeholder files
+touch wk06/research/consent-protocol.md
+touch wk06/research/stories.md
+touch wk06/research/notes.md
+touch wk06/backlog/backlog.csv
+touch wk06/instrumentation/plan.md
+</code></pre>
+<h3 id="step-2-document-consent-protocol"><a class="header" href="#step-2-document-consent-protocol">Step 2: Document Consent Protocol</a></h3>
+<p>Edit <code>wk06/research/consent-protocol.md</code>:</p>
+<pre><code class="language-markdown"># Informed Consent Protocol — Week 6 Peer Interviews
+
+**Module**: COMP2850 Human-Computer Interaction
+**Activity**: Low-risk needs-finding (peer interviews)
+**Date**: [YYYY-MM-DD]
+**Researcher**: [Your Name/Student ID]
+
+---
+
+## Purpose
+
+We are conducting short peer interviews (5-10 minutes) to understand how people use task managers and identify accessibility improvements. This is part of our HCI coursework for Weeks 6-11.
+
+## What You'll Do
+
+I will ask you 3-5 questions about your experience with task management tools (e.g., "Tell me about a time you struggled to find a specific task"). I'll take brief notes. **No recordings** will be made unless you explicitly agree (and I'll ask again before starting).
+
+## Data Collected
+
+- **What I will collect**:
+  - Pseudonymised notes (e.g., "Participant A said...")
+  - Timestamps of interview
+  - Contextual tags (e.g., "Uses keyboard only", "Prefers dark mode")
+
+- **What I will NOT collect**:
+  - Your name (unless you want credit in acknowledgements)
+  - Student ID number
+  - Email address
+  - Any other personally identifiable information (PII)
+
+## Data Storage
+
+- **Where**: Local Git repository on my laptop (private repo, not shared publicly)
+- **Who can access**: Me, my lab partner, module teaching staff (if requested for marking)
+- **How long**: Until end of Semester 1 (January 2025), then deleted OR anonymised for portfolio
+
+## Your Rights (UK GDPR / Data Protection Act 2018)
+
+- **Right to withdraw**: You can stop at any time, no explanation needed
+- **Right to access**: You can ask to see your data (I'll show you my notes)
+- **Right to erasure**: You can request I delete your data (email me with interview date/pseudonym)
+- **Right to complain**: Contact University Data Protection Officer if concerned: dpo@leeds.ac.uk
+
+## Consent Confirmation
+
+Before starting, I will ask:
+- [ ] Have I explained the purpose clearly?
+- [ ] Do you understand what data I'll collect?
+- [ ] Do you know you can stop at any time?
+- [ ] Do you consent to participate?
+
+**Verbal consent is sufficient** for this low-risk activity. If you say "yes", I'll note:
+- Date/time: [YYYY-MM-DD HH:MM]
+- Pseudonym assigned: [e.g., "Participant A"]
+- Consent confirmed: [Initials]
+
+---
+
+## Opt-Out Process
+
+If you change your mind after the interview:
+1. Email me at [your-university-email]
+2. Include: interview date and pseudonym (if you remember it)
+3. I will delete all notes related to your session within 48 hours
+4. I will confirm deletion via email
+
+---
+
+## Contact
+
+**Researcher**: [Your Name], [your-email@leeds.ac.uk]
+**Module Lead**: Dr. [Name], [module-email]
+**University Ethics**: Research Ethics, ethics@leeds.ac.uk
+
+---
+
+**Template source**: COMP2850 HCI, University of Leeds
+**Reference**: ICO (2024). Guide to GDPR, &lt;https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/&gt;
+</code></pre>
+<h3 id="step-3-review-with-lab-partner"><a class="header" href="#step-3-review-with-lab-partner">Step 3: Review with Lab Partner</a></h3>
+<p>Pair up with a classmate and:</p>
+<ol>
+<li>Read each other's consent protocols</li>
+<li>Check for <strong>missing elements</strong>:
+<ul>
+<li>✅ Purpose clearly stated?</li>
+<li>✅ Data storage location specified?</li>
+<li>✅ Participant rights listed (withdraw, access, delete)?</li>
+<li>✅ Opt-out process described?</li>
+</ul>
+</li>
+<li>Suggest improvements (clearer language, missing details)</li>
+</ol>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Consent protocol saved in <code>wk06/research/consent-protocol.md</code></li>
+<li>✅ Reviewed by peer (get their initials/signature in notes)</li>
+<li>✅ Ready to use for interviews</li>
+</ul>
+<hr />
+<h2 id="activity-2-conduct-peer-interviews"><a class="header" href="#activity-2-conduct-peer-interviews">Activity 2: Conduct Peer Interviews</a></h2>
+<p><strong>Time</strong>: 40 minutes (20 min each direction)
+<strong>Materials</strong>: Interview prompts, note-taking template</p>
+<h3 id="step-1-interview-prompts"><a class="header" href="#step-1-interview-prompts">Step 1: Interview Prompts</a></h3>
+<p>Use these open-ended prompts (adapt as needed):</p>
+<p><strong>General task management</strong>:</p>
+<ol>
+<li>"Tell me about the last time you used a to-do list or task manager. What were you trying to accomplish?"</li>
+<li>"What frustrates you most about managing tasks? Can you give me a specific example?"</li>
+<li>"Have you ever lost track of an important task? What happened?"</li>
+</ol>
+<p><strong>Accessibility &amp; interaction</strong>:
+4. "Do you ever work without a mouse (e.g., trackpad broken, using laptop on train)? How does that change how you interact with apps?"
+5. "Have you used a task manager with your eyes closed or in bright sunlight? What was hard?"
+6. "If you could add one feature to make task management less stressful, what would it be?"</p>
+<p><strong>Follow-up probes</strong>:</p>
+<ul>
+<li>"Can you tell me more about that?"</li>
+<li>"How did that make you feel?"</li>
+<li>"What did you do to work around it?"</li>
+</ul>
+<h3 id="step-2-note-taking-template"><a class="header" href="#step-2-note-taking-template">Step 2: Note-Taking Template</a></h3>
+<p>Create <code>wk06/research/notes.md</code>:</p>
+<pre><code class="language-markdown"># Interview Notes — Week 6
+
+## Participant A
+**Date**: [YYYY-MM-DD HH:MM]
+**Context**: [e.g., Uses keyboard only, prefers dark mode, has ADHD]
+**Consent**: ✅ Confirmed verbally
+**Duration**: [~10 minutes]
+
+### Q1: Last time you used a task manager
+**Response**: "I use Notion for uni work. Last week I had to find all tasks tagged 'COMP2850' to prepare for a deadline. It took ages because the filter kept resetting."
+
+**Observations**:
+- Mentioned filter UX issue (cognitive load)
+- Time pressure context (deadline stress)
+- Tag-based workflow (not just chronological)
+
+**Themes**: `filter_persistence`, `cognitive_load`, `deadline_anxiety`
+
+---
+
+### Q2: What frustrates you?
+**Response**: "When I submit a form and nothing happens—like, did it save? I have to refresh the whole page to check."
+
+**Observations**:
+- Lack of confirmation feedback
+- Low trust in interface
+- Workaround = page reload (inefficient)
+
+**Themes**: `status_feedback`, `confirmation`, `trust`
+
+---
+
+### Q3: Lost track of important task?
+**Response**: "Yeah, I once forgot to submit coursework because it was buried in my list. I wish there was a way to pin urgent things."
+
+**Observations**:
+- List length issue (visibility)
+- Prioritisation need
+- Consequence = missed deadline (high impact)
+
+**Themes**: `prioritisation`, `visibility`, `urgent_tasks`
+
+---
+
+### Q4: Work without a mouse?
+**Response**: "My trackpad broke last month. I tried using Tab to navigate, but some buttons were impossible to reach. Had to borrow a friend's mouse."
+
+**Observations**:
+- Keyboard-only experience = friction
+- Temporary impairment (broken hardware)
+- Exclusion from features
+
+**Themes**: `keyboard_nav`, `temporary_impairment`, `button_accessibility`
+
+---
+
+### Q5: Eyes closed / bright sunlight?
+**Response**: "Haven't tried eyes closed, but in sunlight I can't read low-contrast text. I increase zoom but then the layout breaks."
+
+**Observations**:
+- Contrast issue (situational disability)
+- Zoom breaks responsive design
+- Environmental factor (sunlight)
+
+**Themes**: `contrast`, `zoom`, `responsive_design`
+
+---
+
+### Q6: One feature to add?
+**Response**: "A way to see progress—like, 'You've completed 8 out of 12 tasks this week.' That would motivate me."
+
+**Observations**:
+- Motivation through feedback
+- Progress visualisation
+- Weekly scope (not just daily)
+
+**Themes**: `progress_tracking`, `motivation`, `feedback`
+
+---
+
+## Summary (Participant A)
+**Top pain points**:
+1. Filter resets → cognitive overload
+2. No confirmation feedback → uncertainty
+3. Keyboard navigation gaps → temporary exclusion
+4. Contrast issues in bright light → situational disability
+
+**Job story ideas**:
+- "When I'm filtering tasks, I want the selection to persist across page reloads so I don't lose my place."
+- "When I submit a form, I want immediate confirmation so I know it worked without refreshing."
+- "When my mouse breaks, I want full keyboard access so I can still complete tasks."
+</code></pre>
+<p><strong>Repeat for Participant B, C, etc.</strong></p>
+<h3 id="step-3-swap-roles"><a class="header" href="#step-3-swap-roles">Step 3: Swap Roles</a></h3>
+<ol>
+<li><strong>Researcher → Participant</strong>: Your partner interviews you (10 minutes)</li>
+<li><strong>Participant → Researcher</strong>: You interview your partner (10 minutes)</li>
+</ol>
+<p><strong>After both interviews</strong>:</p>
+<ul>
+<li>Compare notes</li>
+<li>Identify overlapping themes (both mentioned confirmation feedback?)</li>
+<li>Flag unique insights (only one person mentioned colour-blindness?)</li>
+</ul>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ At least 2 interviews completed (ideally 3-4)</li>
+<li>✅ Notes saved in <code>wk06/research/notes.md</code></li>
+<li>✅ Themes tagged consistently (use same terms across interviews)</li>
+</ul>
+<hr />
+<h2 id="activity-3-synthesise-job-stories"><a class="header" href="#activity-3-synthesise-job-stories">Activity 3: Synthesise Job Stories</a></h2>
+<p><strong>Time</strong>: 25 minutes
+<strong>Materials</strong>: Interview notes, job story template</p>
+<h3 id="step-1-extract-situations--needs"><a class="header" href="#step-1-extract-situations--needs">Step 1: Extract Situations &amp; Needs</a></h3>
+<p>Review <code>notes.md</code> and list <strong>situations</strong> where people struggled:</p>
+<div class="table-wrapper"><table><thead><tr><th>Situation</th><th>Need</th><th>Evidence</th></tr></thead><tbody>
+<tr><td>Filtering tasks for specific project</td><td>Filter persists across reloads</td><td>P-A notes L5</td></tr>
+<tr><td>Submitting a form</td><td>Confirmation feedback</td><td>P-A notes L12, P-B notes L8</td></tr>
+<tr><td>Using keyboard only (broken mouse)</td><td>Full keyboard access to all buttons</td><td>P-A notes L20</td></tr>
+<tr><td>Bright sunlight</td><td>High-contrast text</td><td>P-A notes L28</td></tr>
+<tr><td>Managing 20+ tasks</td><td>Visual progress indicator</td><td>P-A notes L35, P-B notes L15</td></tr>
+</tbody></table>
+</div>
+<h3 id="step-2-write-job-stories"><a class="header" href="#step-2-write-job-stories">Step 2: Write Job Stories</a></h3>
+<p>Create <code>wk06/research/stories.md</code>:</p>
+<pre><code class="language-markdown"># Job Stories — Week 6 Needs-Finding
+
+## Story S1: Filter Persistence
+**Situation**: When I'm filtering tasks by project tag (e.g., "COMP2850")
+**Motivation**: I want the filter selection to persist across page reloads
+**Outcome**: So I can pick up where I left off without re-selecting the filter
+**Underlying need**: Because re-filtering 10+ times per session creates cognitive overload and wastes time
+
+**Evidence**: Participant A (notes L5), Participant B (notes L3)
+**Inclusion risk**: Cognitive, memory impairment, ADHD
+**Type**: Job story (situation-specific)
+
+---
+
+## Story S2: Confirmation Feedback
+**Situation**: When I submit a form (add task, edit task, delete task)
+**Motivation**: I want immediate, explicit confirmation that the action succeeded
+**Outcome**: So I can trust the interface without refreshing to verify
+**Underlying need**: Because uncertainty about save status causes anxiety and inefficient workarounds (page reload)
+
+**Evidence**: Participant A (notes L12), Participant B (notes L8)
+**Inclusion risk**: Cognitive, screen reader (if confirmation not announced), low digital literacy
+**Type**: Job story
+
+---
+
+## Story S3: Full Keyboard Access
+**Situation**: When my mouse/trackpad is unavailable (broken hardware, RSI flare-up, preference)
+**Motivation**: I want to access all features using only Tab, Enter, Space, and arrow keys
+**Outcome**: So I can complete tasks without being excluded
+**Underlying need**: Because reliance on pointing device excludes people with motor impairments or temporary injuries
+
+**Evidence**: Participant A (notes L20)
+**Inclusion risk**: Motor impairment, RSI, temporary disability, keyboard-only preference
+**Type**: Job story
+**WCAG**: 2.1.1 Keyboard (A), 2.1.3 Keyboard (No Exception, AAA)
+
+---
+
+## Story S4: High Contrast
+**Situation**: When I'm working in bright sunlight or have low vision
+**Motivation**: I want text to have sufficient contrast against background
+**Outcome**: So I can read task titles and buttons without straining
+**Underlying need**: Because low contrast creates situational disability (sunlight) or permanent exclusion (low vision)
+
+**Evidence**: Participant A (notes L28)
+**Inclusion risk**: Low vision, colour-blindness, situational (bright light)
+**Type**: Job story
+**WCAG**: 1.4.3 Contrast (Minimum, AA) — 4.5:1 for normal text
+
+---
+
+## Story S5: Progress Visualisation
+**Situation**: When I'm managing a long task list (15+ items)
+**Motivation**: I want to see completion progress (e.g., "8/12 done this week")
+**Outcome**: So I can feel motivated and track productivity
+**Underlying need**: Because invisible progress reduces motivation and makes it hard to assess workload
+
+**Evidence**: Participant A (notes L35), Participant B (notes L15)
+**Inclusion risk**: Cognitive, ADHD (executive function support)
+**Type**: Job story
+
+---
+
+## Story S6: Persistent Error Messages (No-JS)
+**Situation**: When JavaScript is disabled (corporate firewall, data-saving mode) and I submit invalid data
+**Motivation**: I want error messages to persist after page reload
+**Outcome**: So I can understand what went wrong and correct it
+**Underlying need**: Because ephemeral error messages (lost on redirect) require perfect memory or multiple submission attempts
+
+**Evidence**: Inferred from Lab 1 no-JS testing; no explicit interview mention (add if time)
+**Inclusion risk**: Cognitive, screen reader (needs page-level error summary)
+**Type**: Pain point (internally identified)
+**WCAG**: 3.3.1 Error Identification (A), 3.3.3 Error Suggestion (AA)
+</code></pre>
+<h3 id="step-3-map-stories-to-wcag"><a class="header" href="#step-3-map-stories-to-wcag">Step 3: Map Stories to WCAG</a></h3>
+<p>For each story, check if it relates to a WCAG criterion:</p>
+<div class="table-wrapper"><table><thead><tr><th>Story</th><th>WCAG Criterion</th><th>Level</th></tr></thead><tbody>
+<tr><td>S3 (Keyboard access)</td><td>2.1.1 Keyboard</td><td>A</td></tr>
+<tr><td>S4 (Contrast)</td><td>1.4.3 Contrast (Minimum)</td><td>AA</td></tr>
+<tr><td>S6 (Error messages)</td><td>3.3.1 Error Identification</td><td>A</td></tr>
+</tbody></table>
+</div>
+<p><strong>Why this matters</strong>: When you build the backlog, you can justify priority with "This is a WCAG Level A failure" vs. "This is a nice-to-have."</p>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ 5-6 job stories written</li>
+<li>✅ Each story cites evidence (participant + line number)</li>
+<li>✅ Inclusion risk tags added (SR, keyboard, cognitive, etc.)</li>
+<li>✅ At least 2 stories map to WCAG criteria</li>
+</ul>
+<hr />
+<h2 id="activity-4-build-inclusive-backlog"><a class="header" href="#activity-4-build-inclusive-backlog">Activity 4: Build Inclusive Backlog</a></h2>
+<p><strong>Time</strong>: 30 minutes
+<strong>Materials</strong>: Job stories, <code>backlog.csv</code> template</p>
+<h3 id="step-1-create-csv-headers"><a class="header" href="#step-1-create-csv-headers">Step 1: Create CSV Headers</a></h3>
+<p>Edit <code>wk06/backlog/backlog.csv</code>:</p>
+<pre><code class="language-csv">id,title,story_ref,story_type,need,type,severity,inclusion_risk,evidence,notes,candidate_fix
+</code></pre>
+<p><strong>Column definitions</strong>:</p>
+<ul>
+<li><strong>id</strong>: Unique number (1, 2, 3...)</li>
+<li><strong>title</strong>: Short summary (&lt; 10 words)</li>
+<li><strong>story_ref</strong>: Link to <code>stories.md#S1</code> or <code>notes.md#L15</code></li>
+<li><strong>story_type</strong>: "Job story", "Pain point", "WCAG violation", "Research insight"</li>
+<li><strong>need</strong>: High-level category ("Confirmation feedback", "Keyboard access")</li>
+<li><strong>type</strong>: "Accessibility", "Usability", "Performance", "Tech debt"</li>
+<li><strong>severity</strong>: High (blocks task), Medium (hinders), Low (cosmetic)</li>
+<li><strong>inclusion_risk</strong>: Comma-separated tags (SR, Keyboard, Cognitive, Motor, Low vision)</li>
+<li><strong>evidence</strong>: Path to notes, screenshot, WCAG reference</li>
+<li><strong>notes</strong>: Free-form (root cause, affected flows)</li>
+<li><strong>candidate_fix</strong>: <code>true</code> if planning to fix in Week 7 (pick 1-2)</li>
+</ul>
+<h3 id="step-2-populate-backlog-rows"><a class="header" href="#step-2-populate-backlog-rows">Step 2: Populate Backlog Rows</a></h3>
+<p>Example entries:</p>
+<pre><code class="language-csv">id,title,story_ref,story_type,need,type,severity,inclusion_risk,evidence,notes,candidate_fix
+1,Filter selection resets on page reload,stories.md#S1,Job story,Reduce cognitive load,Usability,Medium,"Cognitive,Memory","P-A notes L5",Current implementation doesn't persist filter state in session or URL,false
+2,No confirmation after form submission,stories.md#S2,Job story,Trust &amp; feedback,Accessibility,High,"Cognitive,SR,Low digital literacy","P-A notes L12; P-B notes L8",HTMX shows status in live region (good) but no-JS path gives no feedback (PRG redirect with no message),true
+3,Delete button not keyboard-accessible,stories.md#S3,Job story,Full keyboard access,Accessibility,High,"Keyboard,Motor","P-A notes L20; WCAG 2.1.1","Inline form works but focus order unclear; test with Tab-only navigation",true
+4,Text contrast below 4.5:1 in default theme,stories.md#S4,Job story,Visibility,Accessibility,Medium,"Low vision,Colour-blind,Situational","P-A notes L28; WCAG 1.4.3",Pico.css default gray (#6c757d) on white = 4.2:1 (fails AA); needs adjustment,false
+5,No progress indicator for completed tasks,stories.md#S5,Job story,Motivation &amp; feedback,Usability,Low,Cognitive,"P-A notes L35; P-B notes L15",Nice-to-have; defer to Semester 2 backlog,false
+6,Error messages not persistent in no-JS path,stories.md#S6,Pain point,Error recovery,Accessibility,High,"Cognitive,SR","Internal testing; WCAG 3.3.1",PRG redirect loses error context; need error summary on target page,true
+7,Skip link not tested with screen reader,Internal audit,WCAG check,Bypass blocks,Accessibility,Medium,SR,"WCAG 2.4.1",Lab 1 tested keyboard focus but not SR announcement; verify with NVDA,false
+8,Live region uses polite (should be assertive for errors),Internal audit,WCAG check,Error announcement,Accessibility,High,SR,"WCAG 4.1.3",Errors need aria-live=assertive so SR interrupts to announce; success messages stay polite,false
+</code></pre>
+<h3 id="step-3-prioritise-with-severity--inclusion"><a class="header" href="#step-3-prioritise-with-severity--inclusion">Step 3: Prioritise with Severity × Inclusion</a></h3>
+<p><strong>Severity scoring</strong>:</p>
+<ul>
+<li><strong>High (3 points)</strong>: Blocks task completion or excludes a group</li>
+<li><strong>Medium (2 points)</strong>: Makes task harder but workaround exists</li>
+<li><strong>Low (1 point)</strong>: Cosmetic or enhancement</li>
+</ul>
+<p><strong>Inclusion weight</strong>:</p>
+<ul>
+<li><strong>Multiple groups affected</strong>: +1 point (e.g., SR + Keyboard + Cognitive = +1)</li>
+<li><strong>WCAG Level A failure</strong>: +2 points</li>
+<li><strong>WCAG Level AA failure</strong>: +1 point</li>
+</ul>
+<p><strong>Example calculation</strong> (Item #2):</p>
+<ul>
+<li>Severity: High (3)</li>
+<li>Inclusion: SR + Cognitive + Low digital literacy (3 groups) = +1</li>
+<li>WCAG: 4.1.3 (AA) = +1</li>
+<li><strong>Total priority</strong>: 3 + 1 + 1 = 5 → <strong>Fix in Week 7</strong></li>
+</ul>
+<p><strong>Example calculation</strong> (Item #5):</p>
+<ul>
+<li>Severity: Low (1)</li>
+<li>Inclusion: Cognitive only (1 group) = 0</li>
+<li>WCAG: N/A = 0</li>
+<li><strong>Total priority</strong>: 1 → <strong>Defer to Semester 2</strong></li>
+</ul>
+<h3 id="step-4-select-candidate-fixes"><a class="header" href="#step-4-select-candidate-fixes">Step 4: Select Candidate Fixes</a></h3>
+<p>Mark 1-2 items with <code>candidate_fix=true</code>. These are the issues you'll fix in <strong>Week 7 Lab 2</strong>. Criteria:</p>
+<ul>
+<li>High severity + high inclusion risk</li>
+<li>Fixable in 1-2 hours (scoped for lab time)</li>
+<li>Clear WCAG criterion to verify against</li>
+</ul>
+<p><strong>Recommended first fixes</strong>:</p>
+<ol>
+<li>Item #2 (No confirmation in no-JS) → Add error summary</li>
+<li>Item #3 (Keyboard access) → Verify Tab order, add aria-labels</li>
+<li>Item #8 (Live region assertive for errors) → Change <code>aria-live</code> attribute</li>
+</ol>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ At least 8 backlog items (mix of research + WCAG audit)</li>
+<li>✅ Severity and inclusion risk assigned to each</li>
+<li>✅ 1-2 items marked as candidate fixes</li>
+<li>✅ Evidence column links to notes or WCAG reference</li>
+</ul>
+<hr />
+<h2 id="activity-5-instrumentation-planning-teaser"><a class="header" href="#activity-5-instrumentation-planning-teaser">Activity 5: Instrumentation Planning (Teaser)</a></h2>
+<p><strong>Time</strong>: 15 minutes
+<strong>Materials</strong>: <code>wk06/instrumentation/plan.md</code></p>
+<p>In <strong>Week 9</strong> you'll run task-based pilots and collect metrics (time-on-task, error rate, completion rate). Today you'll sketch what data to capture.</p>
+<h3 id="step-1-identify-events-to-log"><a class="header" href="#step-1-identify-events-to-log">Step 1: Identify Events to Log</a></h3>
+<p>Based on your backlog, list key events:</p>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>Why Log It</th><th>Fields to Capture</th></tr></thead><tbody>
+<tr><td><code>task_created</code></td><td>Measure add task completion time</td><td><code>ts_iso</code>, <code>session_id</code>, <code>title_length</code>, <code>js_mode</code></td></tr>
+<tr><td><code>task_deleted</code></td><td>Measure delete task completion time</td><td><code>ts_iso</code>, <code>session_id</code>, <code>task_id</code>, <code>js_mode</code></td></tr>
+<tr><td><code>validation_error</code></td><td>Count errors (usability metric)</td><td><code>ts_iso</code>, <code>session_id</code>, <code>field</code>, <code>error_type</code>, <code>js_mode</code></td></tr>
+<tr><td><code>filter_applied</code></td><td>Track filter usage (S1 story)</td><td><code>ts_iso</code>, <code>session_id</code>, <code>filter_value</code>, <code>result_count</code></td></tr>
+</tbody></table>
+</div>
+<h3 id="step-2-draft-instrumentation-plan"><a class="header" href="#step-2-draft-instrumentation-plan">Step 2: Draft Instrumentation Plan</a></h3>
+<p>Edit <code>wk06/instrumentation/plan.md</code>:</p>
+<pre><code class="language-markdown"># Instrumentation Plan — Week 6
+
+**Purpose**: Capture objective metrics for Week 9 task-based pilots and Week 10 analysis.
+
+---
+
+## Events to Log
+
+### 1. Task Created
+**Trigger**: POST /tasks (success)
+**Fields**:
+- `ts_iso`: ISO 8601 timestamp (e.g., 2025-01-15T14:23:45Z)
+- `session_id`: Anonymous 6-char hex (e.g., `P1_a3f7`)
+- `request_id`: Unique per request (for tracing)
+- `task_code`: `T3_add` (pilot task identifier)
+- `step`: `submit`
+- `outcome`: `success` | `validation_error`
+- `ms`: Time from request start to response (server-side)
+- `http_status`: 200 (success) | 400 (validation error)
+- `js_mode`: `js-on` | `js-off`
+
+**Why**: Measure task completion time, compare HTMX vs. no-JS.
+
+---
+
+### 2. Validation Error
+**Trigger**: POST /tasks (blank title)
+**Fields**: Same as Task Created, but `outcome=validation_error`, `http_status=400`
+
+**Why**: Count errors as usability metric; high error rate = poor UX.
+
+---
+
+### 3. Task Deleted
+**Trigger**: POST /tasks/{id}/delete (success)
+**Fields**: Same structure as Task Created, but `task_code=T4_delete`
+
+**Why**: Measure delete task time; verify live region announcement.
+
+---
+
+## Data Storage
+
+- **Format**: CSV (human-readable, easy to analyse in Excel/Google Sheets)
+- **Location**: `data/metrics.csv` (local file, not cloud)
+- **Schema**:
+  ```csv
+  ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+</code></pre>
+<p><strong>Example rows</strong>:</p>
+<pre><code class="language-csv">2025-01-15T14:23:45Z,P1_a3f7,req_001,T3_add,submit,success,120,200,js-on
+2025-01-15T14:24:10Z,P1_a3f7,req_002,T4_delete,submit,success,85,200,js-on
+2025-01-15T14:25:00Z,P2_b8c4,req_003,T3_add,submit,validation_error,0,400,js-off
+</code></pre>
+<hr />
+<h2 id="ethics--privacy"><a class="header" href="#ethics--privacy">Ethics &amp; Privacy</a></h2>
+<ul>
+<li><strong>No PII</strong>: Session IDs are random hex (not linked to names/emails)</li>
+<li><strong>Anonymisation</strong>: Use <code>P1</code>, <code>P2</code> pseudonyms (consistent with interview notes)</li>
+<li><strong>Consent</strong>: Covered by Week 6 consent protocol (low-risk research)</li>
+<li><strong>Retention</strong>: Delete after Semester 1 or anonymise for portfolio</li>
+</ul>
+<hr />
+<h2 id="implementation-week-9"><a class="header" href="#implementation-week-9">Implementation (Week 9)</a></h2>
+<p>Create <code>src/main/kotlin/utils/Logger.kt</code>:</p>
+<pre><code class="language-kotlin">object Logger {
+    private val file = File("data/metrics.csv").apply {
+        parentFile?.mkdirs()
+        if (!exists()) writeText("ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode\n")
+    }
+
+    @Synchronized
+    fun write(session: String, req: String, task: String, step: String, outcome: String, ms: Long, status: Int, js: String) {
+        val ts = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        file.appendText("$ts,$session,$req,$task,$step,$outcome,$ms,$status,$js\n")
+    }
+}
+</code></pre>
+<hr />
+<p><strong>Next steps</strong>: In Week 9 Lab 1, integrate Logger into routes and test with manual pilots.</p>
+<pre><code>
+**Stop and check**:
+- ✅ Instrumentation plan saved
+- ✅ Events identified (at least 3)
+- ✅ CSV schema defined
+- ✅ Ethics considerations documented
+
+---
+
+## Reflection Questions
+
+1. **Job stories vs. requirements**: Look at your backlog. How would the items differ if you'd written traditional requirements ("The system shall...") instead of job stories?
+
+2. **Consent trade-offs**: Our protocol uses pseudonyms and no recordings. What insights might we *miss* by not recording audio? When would recordings be justified?
+
+3. **Inclusion risk tagging**: Review your backlog. Did you find issues that affect *only* screen reader users, or do most issues affect multiple groups? What does this tell you about inclusive design?
+
+4. **Evidence chains**: Pick one backlog item. Can you trace it from interview notes → job story → backlog → (future) fix → verification? What's missing in your chain?
+
+---
+
+## Further Reading
+
+**Jobs-to-Be-Done**
+- Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). "Know Your Customers' Jobs to Be Done." *Harvard Business Review*. &lt;https://hbr.org/2016/09/know-your-customers-jobs-to-be-done&gt;
+- Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). *Competing Against Luck*. HarperCollins.
+
+**Qualitative research methods**
+- Lazar, J., Feng, J. H., &amp; Hochheiser, H. (2017). *Research Methods in Human-Computer Interaction* (2nd ed.). Morgan Kaufmann. (Ch. 9: Interviews &amp; Focus Groups)
+- Braun, V., &amp; Clarke, V. (2006). "Using thematic analysis in psychology." *Qualitative Research in Psychology*, 3(2), 77-101.
+
+**Ethics &amp; GDPR**
+- ICO (2024). *Guide to the UK GDPR*. &lt;https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/&gt;
+- BCS (2022). *Code of Conduct*. &lt;https://www.bcs.org/membership-and-registrations/become-a-member/bcs-code-of-conduct/&gt;
+
+**Inclusive design**
+- Microsoft (2024). *Inclusive Design Toolkit*. &lt;https://inclusive.microsoft.design/&gt;
+- Holmes, K. (2018). *Mismatch: How Inclusion Shapes Design*. MIT Press.
+
+---
+
+## Glossary Summary
+
+| Term | Definition | Example/Context |
+|------|------------|-----------------|
+| **Needs-finding** | Research to understand people's motivations, not just feature requests | Interviews reveal "I want confirmation" (need) vs. "Add a popup" (solution) |
+| **Job story** | Situation-specific story format: When/I want/So I can/Because | "When filtering, I want persistence so I don't lose context because re-filtering is tedious" |
+| **Informed consent** | Explaining research purpose, data use, and participant rights before collecting data | Consent script explains what you'll note, where it's stored, how to opt out |
+| **Pseudonym** | Fake name to protect identity | "Participant A" instead of "Alice Smith" |
+| **PII (Personally Identifiable Information)** | Data that can identify an individual (name, email, student ID) | Names = PII; random session IDs ≠ PII |
+| **UK GDPR** | Data protection law (Data Protection Act 2018) | Right to access, delete, withdraw consent |
+| **Inclusive backlog** | Backlog with severity + inclusion risk tags | "High severity, affects SR + Keyboard users" |
+| **Thematic coding** | Identifying patterns in qualitative data | Tag interview notes with `confirmation`, `keyboard_nav` themes |
+| **Severity** | Impact on task completion (High/Medium/Low) | High = blocks completion; Low = cosmetic |
+| **Inclusion risk** | Who's affected (SR, Keyboard, Cognitive, Motor, Low vision) | SR + Cognitive = multiple groups at risk |
+
+---
+
+## Lab Checklist
+
+Before leaving lab, confirm:
+
+- [ ] **Consent protocol written**: `wk06/research/consent-protocol.md` complete with opt-out process
+- [ ] **Interviews completed**: At least 2 peer interviews (ideally 3-4)
+- [ ] **Notes saved**: `wk06/research/notes.md` with themes tagged
+- [ ] **Job stories written**: 5-6 stories in `wk06/research/stories.md` with evidence links
+- [ ] **Backlog populated**: 8+ items in `wk06/backlog/backlog.csv` with severity + inclusion risk
+- [ ] **Candidate fixes selected**: 1-2 items marked `candidate_fix=true`
+- [ ] **Instrumentation plan drafted**: `wk06/instrumentation/plan.md` outlines metrics for Week 9
+- [ ] **Code committed**: `git add wk06/`, `git commit -m "wk6-lab2: needs-finding + consent + backlog"`
+
+---
+
+## Next Steps
+
+In **Week 7 Lab 1** you will:
+1. Review ethics guidance from guest speaker
+2. Implement accessible inline edit (dual-path HTMX + no-JS)
+3. Add validation with `aria-describedby` and `role="alert"`
+4. Test with screen reader (NVDA/VoiceOver)
+
+**Preparation**:
+- Ensure scaffold from Lab 1 still runs (`./gradlew run`)
+- Review backlog items marked `candidate_fix=true`
+- Install NVDA (Windows) or enable VoiceOver (macOS) for testing
+
+---
+
+**Lab authored by**: COMP2850 Teaching Team, University of Leeds
+**Last updated**: 2025-01-14
+**Licence**: Academic use only (not for redistribution)</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../wk06/src/wk6-lab1-html-css-htmx.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../wk06/src/wk6-lab1-html-css-htmx.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

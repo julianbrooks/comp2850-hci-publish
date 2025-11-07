@@ -1,0 +1,740 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Task 1: Evaluation &amp; Findings - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="task-1-evaluation--findings"><a class="header" href="#task-1-evaluation--findings">Task 1: Evaluation &amp; Findings</a></h1>
+<p><img src="https://img.shields.io/badge/Task_1-Evaluation-blue" alt="Task 1" />
+<img src="https://img.shields.io/badge/Due-Week_9_Lab_2-orange" alt="Week 9" />
+<img src="https://img.shields.io/badge/LOs-7_assessed-green" alt="LOs" /></p>
+<hr />
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Design and execute a <strong>task-based usability evaluation</strong> with peer pilots (n=4 minimum), collecting quantitative metrics and qualitative observations to identify accessibility and usability issues in your HCI implementation.</p>
+<p><strong>What you'll learn</strong>:</p>
+<ul>
+<li>How to design rigorous evaluation protocols</li>
+<li>How to collect privacy-safe metrics using server-side instrumentation</li>
+<li>How to synthesise findings from mixed-methods data</li>
+<li>How to create evidence chains linking data to design decisions</li>
+</ul>
+<hr />
+<h2 id="what-were-assessing"><a class="header" href="#what-were-assessing">What We're Assessing</a></h2>
+<h3 id="-what-this-task-does-assess"><a class="header" href="#-what-this-task-does-assess">✅ What This Task DOES Assess</a></h3>
+<p><strong>HCI process competence</strong> (LO8):</p>
+<ul>
+<li>Can you design a rigorous evaluation protocol?</li>
+<li>Can you execute ethical pilots (consent, privacy, right to withdraw)?</li>
+<li>Can you collect valid quantitative data (metrics.csv complete, no fabrication)?</li>
+<li>Can you synthesise findings from mixed-methods data?</li>
+</ul>
+<p><strong>Evidence-based thinking</strong> (LO1, LO6, LO12):</p>
+<ul>
+<li>Do you ground findings in data (evidence chains: data → observation → interpretation)?</li>
+<li>Can you link evaluation to needs-finding (LO2: job stories → task design)?</li>
+<li>Do you report honestly (limitations acknowledged, unexpected results explained)?</li>
+</ul>
+<p><strong>Professional practice</strong> (LO11, LO12, LO13):</p>
+<ul>
+<li>Do you follow ethical protocols (consent, anonymity, no PII)?</li>
+<li>Can you collaborate effectively (peer pilots, observer role)?</li>
+<li>Can you integrate HCI methods with software engineering (server-side instrumentation)?</li>
+</ul>
+<h3 id="-what-this-task-does-not-assess"><a class="header" href="#-what-this-task-does-not-assess">❌ What This Task Does NOT Assess</a></h3>
+<p><strong>Code quality</strong>: We're not grading your Week 6-8 implementation (that's already built). We assess your <strong>evaluation method</strong>, not your coding skills.</p>
+<p><strong>Kotlin/Ktor proficiency</strong>: That's OOP (Weeks 1-5). We assess <strong>HCI methods</strong> (protocol design, pilots, analysis).</p>
+<p><strong>Writing quality</strong>: Beyond basic clarity, we don't mark prose style. <strong>Tables, metrics, and evidence chains</strong> matter more than eloquent paragraphs.</p>
+<p><strong>Feature completeness</strong>: We don't care if your app is "finished". We care if you can <strong>evaluate what exists</strong> using rigorous methods.</p>
+<p><strong>Perfect results</strong>: We don't expect zero issues found. We expect <strong>honest reporting</strong> and <strong>traceable evidence</strong>.</p>
+<hr />
+<h2 id="timeline"><a class="header" href="#timeline">Timeline</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>When</th><th>Activity</th><th>Deliverable</th></tr></thead><tbody>
+<tr><td><strong>Week 8 Lab 2</strong></td><td><strong>Task 1 launched</strong><br>Draft evaluation plan, define tasks, write protocol</td><td>Planning docs (not submitted yet)</td></tr>
+<tr><td><strong>Week 9 Lab 1</strong></td><td>Learn server-side instrumentation (<code>Logger.kt</code>, timing)<br>Finalise protocol</td><td>Working instrumentation + consent protocol</td></tr>
+<tr><td><strong>Week 9 Lab 2</strong></td><td>Conduct 4+ peer pilots<br>Synthesise findings<br><strong>Submit to Gradescope</strong></td><td>Complete Task 1 package (6 files + evidence)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Total time</strong>: 6-7 hours across 2 weeks</p>
+<hr />
+<h2 id="learning-outcomes-assessed"><a class="header" href="#learning-outcomes-assessed">Learning Outcomes Assessed</a></h2>
+<p>This task assesses <strong>7 of 13 HCI Learning Outcomes</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>How Task 1 Assesses It</th></tr></thead><tbody>
+<tr><td><strong>LO1</strong></td><td>Differentiate people-centred methodologies</td><td>Evaluation method selection and justification</td></tr>
+<tr><td><strong>LO2</strong></td><td>Design and conduct needs-finding</td><td>Link evaluation tasks to Week 6 job stories</td></tr>
+<tr><td><strong>LO6</strong></td><td>Apply iterative design</td><td>Pilot data → findings synthesis → redesign planning</td></tr>
+<tr><td><strong>LO8</strong></td><td>Design and execute evaluation</td><td>Protocol design, 4+ pilots, metrics collection</td></tr>
+<tr><td><strong>LO11</strong></td><td>Collaborate in teams</td><td>Peer pilot facilitation + observer role</td></tr>
+<tr><td><strong>LO12</strong></td><td>Demonstrate professionalism</td><td>Consent adherence, honest reporting, evidence chains</td></tr>
+<tr><td><strong>LO13</strong></td><td>Integrate HCI with SE</td><td>Server-side instrumentation (<code>Logger.kt</code>, timing wrappers)</td></tr>
+</tbody></table>
+</div>
+<p>See <a href="../references/learning-outcomes.html">Learning Outcomes Reference</a> for full definitions.</p>
+<hr />
+<h2 id="what-youre-evaluating"><a class="header" href="#what-youre-evaluating">What You're Evaluating</a></h2>
+<p><strong>Your own HCI implementation</strong> built during Weeks 6-8:</p>
+<ul>
+<li>Task management interface (CRUD operations)</li>
+<li>Server-first architecture (Ktor + Pebble templates)</li>
+<li>HTMX progressive enhancement</li>
+<li>No-JS parity (all features work without JavaScript)</li>
+<li>Accessibility features (ARIA, keyboard navigation, semantic HTML)</li>
+</ul>
+<p><strong>Focus</strong>: Evaluate <strong>actual implementation</strong>, not hypothetical design. Test what you built.</p>
+<hr />
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<p>Submit <strong>6 files + evidence directory</strong> to Gradescope by <strong>Week 9 Lab 2 deadline</strong>:</p>
+<h3 id="required-files"><a class="header" href="#required-files">Required Files</a></h3>
+<h4 id="1-01-evaluation-planmd"><a class="header" href="#1-01-evaluation-planmd">1. <code>01-evaluation-plan.md</code></a></h4>
+<p><strong>What it is</strong>: High-level plan explaining what you're evaluating, why, and how.</p>
+<p><strong>Key sections</strong>:</p>
+<ul>
+<li>Evaluation objectives (design questions you need answered)</li>
+<li><strong>Link to needs-finding</strong> (LO2): How Week 6 job stories informed task selection</li>
+<li>Method selection (why task-based testing?)</li>
+<li>Success criteria (quantitative targets + qualitative indicators)</li>
+<li>Evaluation scope (features in/out of scope)</li>
+<li>Risks &amp; mitigations</li>
+<li>Ethical considerations</li>
+<li>Timeline</li>
+<li>Expected outcomes</li>
+</ul>
+<p><strong>Template</strong>: <a href="../../wk09/lab-wk9/submission/task1-draft/01-evaluation-plan.html">wk09/lab-wk9/submission/task1-draft/01-evaluation-plan.md</a></p>
+<p><strong>Example connection to needs-finding</strong> (see <a href="#worked-example-linking-needs-finding-to-evaluation">Worked Example: Linking Needs-Finding to Evaluation</a> below):</p>
+<blockquote>
+<p>"Job story from Week 6: 'When I need to track coursework deadlines, I want to quickly add tasks, so I don't forget important dates' → informed Task 3 (add task) with target time &lt;10 seconds."</p>
+</blockquote>
+<hr />
+<h4 id="2-02-protocolmd"><a class="header" href="#2-02-protocolmd">2. <code>02-protocol.md</code></a></h4>
+<p><strong>What it is</strong>: Step-by-step session flow for pilots (consent → tasks → debrief).</p>
+<p><strong>Key sections</strong>:</p>
+<ul>
+<li>Consent process (script, participant rights)</li>
+<li>Pre-session setup (instrumentation check, browser config)</li>
+<li>Task instructions (read to participants verbatim)</li>
+<li>Facilitator guidelines (neutral tone, no leading)</li>
+<li>Observer notes template</li>
+<li>Debrief questions (confidence ratings, open feedback)</li>
+<li>Data handling (anonymisation, storage)</li>
+</ul>
+<p><strong>Template</strong>: Already exists at <a href="../../wk09/lab-wk9/research/protocol.html">wk09/lab-wk9/research/protocol.md</a></p>
+<p><strong>Critical</strong>: Protocol must include consent confirmation and right to withdraw.</p>
+<hr />
+<h4 id="3-03-tasksmd"><a class="header" href="#3-03-tasksmd">3. <code>03-tasks.md</code></a></h4>
+<p><strong>What it is</strong>: Specific evaluation tasks participants will perform.</p>
+<p><strong>Structure for each task</strong>:</p>
+<ul>
+<li>Scenario (context for task)</li>
+<li>Instructions (read to participant)</li>
+<li>Success criteria (observable outcomes)</li>
+<li>Expected duration (target time)</li>
+<li>Known risks (potential issues)</li>
+</ul>
+<p><strong>Template</strong>: <a href="../../wk09/lab-wk9/submission/task1-draft/03-tasks.html">wk09/lab-wk9/submission/task1-draft/03-tasks.md</a></p>
+<p><strong>Example task</strong>:</p>
+<pre><code class="language-markdown">## Task 2 (T2): Edit Existing Task
+
+### Scenario
+You created a task with the wrong title. You need to edit it.
+
+### Instructions
+"Find the task titled 'Lab report' and change it to 'COMP2850 lab report'."
+
+### Success Criteria
+- Task title updated to 'COMP2850 lab report'
+- No validation errors
+- Task still visible in list
+
+### Expected Duration
+Target: &lt; 15 seconds
+
+### Known Risks
+- Inline edit focus management (keyboard users)
+- Validation error not announced (SR users)
+</code></pre>
+<hr />
+<h4 id="4-04-resultscsv--04-results-readmemd"><a class="header" href="#4-04-resultscsv--04-results-readmemd">4. <code>04-results.csv</code> + <code>04-results-README.md</code></a></h4>
+<p><strong>What it is</strong>: Raw quantitative data from pilots (time-on-task, errors, completion).</p>
+<p><strong>CSV schema</strong>:</p>
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+2025-10-15T14:18:23.456Z,P1_7a9f,r001,T3_add,success,,567,200,on
+</code></pre>
+<p><strong>Columns explained in README</strong>:</p>
+<ul>
+<li><code>ts_iso</code>: Event timestamp (ISO 8601 UTC)</li>
+<li><code>session_id</code>: Anonymous participant ID (P1_xxxx, P2_xxxx)</li>
+<li><code>task_code</code>: Task identifier (T1_filter, T2_edit, etc.)</li>
+<li><code>step</code>: Event type (success, validation_error, fail)</li>
+<li><code>outcome</code>: Specific error (blank_title, max_length, etc.)</li>
+<li><code>ms</code>: Duration in milliseconds</li>
+<li><code>http_status</code>: HTTP response code (200, 400, 500)</li>
+<li><code>js_mode</code>: JavaScript availability (on, off)</li>
+</ul>
+<p><strong>Source</strong>: Captured via server-side <code>Logger.kt</code> (Week 9 Lab 1)</p>
+<p><strong>Template</strong>: <a href="../../wk09/lab-wk9/submission/task1-draft/04-results.csv">wk09/lab-wk9/submission/task1-draft/04-results.csv</a></p>
+<p><strong>Privacy</strong>: Session IDs must be anonymous (no names, emails, student IDs).</p>
+<hr />
+<h4 id="5-05-findingsmd"><a class="header" href="#5-05-findingsmd">5. <code>05-findings.md</code></a></h4>
+<p><strong>What it is</strong>: Synthesised analysis with evidence chains linking data to findings.</p>
+<p><strong>Key sections</strong>:</p>
+<ol>
+<li><strong>Executive summary</strong> (3-5 key findings)</li>
+<li><strong>Quantitative results</strong> (completion rates, median times, error rates, JS-on vs JS-off)</li>
+<li><strong>Qualitative findings</strong> (accessibility issues, usability issues, positive observations)</li>
+<li><strong>Prioritisation</strong> (using Impact + Inclusion – Effort matrix)</li>
+<li><strong>Evidence chains</strong> (raw data → observation → interpretation → backlog item)</li>
+<li><strong>Limitations</strong> (sample size, diversity, study context)</li>
+<li><strong>Conclusion</strong> (recommended fixes for Task 2)</li>
+</ol>
+<p><strong>Template</strong>: <a href="../../wk09/lab-wk9/submission/task1-draft/05-findings.html">wk09/lab-wk9/submission/task1-draft/05-findings.md</a></p>
+<p><strong>Evidence chain example</strong>:</p>
+<pre><code>04-results.csv line 127: P2_4d8e,T2_edit,validation_error,blank_title,0,400,on
+    ↓
+06-evidence/pilot-notes/P2-notes.md line 12: "P2: 'I didn't hear any error message'"
+    ↓
+Interpretation: SR users cannot detect validation errors (WCAG 4.1.3)
+    ↓
+backlog/backlog.csv wk9-01: "Add role=alert to error messages"
+    ↓
+Task 2 fix: Implement aria-live + aria-describedby + focus management
+</code></pre>
+<p><strong>Content</strong>: 600-800 words of prose + tables (quantitative stats) + evidence chains. Focus on analysis, not padding. Excludes tables, code snippets, and headings.</p>
+<hr />
+<h4 id="6-06-evidence"><a class="header" href="#6-06-evidence">6. <code>06-evidence/</code></a></h4>
+<p><strong>What it is</strong>: Directory containing screenshots, pilot notes, and consent logs.</p>
+<p><strong>Structure</strong>:</p>
+<pre><code>06-evidence/
+├── README.md                    # Privacy guidelines, annotation instructions
+├── screenshots/
+│   ├── t2-validation-error.png  # Visual evidence of issues
+│   ├── t1-filter-results.png
+│   └── annotations.md           # Alt text + context for all screenshots
+├── pilot-notes/
+│   ├── P1-notes.md              # Qualitative observations per participant
+│   ├── P2-notes.md
+│   ├── P3-notes.md
+│   └── P4-notes.md
+└── consent-log.md               # Participant consent tracking (optional)
+</code></pre>
+<p><strong>Templates</strong>:</p>
+<ul>
+<li>README: <a href="../../wk09/lab-wk9/submission/task1-draft/06-evidence/README.html">wk09/lab-wk9/submission/task1-draft/06-evidence/README.md</a></li>
+<li>Annotations: <a href="../../wk09/lab-wk9/submission/task1-draft/06-evidence/screenshots/annotations.html">wk09/lab-wk9/submission/task1-draft/06-evidence/screenshots/annotations.md</a></li>
+</ul>
+<p><strong>Privacy requirements</strong>:</p>
+<ul>
+<li>✅ All screenshots cropped/blurred to remove PII</li>
+<li>✅ Pilot notes use codes (P1, P2) not names</li>
+<li>✅ Session IDs anonymous (P1_7a9f not recognisable)</li>
+<li>✅ No emails, student IDs, or personal data</li>
+</ul>
+<hr />
+<h2 id="submission-structure"><a class="header" href="#submission-structure">Submission Structure</a></h2>
+<p>Your <code>task1-draft/</code> directory should look like this:</p>
+<pre><code>wk09/lab-wk9/submission/task1-draft/
+├── 01-evaluation-plan.md
+├── 02-protocol.md
+├── 03-tasks.md
+├── 04-results.csv
+├── 04-results-README.md
+├── 05-findings.md
+└── 06-evidence/
+    ├── README.md
+    ├── screenshots/
+    │   ├── t1-filter-results.png
+    │   ├── t2-validation-error.png
+    │   └── annotations.md
+    ├── pilot-notes/
+    │   ├── P1-notes.md
+    │   ├── P2-notes.md
+    │   ├── P3-notes.md
+    │   └── P4-notes.md
+    └── consent-log.md
+</code></pre>
+<p><strong>Submission</strong>: Zip this directory and upload to Gradescope. (See <a href="#submission-instructions">Submission Instructions</a> below for details.)</p>
+<hr />
+<h2 id="minimum-requirements"><a class="header" href="#minimum-requirements">Minimum Requirements</a></h2>
+<p><strong>Must have</strong>:</p>
+<ul>
+<li>✅ <strong>Minimum 4 participants</strong> (n=4)</li>
+<li>✅ <strong>At least 3 variants tested</strong> (see <a href="#what-are-variants">What are variants?</a> below)</li>
+<li>✅ <strong>Quantitative data</strong> in <code>04-results.csv</code> (time, errors, completion)</li>
+<li>✅ <strong>Qualitative data</strong> in pilot notes (quotes, observations)</li>
+<li>✅ <strong>Evidence chains</strong> linking data → findings → backlog</li>
+<li>✅ <strong>Consent documented</strong> (protocol + participant confirmation)</li>
+<li>✅ <strong>No PII</strong> in any file</li>
+</ul>
+<p><strong>Nice to have</strong>:</p>
+<ul>
+<li>🌟 Screen reader variant tested (NVDA, VoiceOver)</li>
+<li>🌟 More than 4 participants (stronger patterns)</li>
+<li>🌟 Statistical analysis (median, MAD calculated correctly)</li>
+<li>🌟 WCAG references in findings (specific criteria cited)</li>
+</ul>
+<hr />
+<h2 id="what-are-variants"><a class="header" href="#what-are-variants">What are Variants?</a></h2>
+<p><strong>Variants</strong> are different configurations or access methods used to test the interface. Testing multiple variants ensures your evaluation captures accessibility and progressive enhancement issues.</p>
+<p><strong>Minimum requirement</strong>: Test at least <strong>3 different variants</strong> across your 4+ participants.</p>
+<p><strong>Common variants</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Variant</th><th>What it tests</th><th>Example participant</th></tr></thead><tbody>
+<tr><td><strong>Standard (HTMX-on)</strong></td><td>Default enhanced experience</td><td>P1: Mouse + HTMX + JavaScript enabled</td></tr>
+<tr><td><strong>Keyboard-only</strong></td><td>Keyboard navigation, focus management</td><td>P2: Tab/Enter only, no mouse, HTMX-on</td></tr>
+<tr><td><strong>No-JS</strong></td><td>Baseline HTML forms, PRG pattern, full-page loads</td><td>P3: JavaScript disabled in browser</td></tr>
+<tr><td><strong>Screen reader</strong></td><td>ARIA announcements, semantic HTML, labels</td><td>P4: NVDA/VoiceOver + keyboard</td></tr>
+<tr><td><strong>Mobile</strong></td><td>Touch targets, viewport scaling, responsive layout</td><td>P5: Phone/tablet browser</td></tr>
+</tbody></table>
+</div>
+<p><strong>Example distribution (n=5)</strong>:</p>
+<ul>
+<li>P1: Standard (mouse + HTMX)</li>
+<li>P2: Keyboard-only (HTMX-on)</li>
+<li>P3: No-JS (keyboard or mouse)</li>
+<li>P4: Screen reader (NVDA + keyboard)</li>
+<li>P5: Repeat of any variant for comparison</li>
+</ul>
+<p><strong>Why 3+ variants?</strong></p>
+<ul>
+<li>Catches progressive enhancement failures (HTMX vs no-JS)</li>
+<li>Identifies keyboard traps, focus issues, unlabelled controls</li>
+<li>Verifies ARIA live regions work (screen reader testing)</li>
+<li>Demonstrates inclusive design competence (LO9)</li>
+</ul>
+<p><strong>Recording variants</strong>: Document in <code>js_mode</code> column of <code>04-results.csv</code> and participant notes.</p>
+<hr />
+<h2 id="common-mistakes-to-avoid"><a class="header" href="#common-mistakes-to-avoid">Common Mistakes to Avoid</a></h2>
+<p>❌ <strong>Fabricated data</strong>: Markers can spot fake metrics (too perfect, unrealistic patterns)</p>
+<p>❌ <strong>No evidence chains</strong>: Saying "SR users struggled" without pilot notes or screenshots</p>
+<p>❌ <strong>PII leaks</strong>: Screenshots with names, session IDs that reveal identities</p>
+<p>❌ <strong>Incomplete pilots</strong>: Only 2-3 participants instead of minimum 4</p>
+<p>❌ <strong>Missing consent</strong>: No documentation of ethical protocol</p>
+<p>❌ <strong>Vague findings</strong>: "Interface needs improvement" vs "Validation errors not announced (WCAG 4.1.3)"</p>
+<p>❌ <strong>No link to needs-finding</strong>: Missing LO2 connection to Week 6 job stories</p>
+<p>❌ <strong>Results.csv incomplete</strong>: Missing session IDs, timestamps, or task outcomes</p>
+<hr />
+<h2 id="worked-example-linking-needs-finding-to-evaluation"><a class="header" href="#worked-example-linking-needs-finding-to-evaluation">Worked Example: Linking Needs-Finding to Evaluation</a></h2>
+<p><strong>Demonstrating LO2 competence</strong> requires showing how Week 6 job stories informed your Task 1 evaluation design.</p>
+<h3 id="example-chain-job-story--task-design--success-criteria"><a class="header" href="#example-chain-job-story--task-design--success-criteria">Example Chain: Job Story → Task Design → Success Criteria</a></h3>
+<h4 id="1-week-6-job-story-from-needs-finding"><a class="header" href="#1-week-6-job-story-from-needs-finding">1. Week 6 Job Story (from Needs-Finding)</a></h4>
+<blockquote>
+<p>"When I'm reviewing my weekly tasks on Sunday evening, I want to see incomplete items highlighted, so I can prioritize tomorrow's work, because I need to meet Friday's deadline."</p>
+</blockquote>
+<p><strong>Context</strong>: Participant prioritises coursework weekly; needs visual distinction between complete/incomplete tasks.</p>
+<hr />
+<h4 id="2-evaluation-task-design-task-1-week-9"><a class="header" href="#2-evaluation-task-design-task-1-week-9">2. Evaluation Task Design (Task 1, Week 9)</a></h4>
+<p>From this job story, you designed <strong>Task 4 (T4): Filter incomplete tasks</strong></p>
+<p><strong>Scenario</strong>: "You have 10 tasks in your list. 4 are complete, 6 are incomplete. You need to review only incomplete tasks."</p>
+<p><strong>Instructions</strong>: "Use the filter to show only incomplete tasks."</p>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>Filter applied successfully</li>
+<li>Only incomplete tasks visible (n=6)</li>
+<li>Screen reader announces result count ("Showing 6 of 10 tasks")</li>
+</ul>
+<p><strong>Expected duration</strong>: Target &lt; 8 seconds (job story context: "Sunday evening" = time-pressured)</p>
+<hr />
+<h4 id="3-link-in-evaluation-plan-01-evaluation-planmd"><a class="header" href="#3-link-in-evaluation-plan-01-evaluation-planmd">3. Link in Evaluation Plan (01-evaluation-plan.md)</a></h4>
+<p>In your evaluation plan, Section 2 ("Link to Needs-Finding"), you write:</p>
+<blockquote>
+<p><strong>Job Story JS3</strong> (from Week 6 participant P2): "When I'm reviewing my weekly tasks on Sunday evening, I want to see incomplete items highlighted, so I can prioritize tomorrow's work, because I need to meet Friday's deadline."</p>
+<p><strong>Informed design of Task 4 (Filter incomplete tasks)</strong>:</p>
+<ul>
+<li><strong>Time target</strong> (&lt; 8 seconds): Job story context indicates time pressure (Sunday evening review before Monday deadlines).</li>
+<li><strong>Result count announcement</strong>: Job story participant mentioned needing to "see" distinction → interpreted as need for both visual and auditory feedback (WCAG 1.3.1).</li>
+<li><strong>Success metric</strong>: Completion rate &gt; 90%, median time &lt; 8s, screen reader result announcement verified.</li>
+</ul>
+</blockquote>
+<hr />
+<h4 id="4-evidence-in-findings-05-findingsmd"><a class="header" href="#4-evidence-in-findings-05-findingsmd">4. Evidence in Findings (05-findings.md)</a></h4>
+<p>After running pilots, you analyse T4 data:</p>
+<blockquote>
+<p><strong>Finding F4</strong>: Filter feature (T4) achieved 100% completion rate (5/5 participants) with median time 6.2s (MAD: 1.1s), exceeding target (&lt; 8s). However, 1/2 screen reader participants reported confusion about result count format ("Showing 6 of 10" read as "Showing six of ten" without context). Links to <strong>JS3</strong> (Week 6): need for clear prioritisation feedback.</p>
+</blockquote>
+<hr />
+<h3 id="what-this-demonstrates-lo2"><a class="header" href="#what-this-demonstrates-lo2">What This Demonstrates (LO2)</a></h3>
+<p>✅ <strong>Needs-finding informed task selection</strong>: Job story → evaluation task
+✅ <strong>Measurable targets derived from context</strong>: "Sunday evening" time pressure → &lt; 8s target
+✅ <strong>Accessibility considerations traced</strong>: "see highlighted" → visual + auditory feedback
+✅ <strong>Evidence chain complete</strong>: Job story → task design → pilot data → finding</p>
+<h3 id="common-mistakes"><a class="header" href="#common-mistakes">Common Mistakes</a></h3>
+<p>❌ <strong>Vague link</strong>: "Job stories informed my tasks" (no specifics)
+❌ <strong>Post-hoc fabrication</strong>: Claiming link to job story that doesn't match task design
+❌ <strong>Missing context</strong>: Citing job story without explaining <em>how</em> it shaped task parameters</p>
+<hr />
+<h2 id="tips-for-success"><a class="header" href="#tips-for-success">Tips for Success</a></h2>
+<h3 id="planning-week-8-lab-2"><a class="header" href="#planning-week-8-lab-2">Planning (Week 8 Lab 2)</a></h3>
+<p>✅ <strong>Draft tasks early</strong>: Define 4-5 realistic tasks based on features you built</p>
+<p>✅ <strong>Set measurable targets</strong>: "&lt; 15 seconds" not "fast"</p>
+<p>✅ <strong>Link to Week 6</strong>: Show how job stories informed task design (LO2)</p>
+<p>✅ <strong>Test your protocol</strong>: Do a dry run before Week 9 pilots</p>
+<hr />
+<h3 id="execution-week-9-lab-1-2"><a class="header" href="#execution-week-9-lab-1-2">Execution (Week 9 Lab 1-2)</a></h3>
+<p>✅ <strong>Instrument carefully</strong>: Test <code>Logger.kt</code> before pilots—verify CSV writes correctly</p>
+<p>✅ <strong>Recruit early</strong>: Don't wait until Week 9 Lab 2 to find participants</p>
+<p>✅ <strong>Pilot diverse variants</strong>: At least 1 keyboard-only, 1 no-JS</p>
+<p>✅ <strong>Take notes immediately</strong>: Don't rely on memory—capture quotes during session</p>
+<p>✅ <strong>Check data completeness</strong>: Before participants leave, verify <code>metrics.csv</code> has their data</p>
+<hr />
+<h3 id="analysis--documentation-week-9-lab-2"><a class="header" href="#analysis--documentation-week-9-lab-2">Analysis &amp; Documentation (Week 9 Lab 2)</a></h3>
+<p>✅ <strong>Scrub screenshots</strong>: Crop/blur PII before adding to <code>06-evidence/</code></p>
+<p>✅ <strong>Calculate stats correctly</strong>: Use median (not mean), calculate MAD for variability</p>
+<p>✅ <strong>Link everything</strong>: Every claim needs file path, line number, or session ID reference</p>
+<p>✅ <strong>Prioritise ruthlessly</strong>: Not all issues are equal—use Impact + Inclusion – Effort</p>
+<p>✅ <strong>Be honest</strong>: Markers value honest reporting over perfect results</p>
+<hr />
+<h2 id="faqs"><a class="header" href="#faqs">FAQs</a></h2>
+<p><strong>Q: Can I use fewer than 4 participants?</strong>
+A: No. Minimum 4 required for identifying patterns. Nielsen's 5-user rule suggests 5 find ~85% of issues.</p>
+<p><strong>Q: What if participants don't give consent?</strong>
+A: Don't proceed with the pilot. Find alternative participants. Consent is non-negotiable.</p>
+<p><strong>Q: Can I fabricate data if I couldn't complete pilots?</strong>
+A: Absolutely not. Academic integrity violation. Contact module lead immediately if you have issues.</p>
+<p><strong>Q: What if my metrics.csv is empty?</strong>
+A: Your instrumentation isn't working. Debug in Week 9 Lab 1 before running pilots.</p>
+<p><strong>Q: Do I need to test with screen readers?</strong>
+A: Not mandatory (keyboard-only is acceptable) but highly recommended for stronger evidence.</p>
+<p><strong>Q: What if my findings show the interface has no problems?</strong>
+A: Unlikely with n=4-5. Revisit pilot notes for subtle issues (confusion, hesitation, errors). Be honest if genuinely no issues, but check you're looking closely enough.</p>
+<p><strong>Q: How do I link to Week 6 needs-finding?</strong>
+A: In <code>01-evaluation-plan.md</code>, section 2 prompts you to reference 2-3 job stories and explain how they shaped your task selection.</p>
+<p><strong>Q: Can I submit early?</strong>
+A: Yes, but you miss Week 9 Lab 2 time for data verification. Use the full 2 weeks.</p>
+<hr />
+<h2 id="marking-criteria"><a class="header" href="#marking-criteria">Marking Criteria</a></h2>
+<h3 id="evidence-quality-30"><a class="header" href="#evidence-quality-30">Evidence Quality (30%)</a></h3>
+<ul>
+<li>Complete quantitative data (<code>04-results.csv</code> with all required columns)</li>
+<li>Rich qualitative data (pilot notes with quotes, timestamps, observations)</li>
+<li>Traceable evidence chains (every claim links to data)</li>
+<li>No PII in any file</li>
+</ul>
+<h3 id="method-rigour-25"><a class="header" href="#method-rigour-25">Method Rigour (25%)</a></h3>
+<ul>
+<li>Clear protocol with consent and ethical safeguards</li>
+<li>Appropriate task design (realistic, measurable, independent)</li>
+<li>Valid variants tested (keyboard, no-JS, etc.)</li>
+<li>Minimum 4 participants recruited and tested</li>
+</ul>
+<h3 id="analysis-depth-25"><a class="header" href="#analysis-depth-25">Analysis Depth (25%)</a></h3>
+<ul>
+<li>Quantitative analysis correct (median, MAD, error rates)</li>
+<li>Qualitative synthesis identifies patterns across participants</li>
+<li>WCAG violations referenced with specific criteria</li>
+<li>Inclusion impact articulated (who is excluded, how)</li>
+<li>Link to needs-finding demonstrated (LO2)</li>
+</ul>
+<h3 id="professional-presentation-20"><a class="header" href="#professional-presentation-20">Professional Presentation (20%)</a></h3>
+<ul>
+<li>Clear, well-structured documentation</li>
+<li>Honest reporting (doesn't hide limitations or unexpected results)</li>
+<li>Complete submission (all 6 files + evidence)</li>
+<li>UK spelling and grammar</li>
+<li>Proper Markdown formatting</li>
+</ul>
+<hr />
+<h2 id="resources"><a class="header" href="#resources">Resources</a></h2>
+<h3 id="templates"><a class="header" href="#templates">Templates</a></h3>
+<p>All templates available in <code>wk09/lab-wk9/submission/task1-draft/</code>:</p>
+<ul>
+<li><a href="../../wk09/lab-wk9/submission/task1-draft/01-evaluation-plan.html">01-evaluation-plan.md</a></li>
+<li><a href="../../wk09/lab-wk9/research/protocol.html">02-protocol.md</a></li>
+<li><a href="../../wk09/lab-wk9/submission/task1-draft/03-tasks.html">03-tasks.md</a></li>
+<li><a href="../../wk09/lab-wk9/submission/task1-draft/04-results.csv">04-results.csv</a> + <a href="../../wk09/lab-wk9/submission/task1-draft/04-results-README.html">README</a></li>
+<li><a href="../../wk09/lab-wk9/submission/task1-draft/05-findings.html">05-findings.md</a></li>
+<li><a href="../../wk09/lab-wk9/submission/task1-draft/06-evidence/README.html">06-evidence/README.md</a></li>
+</ul>
+<h3 id="references"><a class="header" href="#references">References</a></h3>
+<ul>
+<li><a href="https://www.nngroup.com/articles/usability-testing-101/">Nielsen: Usability Testing 101</a></li>
+<li><a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">Nielsen: Why You Only Need 5 Users</a></li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/metrics/">W3C: Measuring Accessibility</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG 2.2 Quick Reference</a></li>
+<li><a href="../references/learning-outcomes.html">Learning Outcomes Reference</a></li>
+<li><a href="../references/glossary.html">Glossary</a></li>
+</ul>
+<h3 id="week-9-lab-materials"><a class="header" href="#week-9-lab-materials">Week 9 Lab Materials</a></h3>
+<ul>
+<li><a href="../../wk09/src/wk9-lab1-eval-plan-instrumentation.html">Week 9 Lab 1: Evaluation Planning &amp; Instrumentation</a></li>
+<li><a href="../../wk09/src/wk9-lab2-pilots-debrief-draft.html">Week 9 Lab 2: Peer Pilots, Debrief, and Task 1 Draft Pack</a></li>
+</ul>
+<hr />
+<h2 id="quick-checklist"><a class="header" href="#quick-checklist">Quick Checklist</a></h2>
+<p>Before submitting, verify:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>6 required files present</strong> (01-06 + evidence directory)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Minimum 4 participants</strong> (documented in results.csv + pilot notes)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Link to Week 6 needs-finding</strong> (LO2 addressed in evaluation plan)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Evidence chains complete</strong> (every finding links to data)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Consent documented</strong> (protocol includes consent script)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No PII in any file</strong> (screenshots cropped, session IDs anonymous)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>WCAG references cited</strong> (specific criteria in findings)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Prioritisation documented</strong> (Impact + Inclusion – Effort matrix)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Screenshots annotated</strong> (alt text + context in annotations.md)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Results.csv verified</strong> (all pilots have data, correct schema)</li>
+</ul>
+<hr />
+<h2 id="submission-instructions"><a class="header" href="#submission-instructions">Submission Instructions</a></h2>
+<p><strong>Gradescope submission details will be confirmed in Week 9 Lab 1.</strong></p>
+<p>In the meantime, prepare your submission:</p>
+<h3 id="packaging-requirements"><a class="header" href="#packaging-requirements">Packaging Requirements</a></h3>
+<ul>
+<li>Keep all files in the <code>task1-draft/</code> directory structure shown above</li>
+<li>Ensure filenames match exactly (case-sensitive): <code>01-evaluation-plan.md</code>, <code>02-protocol.md</code>, etc.</li>
+<li>Verify <strong>no PII</strong> in any file before packaging (screenshots cropped, session IDs anonymous)</li>
+<li>Check all evidence chains are complete (file paths and line numbers accurate)</li>
+</ul>
+<h3 id="file-size-considerations"><a class="header" href="#file-size-considerations">File Size Considerations</a></h3>
+<ul>
+<li>Screenshots: Crop to relevant area, use PNG/JPG compression</li>
+<li>CSV files: Text format, should be &lt; 1MB</li>
+<li>Total package: Aim for &lt; 20MB (if larger, check for unnecessary files)</li>
+</ul>
+<h3 id="naming-conventions"><a class="header" href="#naming-conventions">Naming Conventions</a></h3>
+<p><strong>To be confirmed</strong> — watch for announcements in Week 9 Lab 1 about:</p>
+<ul>
+<li>Zip file naming (e.g., <code>studentID_task1.zip</code> vs <code>task1-draft.zip</code>)</li>
+<li>Gradescope assignment name</li>
+<li>Late submission policy</li>
+</ul>
+<h3 id="pre-submission-checklist"><a class="header" href="#pre-submission-checklist">Pre-Submission Checklist</a></h3>
+<p>Use the <a href="#quick-checklist">Quick Checklist</a> below to verify all requirements met.</p>
+<hr />
+<p><a href="overview.html">← Back to Assessment Overview</a> | <a href="task2.html">Next: Task 2 →</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assessment/overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../assessment/task2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assessment/overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../assessment/task2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

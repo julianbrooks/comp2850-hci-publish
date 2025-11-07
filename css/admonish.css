@@ -1,0 +1,29 @@
+/* Admonish plugin placeholder - install via: mdbook-admonish install */
+/* For now, basic admonition styling */
+
+.admonition {
+    border-left: 4px solid #1976d2;
+    padding: 1em;
+    margin: 1em 0;
+    background-color: #f5f5f5;
+}
+
+.admonition.note {
+    border-color: #1976d2;
+    background-color: #e3f2fd;
+}
+
+.admonition.warning {
+    border-color: #f57c00;
+    background-color: #fff3e0;
+}
+
+.admonition.danger {
+    border-color: #d32f2f;
+    background-color: #ffebee;
+}
+
+.admonition.tip {
+    border-color: #388e3c;
+    background-color: #e8f5e9;
+}

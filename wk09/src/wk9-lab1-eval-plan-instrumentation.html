@@ -1,0 +1,1633 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Evaluation plan, metrics, instrumentation - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-9--lab-1--evaluation-plan-metrics-schema-and-instrumentation"><a class="header" href="#week-9--lab-1--evaluation-plan-metrics-schema-and-instrumentation">Week 9 • Lab 1 — Evaluation Plan, Metrics Schema, and Instrumentation</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-9-orange" alt="Week 9" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="before-lab-required-reading-20-mins"><a class="header" href="#before-lab-required-reading-20-mins">Before Lab: Required Reading (20 mins)</a></h2>
+<p>📖 <strong>Essential</strong></p>
+<ul>
+<li>Pull Week 9 starter repo branch (baseline instrumentation stubs):</li>
+<li><a href="https://www.nngroup.com/articles/usability-testing-101/">Nielsen Norman Group: How to Conduct a Usability Test</a></li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/metrics/">W3C: Measuring Accessibility</a></li>
+<li>Review <a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li>Review <a href="../../references/consent-pii-faq.html">Consent and PII FAQ</a></li>
+</ul>
+<p>📖 <strong>Contextual</strong>:</p>
+<ul>
+<li><a href="https://hypermedia.systems/">hypermedia.systems: Instrumentation</a> (optional chapter if available)</li>
+<li><a href="https://www.gov.uk/service-manual/user-research/plan-a-research-session">GOV.UK: Planning user research</a></li>
+</ul>
+<hr />
+<h2 id="introduction-from-prototype-to-evidence"><a class="header" href="#introduction-from-prototype-to-evidence">Introduction: From Prototype to Evidence</a></h2>
+<p>Weeks 6–8 built a functional, accessible task list prototype. <strong>Now the critical question</strong>: Does it actually work for real people?</p>
+<p><strong>HCI is empirical</strong>. We can't claim "this is usable" without evidence. This week you:</p>
+<ol>
+<li>Design an evaluation plan (what to measure, how)</li>
+<li>Instrument your prototype to capture objective data</li>
+<li>Prepare for peer pilots (Week 9 Lab 2)</li>
+</ol>
+<p><strong>Why this matters</strong>:</p>
+<ul>
+<li><strong>Gradescope Task 2</strong> requires quantitative data (completion times, error rates) + qualitative insights</li>
+<li><strong>Week 10 redesign</strong> depends on identifying real bottlenecks (not guesses)</li>
+<li><strong>Week 11 portfolio</strong> needs evidence chains: problem → measurement → fix → verification</li>
+<li><strong>Industry practice</strong>: Product decisions backed by data, not opinions</li>
+</ul>
+<p><strong>Ethical imperative</strong>: Evaluation must respect privacy. We follow <strong>low-risk peer study protocols</strong>—no recordings, no PII, informed consent, opt-out honoured.</p>
+<hr />
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<blockquote>
+<p><strong>Staff reference</strong>: Full instrumentation implementation lives in the <a href="../../resources/code-resources.html#week-9">solution repository</a>.
+By the end of this session, you will have:</p>
+</blockquote>
+<ul>
+<li>Designed task-based evaluation protocol with 3+ tasks and clear success criteria</li>
+<li>Defined metrics (time-on-task, errors, SUS, confidence)</li>
+<li>Written an ethical, repeatable protocol for peer pilots</li>
+<li>Instrumented codebase to capture metrics (server-side logging)</li>
+<li>Verified instrumentation captures data correctly for JS-on and JS-off paths</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO1</strong>: Differentiate people-centred methods — evidenced by method selection rationale</li>
+<li><strong>LO8</strong>: Design and execute evaluation — evidenced by protocol + metrics + instrumentation</li>
+<li><strong>LO13</strong>: Integrate HCI with SE — evidenced by server-side instrumentation code</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="usability-evaluation"><a class="header" href="#usability-evaluation">Usability Evaluation</a></h3>
+<blockquote>
+<p><strong>Usability Evaluation</strong> [GLOSSARY]</p>
+<p>Systematic assessment of how well people can use a system to achieve goals. <strong>Formative</strong> (improve design during development) vs <strong>Summative</strong> (measure final quality).</p>
+<p><strong>This module uses formative evaluation</strong>: gather data during development (Week 9), redesign (Week 10), verify improvements (Week 10/11).</p>
+<p><strong>Components</strong>:</p>
+<ul>
+<li><strong>Tasks</strong>: Realistic scenarios with measurable outcomes</li>
+<li><strong>Metrics</strong>: Objective (time, errors) + subjective (satisfaction, confidence)</li>
+<li><strong>Participants</strong>: Peers, representative of target population</li>
+<li><strong>Protocol</strong>: Step-by-step procedure ensuring consistency</li>
+</ul>
+<p><strong>HCI Connection</strong>: ISO 9241-11 defines usability as "extent to which a product can be used by specified users to achieve specified goals with effectiveness, efficiency, and satisfaction."</p>
+<p><strong>Academic rigour</strong>: Evaluation design determines validity of findings. Poor tasks → biased data → wrong redesign decisions.</p>
+<p>🔗 <a href="https://www.iso.org/standard/63500.html">ISO 9241-11:2018 Usability</a>
+🔗 <a href="https://www.nngroup.com/articles/usability-101-introduction-to-usability/">Nielsen: Usability 101</a></p>
+</blockquote>
+<h3 id="task-based-evaluation"><a class="header" href="#task-based-evaluation">Task-Based Evaluation</a></h3>
+<blockquote>
+<p><strong>Task-Based Evaluation</strong> [GLOSSARY]</p>
+<p>Participants complete realistic tasks while researchers observe and measure. Contrasts with feature walkthroughs or preference surveys.</p>
+<p><strong>Task characteristics</strong>:</p>
+<ul>
+<li><strong>Realistic</strong>: Matches actual use context ("Find invoices" not "Use filter")</li>
+<li><strong>Measurable</strong>: Clear success condition (found correct result, completed within time)</li>
+<li><strong>Scoped</strong>: Completable in 2-5 minutes per task</li>
+<li><strong>Representative</strong>: Covers critical flows identified in backlog</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code>Task T1: Search for Tasks
+Scenario: "You need to find all tasks containing the word 'invoice'.
+           Use the filter to show only matching tasks and count how many remain."
+Success: Reports correct count within 2 minutes, no validation errors
+</code></pre>
+<p><strong>Why not feature-based?</strong> "Test the filter" is vague—participants don't know when they've succeeded. Task-based evaluation mirrors real-world goals.</p>
+<p><strong>HCI Connection</strong>: Tasks ground evaluation in <strong>ecological validity</strong>—findings generalize to real use.</p>
+<p>🔗 <a href="https://www.nngroup.com/articles/task-scenarios-usability-testing/">Nielsen: Task Scenarios for Usability Testing</a></p>
+</blockquote>
+<h3 id="objective-vs-subjective-metrics"><a class="header" href="#objective-vs-subjective-metrics">Objective vs Subjective Metrics</a></h3>
+<blockquote>
+<p><strong>Objective Metrics</strong> [GLOSSARY]</p>
+<p>Measurable, observable data: completion time, error count, HTTP status codes. <strong>No interpretation required</strong>.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Time-on-task</strong>: Milliseconds from task start to completion (server-timed)</li>
+<li><strong>Completion rate</strong>: Did participant achieve goal? (0 = fail, 1 = success)</li>
+<li><strong>Error rate</strong>: <code>validation_error / (success + validation_error)</code></li>
+<li><strong>Click/keystroke count</strong>: Efficiency measure (lower is better for same outcome)</li>
+</ul>
+<p><strong>Benefits</strong>: Repeatable, comparable across participants, statistically analysable
+<strong>Limitations</strong>: Don't capture frustration, confusion, satisfaction</p>
+<hr />
+<p><strong>Subjective Metrics</strong> [GLOSSARY]</p>
+<p>Self-reported feelings, perceptions, attitudes. Require interpretation.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Confidence rating</strong>: "How confident are you that you completed the task correctly?" (1–5 scale)</li>
+<li><strong>Difficulty rating</strong>: "How difficult was this task?" (1–7 scale)</li>
+<li><strong>Satisfaction</strong>: Post-session questionnaire (SUS, UMUX-Lite)</li>
+<li><strong>Qualitative notes</strong>: Open-ended feedback ("I wasn't sure if it saved")</li>
+</ul>
+<p><strong>Benefits</strong>: Capture affective response, uncover unexpected issues
+<strong>Limitations</strong>: Vary by person, memory biases, social desirability</p>
+<p><strong>HCI Connection</strong>: Both required. ISO 9241-11 defines usability as <strong>effectiveness</strong> (objective: completion), <strong>efficiency</strong> (objective: time), and <strong>satisfaction</strong> (subjective).</p>
+<p>🔗 <a href="https://measuringux.com/">Measuring UX</a> — Quantitative UX metrics handbook</p>
+</blockquote>
+<h3 id="server-side-instrumentation"><a class="header" href="#server-side-instrumentation">Server-Side Instrumentation</a></h3>
+<blockquote>
+<p><strong>Server-Side Instrumentation</strong> [GLOSSARY]</p>
+<p>Logging application events at the server (not client). Data captured regardless of JavaScript availability.</p>
+<p><strong>Why server-side?</strong></p>
+<ul>
+<li><strong>Reliability</strong>: Can't be blocked by ad blockers, disabled JS, browser crashes</li>
+<li><strong>Privacy</strong>: No third-party analytics (e.g., Google Analytics) that track across sites</li>
+<li><strong>Parity</strong>: Same data structure for HTMX and no-JS paths</li>
+<li><strong>Control</strong>: You own the data (no GDPR concerns with external processors)</li>
+</ul>
+<p><strong>Pattern</strong>:</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val start = System.currentTimeMillis()
+    // ... validation, update logic ...
+    val duration = System.currentTimeMillis() - start
+    Logger.write(session, reqId, "T2_edit", "success", "", duration, 200, jsMode)
+}
+</code></pre>
+<p><strong>Log structure</strong> (CSV):</p>
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+2025-10-13T14:23:01Z,abc123,r001,T1_filter,success,,1847,200,on
+2025-10-13T14:23:15Z,abc123,r002,T2_edit,validation_error,blank_title,234,400,on
+</code></pre>
+<p><strong>HCI Connection</strong>: Instrumentation enables <strong>empirical HCI</strong>—quantify behaviour at scale (beyond 5 pilot peers).</p>
+<p>🔗 <a href="https://www.exp-platform.com/">Kohavi et al.: Online Controlled Experiments</a> — Industry practice</p>
+</blockquote>
+<h3 id="privacy-by-design-revisited"><a class="header" href="#privacy-by-design-revisited">Privacy by Design (Revisited)</a></h3>
+<blockquote>
+<p><strong>Privacy by Design</strong> [GLOSSARY]</p>
+<p>Build data minimization and privacy into system architecture (not bolt on later).</p>
+<p><strong>Week 9 requirements</strong>:</p>
+<ul>
+<li><strong>Anonymous session IDs</strong>: Random tokens (e.g., <code>sid=X7kL9p</code>), not names/emails</li>
+<li><strong>No PII in logs</strong>: No IP addresses, device fingerprints, real names</li>
+<li><strong>Opt-out mechanism</strong>: Participants can request data deletion (delete rows matching session_id)</li>
+<li><strong>Local storage</strong>: Logs stay in private repo, not synced to public forks</li>
+<li><strong>Consent clarity</strong>: Protocol explains what's logged and why</li>
+</ul>
+<p><strong>Example — BAD</strong>:</p>
+<pre><code class="language-csv">timestamp,email,task,duration
+2025-10-13,alice@leeds.ac.uk,T1,1800
+</code></pre>
+<p>❌ Email is PII, violates GDPR</p>
+<p><strong>Example — GOOD</strong>:</p>
+<pre><code class="language-csv">ts_iso,session_id,task_code,ms,js_mode
+2025-10-13T14:23:01Z,X7kL9p,T1,1800,on
+</code></pre>
+<p>✅ Anonymous, minimal, fit-for-purpose</p>
+<p><strong>UK context</strong>: Data Protection Act 2018 + UK GDPR require <strong>lawful basis</strong> for processing. Low-risk peer studies at universities typically use "legitimate interest" or "consent" basis. <strong>Must document</strong> in protocol.</p>
+<p>🔗 Review <a href="../../references/consent-pii-faq.html">Consent and PII FAQ</a> for full guidance
+🔗 <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/data-protection-by-design-and-default/">ICO: Privacy by Design</a></p>
+</blockquote>
+<h3 id="median-vs-mean"><a class="header" href="#median-vs-mean">Median vs Mean</a></h3>
+<blockquote>
+<p><strong>Median</strong> [GLOSSARY]</p>
+<p>Middle value in sorted dataset. <strong>Resistant to outliers</strong>.</p>
+<p><strong>Example</strong>: Task completion times [10s, 12s, 15s, 18s, 120s]</p>
+<ul>
+<li>Mean = (10+12+15+18+120)/5 = <strong>35s</strong> ← skewed by 120s outlier</li>
+<li>Median = <strong>15s</strong> ← middle value, represents typical experience</li>
+</ul>
+<p><strong>Why use median in HCI?</strong> Completion times often have outliers (someone distracted, interrupted, confused). Median tells you what most people experienced.</p>
+<p><strong>Median Absolute Deviation (MAD)</strong>: Robust measure of spread.</p>
+<pre><code>MAD = median(|x_i - median(x)|)
+</code></pre>
+<p>Less sensitive to outliers than standard deviation.</p>
+<p><strong>HCI Connection</strong>: Report median + MAD for timing data. Use mean for Likert scales (confidence ratings) where outliers are meaningful.</p>
+<p>🔗 <a href="https://measuringux.com/median/">Measuring UX: Why Median?</a></p>
+</blockquote>
+<hr />
+<h2 id="activity-a-define-evaluation-tasks-30-min"><a class="header" href="#activity-a-define-evaluation-tasks-30-min">Activity A: Define Evaluation Tasks (30 min)</a></h2>
+<p><strong>Goal</strong>: Create 3-4 realistic tasks that cover critical flows and accessibility concerns.</p>
+<h3 id="step-1-review-backlog-and-audit-findings-10-min"><a class="header" href="#step-1-review-backlog-and-audit-findings-10-min">Step 1: Review backlog and audit findings (10 min)</a></h3>
+<p>Open <code>backlog/backlog.csv</code> and identify:</p>
+<ul>
+<li>High-priority features (create, edit, delete, filter)</li>
+<li>Accessibility fixes from Week 7 (inline edit, status announcements)</li>
+<li>No-JS parity concerns from Week 8</li>
+</ul>
+<p><strong>Example backlog snippet</strong>:</p>
+<pre><code class="language-csv">id,week,priority,category,description,wcag,status
+wk7-03,7,high,a11y,"Status messages not announced in no-JS mode",4.1.3,fixed
+wk8-01,8,high,parity,"Delete confirmation missing in no-JS",3.3.4,open
+wk8-05,8,medium,ux,"Filter doesn't show 'no results' message",3.3.1,open
+</code></pre>
+<p><strong>Identify task candidates</strong>:</p>
+<ul>
+<li><strong>T1</strong>: Filter tasks (tests search, result announcement, no-results state)</li>
+<li><strong>T2</strong>: Edit task inline (tests validation, focus management, status announcement)</li>
+<li><strong>T3</strong>: Add task (tests create flow, PRG, error handling)</li>
+<li><strong>T4</strong>: Delete task (tests confirmation, dual-path, status)</li>
+</ul>
+<h3 id="step-2-write-task-scenarios-15-min"><a class="header" href="#step-2-write-task-scenarios-15-min">Step 2: Write task scenarios (15 min)</a></h3>
+<p><strong>Create <code>wk09/lab-wk9/research/tasks.md</code></strong>:</p>
+<pre><code class="language-markdown"># Evaluation Tasks — Week 9
+
+## Task T1: Filter Tasks
+
+**Scenario**:
+"You've been asked to find all tasks containing the word 'report'. Use the filter box to show only matching tasks, then count how many tasks remain."
+
+**Setup**:
+- Pre-populate task list with 10 tasks, 3 containing "report" in title
+- Example: "Submit expense report", "Draft annual report", "Review quarterly report", plus 7 others
+
+**Success criteria**:
+- Participant uses filter box (types "report")
+- Participant reports correct count (3 tasks)
+- Completed within 2 minutes
+- No validation errors
+
+**Metrics**:
+- Time from page load to stating count (ms)
+- Completion (0 = fail, 1 = success)
+- Validation errors (count)
+- Confidence rating (1–5): "How confident are you that you found all matching tasks?"
+
+**Accessibility checks**:
+- Result count announced by screen reader?
+- Keyboard-only completion possible?
+- Works with JS disabled?
+
+---
+
+## Task T2: Edit Task Title
+
+**Scenario**:
+"The task 'Submit invoices' has a typo. Change it to 'Submit invoices by Friday' and save the change."
+
+**Setup**:
+- Task ID 5: "Submit invoices" (visible in list)
+- Participant must click Edit, change text, save
+
+**Success criteria**:
+- Participant activates edit mode
+- Participant updates title correctly
+- Change persists after save
+- Completed within 90 seconds
+- No validation errors
+
+**Metrics**:
+- Time from click Edit to save confirmation (ms)
+- Completion (0/1)
+- Validation errors (e.g., blank title submitted by mistake)
+- Confidence rating (1–5)
+
+**Accessibility checks**:
+- Status message "Updated [title]" announced?
+- Focus remains on/near edited task?
+- Works with keyboard only?
+- Works with JS disabled?
+
+---
+
+## Task T3: Add New Task
+
+**Scenario**:
+"You need to remember to 'Call supplier about delivery'. Add this as a new task."
+
+**Setup**:
+- Empty or partially filled task list
+- Form visible at top of page
+
+**Success criteria**:
+- Participant types exact title (or close match)
+- Submits form
+- New task appears in list
+- Completed within 60 seconds
+
+**Metrics**:
+- Time from focus in input to confirmation (ms)
+- Completion (0/1)
+- Validation errors (if they submit blank by accident)
+- Confidence rating (1–5)
+
+**Accessibility checks**:
+- Status message "Added [title]" announced?
+- Form remains usable after error (if triggered)?
+- Works with JS disabled (PRG)?
+
+---
+
+## Task T4: Delete Task
+
+**Scenario**:
+"The task 'Test entry' is no longer needed. Delete it from the list."
+
+**Setup**:
+- Task ID 8: "Test entry" (visible in list)
+
+**Success criteria**:
+- Participant clicks Delete button
+- Confirms deletion (HTMX path) or submits form (no-JS)
+- Task removed from list
+- Completed within 45 seconds
+
+**Metrics**:
+- Time from click Delete to confirmation (ms)
+- Completion (0/1)
+- Confirmation dialog acknowledged (HTMX only)
+- Confidence rating (1–5)
+
+**Accessibility checks**:
+- Delete button has accessible name ("Delete task: Test entry")?
+- Status message "Deleted [title]" announced (HTMX)?
+- Works with keyboard only?
+- Works with JS disabled (no confirmation, but functions)?
+
+---
+
+## Task Order
+
+**Recommended sequence**:
+1. **Warm-up** (not timed): "Browse the task list and familiarize yourself with the interface."
+2. T3 (Add) — Low cognitive load, builds confidence
+3. T1 (Filter) — Medium complexity, tests search
+4. T2 (Edit) — Tests inline interaction, validation
+5. T4 (Delete) — Destructive action, tests confirmation
+6. **Debrief** (qualitative): Open-ended questions
+
+**Counterbalance** if testing multiple participants: alternate T1/T2 order to avoid learning effects.
+
+---
+
+## Notes for Facilitator
+
+- **Do not help** unless participant is completely stuck (&gt;3 min). Note as "facilitated" in observations.
+- **Think-aloud optional**: Ask participants to narrate their thoughts if comfortable. Don't force.
+- **Screen reader users**: Allow extra time for navigation. Log SR-specific observations separately.
+- **Keyboard-only**: Offer keyboard-only variant to 1-2 participants for comparison.
+- **No-JS**: Test at least 1 participant with JS disabled to verify parity.
+
+---
+
+## Success Definitions
+
+**Completion codes**:
+- `1` = Task fully completed, correct outcome
+- `0.5` = Partial completion (e.g., found filter but wrong count)
+- `0` = Failed or abandoned
+
+**Time bounds**:
+- T1: 120s
+- T2: 90s
+- T3: 60s
+- T4: 45s
+
+If participant exceeds time, prompt: "Would you like to continue, or shall we move to the next task?"
+</code></pre>
+<h3 id="step-3-validate-tasks-with-team-5-min"><a class="header" href="#step-3-validate-tasks-with-team-5-min">Step 3: Validate tasks with team (5 min)</a></h3>
+<p>Walk through each task with your pair/team:</p>
+<ul>
+<li>Are scenarios realistic?</li>
+<li>Are success criteria measurable?</li>
+<li>Do they cover your backlog priorities?</li>
+<li>Can they be completed in allocated time?</li>
+</ul>
+<p>Adjust wording if anything is ambiguous.</p>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+3-4 tasks defined with clear scenarios</li>
+<li><input disabled="" type="checkbox"/>
+Success criteria objective and measurable</li>
+<li><input disabled="" type="checkbox"/>
+Metrics list includes objective + subjective</li>
+<li><input disabled="" type="checkbox"/>
+Accessibility checks specified per task</li>
+<li><input disabled="" type="checkbox"/>
+Task order and timing planned</li>
+</ul>
+<hr />
+<h2 id="activity-b-define-metrics-and-measures-20-min"><a class="header" href="#activity-b-define-metrics-and-measures-20-min">Activity B: Define Metrics and Measures (20 min)</a></h2>
+<p><strong>Goal</strong>: Specify exactly how you'll calculate each metric. Prevents ambiguity during analysis (Week 10).</p>
+<p><strong>Create <code>wk09/lab-wk9/research/measures.md</code></strong>:</p>
+<pre><code class="language-markdown"># Metrics Definitions — Week 9
+
+Reference: [Evaluation Metrics Quick Reference](../../references/evaluation-metrics-quickref.md)
+
+---
+
+## Objective Metrics
+
+### 1. Completion Rate
+
+**Definition**: Proportion of participants who successfully complete the task.
+
+**Calculation**:
+</code></pre>
+<p>Completion rate = (# successes) / (# attempts)</p>
+<pre><code>
+**Data source**: Manual observation + server logs (look for `step=success`)
+
+**Reporting**: Percentage per task (e.g., "T1: 4/5 = 80%")
+
+**Split by**:
+- JS-on vs JS-off
+- Keyboard-only vs mouse
+- Screen reader vs visual
+
+---
+
+### 2. Time-on-Task
+
+**Definition**: Duration from task start to completion or abandonment.
+
+**Calculation**:
+- **Server-timed**: `ms` column in metrics.csv (start to success event)
+- **Backup**: Facilitator stopwatch (start when participant reads scenario, stop when they say "done")
+
+**Reporting**:
+- **Median** (primary): Middle value, resistant to outliers
+- **MAD**: Median absolute deviation for spread
+- **Range**: Min-max for context
+
+**Example**:
+</code></pre>
+<p>T1 (Filter):
+Median: 24s
+MAD: 6s
+Range: 12s–58s (n=5)</p>
+<pre><code>
+**Split by**: JS-on vs JS-off (expect no-JS to be slower due to full page reloads)
+
+---
+
+### 3. Error Rate
+
+**Definition**: Proportion of attempts that trigger validation errors.
+
+**Calculation**:
+</code></pre>
+<p>Error rate = (# validation_error events) / (# total attempts)</p>
+<pre><code>
+**Data source**: `data/metrics.csv` where `step=validation_error`
+
+**Reporting**: Percentage per task + qualitative notes on error type
+
+**Example**:
+</code></pre>
+<p>T3 (Add Task):
+Error rate: 2/5 = 40%
+Errors: 1× blank title, 1× exceeded max length</p>
+<pre><code>
+**HCI insight**: High error rates → poor affordances, unclear constraints, or accessibility issues
+
+---
+
+### 4. Validation Error Count
+
+**Definition**: Number of validation errors per participant per task.
+
+**Calculation**: Count rows in `metrics.csv` with `step=validation_error` for given session + task
+
+**Reporting**: Mean errors per task
+
+**Example**:
+</code></pre>
+<p>T2 (Edit):
+Mean errors per participant: 0.4 (2 errors across 5 participants)</p>
+<pre><code>
+---
+
+## Subjective Metrics
+
+### 5. Confidence Rating
+
+**Definition**: Self-reported confidence that task was completed correctly.
+
+**Scale**: 1 (not at all confident) → 5 (very confident)
+
+**Collection method**: Ask immediately after each task:
+&gt; "On a scale of 1 to 5, how confident are you that you completed that task correctly?"
+
+**Reporting**:
+- Mean + standard deviation
+- Distribution (how many rated 1, 2, 3, 4, 5)
+
+**Example**:
+</code></pre>
+<p>T1 (Filter):
+Mean confidence: 4.2 ± 0.8
+Distribution: 0×1, 0×2, 1×3, 2×4, 2×5</p>
+<pre><code>
+**HCI insight**: Low confidence despite successful completion → interface doesn't provide sufficient feedback
+
+---
+
+### 6. Difficulty Rating (optional)
+
+**Definition**: Perceived difficulty of task.
+
+**Scale**: 1 (very easy) → 7 (very difficult)
+
+**Collection method**: Post-task question:
+&gt; "How difficult was that task?"
+
+**Reporting**: Mean ± SD per task
+
+---
+
+### 7. Post-Session Satisfaction (optional)
+
+**Method**: 2-question UMUX-Lite (if time permits):
+1. "This system's capabilities meet my requirements" (1–7: strongly disagree → strongly agree)
+2. "This system is easy to use" (1–7: strongly disagree → strongly agree)
+
+**Calculation**: Average of the two responses (higher = better perceived usability)
+
+**Reporting**: Mean score across all participants
+
+**Note**: UMUX-Lite takes &lt;30 seconds, validated proxy for SUS (System Usability Scale)
+
+---
+
+## Qualitative Observations
+
+### 8. Facilitator Notes
+
+**Capture**:
+- Hesitations ("Participant paused 10s before clicking filter")
+- Verbalizations ("I'm not sure if it saved")
+- Accessibility issues ("Screen reader didn't announce result count")
+- Workarounds ("Used Ctrl+F instead of built-in filter")
+
+**Format**: Timestamped notes in `pilot-notes.md`
+
+**Analysis**: Thematic coding in Week 10 (group similar issues, link to backlog items)
+
+---
+
+## Accessibility-Specific Metrics
+
+### 9. Keyboard-Only Completion
+
+**Definition**: Can task be completed using only keyboard (no mouse)?
+
+**Measurement**: Binary per task (yes/no)
+
+**Reporting**: "T1: Keyboard-accessible ✅" or "T3: Tab order broken, failed ✗"
+
+---
+
+### 10. Screen Reader Announcement Quality
+
+**Definition**: Are status messages and result counts announced appropriately?
+
+**Measurement**: Qualitative note per task (announced / not announced / partial)
+
+**Reporting**: List issues with WCAG references (4.1.3 Status Messages)
+
+---
+
+## Data Integrity Checks
+
+Before analysis (Week 10):
+- **Completeness**: All tasks have `session_id`, `task_code`, `step`
+- **Plausibility**: Times within expected ranges (12s–120s for T1)
+- **Consistency**: JS-mode matches observed condition
+- **Outliers**: Flag times &gt;3× median for review
+
+Document any anomalies in `wk09/lab-wk9/research/data-notes.md`
+
+---
+
+## Summary Table
+
+| Metric | Type | Source | Calculation | Reporting |
+|--------|------|--------|-------------|-----------|
+| Completion rate | Objective | Manual + logs | successes / attempts | % per task |
+| Time-on-task | Objective | Server logs | Median + MAD | Seconds |
+| Error rate | Objective | Server logs | errors / attempts | % per task |
+| Confidence | Subjective | Post-task question | Mean ± SD | 1–5 scale |
+| Facilitator notes | Qualitative | Manual observation | Thematic coding | Categories |
+| KB-only completion | Accessibility | Manual test | Binary | ✅/✗ |
+| SR announcements | Accessibility | SR observation | Qualitative | Issues list |
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Every metric has clear definition</li>
+<li><input disabled="" type="checkbox"/>
+Calculation methods specified</li>
+<li><input disabled="" type="checkbox"/>
+Data sources identified (logs vs manual)</li>
+<li><input disabled="" type="checkbox"/>
+Reporting format decided (median vs mean, etc.)</li>
+<li><input disabled="" type="checkbox"/>
+Accessibility metrics included</li>
+</ul>
+<hr />
+<h2 id="activity-c-write-ethical-protocol-25-min"><a class="header" href="#activity-c-write-ethical-protocol-25-min">Activity C: Write Ethical Protocol (25 min)</a></h2>
+<p><strong>Goal</strong>: Document the procedure so it's repeatable and ethical.</p>
+<p><strong>Create <code>wk09/lab-wk9/research/protocol.md</code></strong>:</p>
+<pre><code class="language-markdown"># Peer Pilot Protocol — Week 9
+
+## Study Overview
+
+**Purpose**: Evaluate usability and accessibility of task list prototype with peer participants.
+
+**Type**: Low-risk formative evaluation, peer-to-peer within module.
+
+**Scope**:
+- 5–6 participants (lab pairs)
+- 4 tasks per session (~15–20 minutes)
+- No audio/video recording
+- No personally identifiable information collected
+
+**Ethical approval**: Covered by module's blanket low-risk consent for peer learning activities (verified with module leader).
+
+**Data retention**: Anonymised logs stored in private repo for academic year, deleted after module assessment complete.
+
+---
+
+## Participant Requirements
+
+**Inclusion**:
+- Enrolled in COMP2850
+- Comfortable using web browsers
+- Able to provide informed consent
+
+**Exclusion**:
+- None (module is inclusive by design)
+
+**Accessibility accommodations**:
+- Screen reader users: allowed extra time, SR-specific observations recorded separately
+- Keyboard-only users: explicitly invited to test no-mouse variant
+- No-JS users: at least one session conducted with JS disabled
+
+---
+
+## Consent Process
+
+**Before starting** (read aloud):
+
+&gt; "Thanks for agreeing to pilot our prototype. This is a quick usability test—about 15 minutes. I'll ask you to complete 4 tasks while I observe and take notes. I'm testing the interface, not you, so there are no wrong answers.
+&gt;
+&gt; **What we're collecting**:
+&gt; - Task completion times (from server logs)
+&gt; - Whether you complete each task successfully
+&gt; - Errors or validation issues
+&gt; - Your confidence ratings after each task
+&gt; - My notes on any hesitations or accessibility issues
+&gt;
+&gt; **What we're NOT collecting**:
+&gt; - Your name, email, or student ID
+&gt; - Screen recordings or audio
+&gt; - Your device details beyond 'keyboard-only' or 'screen reader'
+&gt;
+&gt; I'll assign you a random session code (like `sid=X7kL9p`) which will appear in the logs. You can request that I delete all data linked to your session code at any time, even after today.
+&gt;
+&gt; **You can stop at any time**, no questions asked, and it won't affect your grade.
+&gt;
+&gt; Do you have any questions before we start?"
+
+**Verbal consent**: "Are you happy to proceed?"
+
+Record in `wk09/lab-wk9/research/consent-log.md`:
+</code></pre>
+<p>Date: 2025-10-15
+Participant code: P1
+Session ID: X7kL9p
+Consent: Verbal consent given
+Notes: Requested keyboard-only variant</p>
+<pre><code>
+**Opt-out path**: If participant requests deletion:
+1. Open `data/metrics.csv`
+2. Delete all rows where `session_id=X7kL9p`
+3. Note in `consent-log.md`: "Data deleted on request [date]"
+
+---
+
+## Session Setup
+
+**Environment**:
+- Quiet space in lab (not open-plan area)
+- Participant laptop/desktop with browser open to prototype
+- Facilitator laptop for notes (don't share screen)
+
+**Pre-pilot**:
+1. Generate random session ID: `openssl rand -hex 3` → e.g., `7a9f2c`
+2. Set cookie in participant browser:
+   ```javascript
+   document.cookie = "sid=7a9f2c; path=/";
+</code></pre>
+<ol start="3">
+<li>Navigate to <code>/tasks</code> (should be pre-populated with seed data)</li>
+<li>Position facilitator to side (not behind—feels invasive)</li>
+</ol>
+<p><strong>Materials</strong>:</p>
+<ul>
+<li>Printed task scenarios (or read aloud)</li>
+<li><code>pilot-notes.md</code> template open</li>
+<li>Stopwatch (backup timing)</li>
+</ul>
+<hr />
+<h2 id="session-flow"><a class="header" href="#session-flow">Session Flow</a></h2>
+<h3 id="0-introduction-2-min"><a class="header" href="#0-introduction-2-min">0. Introduction (2 min)</a></h3>
+<ul>
+<li>Consent process (see above)</li>
+<li>Explain think-aloud (optional): "Feel free to say what you're thinking as you go, but no pressure."</li>
+<li>Set expectations: "I won't help unless you're stuck for &gt;3 minutes."</li>
+</ul>
+<h3 id="1-warm-up-2-min-not-timed"><a class="header" href="#1-warm-up-2-min-not-timed">1. Warm-up (2 min, not timed)</a></h3>
+<p>"Take a minute to browse the task list. Click around, get familiar. Let me know when you're ready to start the timed tasks."</p>
+<h3 id="2-task-t3-add-task-60s-limit"><a class="header" href="#2-task-t3-add-task-60s-limit">2. Task T3: Add Task (60s limit)</a></h3>
+<p><strong>Read scenario</strong>:
+"You need to remember to 'Call supplier about delivery'. Add this as a new task."</p>
+<p><strong>Start timing</strong> when participant focuses in input field (or reads scenario, if using stopwatch).</p>
+<p><strong>Observe</strong>:</p>
+<ul>
+<li>Do they find the form immediately?</li>
+<li>Do they submit blank by mistake?</li>
+<li>Do they notice the success confirmation?</li>
+</ul>
+<p><strong>Post-task question</strong>:
+"On a scale of 1 to 5, how confident are you that you completed that correctly?"</p>
+<p><strong>Record</strong>: Completion (0/1), confidence, notes</p>
+<hr />
+<h3 id="3-task-t1-filter-tasks-120s-limit"><a class="header" href="#3-task-t1-filter-tasks-120s-limit">3. Task T1: Filter Tasks (120s limit)</a></h3>
+<p><strong>Read scenario</strong>:
+"You've been asked to find all tasks containing the word 'report'. Use the filter to show only matching tasks, then count how many remain."</p>
+<p><strong>Observe</strong>:</p>
+<ul>
+<li>Do they find the filter box?</li>
+<li>Do they read the result count?</li>
+<li>Do they manually count items?</li>
+</ul>
+<p><strong>Post-task</strong>: Confidence rating</p>
+<hr />
+<h3 id="4-task-t2-edit-task-90s-limit"><a class="header" href="#4-task-t2-edit-task-90s-limit">4. Task T2: Edit Task (90s limit)</a></h3>
+<p><strong>Read scenario</strong>:
+"The task 'Submit invoices' has a typo. Change it to 'Submit invoices by Friday' and save the change."</p>
+<p><strong>Observe</strong>:</p>
+<ul>
+<li>Do they find Edit button?</li>
+<li>Do they trigger validation errors?</li>
+<li>Do they check that change persisted?</li>
+</ul>
+<p><strong>Post-task</strong>: Confidence rating</p>
+<hr />
+<h3 id="5-task-t4-delete-task-45s-limit"><a class="header" href="#5-task-t4-delete-task-45s-limit">5. Task T4: Delete Task (45s limit)</a></h3>
+<p><strong>Read scenario</strong>:
+"The task 'Test entry' is no longer needed. Delete it."</p>
+<p><strong>Observe</strong>:</p>
+<ul>
+<li>Confirmation dialog (HTMX) or direct submit (no-JS)?</li>
+<li>Do they verify deletion succeeded?</li>
+</ul>
+<p><strong>Post-task</strong>: Confidence rating</p>
+<hr />
+<h3 id="6-debrief-3-min"><a class="header" href="#6-debrief-3-min">6. Debrief (3 min)</a></h3>
+<p><strong>Ask</strong>:</p>
+<ol>
+<li>"Which task felt most difficult?"</li>
+<li>"Did anything surprise you or not work as you expected?"</li>
+<li>"Were there any points where you weren't sure if something had worked?"</li>
+<li>"(For SR/keyboard users) Did you encounter any accessibility barriers?"</li>
+</ol>
+<p><strong>Record</strong> verbatim quotes in notes.</p>
+<p><strong>Thank participant</strong>:
+"That's really helpful, thank you. Your feedback will directly improve the prototype."</p>
+<hr />
+<h2 id="facilitator-guidelines"><a class="header" href="#facilitator-guidelines">Facilitator Guidelines</a></h2>
+<p><strong>Do</strong>:</p>
+<ul>
+<li>Remain neutral (don't lead: "Did you see the status message?")</li>
+<li>Take detailed notes (timestamps, direct quotes)</li>
+<li>Allow silence (don't fill pauses)</li>
+<li>Note when you intervene ("Prompted after 3min stuck")</li>
+</ul>
+<p><strong>Don't</strong>:</p>
+<ul>
+<li>Explain the interface before tasks</li>
+<li>Show participant how to do something (defeats the test)</li>
+<li>Justify design choices ("It's supposed to work like this...")</li>
+<li>Make participant feel judged</li>
+</ul>
+<p><strong>If participant is completely stuck</strong>:</p>
+<ul>
+<li>Wait 3 minutes</li>
+<li>Ask: "What are you looking for?" (diagnostic question)</li>
+<li>If still stuck: "Let's move to the next task"</li>
+<li><strong>Mark task as failed, note reason</strong></li>
+</ul>
+<hr />
+<h2 id="data-recording"><a class="header" href="#data-recording">Data Recording</a></h2>
+<p><strong>Automated</strong> (server logs → <code>data/metrics.csv</code>):</p>
+<ul>
+<li>Timestamp, session_id, task_code, step (start/success/validation_error), ms, js_mode</li>
+</ul>
+<p><strong>Manual</strong> (<code>wk09/lab-wk9/research/pilot-notes.md</code>):</p>
+<pre><code>Session: P1 (sid=7a9f2c)
+Date: 2025-10-15
+Variant: Keyboard-only, JS-on
+
+| Time | Task | Observation | Tag |
+|------|------|-------------|-----|
+| 14:23 | T3 | Participant hesitated before submitting—unsure if 'Enter' or button | ux-feedback |
+| 14:25 | T3 | Success message not noticed initially | a11y-status |
+| 14:26 | T1 | Typed 'report' slowly, watching for instant results | ux-expectation |
+| 14:27 | T1 | Screen reader announced "Showing 3 tasks" ✓ | a11y-pass |
+| 14:29 | T2 | Clicked Edit, validation error triggered (blank submission) | error-handling |
+| 14:30 | T2 | Recovered from error, completed successfully | resilience |
+
+Debrief notes:
+- "I liked that the filter worked without clicking a button"
+- "I wasn't sure the edit saved—maybe make the message more obvious?"
+- SR announced status messages correctly throughout
+</code></pre>
+<p><strong>Subjective ratings</strong> (post-task, in notes):</p>
+<pre><code>Confidence ratings (1–5):
+  T3: 5
+  T1: 4
+  T2: 3 ("not sure it saved")
+  T4: 5
+</code></pre>
+<hr />
+<h2 id="post-session"><a class="header" href="#post-session">Post-Session</a></h2>
+<p><strong>Immediate</strong>:</p>
+<ol>
+<li>Save notes to <code>wk09/lab-wk9/research/pilots/P1-notes.md</code></li>
+<li>Check <code>data/metrics.csv</code> for completeness (all tasks logged?)</li>
+<li>Note any missing data or anomalies</li>
+</ol>
+<p><strong>After all pilots</strong>:</p>
+<ol>
+<li>Copy <code>data/metrics.csv</code> to <code>wk09/lab-wk9/submission/task1-draft/results.csv</code></li>
+<li>Aggregate notes into themes (Week 10 lab)</li>
+<li>Calculate medians, error rates (Week 10 lab)</li>
+</ol>
+<hr />
+<h2 id="accessibility-variants"><a class="header" href="#accessibility-variants">Accessibility Variants</a></h2>
+<h3 id="keyboard-only-session"><a class="header" href="#keyboard-only-session">Keyboard-Only Session</a></h3>
+<ul>
+<li>Participant uses Tab, Enter, Space only (no mouse)</li>
+<li>Observe tab order, focus visibility, keyboard traps</li>
+<li>Note any unreachable elements</li>
+</ul>
+<h3 id="screen-reader-session"><a class="header" href="#screen-reader-session">Screen Reader Session</a></h3>
+<ul>
+<li>Participant uses NVDA (Windows) or Orca (Linux)</li>
+<li>Allow 2× time for navigation</li>
+<li>Note announcements, label quality, live region behaviour</li>
+<li>Capture SR output in notes (verbatim if possible)</li>
+</ul>
+<h3 id="no-js-session"><a class="header" href="#no-js-session">No-JS Session</a></h3>
+<ul>
+<li>Disable JavaScript in browser settings before starting</li>
+<li>Expect slower times (full page reloads)</li>
+<li>Verify all tasks still function (parity check)</li>
+<li>Note any missing features or broken flows</li>
+</ul>
+<hr />
+<h2 id="risk-mitigation"><a class="header" href="#risk-mitigation">Risk Mitigation</a></h2>
+<p><strong>Participant distress</strong>: If participant becomes frustrated:</p>
+<ul>
+<li>Reassure: "This is really helpful feedback—it's the interface, not you."</li>
+<li>Offer to skip task or stop session</li>
+</ul>
+<p><strong>Technical failure</strong>: If server crashes mid-session:</p>
+<ul>
+<li>Restart server, reload page</li>
+<li>Resume from next task (don't re-run completed tasks)</li>
+<li>Note incident in data-notes.md</li>
+</ul>
+<p><strong>Data loss</strong>: If logs don't record correctly:</p>
+<ul>
+<li>Use facilitator stopwatch times as backup</li>
+<li>Note in data-notes.md: "Session P3: server logs incomplete, used manual timing"</li>
+</ul>
+<hr />
+<h2 id="summary-checklist"><a class="header" href="#summary-checklist">Summary Checklist</a></h2>
+<p>Before each session:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Generate session ID, set cookie</li>
+<li><input disabled="" type="checkbox"/>
+Seed task database with test data</li>
+<li><input disabled="" type="checkbox"/>
+Print or queue task scenarios</li>
+<li><input disabled="" type="checkbox"/>
+Open pilot-notes template</li>
+<li><input disabled="" type="checkbox"/>
+Confirm server running</li>
+</ul>
+<p>During session:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Read consent script, obtain verbal consent</li>
+<li><input disabled="" type="checkbox"/>
+Record session metadata (P code, sid, date)</li>
+<li><input disabled="" type="checkbox"/>
+Time each task (automated + backup)</li>
+<li><input disabled="" type="checkbox"/>
+Collect confidence ratings</li>
+<li><input disabled="" type="checkbox"/>
+Take qualitative notes with timestamps</li>
+<li><input disabled="" type="checkbox"/>
+Debrief open questions</li>
+</ul>
+<p>After session:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Save notes to pilots/ directory</li>
+<li><input disabled="" type="checkbox"/>
+Verify logs in metrics.csv</li>
+<li><input disabled="" type="checkbox"/>
+Thank participant, reiterate opt-out path</li>
+</ul>
+<pre><code>
+✋ **Stop and check**:
+- [ ] Consent process clear and ethical
+- [ ] Session flow structured and timed
+- [ ] Facilitator guidelines prevent bias
+- [ ] Data recording specified (auto + manual)
+- [ ] Accessibility variants documented
+- [ ] Risk mitigation addressed
+
+---
+
+## Activity D: Implement Instrumentation (35 min)
+
+**Goal**: Add server-side logging to capture task events.
+
+### Step 1: Define schema (5 min)
+
+**Create `wk09/lab-wk9/instr/schema.md`**:
+
+```markdown
+# Metrics CSV Schema
+
+**File**: `data/metrics.csv`
+
+**Columns**:
+```csv
+ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Column</th><th>Type</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>ts_iso</code></td><td>ISO 8601 timestamp</td><td>Event timestamp (UTC)</td><td><code>2025-10-13T14:23:01.832Z</code></td></tr>
+<tr><td><code>session_id</code></td><td>String (6-12 chars)</td><td>Anonymous session identifier</td><td><code>X7kL9p</code></td></tr>
+<tr><td><code>request_id</code></td><td>String</td><td>Unique request identifier</td><td><code>r001</code></td></tr>
+<tr><td><code>task_code</code></td><td>String</td><td>Task identifier from evaluation plan</td><td><code>T1_filter</code>, <code>T2_edit</code>, <code>T3_add</code>, <code>T4_delete</code></td></tr>
+<tr><td><code>step</code></td><td>Enum</td><td>Event type</td><td><code>start</code>, <code>success</code>, <code>validation_error</code>, <code>fail</code>, <code>server_error</code></td></tr>
+<tr><td><code>outcome</code></td><td>String</td><td>Specific outcome (for errors)</td><td><code>blank_title</code>, <code>max_length</code>, empty for success</td></tr>
+<tr><td><code>ms</code></td><td>Integer</td><td>Duration in milliseconds (start to event)</td><td><code>1847</code></td></tr>
+<tr><td><code>http_status</code></td><td>Integer</td><td>HTTP status code</td><td><code>200</code>, <code>400</code>, <code>500</code></td></tr>
+<tr><td><code>js_mode</code></td><td>Enum</td><td>JavaScript availability</td><td><code>on</code> (HTMX), <code>off</code> (no-JS)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Example rows</strong>:</p>
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+2025-10-13T14:23:01.832Z,X7kL9p,r001,T1_filter,success,,1847,200,on
+2025-10-13T14:25:12.123Z,X7kL9p,r002,T3_add,validation_error,blank_title,234,400,on
+2025-10-13T14:26:03.456Z,X7kL9p,r003,T3_add,success,,567,200,on
+2025-10-13T14:28:15.789Z,X7kL9p,r004,T2_edit,success,,1234,200,on
+</code></pre>
+<blockquote>
+<p><strong>📊 Walkthrough: Understanding a User Session</strong></p>
+<p>Let's trace <strong>one participant</strong> (session <code>X7kL9p</code>) through their tasks:</p>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>Time</th><th>Task</th><th>What Happened</th><th><code>step</code></th><th><code>outcome</code></th><th><code>ms</code></th><th><code>js_mode</code></th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td>14:23:01</td><td><strong>T1</strong> (Filter)</td><td>✅ Successfully filtered tasks</td><td><code>success</code></td><td><em>(empty)</em></td><td>1847ms</td><td><code>on</code> (HTMX)</td></tr>
+<tr><td><strong>2</strong></td><td>14:25:12</td><td><strong>T3</strong> (Add)</td><td>❌ Tried to add blank title</td><td><code>validation_error</code></td><td><code>blank_title</code></td><td>234ms</td><td><code>on</code> (HTMX)</td></tr>
+<tr><td><strong>3</strong></td><td>14:26:03</td><td><strong>T3</strong> (Add)</td><td>✅ Retry succeeded</td><td><code>success</code></td><td><em>(empty)</em></td><td>567ms</td><td><code>on</code> (HTMX)</td></tr>
+<tr><td><strong>4</strong></td><td>14:28:15</td><td><strong>T2</strong> (Edit)</td><td>✅ Edited task inline</td><td><code>success</code></td><td><em>(empty)</em></td><td>1234ms</td><td><code>on</code> (HTMX)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Observations</strong>:</p>
+<ul>
+<li><strong>Same <code>session_id</code></strong> (<code>X7kL9p</code>) = all rows belong to one participant's session</li>
+<li><strong>Row 2 → Row 3</strong>: User made a validation error (<code>blank_title</code>), then retried successfully</li>
+<li><strong><code>ms</code> column</strong>: Row 2 is fast (234ms) because validation happens server-side instantly, Row 1 is slower (1847ms) because filtering queries the database</li>
+<li><strong><code>js_mode=on</code></strong>: This participant had JavaScript enabled (HTMX working)</li>
+<li><strong><code>outcome</code> empty for success</strong>: Only populated when <code>step=validation_error</code> or <code>fail</code></li>
+</ul>
+<p><strong>Why this matters for analysis</strong>:</p>
+<ul>
+<li><strong>Error rate</strong>: 1 error / 4 attempts = 25% error rate for this participant</li>
+<li><strong>Recovery</strong>: User recovered from error (Row 3 success after Row 2 error) = good resilience</li>
+<li><strong>Time-to-task</strong>: Row 1 took 1.8 seconds (reasonable for filter operation)</li>
+<li><strong>Comparison</strong>: We can compare this participant's times against median times for T1, T2, T3, T4</li>
+</ul>
+</blockquote>
+<p><strong>Notes</strong>:</p>
+<ul>
+<li><code>ms</code> measures server-side duration only (not client rendering)</li>
+<li><code>start</code> events optional (can derive from first log per task per session)</li>
+<li><code>outcome</code> field allows filtering by specific error types in analysis</li>
+</ul>
+<pre><code>
+### Step 2: Create Logger helper (10 min)
+
+**Create `src/main/kotlin/utils/Logger.kt`**:
+
+```kotlin
+package utils
+
+import java.io.File
+import java.time.Instant
+import java.time.format.DateTimeFormatter
+
+/**
+ * Simple CSV logger for HCI evaluation metrics.
+ * Thread-safe, appends to data/metrics.csv.
+ *
+ * Privacy: Ensure session_id is anonymous (no PII).
+ */
+object Logger {
+    private val file = File("data/metrics.csv").apply {
+        parentFile?.mkdirs()
+        if (!exists()) {
+            writeText("ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode\n")
+        }
+    }
+
+    /**
+     * Write a single log entry.
+     *
+     * @param session Anonymous session ID (e.g., from cookie)
+     * @param req Request ID (unique per request, for tracing)
+     * @param task Task code (T1_filter, T2_edit, etc.)
+     * @param step Event type (start, success, validation_error, fail, server_error)
+     * @param outcome Specific outcome for errors (blank_title, max_length, etc.)
+     * @param ms Duration in milliseconds (0 if not applicable)
+     * @param status HTTP status code (200, 400, 500, etc.)
+     * @param js JavaScript mode ("on" or "off")
+     */
+    @Synchronized
+    fun write(
+        session: String,
+        req: String,
+        task: String,
+        step: String,
+        outcome: String,
+        ms: Long,
+        status: Int,
+        js: String
+    ) {
+        val ts = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        file.appendText("$ts,$session,$req,$task,$step,$outcome,$ms,$status,$js\n")
+    }
+
+    /**
+     * Convenience: log validation error with outcome.
+     */
+    fun validationError(
+        session: String,
+        req: String,
+        task: String,
+        outcome: String,
+        ms: Long,
+        js: String
+    ) {
+        write(session, req, task, "validation_error", outcome, ms, 400, js)
+    }
+
+    /**
+     * Convenience: log success.
+     */
+    fun success(
+        session: String,
+        req: String,
+        task: String,
+        ms: Long,
+        js: String
+    ) {
+        write(session, req, task, "success", "", ms, 200, js)
+    }
+}
+</code></pre>
+<h3 id="step-3-create-timing-helper-10-min"><a class="header" href="#step-3-create-timing-helper-10-min">Step 3: Create timing helper (10 min)</a></h3>
+<p><strong>Create <code>src/main/kotlin/utils/Timing.kt</code></strong>:</p>
+<pre><code class="language-kotlin">package utils
+
+import io.ktor.server.application.*
+import io.ktor.util.*
+
+/**
+ * Timing helper for HCI evaluation.
+ * Wraps a block of code, measures duration, logs result.
+ */
+
+// AttributeKey for storing request start time
+val RequestStartTimeKey = AttributeKey&lt;Long&gt;("RequestStartTime")
+
+// AttributeKey for request ID
+val RequestIdKey = AttributeKey&lt;String&gt;("RequestId")
+
+/**
+ * Extension function to time a block of code and log the result.
+ *
+ * Usage:
+ *   call.timed(taskCode = "T1_filter", jsMode = "on") {
+ *       // ... validation, processing, etc.
+ *       // If validation fails, throw exception or return early
+ *   }
+ *
+ * Automatically logs success or captures exceptions.
+ */
+suspend fun ApplicationCall.timed(
+    taskCode: String,
+    jsMode: String,
+    block: suspend ApplicationCall.() -&gt; Unit
+) {
+    val start = System.currentTimeMillis()
+    call.attributes.put(RequestStartTimeKey, start)
+
+    val session = request.cookies["sid"] ?: "anon"
+    val reqId = attributes.getOrNull(RequestIdKey) ?: newReqId()
+
+    try {
+        block()
+        val duration = System.currentTimeMillis() - start
+        Logger.success(session, reqId, taskCode, duration, jsMode)
+    } catch (e: Exception) {
+        val duration = System.currentTimeMillis() - start
+        Logger.write(session, reqId, taskCode, "server_error", e.message ?: "unknown", duration, 500, jsMode)
+        throw e
+    }
+}
+
+/**
+ * Helper to detect JavaScript mode from HTMX header.
+ */
+fun ApplicationCall.isHtmx(): Boolean =
+    request.headers["HX-Request"]?.equals("true", ignoreCase = true) == true
+
+fun ApplicationCall.jsMode(): String =
+    if (isHtmx()) "on" else "off"
+
+/**
+ * Generate a unique request ID.
+ */
+private var requestCounter = 0
+fun newReqId(): String = "r${String.format("%04d", ++requestCounter)}"
+</code></pre>
+<h3 id="step-4-instrument-routes-10-min"><a class="header" href="#step-4-instrument-routes-10-min">Step 4: Instrument routes (10 min)</a></h3>
+<p><strong>Update <code>src/main/kotlin/routes/Tasks.kt</code></strong> (example for POST /tasks):</p>
+<pre><code class="language-kotlin">post("/tasks") {
+    val reqId = newReqId()
+    call.attributes.put(RequestIdKey, reqId)
+
+    val session = call.request.cookies["sid"] ?: "anon"
+    val jsMode = call.jsMode()
+
+    call.timed(taskCode = "T3_add", jsMode = jsMode) {
+        val title = call.receiveParameters()["title"].orEmpty().trim()
+
+        // Validation
+        if (title.isBlank()) {
+            Logger.validationError(session, reqId, "T3_add", "blank_title", 0, jsMode)
+            if (call.isHtmx()) {
+                val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+                return@timed call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+            } else {
+                return@timed call.respondRedirect("/tasks?error=title")
+            }
+        }
+
+        if (title.length &gt; 200) {
+            Logger.validationError(session, reqId, "T3_add", "max_length", 0, jsMode)
+            if (call.isHtmx()) {
+                val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title too long (max 200 chars).&lt;/div&gt;"""
+                return@timed call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+            } else {
+                return@timed call.respondRedirect("/tasks?error=title&amp;msg=too_long")
+            }
+        }
+
+        // Success path
+        val task = repo.add(title)
+        if (call.isHtmx()) {
+            val item = PebbleRender.render("tasks/_item.peb", mapOf("t" to task))
+            val status = """&lt;div id="status" hx-swap-oob="true"&gt;Added "${task.title}".&lt;/div&gt;"""
+            call.respondText(item + status, ContentType.Text.Html)
+        } else {
+            call.respondRedirect("/tasks")
+        }
+    }
+}
+</code></pre>
+<p><strong>Similarly instrument</strong>:</p>
+<ul>
+<li><code>GET /tasks</code> with <code>T1_filter</code> (if query param <code>q</code> present)</li>
+<li><code>POST /tasks/{id}/edit</code> with <code>T2_edit</code></li>
+<li><code>DELETE /tasks/{id}</code> with <code>T4_delete</code></li>
+</ul>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Logger.kt compiles and creates metrics.csv</li>
+<li><input disabled="" type="checkbox"/>
+Timing.kt provides timed{} helper</li>
+<li><input disabled="" type="checkbox"/>
+At least one route instrumented (POST /tasks)</li>
+<li><input disabled="" type="checkbox"/>
+Validation errors logged explicitly</li>
+</ul>
+<hr />
+<h2 id="activity-e-dry-run-and-verify-10-min"><a class="header" href="#activity-e-dry-run-and-verify-10-min">Activity E: Dry Run and Verify (10 min)</a></h2>
+<p><strong>Goal</strong>: Confirm instrumentation works before real pilots.</p>
+<h3 id="step-1-set-session-cookie-2-min"><a class="header" href="#step-1-set-session-cookie-2-min">Step 1: Set session cookie (2 min)</a></h3>
+<p>Open browser DevTools Console:</p>
+<pre><code class="language-javascript">document.cookie = "sid=DRY_RUN_01; path=/";
+</code></pre>
+<p>Reload page.</p>
+<h3 id="step-2-execute-test-tasks-5-min"><a class="header" href="#step-2-execute-test-tasks-5-min">Step 2: Execute test tasks (5 min)</a></h3>
+<p><strong>With JS enabled</strong>:</p>
+<ol>
+<li>Add task "Test task 1" → expect success row in metrics.csv</li>
+<li>Submit empty form → expect validation_error row</li>
+<li>Add task "Test task 2" → expect success row</li>
+<li>Edit a task → expect T2_edit success row</li>
+<li>Delete a task → expect T4_delete success row</li>
+</ol>
+<p><strong>Disable JS</strong>:
+6. Repeat add task (empty + valid) → expect js_mode=off rows</p>
+<h3 id="step-3-inspect-logs-3-min"><a class="header" href="#step-3-inspect-logs-3-min">Step 3: Inspect logs (3 min)</a></h3>
+<p>Open <code>data/metrics.csv</code>:</p>
+<p><strong>Expected columns</strong>:</p>
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+</code></pre>
+<p><strong>Example rows</strong>:</p>
+<pre><code class="language-csv">2025-10-13T15:01:23.456Z,DRY_RUN_01,r001,T3_add,success,,567,200,on
+2025-10-13T15:01:45.789Z,DRY_RUN_01,r002,T3_add,validation_error,blank_title,0,400,on
+2025-10-13T15:02:10.123Z,DRY_RUN_01,r003,T3_add,success,,432,200,on
+2025-10-13T15:03:00.000Z,DRY_RUN_01,r004,T2_edit,success,,1234,200,on
+2025-10-13T15:03:30.500Z,DRY_RUN_01,r005,T4_delete,success,,210,200,on
+2025-10-13T15:04:15.800Z,DRY_RUN_01,r006,T3_add,success,,3456,200,off
+</code></pre>
+<p><strong>Verify</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+All columns present</li>
+<li><input disabled="" type="checkbox"/>
+Timestamps in ISO 8601 format</li>
+<li><input disabled="" type="checkbox"/>
+session_id consistent (DRY_RUN_01)</li>
+<li><input disabled="" type="checkbox"/>
+task_code matches your task definitions</li>
+<li><input disabled="" type="checkbox"/>
+js_mode correct (on for HTMX, off for no-JS)</li>
+<li><input disabled="" type="checkbox"/>
+Durations plausible (not negative, not absurdly high)</li>
+<li><input disabled="" type="checkbox"/>
+HTTP status codes correct (200 success, 400 validation error)</li>
+</ul>
+<p><strong>If anything is wrong</strong>: Fix Logger.kt or route instrumentation, re-run dry run.</p>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Dry run completed with JS-on and JS-off paths</li>
+<li><input disabled="" type="checkbox"/>
+metrics.csv contains valid rows</li>
+<li><input disabled="" type="checkbox"/>
+Validation errors logged correctly</li>
+<li><input disabled="" type="checkbox"/>
+Durations captured</li>
+</ul>
+<hr />
+<h2 id="commit--reflect-10-min"><a class="header" href="#commit--reflect-10-min">Commit &amp; Reflect (10 min)</a></h2>
+<h3 id="commit-message"><a class="header" href="#commit-message">Commit message</a></h3>
+<pre><code class="language-bash">git add wk09/lab-wk9/research wk09/lab-wk9/instr src/main/kotlin/utils data/metrics.csv
+
+git commit -m "$(cat &lt;&lt;'EOF'
+wk9s1: evaluation plan + server-side instrumentation
+
+- Defined 4 tasks (filter, edit, add, delete) with success criteria
+- Documented objective + subjective metrics (completion, time, errors, confidence)
+- Created ethical protocol with consent process, session flow, accessibility variants
+- Implemented Logger.kt (CSV appender, thread-safe)
+- Implemented Timing.kt (timed{} helper, jsMode detection)
+- Instrumented POST /tasks with T3_add logging + validation errors
+- Dry-run verified: metrics.csv captures correct data for JS-on/off paths
+- Scaffolded Task 1 draft evidence pack (eval-plan.md, protocol.md)
+
+Ready for peer pilots in Week 9 Lab 2.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+EOF
+)"
+</code></pre>
+<h3 id="reflection-questions"><a class="header" href="#reflection-questions">Reflection questions</a></h3>
+<p><strong>Answer in <code>wk09/reflection.md</code></strong>:</p>
+<ol>
+<li>
+<p><strong>Metrics selection</strong>: Which metrics will be most useful for identifying usability issues? Why did you prioritize objective vs subjective data?</p>
+</li>
+<li>
+<p><strong>Ethical considerations</strong>: What was most challenging about designing a privacy-respecting evaluation? How did you ensure no PII would be collected?</p>
+</li>
+<li>
+<p><strong>Instrumentation trade-offs</strong>: Server-side logging has limitations (doesn't capture client-side rendering time, scroll behaviour, etc.). What gaps might this create in your analysis?</p>
+</li>
+<li>
+<p><strong>Task design</strong>: How realistic are your task scenarios? Would they generalize to non-peer participants (e.g., non-CS students)?</p>
+</li>
+<li>
+<p><strong>Accessibility</strong>: How confident are you that your instrumentation will capture accessibility issues (SR announcements, keyboard traps)? What additional data would you need?</p>
+</li>
+<li>
+<p><strong>Pilot readiness</strong>: What could go wrong during Week 9 Lab 2 pilots? How have you mitigated those risks?</p>
+</li>
+</ol>
+<hr />
+<h2 id="looking-ahead-week-9-lab-2-pilots"><a class="header" href="#looking-ahead-week-9-lab-2-pilots">Looking Ahead: Week 9 Lab 2 Pilots</a></h2>
+<p>Next session (Lab 2):</p>
+<ul>
+<li>Run 5–6 peer pilots using your protocol</li>
+<li>Collect metrics.csv data + qualitative notes</li>
+<li>Debrief participants</li>
+<li>Prepare draft evidence pack for Task 1</li>
+</ul>
+<p><strong>Before Lab 2</strong>:</p>
+<ul>
+<li>Review protocol with your pair (practice reading consent script)</li>
+<li>Test dry-run one more time (ensure nothing broke)</li>
+<li>Prepare seed data (task list with known tasks for T1/T2/T4)</li>
+<li>Print task scenarios or have them ready to read</li>
+</ul>
+<p><strong>Week 10</strong> will analyse this data—solid planning now saves hours of confusion later.</p>
+<hr />
+<h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
+<h3 id="essential"><a class="header" href="#essential">Essential</a></h3>
+<ul>
+<li><a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Median, MAD, error rate calculations</li>
+<li><a href="../../references/consent-pii-faq.html">Consent and PII FAQ</a> — PII definitions, opt-out procedures</li>
+<li><a href="https://www.nngroup.com/articles/how-many-test-users/">Nielsen: How Many Test Users?</a> — 5 users find 85% of issues</li>
+</ul>
+<h3 id="hci-evaluation-methods"><a class="header" href="#hci-evaluation-methods">HCI Evaluation Methods</a></h3>
+<ul>
+<li><strong>Lazar et al. (2017).</strong> <em>Research Methods in Human-Computer Interaction</em> (2nd ed.). Chapters 5-6 (usability testing, metrics)</li>
+<li><a href="https://dl.acm.org/doi/book/10.5555/291224">SIGCHI: Usability Evaluation</a> — Academic grounding</li>
+<li><a href="https://measuringux.com/">Measuring UX</a> — Practical guide to quantitative UX</li>
+</ul>
+<h3 id="ethics--privacy"><a class="header" href="#ethics--privacy">Ethics &amp; Privacy</a></h3>
+<ul>
+<li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/data-protection-by-design-and-default/">ICO: Data Protection by Design</a></li>
+<li><a href="https://www.bps.org.uk/guideline/code-ethics-and-conduct">BPS Code of Ethics</a> — UK professional standards for research</li>
+<li><a href="https://researchsupport.leeds.ac.uk/research-ethics/">University of Leeds Research Ethics</a> — Institutional policy</li>
+</ul>
+<h3 id="instrumentation"><a class="header" href="#instrumentation">Instrumentation</a></h3>
+<ul>
+<li><a href="https://www.exp-platform.com/">Kohavi et al.: Online Controlled Experiments</a> — A/B testing at scale (industry context)</li>
+<li><a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4">Google Analytics 4: Measurement Protocol</a> — Example of event-based logging (we avoid third-party but shows patterns)</li>
+</ul>
+<h3 id="accessibility-evaluation"><a class="header" href="#accessibility-evaluation">Accessibility Evaluation</a></h3>
+<ul>
+<li><a href="https://webaim.org/articles/evaluatingcognitive/">WebAIM: Evaluating Accessibility</a> — Cognitive disabilities focus</li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/involving-users/">W3C: Involving Users in Evaluating Web Accessibility</a></li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
+<tr><td><strong>Usability evaluation</strong></td><td>Systematic assessment of how well people can use a system to achieve goals</td></tr>
+<tr><td><strong>Task-based evaluation</strong></td><td>Participants complete realistic scenarios while researchers observe and measure</td></tr>
+<tr><td><strong>Objective metrics</strong></td><td>Measurable, observable data (time, errors, completion) without interpretation</td></tr>
+<tr><td><strong>Subjective metrics</strong></td><td>Self-reported feelings, perceptions, attitudes (confidence, satisfaction)</td></tr>
+<tr><td><strong>Server-side instrumentation</strong></td><td>Logging events at the server; reliable, privacy-respecting, works regardless of JS</td></tr>
+<tr><td><strong>Privacy by Design</strong></td><td>Build data minimization and privacy into system architecture from the start</td></tr>
+<tr><td><strong>Median</strong></td><td>Middle value in sorted dataset; resistant to outliers</td></tr>
+<tr><td><strong>MAD</strong></td><td>Median Absolute Deviation; robust measure of spread</td></tr>
+<tr><td><strong>Informed consent</strong></td><td>Participants understand what data is collected, how it's used, and can opt out</td></tr>
+<tr><td><strong>Low-risk study</strong></td><td>Peer-to-peer evaluation with minimal data collection, no vulnerable groups</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Lab complete!</strong> You have a comprehensive evaluation plan, ethical protocol, and working instrumentation. Week 9 Lab 2 will collect real data from peer pilots.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../wk09/src/wk9-lab2-pilots-debrief-draft.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../wk09/src/wk9-lab2-pilots-debrief-draft.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,1122 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Ethics overlay + accessible inline edit - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-7--lab-1-ethics-in-practice--accessible-inline-edit"><a class="header" href="#week-7--lab-1-ethics-in-practice--accessible-inline-edit">Week 7 • Lab 1: Ethics in Practice &amp; Accessible Inline Edit</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-7-orange" alt="Week 7" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<hr />
+<h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
+<p><strong>Essential</strong></p>
+<ul>
+<li>Pull latest changes in your starter repository (Week 7 branch)</li>
+<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html">W3C (2024). WCAG 2.2: 3.3.1 Error Identification</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html">W3C (2024). WCAG 2.2: 4.1.3 Status Messages</a></li>
+<li><a href="https://htmx.org/examples/click-to-edit/">HTMX: Click to Edit Pattern</a></li>
+<li><a href="../../references/example-accessible-inline-edit.html">Example: Accessible Inline Edit</a> (worked example)</li>
+</ul>
+<p><strong>Recommended</strong></p>
+<ul>
+<li><a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a></li>
+<li><a href="https://www.deque.com/blog/aria-live-regions-updated/">Deque: ARIA Live Regions</a></li>
+<li><a href="../../references/privacy-by-design.html">Privacy by Design</a> (ethics framework)</li>
+</ul>
+<hr />
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<h3 id="context"><a class="header" href="#context">Context</a></h3>
+<p>In <strong>Week 6</strong> you built a server-first task manager with add/delete functionality. The scaffold works without JavaScript, uses ARIA live regions for status announcements, and follows the PRG (Post-Redirect-Get) pattern.</p>
+<p><strong>This week you'll add inline editing</strong>—one of the most challenging patterns to make accessible. Done poorly, inline edit breaks screen reader navigation, loses keyboard focus, and excludes people using assistive technology. Done well, it provides a seamless experience across HTMX, no-JS, keyboard, and screen reader interaction modes.</p>
+<p>You'll also review <strong>ethics in practice</strong>: how consent, data minimisation, and privacy-by-design shape implementation decisions (not just policy documents).</p>
+<h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
+<p><strong>Professionally</strong>, inline edit is everywhere:</p>
+<ul>
+<li><strong>Trello</strong> (task management): click card title to edit</li>
+<li><strong>Notion</strong> (knowledge base): click any block to edit</li>
+<li><strong>GitHub</strong> (issue tracking): click issue title to edit</li>
+</ul>
+<p>All these examples face the same accessibility challenge: how do you swap view mode ↔ edit mode without losing context for screen reader users?</p>
+<p><strong>Academically</strong>, this lab demonstrates:</p>
+<ul>
+<li><strong>Dual-path architecture</strong>: Same feature, different implementation (HTMX vs. no-JS)</li>
+<li><strong>Progressive disclosure</strong>: Edit form only appears when needed (not cluttering UI)</li>
+<li><strong>ARIA best practices</strong>: <code>aria-describedby</code>, <code>role="alert"</code>, focus management</li>
+</ul>
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Implemented a consent modal with GDPR-compliant controls</li>
+<li>Built an inline-edit feature with accessible focus management and dual-path support (HTMX + no-JS)</li>
+<li>Created accessible validation with ARIA error identification</li>
+<li>Tested with keyboard and screen reader (NVDA/VoiceOver)</li>
+<li>Documented ethical trade-offs in design decisions</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO3</strong>: Analyse ethical implications — evidenced by consent modal implementation</li>
+<li><strong>LO5</strong>: Create interface prototypes — evidenced by inline-edit feature</li>
+<li><strong>LO9</strong>: Apply inclusive design — evidenced by keyboard navigation + ARIA patterns</li>
+<li><strong>LO10</strong>: Critique societal impacts — evidenced by ethics reflection</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="1-inline-edit-pattern"><a class="header" href="#1-inline-edit-pattern">1. Inline Edit Pattern</a></h3>
+<p><strong>Inline edit</strong> = editing content in place (not navigating to a separate edit page).</p>
+<p><strong>View mode</strong> → <strong>Edit mode</strong> → <strong>View mode</strong></p>
+<p><strong>Traditional approach</strong> (separate edit page):</p>
+<pre><code>View: GET /tasks/1 → shows task details
+Edit: GET /tasks/1/edit → shows edit form
+Save: POST /tasks/1 → validates, redirects to /tasks/1
+</code></pre>
+<p><strong>Inline edit approach</strong>:</p>
+<pre><code>View: Renders view template (title as text)
+Edit: Swaps view → edit template (title as input)
+Save: Swaps edit → view template (updated title)
+</code></pre>
+<p><strong>Why inline edit is harder for accessibility</strong>:</p>
+<ul>
+<li>Focus moves between elements (button → input → button)</li>
+<li>Screen reader must announce mode change</li>
+<li>Cancel action must restore original state</li>
+<li>Keyboard shortcuts conflict (Enter = submit vs. newline)</li>
+</ul>
+<h3 id="2-dual-path-implementation"><a class="header" href="#2-dual-path-implementation">2. Dual-Path Implementation</a></h3>
+<p><strong>HTMX path</strong> (JavaScript enabled):</p>
+<ol>
+<li>User clicks "Edit" button</li>
+<li><code>hx-get="/tasks/1/edit"</code> → server returns edit form HTML fragment</li>
+<li><code>hx-target="#task-1" hx-swap="outerHTML"</code> → replaces <code>&lt;li&gt;</code> with form</li>
+<li>User edits, clicks "Save"</li>
+<li><code>hx-post="/tasks/1/edit"</code> → server validates, returns updated view fragment</li>
+<li>HTMX swaps form → view mode</li>
+<li>OOB status update announces "Task updated"</li>
+</ol>
+<p><strong>No-JS path</strong> (JavaScript disabled):</p>
+<ol>
+<li>User clicks "Edit" button</li>
+<li>GET <code>/tasks/1/edit</code> → full-page reload with edit form shown</li>
+<li>User edits, clicks "Save"</li>
+<li>POST <code>/tasks/1/edit</code> → validates, redirects to <code>/tasks</code> (PRG)</li>
+<li>Page reloads showing updated task</li>
+</ol>
+<p><strong>Key invariant</strong>: Both paths end in same state (task updated), just different UX (instant swap vs. page reload).</p>
+<h3 id="3-aria-error-identification-wcag-331"><a class="header" href="#3-aria-error-identification-wcag-331">3. ARIA Error Identification (WCAG 3.3.1)</a></h3>
+<p><strong>WCAG 3.3.1 (Level A)</strong>: If an input error is detected, the item in error is identified and described to the user in text.</p>
+<p><strong>Requirements</strong>:</p>
+<ol>
+<li>Error must be <strong>identified</strong>: Label or instruction shows which field has error</li>
+<li>Error must be <strong>described</strong>: Specific message (not just "Invalid")</li>
+<li>Error must be <strong>programmatically associated</strong>: Screen reader announces error with field</li>
+</ol>
+<p><strong>Implementation</strong>:</p>
+<pre><code class="language-html">&lt;label for="title-1"&gt;Title&lt;/label&gt;
+&lt;input id="title-1" name="title"
+       aria-describedby="hint-1 error-1"&gt;
+&lt;small id="hint-1"&gt;Keep it short and specific.&lt;/small&gt;
+&lt;p id="error-1" role="alert"&gt;Title is required. Please enter at least one character.&lt;/p&gt;
+</code></pre>
+<p><strong>How it works</strong>:</p>
+<ol>
+<li>Input links to error via <code>aria-describedby="error-1"</code></li>
+<li>Screen reader announces: "Title, edit, Keep it short and specific, Title is required. Please enter at least one character."</li>
+<li><code>role="alert"</code> makes screen reader interrupt to announce error</li>
+</ol>
+<h3 id="4-focus-management"><a class="header" href="#4-focus-management">4. Focus Management</a></h3>
+<p><strong>Problem</strong>: When HTMX swaps DOM elements, focus can be lost.</p>
+<p><strong>Example</strong>:</p>
+<pre><code>1. User focuses "Edit" button
+2. Clicks Enter (activates button)
+3. HTMX swaps &lt;li&gt; → &lt;form&gt;
+4. Focus lost (button no longer exists)
+</code></pre>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li><strong>HTMX attempts restoration</strong>: If swapped element has same <code>id</code>, HTMX tries to restore focus</li>
+<li><strong>Manual focus</strong>: Use <code>hx-on::after-swap="document.getElementById('title-1').focus()"</code></li>
+<li><strong>Tab order preserved</strong>: Ensure new elements appear in logical position</li>
+</ul>
+<p><strong>WCAG 2.4.3 (Focus Order, A)</strong>: If a web page can be navigated sequentially, focusable components receive focus in an order that preserves meaning and operability.</p>
+<h3 id="5-status-messages-wcag-413"><a class="header" href="#5-status-messages-wcag-413">5. Status Messages (WCAG 4.1.3)</a></h3>
+<p><strong>WCAG 4.1.3 (Level AA)</strong>: Status messages can be programmatically determined through role or properties such that they can be presented to the user by assistive technologies without receiving focus.</p>
+<p><strong>Status message</strong> = information about the outcome of an action (success, error, progress).</p>
+<p><strong>Implementation</strong>:</p>
+<pre><code class="language-html">&lt;!-- In base.peb --&gt;
+&lt;div id="status" role="status" aria-live="polite"&gt;&lt;/div&gt;
+
+&lt;!-- Server response (HTMX OOB) --&gt;
+&lt;div id="status" hx-swap-oob="true"&gt;Task "Buy milk" updated successfully.&lt;/div&gt;
+</code></pre>
+<p><strong>Why this matters</strong>: Screen reader users need confirmation that save succeeded, but moving focus to a status message disrupts workflow. Live regions solve this by announcing without focus change.</p>
+<hr />
+<h2 id="activity-1-ethics-refresher--data-boundaries"><a class="header" href="#activity-1-ethics-refresher--data-boundaries">Activity 1: Ethics Refresher &amp; Data Boundaries</a></h2>
+<p><strong>Time</strong>: 20 minutes
+<strong>Materials</strong>: Week 6 consent protocol, privacy-by-design guidance</p>
+<h3 id="step-1-review-consent-protocol"><a class="header" href="#step-1-review-consent-protocol">Step 1: Review Consent Protocol</a></h3>
+<p>Open <code>wk06/research/consent-protocol.md</code> from Week 6 Lab 2.</p>
+<p><strong>Check</strong>:</p>
+<ul>
+<li>✅ Purpose clearly stated?</li>
+<li>✅ Data storage location specified (local Git repo)?</li>
+<li>✅ Participant rights listed (withdraw, access, delete)?</li>
+<li>✅ Opt-out process described?</li>
+</ul>
+<p><strong>If missing any</strong>, update now before Week 7 interviews/testing.</p>
+<h3 id="step-2-identify-data-boundaries"><a class="header" href="#step-2-identify-data-boundaries">Step 2: Identify Data Boundaries</a></h3>
+<p>Create <code>wk07/ethics/data-boundaries.md</code>:</p>
+<pre><code class="language-markdown"># Data Boundaries — Week 7
+
+## What We Collect (Allowed)
+- **Pseudonymised session IDs**: Random 6-char hex (e.g., `P1_a3f7`)
+- **Task metadata**: Title, completion status, timestamps
+- **Interaction logs**: HTTP requests, response times, error codes
+- **Accessibility testing notes**: "NVDA announced X", "Focus moved to Y"
+
+## What We DO NOT Collect (Prohibited)
+- ❌ Real names (use pseudonyms: Participant A, P1, etc.)
+- ❌ Student ID numbers
+- ❌ Email addresses
+- ❌ IP addresses (Ktor logs disabled in production)
+- ❌ Content of tasks beyond module examples (e.g., no personal to-do items)
+
+## Storage &amp; Retention
+- **Location**: Local CSV files (`data/tasks.csv`, `data/metrics.csv`)
+- **Access**: Researcher, lab partner, module staff (on request)
+- **Encryption**: Standard filesystem permissions (chmod 600)
+- **Deletion**: End of Semester 1 (January 2025) OR anonymised for portfolio
+
+## Privacy by Design Principles Applied
+1. **Data minimisation**: Only collect session ID (not name)
+2. **Purpose limitation**: Metrics used only for HCI evaluation (not sold/shared)
+3. **Storage limitation**: Delete after assessment complete
+4. **Integrity &amp; confidentiality**: Local storage (not cloud), Git repo private
+
+## Ethics Risks Identified
+| Risk | Mitigation |
+|------|-----------|
+| Task titles contain sensitive info | Provide example tasks ("Buy milk"); warn against personal content |
+| Session IDs linked to participants | Use randomised IDs; don't store mapping |
+| Git repo accidentally public | Verify `.git/config` remote is private; add `.gitignore` for `/data` |
+| Screenshots include PII | Crop to relevant UI; blur names if visible |
+
+---
+
+**Reference**: ICO (2024). Guide to GDPR, &lt;https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/&gt;
+</code></pre>
+<h3 id="step-3-update-gitignore"><a class="header" href="#step-3-update-gitignore">Step 3: Update <code>.gitignore</code></a></h3>
+<p>Ensure sensitive data isn't committed:</p>
+<pre><code class="language-bash"># Add to .gitignore
+/data/tasks.csv
+/data/metrics.csv
+/wk*/research/*notes.md  # Interview notes with pseudonyms
+*.log
+</code></pre>
+<p><strong>Rationale</strong>: Even with pseudonyms, raw interview notes could be re-identified in small cohorts. Keep them local, don't push to remote.</p>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Data boundaries documented</li>
+<li>✅ <code>.gitignore</code> updated to exclude sensitive files</li>
+<li>✅ Consent protocol from Week 6 still valid</li>
+</ul>
+<hr />
+<h2 id="activity-2-implement-viewedit-templates"><a class="header" href="#activity-2-implement-viewedit-templates">Activity 2: Implement View/Edit Templates</a></h2>
+<p><strong>Time</strong>: 30 minutes
+<strong>Materials</strong>: <code>templates/tasks/</code>, Pebble template engine</p>
+<blockquote>
+<p><strong>🔄 Refactoring Note: From Monolithic to Partials</strong></p>
+<p>In <strong>Week 6</strong>, your <code>tasks/index.peb</code> rendered each task as a simple <code>&lt;li&gt;</code> with title + delete button:</p>
+<pre><code class="language-html">{% for task in tasks %}
+  &lt;li id="task-{{ task.id }}"&gt;
+    &lt;span&gt;{{ task.title }}&lt;/span&gt;
+    &lt;form action="/tasks/{{ task.id }}/delete" method="post"&gt;
+      &lt;button type="submit"&gt;Delete&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/li&gt;
+{% endfor %}
+</code></pre>
+<p>In <strong>Week 7</strong>, we introduce <strong>inline editing</strong>, which requires two states:</p>
+<ul>
+<li><strong>View mode</strong>: Display title with Edit/Delete buttons</li>
+<li><strong>Edit mode</strong>: Show input field with Save/Cancel buttons</li>
+</ul>
+<p><strong>Refactoring strategy</strong>:</p>
+<ol>
+<li>Extract <code>&lt;li&gt;</code> markup into <strong>two partial templates</strong>:
+<ul>
+<li><code>_item.peb</code> - Read-only display (view mode)</li>
+<li><code>_edit.peb</code> - Editable input (edit mode)</li>
+</ul>
+</li>
+<li>Update <code>tasks/index.peb</code> to <code>{% include %}</code> the appropriate partial</li>
+<li>HTMX will swap partials in-place (view ↔ edit) without full page reload</li>
+</ol>
+<p><strong>Before</strong> (Week 6):</p>
+<pre><code>tasks/index.peb (full page)
+  └── &lt;li&gt; hardcoded for each task
+</code></pre>
+<p><strong>After</strong> (Week 7):</p>
+<pre><code>tasks/index.peb (full page)
+  └── {% include "tasks/_item.peb" %}  ← Reusable view partial
+  └── {% include "tasks/_edit.peb" %}  ← Reusable edit partial
+</code></pre>
+<p><strong>Note</strong>: The underscore prefix (<code>_</code>) indicates these are <strong>partials</strong> (fragments included in other templates), not standalone pages. This is a widely-used convention (Rails, Jekyll, Sass) that Week 8 explains in detail.</p>
+<pre><code>
+This **separation of concerns** makes it easier to:
+- Swap between states (HTMX swaps just the `&lt;li&gt;`, not the whole page)
+- Test each mode independently
+- Add more modes later (e.g., "completed" view with strikethrough)
+</code></pre>
+</blockquote>
+<h3 id="step-1-understanding-the-existing-structure"><a class="header" href="#step-1-understanding-the-existing-structure">Step 1: Understanding the Existing Structure</a></h3>
+<p>From Week 6, you already have <code>templates/tasks/_item.peb</code> which displays a task in <strong>view mode</strong>. In Week 7, we'll add an Edit button to <code>_item.peb</code> and create a new <code>_edit.peb</code> template for <strong>edit mode</strong>.</p>
+<p>We'll create <strong>two modes</strong>: view (display title) and edit (input field).</p>
+<h3 id="step-2-update-view-mode-partial"><a class="header" href="#step-2-update-view-mode-partial">Step 2: Update View Mode Partial</a></h3>
+<p>The <code>_item.peb</code> template already exists from Week 6. We need to <strong>add an Edit button</strong> to it.</p>
+<p>Update <code>templates/tasks/_item.peb</code> to add an Edit button before the Toggle button:</p>
+<pre><code class="language-html">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
+  &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
+        hx-post="/tasks/{{ task.id }}/delete"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Delete task: {{ task.title }}"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Accessibility features</strong>:</p>
+<ul>
+<li>Unique <code>id="task-{{ task.id }}"</code> for HTMX targeting</li>
+<li><code>aria-label</code> on buttons provides context ("Edit task: Buy milk")</li>
+<li>Semantic <code>&lt;li&gt;</code> structure (screen readers announce "List item 1 of 5")</li>
+</ul>
+<h3 id="step-3-create-edit-mode-partial"><a class="header" href="#step-3-create-edit-mode-partial">Step 3: Create Edit Mode Partial</a></h3>
+<p>Create a new file <code>templates/tasks/_edit.peb</code>:</p>
+<pre><code class="language-html">&lt;li id="task-{{ task.id }}" class="task-edit"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+
+    &lt;label for="title-{{ task.id }}"&gt;Title&lt;/label&gt;
+    &lt;input type="text"
+           id="title-{{ task.id }}"
+           name="title"
+           value="{{ task.title }}"
+           required
+           autofocus
+           aria-describedby="hint-{{ task.id }}{% if error %} error-{{ task.id }}{% endif %}"&gt;
+
+    &lt;small id="hint-{{ task.id }}"&gt;Keep it short and specific.&lt;/small&gt;
+
+    {% if error %}
+      &lt;p id="error-{{ task.id }}" class="error" role="alert" aria-live="assertive"&gt;
+        {{ error }}
+      &lt;/p&gt;
+    {% else %}
+      &lt;p id="error-{{ task.id }}" class="visually-hidden" aria-live="assertive"&gt;&lt;/p&gt;
+    {% endif %}
+
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+    &lt;a href="/tasks"
+       hx-get="/tasks/{{ task.id }}/view"
+       hx-target="#task-{{ task.id }}"
+       hx-swap="outerHTML"
+       role="button"&gt;Cancel&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Accessibility features</strong>:</p>
+<ul>
+<li><code>autofocus</code>: Input receives focus when form appears (keyboard users can start typing immediately)</li>
+<li><code>aria-describedby</code>: Links input to hint and error (screen reader announces both)</li>
+<li><code>role="alert" aria-live="assertive"</code>: Error interrupts screen reader to announce immediately</li>
+<li>Error element always exists (even when hidden) so <code>aria-describedby</code> always points to valid ID</li>
+<li>Cancel link has <code>role="button"</code> for semantic consistency</li>
+</ul>
+<h3 id="step-4-update-main-task-list-template"><a class="header" href="#step-4-update-main-task-list-template">Step 4: Update Main Task List Template</a></h3>
+<p>Edit <code>templates/tasks/index.peb</code>:</p>
+<pre><code class="language-html">{% extends "base.peb" %}
+
+{% block content %}
+&lt;h1&gt;Tasks&lt;/h1&gt;
+
+&lt;section aria-labelledby="add-heading"&gt;
+  &lt;h2 id="add-heading"&gt;Add a new task&lt;/h2&gt;
+  &lt;form action="/tasks" method="post"
+        hx-post="/tasks"
+        hx-target="#task-list"
+        hx-swap="beforeend"&gt;
+    &lt;label for="title"&gt;Title&lt;/label&gt;
+    &lt;input type="text" id="title" name="title" required
+           placeholder="e.g., Buy milk" aria-describedby="title-hint"&gt;
+    &lt;small id="title-hint"&gt;Keep it short and specific.&lt;/small&gt;
+    &lt;button type="submit"&gt;Add Task&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;
+
+&lt;section aria-labelledby="list-heading"&gt;
+  &lt;h2 id="list-heading"&gt;Current tasks ({{ tasks | length }})&lt;/h2&gt;
+  &lt;ul id="task-list"&gt;
+    {% for task in tasks %}
+      {% if editingId and editingId == task.id %}
+        {% include "tasks/_edit.peb" with {"task": task, "error": errorMessage} %}
+      {% else %}
+        {% include "tasks/_item.peb" with {"task": task} %}
+      {% endif %}
+    {% empty %}
+      &lt;li&gt;No tasks yet. Add one above!&lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+&lt;/section&gt;
+{% endblock %}
+</code></pre>
+<p><strong>Logic</strong>:</p>
+<ul>
+<li>If <code>editingId</code> matches current task, render edit mode</li>
+<li>Otherwise, render view mode</li>
+<li>This enables no-JS path (full-page render with one task in edit mode)</li>
+</ul>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ <code>view.peb</code> created with Edit/Delete buttons</li>
+<li>✅ <code>edit.peb</code> created with input + Save/Cancel</li>
+<li>✅ <code>index.peb</code> uses conditional includes</li>
+</ul>
+<hr />
+<h2 id="activity-3-implement-routes-dual-path"><a class="header" href="#activity-3-implement-routes-dual-path">Activity 3: Implement Routes (Dual-Path)</a></h2>
+<p><strong>Time</strong>: 35 minutes
+<strong>Materials</strong>: <code>src/main/kotlin/routes/Tasks.kt</code></p>
+<h3 id="step-1-add-helper-to-detect-htmx"><a class="header" href="#step-1-add-helper-to-detect-htmx">Step 1: Add Helper to Detect HTMX</a></h3>
+<p>Already exists from Week 6, but verify:</p>
+<pre><code class="language-kotlin">fun ApplicationCall.isHtmx(): Boolean =
+    request.headers["HX-Request"]?.equals("true", ignoreCase = true) == true
+</code></pre>
+<h3 id="step-2-add-get-tasksidedit-route"><a class="header" href="#step-2-add-get-tasksidedit-route">Step 2: Add GET /tasks/{id}/edit Route</a></h3>
+<pre><code class="language-kotlin">get("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.NotFound)
+    val task = TaskRepository.find(id) ?: return@get call.respond(HttpStatusCode.NotFound)
+
+    if (call.isHtmx()) {
+        // HTMX path: return edit fragment
+        val template = pebble.getTemplate("templates/tasks/_edit.peb")
+        val model = mapOf("task" to task, "error" to null)
+        val writer = StringWriter()
+        template.evaluate(writer, model)
+        call.respondText(writer.toString(), ContentType.Text.Html)
+    } else {
+        // No-JS path: full-page render with editingId
+        val model = mapOf(
+            "title" to "Tasks",
+            "tasks" to TaskRepository.all(),
+            "editingId" to id,
+            "errorMessage" to null
+        )
+        val template = pebble.getTemplate("templates/tasks/index.peb")
+        val writer = StringWriter()
+        template.evaluate(writer, model)
+        call.respondText(writer.toString(), ContentType.Text.Html)
+    }
+}
+</code></pre>
+<p><strong>Logic</strong>:</p>
+<ul>
+<li>HTMX: Returns <code>&lt;li&gt;</code> edit fragment (swaps in place)</li>
+<li>No-JS: Returns full page with <code>editingId=1</code> (conditional rendering in template)</li>
+</ul>
+<h3 id="step-3-add-post-tasksidedit-route"><a class="header" href="#step-3-add-post-tasksidedit-route">Step 3: Add POST /tasks/{id}/edit Route</a></h3>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.NotFound)
+    val task = TaskRepository.find(id) ?: return@post call.respond(HttpStatusCode.NotFound)
+
+    val newTitle = call.receiveParameters()["title"].orEmpty().trim()
+
+    // Validation
+    if (newTitle.isBlank()) {
+        if (call.isHtmx()) {
+            // HTMX path: return edit fragment with error
+            val template = pebble.getTemplate("templates/tasks/_edit.peb")
+            val model = mapOf(
+                "task" to task,
+                "error" to "Title is required. Please enter at least one character."
+            )
+            val writer = StringWriter()
+            template.evaluate(writer, model)
+            return@post call.respondText(writer.toString(), ContentType.Text.Html, HttpStatusCode.BadRequest)
+        } else {
+            // No-JS path: redirect with error flag
+            return@post call.respondRedirect("/tasks/${id}/edit?error=blank")
+        }
+    }
+
+    // Update task
+    task.title = newTitle
+    TaskRepository.update(task)
+
+    if (call.isHtmx()) {
+        // HTMX path: return view fragment + OOB status
+        val viewTemplate = pebble.getTemplate("templates/tasks/_item.peb")
+        val viewWriter = StringWriter()
+        viewTemplate.evaluate(viewWriter, mapOf("task" to task))
+
+        val status = """&lt;div id="status" hx-swap-oob="true"&gt;Task "${task.title}" updated successfully.&lt;/div&gt;"""
+
+        return@post call.respondText(viewWriter.toString() + status, ContentType.Text.Html)
+    }
+
+    // No-JS path: PRG redirect
+    call.respondRedirect("/tasks")
+}
+</code></pre>
+<p><strong>Validation paths</strong>:</p>
+<ul>
+<li><strong>HTMX + error</strong>: Returns edit fragment with error message, status 400</li>
+<li><strong>No-JS + error</strong>: Redirects to <code>/tasks/{id}/edit?error=blank</code></li>
+<li><strong>HTMX + success</strong>: Returns view fragment + OOB status</li>
+<li><strong>No-JS + success</strong>: PRG redirect to <code>/tasks</code></li>
+</ul>
+<h3 id="step-4-handle-error-query-parameter-no-js"><a class="header" href="#step-4-handle-error-query-parameter-no-js">Step 4: Handle Error Query Parameter (No-JS)</a></h3>
+<p>Update GET <code>/tasks/{id}/edit</code> to handle <code>?error=blank</code>:</p>
+<pre><code class="language-kotlin">get("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.NotFound)
+    val task = TaskRepository.find(id) ?: return@get call.respond(HttpStatusCode.NotFound)
+    val errorParam = call.request.queryParameters["error"]
+
+    val errorMessage = when (errorParam) {
+        "blank" -&gt; "Title is required. Please enter at least one character."
+        else -&gt; null
+    }
+
+    if (call.isHtmx()) {
+        val template = pebble.getTemplate("templates/tasks/_edit.peb")
+        val model = mapOf("task" to task, "error" to errorMessage)
+        val writer = StringWriter()
+        template.evaluate(writer, model)
+        call.respondText(writer.toString(), ContentType.Text.Html)
+    } else {
+        val model = mapOf(
+            "title" to "Tasks",
+            "tasks" to TaskRepository.all(),
+            "editingId" to id,
+            "errorMessage" to errorMessage
+        )
+        val template = pebble.getTemplate("templates/tasks/index.peb")
+        val writer = StringWriter()
+        template.evaluate(writer, model)
+        call.respondText(writer.toString(), ContentType.Text.Html)
+    }
+}
+</code></pre>
+<h3 id="step-5-add-get-tasksidview-cancel-handler"><a class="header" href="#step-5-add-get-tasksidview-cancel-handler">Step 5: Add GET /tasks/{id}/view (Cancel Handler)</a></h3>
+<pre><code class="language-kotlin">get("/tasks/{id}/view") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@get call.respond(HttpStatusCode.NotFound)
+    val task = TaskRepository.find(id) ?: return@get call.respond(HttpStatusCode.NotFound)
+
+    // HTMX path only (cancel is just a link to /tasks in no-JS)
+    val template = pebble.getTemplate("templates/tasks/_item.peb")
+    val model = mapOf("task" to task)
+    val writer = StringWriter()
+    template.evaluate(writer, model)
+    call.respondText(writer.toString(), ContentType.Text.Html)
+}
+</code></pre>
+<h3 id="step-6-add-taskrepository-methods"><a class="header" href="#step-6-add-taskrepository-methods">Step 6: Add TaskRepository Methods</a></h3>
+<p>If not already present:</p>
+<pre><code class="language-kotlin">object TaskRepository {
+    // ... existing methods ...
+
+    fun find(id: Int): Task? = tasks.find { it.id == id }
+
+    fun update(task: Task) {
+        tasks.find { it.id == task.id }?.let { it.title = task.title }
+        persist()
+    }
+}
+</code></pre>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ GET <code>/tasks/{id}/edit</code> returns edit fragment (HTMX) or full page (no-JS)</li>
+<li>✅ POST <code>/tasks/{id}/edit</code> validates, returns fragment/redirect</li>
+<li>✅ GET <code>/tasks/{id}/view</code> returns view fragment (cancel handler)</li>
+<li>✅ Error messages passed to templates</li>
+</ul>
+<hr />
+<h2 id="activity-4-test-dual-path-functionality"><a class="header" href="#activity-4-test-dual-path-functionality">Activity 4: Test Dual-Path Functionality</a></h2>
+<p><strong>Time</strong>: 25 minutes
+<strong>Materials</strong>: Browser, keyboard, screen reader</p>
+<h3 id="test-1-htmx-path-javascript-enabled"><a class="header" href="#test-1-htmx-path-javascript-enabled">Test 1: HTMX Path (JavaScript Enabled)</a></h3>
+<ol>
+<li><strong>Load http://localhost:8080/tasks</strong></li>
+<li><strong>Add a task</strong>: "Test inline edit"</li>
+<li><strong>Click "Edit"</strong>:
+<ul>
+<li><strong>Expected</strong>: Form appears in place (no page reload)</li>
+<li><strong>Check Network tab</strong>: See GET <code>/tasks/1/edit</code> (AJAX)</li>
+</ul>
+</li>
+<li><strong>Type new title</strong>: "Updated title"</li>
+<li><strong>Click "Save"</strong>:
+<ul>
+<li><strong>Expected</strong>: View mode appears (no page reload)</li>
+<li><strong>Check DevTools</strong>: <code>#status</code> text = "Task 'Updated title' updated successfully."</li>
+</ul>
+</li>
+<li><strong>Click "Cancel"</strong> (after editing again):
+<ul>
+<li><strong>Expected</strong>: Returns to view mode, original title preserved</li>
+</ul>
+</li>
+</ol>
+<p><strong>Result</strong>: ✅ Inline edit works with HTMX</p>
+<h3 id="test-2-validation-htmx"><a class="header" href="#test-2-validation-htmx">Test 2: Validation (HTMX)</a></h3>
+<ol>
+<li><strong>Click "Edit"</strong> on a task</li>
+<li><strong>Delete all text</strong>, click "Save"</li>
+<li><strong>Expected</strong>: Error message appears: "Title is required..."</li>
+<li><strong>Check error element</strong>:
+<ul>
+<li>Inspect <code>&lt;p id="error-1" role="alert"&gt;</code></li>
+<li>Confirm <code>aria-live="assertive"</code></li>
+</ul>
+</li>
+<li><strong>Type valid title</strong>, click "Save"</li>
+<li><strong>Expected</strong>: Error disappears, save succeeds</li>
+</ol>
+<p><strong>Result</strong>: ✅ Validation works (HTMX)</p>
+<h3 id="test-3-no-js-path-javascript-disabled"><a class="header" href="#test-3-no-js-path-javascript-disabled">Test 3: No-JS Path (JavaScript Disabled)</a></h3>
+<ol>
+<li><strong>Disable JavaScript</strong> (DevTools → Settings → Disable JavaScript)</li>
+<li><strong>Reload page</strong></li>
+<li><strong>Click "Edit"</strong>:
+<ul>
+<li><strong>Expected</strong>: Full page reload, edit form shown</li>
+</ul>
+</li>
+<li><strong>Type new title</strong>: "No-JS test"</li>
+<li><strong>Click "Save"</strong>:
+<ul>
+<li><strong>Expected</strong>: Page reloads, task updated</li>
+</ul>
+</li>
+<li><strong>Click "Edit"</strong>, delete title, click "Save"**:
+<ul>
+<li><strong>Expected</strong>: Page reloads, error message shown</li>
+</ul>
+</li>
+</ol>
+<p><strong>Result</strong>: ✅ No-JS path works</p>
+<h3 id="test-4-keyboard-navigation"><a class="header" href="#test-4-keyboard-navigation">Test 4: Keyboard Navigation</a></h3>
+<p><strong>Re-enable JavaScript</strong>, reload page:</p>
+<ol>
+<li><strong>Tab to "Edit" button</strong></li>
+<li><strong>Press Enter</strong>:
+<ul>
+<li><strong>Expected</strong>: Form appears, focus in input field (autofocus)</li>
+</ul>
+</li>
+<li><strong>Type new title</strong></li>
+<li><strong>Tab to "Save" button</strong>, press Enter:
+<ul>
+<li><strong>Expected</strong>: Saves, returns to view mode</li>
+</ul>
+</li>
+<li><strong>Tab to "Edit"</strong>, Enter, Tab to "Cancel"**, Enter:
+<ul>
+<li><strong>Expected</strong>: Returns to view mode without saving</li>
+</ul>
+</li>
+</ol>
+<p><strong>Check focus indicators</strong>:</p>
+<ul>
+<li>✅ All buttons have visible outline on focus</li>
+<li>✅ Input has visible outline</li>
+<li>✅ Focus order logical (Edit → Title input → Save → Cancel)</li>
+</ul>
+<p><strong>Result</strong>: ✅ Keyboard accessible</p>
+<h3 id="test-5-screen-reader-nvdavoiceover"><a class="header" href="#test-5-screen-reader-nvdavoiceover">Test 5: Screen Reader (NVDA/VoiceOver)</a></h3>
+<p><strong>Windows (NVDA)</strong>:</p>
+<ol>
+<li>Start NVDA (Ctrl+Alt+N)</li>
+<li>Navigate to task list</li>
+<li><strong>Tab to "Edit" button</strong>:
+<ul>
+<li><strong>Listen for</strong>: "Edit task: Test inline edit, button"</li>
+</ul>
+</li>
+<li><strong>Press Enter</strong> (activates Edit)</li>
+<li><strong>Listen for</strong>: "Title, edit, Keep it short and specific, [current value]"</li>
+<li><strong>Delete text, Tab to Save, Enter</strong></li>
+<li><strong>Listen for</strong>: "Title is required. Please enter at least one character, alert"</li>
+<li><strong>Type valid title, Save</strong></li>
+<li><strong>Listen for</strong>: "Task 'Valid title' updated successfully"</li>
+</ol>
+<p><strong>macOS (VoiceOver)</strong>:</p>
+<ol>
+<li>Enable VoiceOver (Cmd+F5)</li>
+<li>Navigate with VoiceOver cursor (VO+Right Arrow)</li>
+<li>Repeat NVDA steps, listen for equivalent announcements</li>
+</ol>
+<p><strong>Result</strong>: ✅ Screen reader announces labels, errors, status</p>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ HTMX path: instant swaps</li>
+<li>✅ No-JS path: page reloads</li>
+<li>✅ Validation works both paths</li>
+<li>✅ Keyboard accessible</li>
+<li>✅ Screen reader announces correctly</li>
+</ul>
+<hr />
+<h2 id="activity-5-evidence-collection"><a class="header" href="#activity-5-evidence-collection">Activity 5: Evidence Collection</a></h2>
+<p><strong>Time</strong>: 15 minutes
+<strong>Materials</strong>: Screenshots, testing notes</p>
+<h3 id="step-1-capture-evidence"><a class="header" href="#step-1-capture-evidence">Step 1: Capture Evidence</a></h3>
+<p>Create <code>wk07/evidence/</code> directory:</p>
+<pre><code class="language-bash">mkdir -p wk07/evidence
+</code></pre>
+<p><strong>Screenshots to capture</strong>:</p>
+<ol>
+<li><strong>View mode</strong> (HTMX): Before clicking Edit</li>
+<li><strong>Edit mode</strong> (HTMX): Form in place</li>
+<li><strong>Validation error</strong> (HTMX): Error message with <code>role="alert"</code></li>
+<li><strong>Status message</strong> (HTMX): DevTools showing <code>#status</code> content</li>
+<li><strong>No-JS edit mode</strong>: Full page with form</li>
+<li><strong>NVDA speech viewer</strong>: Showing error announcement</li>
+</ol>
+<p><strong>Example naming</strong>:</p>
+<ul>
+<li><code>01-view-mode-htmx.png</code></li>
+<li><code>02-edit-mode-htmx.png</code></li>
+<li><code>03-validation-error-htmx.png</code></li>
+<li><code>04-status-oob-devtools.png</code></li>
+<li><code>05-edit-mode-nojs.png</code></li>
+<li><code>06-nvda-error-announcement.png</code></li>
+</ul>
+<h3 id="step-2-document-testing-notes"><a class="header" href="#step-2-document-testing-notes">Step 2: Document Testing Notes</a></h3>
+<p>Create <code>wk07/evidence/testing-notes.md</code>:</p>
+<pre><code class="language-markdown"># Testing Notes — Week 7 Lab 1
+
+## HTMX Path
+**Date**: [YYYY-MM-DD]
+**Browser**: Chrome 120.0
+**JavaScript**: Enabled
+
+### Test: Inline edit activation
+- **Action**: Clicked "Edit" button
+- **Result**: ✅ Form appeared instantly (no page reload)
+- **Network**: GET /tasks/1/edit (AJAX, 45ms)
+- **Screenshot**: `01-view-mode-htmx.png`, `02-edit-mode-htmx.png`
+
+### Test: Validation error
+- **Action**: Deleted title, clicked "Save"
+- **Result**: ✅ Error shown: "Title is required..."
+- **ARIA**: `&lt;p id="error-1" role="alert" aria-live="assertive"&gt;` confirmed in DevTools
+- **Screenshot**: `03-validation-error-htmx.png`
+
+### Test: Successful save
+- **Action**: Entered valid title, clicked "Save"
+- **Result**: ✅ View mode restored, status = "Task 'New title' updated successfully."
+- **Screenshot**: `04-status-oob-devtools.png`
+
+---
+
+## No-JS Path
+**Date**: [YYYY-MM-DD]
+**Browser**: Chrome 120.0
+**JavaScript**: Disabled
+
+### Test: Edit activation
+- **Action**: Clicked "Edit" button
+- **Result**: ✅ Full page reload, form shown
+- **URL**: http://localhost:8080/tasks/1/edit
+
+### Test: Validation error
+- **Action**: Deleted title, clicked "Save"
+- **Result**: ✅ Redirect to /tasks/1/edit?error=blank, error shown
+- **Screenshot**: `05-edit-mode-nojs-error.png`
+
+---
+
+## Keyboard Testing
+**Date**: [YYYY-MM-DD]
+**Input**: Keyboard only (no mouse)
+
+### Test: Tab navigation
+- **Path**: Tab → "Edit" → Enter → Title input (autofocus) → Tab → "Save" → Enter
+- **Result**: ✅ Focus order logical, all buttons reachable
+- **Focus indicators**: ✅ Visible outline on all elements
+
+---
+
+## Screen Reader Testing
+**Date**: [YYYY-MM-DD]
+**Tool**: NVDA 2024.1 (Windows 11)
+
+### Test: Edit button announcement
+- **Navigated to**: "Edit" button
+- **NVDA said**: "Edit task: Buy milk, button"
+- **Result**: ✅ Contextual label announced
+
+### Test: Input field announcement
+- **Activated**: Edit button (Enter)
+- **NVDA said**: "Title, edit, Keep it short and specific, Buy milk"
+- **Result**: ✅ Label + hint + value announced
+
+### Test: Error announcement
+- **Action**: Deleted title, pressed Save
+- **NVDA said**: "Title is required. Please enter at least one character, alert"
+- **Result**: ✅ Error announced immediately (assertive)
+
+### Test: Status message announcement
+- **Action**: Saved valid title
+- **NVDA said**: "Task 'New title' updated successfully"
+- **Result**: ✅ Status announced (polite, didn't interrupt)
+
+---
+
+## Issues Found
+None. All tests passed.
+
+## WCAG Compliance Check
+| Criterion | Status | Evidence |
+|-----------|--------|----------|
+| 2.1.1 Keyboard (A) | ✅ Pass | All features accessible via Tab/Enter |
+| 3.3.1 Error Identification (A) | ✅ Pass | Error message explicit, aria-describedby links input |
+| 4.1.3 Status Messages (AA) | ✅ Pass | Live region announces success without focus change |
+</code></pre>
+<p><strong>Stop and check</strong>:</p>
+<ul>
+<li>✅ Screenshots saved in <code>wk07/evidence/</code></li>
+<li>✅ Testing notes documented</li>
+<li>✅ WCAG criteria mapped to evidence</li>
+</ul>
+<hr />
+<h2 id="reflection-questions"><a class="header" href="#reflection-questions">Reflection Questions</a></h2>
+<ol>
+<li>
+<p><strong>Dual-path trade-offs</strong>: The HTMX path returns HTML fragments; the no-JS path returns full pages. Which is easier to maintain? Which is easier to test?</p>
+</li>
+<li>
+<p><strong>Focus management</strong>: HTMX tries to restore focus after swaps. Did you notice focus moving unexpectedly? How would you improve this?</p>
+</li>
+<li>
+<p><strong>Error persistence</strong>: In the no-JS path, errors survive redirects via query parameters. Could you use session storage instead? What are the trade-offs?</p>
+</li>
+<li>
+<p><strong>Screen reader experience</strong>: Compare the HTMX path (instant swap) vs. no-JS path (page reload). Which is better for screen reader users? Why?</p>
+</li>
+</ol>
+<hr />
+<h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
+<p><strong>Inline edit patterns</strong></p>
+<ul>
+<li>HTMX Examples: Click to Edit. <a href="https://htmx.org/examples/click-to-edit/">https://htmx.org/examples/click-to-edit/</a></li>
+<li>Nielsen Norman Group (2015). "In-Place Editing". <a href="https://www.nngroup.com/articles/in-place-editing/">https://www.nngroup.com/articles/in-place-editing/</a></li>
+</ul>
+<p><strong>WCAG Error Identification</strong></p>
+<ul>
+<li>W3C (2024). Understanding 3.3.1 Error Identification. <a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html">https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html</a></li>
+<li>GOV.UK Design System: Error Message Component. <a href="https://design-system.service.gov.uk/components/error-message/">https://design-system.service.gov.uk/components/error-message/</a></li>
+</ul>
+<p><strong>Focus management</strong></p>
+<ul>
+<li>Deque (2023). "Focus Management in ARIA". <a href="https://www.deque.com/blog/give-focus-power/">https://www.deque.com/blog/give-focus-power/</a></li>
+<li>WebAIM: Keyboard Accessibility. <a href="https://webaim.org/techniques/keyboard/">https://webaim.org/techniques/keyboard/</a></li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>Definition</th><th>Example/Context</th></tr></thead><tbody>
+<tr><td><strong>Inline edit</strong></td><td>Editing content in place (not separate page)</td><td>Click task title → form appears → save → title updates</td></tr>
+<tr><td><strong>Dual-path</strong></td><td>Same feature, different implementation (HTMX vs. no-JS)</td><td>HTMX = fragment swap; no-JS = full page reload</td></tr>
+<tr><td><strong>aria-describedby</strong></td><td>Links input to descriptive text (hint/error)</td><td><code>&lt;input aria-describedby="hint-1 error-1"&gt;</code></td></tr>
+<tr><td><strong>role="alert"</strong></td><td>Announces content immediately to screen readers</td><td><code>&lt;p role="alert"&gt;Error message&lt;/p&gt;</code></td></tr>
+<tr><td><strong>OOB swap</strong></td><td>HTMX updating element outside main target</td><td><code>&lt;div id="status" hx-swap-oob="true"&gt;</code></td></tr>
+<tr><td><strong>Autofocus</strong></td><td>Input receives focus when rendered</td><td><code>&lt;input autofocus&gt;</code> (use sparingly, can disorient SR users)</td></tr>
+<tr><td><strong>Focus order</strong></td><td>Sequence of Tab navigation (WCAG 2.4.3)</td><td>Edit button → Title input → Save → Cancel</td></tr>
+<tr><td><strong>WCAG 3.3.1</strong></td><td>Error Identification (Level A)</td><td>Error must be identified + described + programmatically associated</td></tr>
+<tr><td><strong>WCAG 4.1.3</strong></td><td>Status Messages (Level AA)</td><td>Status announced without focus change (live regions)</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="lab-checklist"><a class="header" href="#lab-checklist">Lab Checklist</a></h2>
+<p>Before leaving lab, confirm:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>View/edit partials created</strong>: <code>templates/tasks/_item.peb</code> (updated with Edit button), <code>templates/tasks/_edit.peb</code> (new)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Routes implemented</strong>: GET/POST <code>/tasks/{id}/edit</code>, GET <code>/tasks/{id}/view</code></li>
+<li><input disabled="" type="checkbox"/>
+<strong>HTMX path works</strong>: Inline edit, validation, save (no page reload)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No-JS path works</strong>: Edit, validation, save (page reloads)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Keyboard accessible</strong>: Tab through all controls, submit with Enter</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Screen reader tested</strong>: NVDA/VoiceOver announces labels, hints, errors, status</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Evidence collected</strong>: Screenshots + testing notes in <code>wk07/evidence/</code></li>
+<li><input disabled="" type="checkbox"/>
+<strong>Code committed</strong>: <code>git add .</code>, <code>git commit -m "wk7-lab1: inline edit with dual-path + ARIA"</code></li>
+</ul>
+<hr />
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>In <strong>Week 7 Lab 2</strong> you will:</p>
+<ol>
+<li>Run structured accessibility audit (WCAG checklist, heuristics)</li>
+<li>Log findings in inclusive backlog</li>
+<li>Implement <strong>one priority fix</strong> from backlog (error summary, focus indicator, etc.)</li>
+<li>Package evidence for Task 1 (Gradescope submission)</li>
+</ol>
+<p><strong>Preparation</strong>:</p>
+<ul>
+<li>Review backlog from Week 6 (<code>wk06/backlog/backlog.csv</code>)</li>
+<li>Install axe DevTools browser extension</li>
+<li>Bring inline edit code from Lab 1 (working state)</li>
+</ul>
+<hr />
+<p><strong>Lab authored by</strong>: COMP2850 Teaching Team, University of Leeds
+<strong>Last updated</strong>: 2025-01-14
+<strong>Licence</strong>: Academic use only (not for redistribution)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../wk07/src/wk7-lab2-audit-backlog-fix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../wk07/src/wk7-lab2-audit-backlog-fix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

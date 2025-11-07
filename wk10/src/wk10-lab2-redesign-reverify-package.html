@@ -1,0 +1,1060 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Inclusive redesign, re-verify, Task 2 package - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-10--lab-2--inclusive-redesign-re-verification-task-2-packaging"><a class="header" href="#week-10--lab-2--inclusive-redesign-re-verification-task-2-packaging">Week 10 • Lab 2 — Inclusive Redesign, Re-Verification, Task 2 Packaging</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-10-orange" alt="Week 10" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="before-lab-required-reading-10-mins"><a class="header" href="#before-lab-required-reading-10-mins">Before Lab: Required Reading (10 mins)</a></h2>
+<p>📖 <strong>Essential</strong>:</p>
+<ul>
+<li>Review your redesign brief (<code>wk10/lab-wk10/docs/redesign-brief.md</code>)</li>
+<li>Review <a href="../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li>Skim the <a href="../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG 2.2 Quick Reference</a> (sections 3.3, 4.1)</li>
+</ul>
+<p>📖 <strong>Contextual</strong>:</p>
+<ul>
+<li><a href="https://webaim.org/techniques/forms/">WebAIM: Creating Accessible Forms</a></li>
+<li><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/making-your-service-accessible-an-introduction">GOV.UK: Making your service accessible</a></li>
+</ul>
+<hr />
+<h2 id="introduction-from-plan-to-implementation"><a class="header" href="#introduction-from-plan-to-implementation">Introduction: From Plan to Implementation</a></h2>
+<p>Week 10 Lab 1 identified Priority 1 fixes through data analysis. <strong>Today you implement and verify those fixes</strong>.</p>
+<p><strong>This lab is where HCI theory becomes practice</strong>:</p>
+<ul>
+<li><strong>Implementation</strong>: Server-first code + HTMX enhancements</li>
+<li><strong>Verification</strong>: Rigorous accessibility testing (keyboard, SR, no-JS)</li>
+<li><strong>Measurement</strong>: Before/after metrics proving improvement</li>
+<li><strong>Documentation</strong>: Evidence chains for Gradescope Task 2</li>
+</ul>
+<p><strong>Why this matters</strong>:</p>
+<ul>
+<li><strong>Gradescope Task 2</strong>: Requires before/after metrics + code changes + verification evidence</li>
+<li><strong>Week 11 portfolio</strong>: This fix becomes a case study (problem → data → fix → verification)</li>
+<li><strong>Professional practice</strong>: Inclusive design is iterative—implement, test, measure, refine</li>
+</ul>
+<p><strong>Quality bar</strong>: Changes must improve accessibility <strong>without breaking existing functionality</strong>. Regression testing is critical.</p>
+<hr />
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Implemented top 3 prioritised fixes (WCAG 2.2 AA)</li>
+<li>Run regression testing (axe + manual keyboard, SR, no-JS)</li>
+<li>Re-piloted with n=2 to verify improvements</li>
+<li>Measured post-change metrics and compared to baseline</li>
+<li>Documented evidence chains (code diffs, screenshots, metrics)</li>
+<li>Packaged Task 2 submission with before/after data</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO4</strong>: Evaluate for accessibility — evidenced by regression testing</li>
+<li><strong>LO6</strong>: Apply iterative design — evidenced by redesign → re-verification cycle</li>
+<li><strong>LO9</strong>: Apply inclusive design — evidenced by WCAG-compliant redesign</li>
+<li><strong>LO12</strong>: Demonstrate professionalism — evidenced by evidence chains in documentation
+Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="regression-testing"><a class="header" href="#regression-testing">Regression Testing</a></h3>
+<blockquote>
+<p><strong>Regression Testing</strong> [GLOSSARY]</p>
+<p>Verifying that new changes don't break existing functionality. Critical when fixing accessibility issues.</p>
+<p><strong>HCI context</strong>: Fixing one accessibility issue can inadvertently break another. Example:</p>
+<ul>
+<li>Fix: Add <code>role="alert"</code> to error messages (helps SR users)</li>
+<li>Regression: Alert interrupts SR navigation mid-task (too assertive)</li>
+<li>Solution: Use <code>aria-live="polite"</code> instead</li>
+</ul>
+<p><strong>Regression checklist covers</strong>:</p>
+<ul>
+<li>Keyboard navigation (tab order, focus indicators)</li>
+<li>Screen reader announcements (live regions, labels)</li>
+<li>No-JS parity (functionality without JavaScript)</li>
+<li>Visual rendering (contrast, zoom, reflow)</li>
+</ul>
+<p><strong>Best practice</strong>: Test with same protocol used in Week 9 pilots—ensures comparability.</p>
+<p>🔗 <a href="https://www.w3.org/WAI/test-evaluate/combined-expertise/">W3C: Regression Testing for Accessibility</a></p>
+</blockquote>
+<h3 id="beforeafter-metrics"><a class="header" href="#beforeafter-metrics">Before/After Metrics</a></h3>
+<blockquote>
+<p><strong>Before/After Metrics</strong> [GLOSSARY]</p>
+<p>Quantitative comparison showing improvement from intervention. Core of evidence-based HCI.</p>
+<p><strong>Requirement</strong>: Baseline (Week 9) + post-change (Week 10 Lab 2) measured identically.</p>
+<p><strong>Example</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Δ</th><th>Interpretation</th></tr></thead><tbody>
+<tr><td>T2 completion (no-JS)</td><td>50%</td><td>100%</td><td>+50%</td><td>Fix restored parity</td></tr>
+<tr><td>T2 error rate</td><td>33%</td><td>10%</td><td>-23%</td><td>Improved affordances</td></tr>
+<tr><td>T2 median time (all)</td><td>1400ms</td><td>1250ms</td><td>-150ms</td><td>Faster (less confusion)</td></tr>
+</tbody></table>
+</div>
+<p><strong>HCI connection</strong>: Before/after metrics demonstrate <strong>measurable impact</strong>—not just "we fixed it" but "completion improved by 50%."</p>
+<p><strong>Gradescope Task 2 requires</strong>: Table + narrative explaining significance (who benefits, why it matters).</p>
+<p>🔗 <a href="https://measuringux.com/before-after/">Measuring UX: Before/After Studies</a></p>
+</blockquote>
+<h3 id="accessible-error-handling"><a class="header" href="#accessible-error-handling">Accessible Error Handling</a></h3>
+<blockquote>
+<p><strong>Accessible Error Handling</strong> [GLOSSARY]</p>
+<p>Validation errors must be perceivable, understandable, and recoverable for all participants.</p>
+<p><strong>WCAG requirements</strong>:</p>
+<ul>
+<li><strong>3.3.1 Error Identification (A)</strong>: Errors identified in text and programmatically determinable</li>
+<li><strong>3.3.3 Error Suggestion (AA)</strong>: Provide correction suggestions when known</li>
+<li><strong>4.1.3 Status Messages (AA)</strong>: Messages announced without focus change</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li><strong>Inline errors</strong>: <code>aria-describedby</code> links input to error message</li>
+<li><strong>Summary errors</strong>: Page-level alert with links to problem fields</li>
+<li><strong>Live regions</strong>: <code>role="alert"</code> for HTMX, <code>aria-live="assertive"</code> for critical errors</li>
+<li><strong>Focus management</strong>: Move focus to error summary (no-JS) or keep on input (HTMX)</li>
+</ul>
+<p><strong>Example (HTMX)</strong>:</p>
+<pre><code class="language-html">&lt;!-- OOB status update --&gt;
+&lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
+  Title is required. Please enter at least one character.
+&lt;/div&gt;
+</code></pre>
+<p><strong>Example (no-JS)</strong>:</p>
+<pre><code class="language-html">&lt;!-- Error summary at top of page --&gt;
+&lt;div id="error-summary" role="alert" tabindex="-1"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#title"&gt;Title is required&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;!-- Input with aria-describedby --&gt;
+&lt;input id="title" aria-invalid="true" aria-describedby="title-error"&gt;
+&lt;p id="title-error"&gt;Title is required. Please enter at least one character.&lt;/p&gt;
+</code></pre>
+<p>🔗 <a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a></p>
+</blockquote>
+<h3 id="code-diffs-for-evidence"><a class="header" href="#code-diffs-for-evidence">Code Diffs for Evidence</a></h3>
+<blockquote>
+<p><strong>Code Diffs</strong> [GLOSSARY]</p>
+<p>Side-by-side comparison showing what changed. Essential for Task 2 evidence.</p>
+<p><strong>Format</strong>:</p>
+<pre><code class="language-diff">- &lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;
++ &lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
++   Title is required. Please enter at least one character.
++ &lt;/div&gt;
+</code></pre>
+<p><strong>What to include</strong>:</p>
+<ul>
+<li>File path (e.g., <code>src/main/kotlin/routes/Tasks.kt:45</code>)</li>
+<li>Before/after code (3-5 lines context)</li>
+<li>Brief explanation of change and WCAG impact</li>
+</ul>
+<p><strong>Generate automatically</strong>:</p>
+<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/ &gt; wk10/gradescope/task2/04-key-diffs.md
+</code></pre>
+<p><strong>HCI connection</strong>: Diffs make fixes <strong>transparent and reproducible</strong>—assessors and peers can see exactly what changed.</p>
+<p>🔗 <a href="https://git-scm.com/docs/git-diff">Git: Generating Diffs</a></p>
+</blockquote>
+<hr />
+<h2 id="activity-a-implement-priority-1-fix-40-min"><a class="header" href="#activity-a-implement-priority-1-fix-40-min">Activity A: Implement Priority 1 Fix (40 min)</a></h2>
+<p><strong>Goal</strong>: Execute redesign plan from Week 10 Lab 1 brief.</p>
+<h3 id="step-1-review-redesign-brief-5-min"><a class="header" href="#step-1-review-redesign-brief-5-min">Step 1: Review redesign brief (5 min)</a></h3>
+<p><strong>Open <code>wk10/lab-wk10/docs/redesign-brief.md</code></strong> and confirm:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Problem statement clear (backed by Week 9 data)</li>
+<li><input disabled="" type="checkbox"/>
+Proposed changes specific (file paths, before/after code)</li>
+<li><input disabled="" type="checkbox"/>
+Acceptance criteria measurable</li>
+<li><input disabled="" type="checkbox"/>
+Verification plan defined</li>
+</ul>
+<p><strong>Assign roles</strong> (if pair programming):</p>
+<ul>
+<li><strong>Driver</strong>: Writes code</li>
+<li><strong>Navigator</strong>: Reviews changes, runs tests, checks against brief</li>
+</ul>
+<p><strong>Swap after 20 min</strong>.</p>
+<h3 id="step-2-implement-server-side-changes-15-min"><a class="header" href="#step-2-implement-server-side-changes-15-min">Step 2: Implement server-side changes (15 min)</a></h3>
+<p><strong>Example: T2 edit validation error accessibility</strong></p>
+<p><strong>File</strong>: <code>src/main/kotlin/routes/Tasks.kt</code></p>
+<p><strong>Before</strong> (Week 9 baseline):</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.BadRequest)
+    val title = call.receiveParameters()["title"].orEmpty().trim()
+
+    if (title.isBlank()) {
+        if (call.isHtmx()) {
+            val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+            return@post call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+        } else {
+            return@post call.respondRedirect("/tasks/{id}/edit?error=title")
+        }
+    }
+
+    // Success path...
+}
+</code></pre>
+<p><strong>After</strong> (Week 10 fix):</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.BadRequest)
+    val title = call.receiveParameters()["title"].orEmpty().trim()
+
+    if (title.isBlank()) {
+        if (call.isHtmx()) {
+            // CHANGE: Added role="alert" + aria-live="assertive" for SR announcement
+            val status = """&lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
+                Title is required. Please enter at least one character.
+            &lt;/div&gt;"""
+            return@post call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+        } else {
+            // CHANGE: Redirect to edit page with error param (focus handled in template)
+            return@post call.respondRedirect("/tasks?error=title&amp;edit_id=$id")
+        }
+    }
+
+    // Success path unchanged
+    repo.update(id, title)
+    if (call.isHtmx()) {
+        val item = PebbleRender.render("tasks/_item.peb", mapOf("t" to repo.get(id)))
+        val status = """&lt;div id="status" role="status" aria-live="polite" hx-swap-oob="true"&gt;
+            Updated "${repo.get(id)?.title}".
+        &lt;/div&gt;"""
+        call.respondText(item + status, ContentType.Text.Html)
+    } else {
+        call.respondRedirect("/tasks")
+    }
+}
+</code></pre>
+<p><strong>Key changes</strong>:</p>
+<ol>
+<li><strong>HTMX error</strong>: Added <code>role="alert"</code> + <code>aria-live="assertive"</code> → SR announces immediately</li>
+<li><strong>HTMX success</strong>: Changed to <code>role="status"</code> + <code>aria-live="polite"</code> → less intrusive</li>
+<li><strong>No-JS error</strong>: Redirect includes <code>edit_id</code> → template can focus correct field</li>
+</ol>
+<h3 id="step-3-implement-template-changes-15-min"><a class="header" href="#step-3-implement-template-changes-15-min">Step 3: Implement template changes (15 min)</a></h3>
+<p><strong>File</strong>: <code>templates/tasks/index.peb</code></p>
+<p><strong>Add error summary</strong> (for no-JS path):</p>
+<pre><code class="language-twig">{% if error %}
+&lt;div id="error-summary" class="error-summary" role="alert" aria-live="assertive" tabindex="-1"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    {% if error == "title" %}
+    &lt;li&gt;&lt;a href="#title"&gt;Title is required. Please enter at least one character.&lt;/a&gt;&lt;/li&gt;
+    {% endif %}
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  // Progressive enhancement: auto-focus error summary
+  // Works even if JS loaded late; gracefully degrades if JS disabled after page load
+  (function() {
+    var errorSummary = document.getElementById('error-summary');
+    if (errorSummary) {
+      errorSummary.focus();
+    }
+  })();
+&lt;/script&gt;
+{% endif %}
+</code></pre>
+<p><strong>Update form input</strong> (link to error):</p>
+<pre><code class="language-twig">&lt;label for="title"&gt;Task title&lt;/label&gt;
+&lt;input id="title" name="title" type="text"
+       {% if error == "title" %}
+       aria-invalid="true"
+       aria-describedby="title-hint title-error"
+       {% else %}
+       aria-describedby="title-hint"
+       {% endif %}
+       required&gt;
+
+&lt;p id="title-hint" class="hint"&gt;Keep titles short and specific.&lt;/p&gt;
+
+{% if error == "title" %}
+&lt;p id="title-error" class="error-message" role="alert"&gt;
+  Title is required. Please enter at least one character.
+&lt;/p&gt;
+{% endif %}
+</code></pre>
+<p><strong>Key changes</strong>:</p>
+<ol>
+<li><strong>Error summary</strong>: <code>role="alert"</code> + <code>tabindex="-1"</code> + auto-focus script</li>
+<li><strong>Input</strong>: <code>aria-invalid="true"</code> when error present</li>
+<li><strong>aria-describedby</strong>: Links input to both hint and error</li>
+<li><strong>Inline error</strong>: <code>role="alert"</code> for immediate announcement</li>
+</ol>
+<h3 id="step-4-test-manually-5-min"><a class="header" href="#step-4-test-manually-5-min">Step 4: Test manually (5 min)</a></h3>
+<p><strong>Start server</strong>: <code>./gradlew run</code></p>
+<p><strong>Test HTMX path</strong>:</p>
+<ol>
+<li>Navigate to <code>/tasks</code></li>
+<li>Click Edit on a task</li>
+<li>Clear title field, click Save</li>
+<li><strong>Expected</strong>: Status message appears immediately ("Title is required...")</li>
+<li><strong>Verify with SR</strong> (if available): Message should be announced without focus change</li>
+</ol>
+<p><strong>Test no-JS path</strong>:</p>
+<ol>
+<li>Disable JavaScript (DevTools → Settings → Disable JavaScript)</li>
+<li>Hard refresh (Ctrl+Shift+R)</li>
+<li>Click Edit on a task</li>
+<li>Clear title, click Save</li>
+<li><strong>Expected</strong>: Page reloads with error summary at top, summary has focus (visible outline)</li>
+<li><strong>Verify</strong>: Tab order → error summary link → click link → focus lands on <code>#title</code> input</li>
+</ol>
+<p><strong>Test keyboard</strong>:</p>
+<ol>
+<li>Tab through entire flow (Edit → clear → submit → error summary → error link → input)</li>
+<li><strong>Verify</strong>: All elements reachable, focus visible, no keyboard traps</li>
+</ol>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+HTMX error path works (status appears, SR announces)</li>
+<li><input disabled="" type="checkbox"/>
+No-JS error path works (summary focused, link navigates to input)</li>
+<li><input disabled="" type="checkbox"/>
+Keyboard navigation smooth (no traps, focus visible)</li>
+<li><input disabled="" type="checkbox"/>
+No console errors</li>
+</ul>
+<hr />
+<h2 id="activity-b-run-regression-checklist-20-min"><a class="header" href="#activity-b-run-regression-checklist-20-min">Activity B: Run Regression Checklist (20 min)</a></h2>
+<p><strong>Goal</strong>: Verify fix didn't break existing functionality or introduce new accessibility issues.</p>
+<h3 id="step-1-download-regression-checklist-2-min"><a class="header" href="#step-1-download-regression-checklist-2-min">Step 1: Download regression checklist (2 min)</a></h3>
+<p><strong>Create <code>wk10/lab-wk10/a11y/regression-checklist.csv</code></strong>:</p>
+<pre><code class="language-csv">category,check,pass,notes
+Keyboard,All interactive elements reachable with Tab,,
+Keyboard,Focus order matches visual order,,
+Keyboard,Focus indicators visible on all elements,,
+Keyboard,No keyboard traps,,
+Keyboard,Skip link functional,,
+Screen Reader,All form labels announced,,
+Screen Reader,Error messages announced (role=alert),,
+Screen Reader,Success messages announced (role=status),,
+Screen Reader,Live regions working (filter results count etc),,
+Screen Reader,Headings navigable (H key in NVDA/Orca),,
+Forms,Errors identified in text,,
+Forms,Errors linked to inputs (aria-describedby),,
+Forms,aria-invalid set when error present,,
+Forms,Error suggestions provided (when applicable),,
+No-JS,All tasks completable with JS disabled,,
+No-JS,Error summary focusable and keyboard-navigable,,
+No-JS,PRG pattern working (refresh doesn't duplicate),,
+No-JS,Full page renders vs fragments (correct responses),,
+Visual,Contrast meets WCAG AA (4.5:1 text),,
+Visual,200% zoom: no horizontal scroll,,
+Visual,Error messages visible (not color-only),,
+Visual,Focus indicators meet contrast requirements,,
+</code></pre>
+<h3 id="step-2-execute-checklist-15-min"><a class="header" href="#step-2-execute-checklist-15-min">Step 2: Execute checklist (15 min)</a></h3>
+<p><strong>Work through each row systematically</strong>:</p>
+<p><strong>Keyboard testing</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Tab from skip link → forms → buttons → tasks → pagination</li>
+<li><input disabled="" type="checkbox"/>
+Shift+Tab reverses order</li>
+<li><input disabled="" type="checkbox"/>
+Enter activates links/buttons, Space toggles checkboxes</li>
+<li><input disabled="" type="checkbox"/>
+Escape closes modals (if any)</li>
+<li><input disabled="" type="checkbox"/>
+Focus visible on all stops (blue outline or similar)</li>
+</ul>
+<p><strong>Screen reader testing</strong> (NVDA Windows / Orca Linux):</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Navigate headings with H key → hears "Tasks", "Add Task", etc.</li>
+<li><input disabled="" type="checkbox"/>
+Forms mode (F key) → lands on first input</li>
+<li><input disabled="" type="checkbox"/>
+Error submission → hears "Alert. Title is required..."</li>
+<li><input disabled="" type="checkbox"/>
+Success submission → hears "Updated [title]" (or similar)</li>
+<li><input disabled="" type="checkbox"/>
+Filter results → hears "Showing 3 tasks" (if live region present)</li>
+</ul>
+<p><strong>No-JS testing</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Disable JS, hard refresh</li>
+<li><input disabled="" type="checkbox"/>
+Add task → works (PRG redirect)</li>
+<li><input disabled="" type="checkbox"/>
+Submit blank form → error summary appears and focused</li>
+<li><input disabled="" type="checkbox"/>
+Click error link → focus moves to input</li>
+<li><input disabled="" type="checkbox"/>
+Edit task → works (full page reload)</li>
+<li><input disabled="" type="checkbox"/>
+Delete task → works (no confirmation expected—documented trade-off)</li>
+</ul>
+<p><strong>Visual testing</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Use contrast checker (DevTools → CSS Overview or extension)</li>
+<li><input disabled="" type="checkbox"/>
+Zoom to 200% (Ctrl/Cmd + plus) → no horizontal scroll</li>
+<li><input disabled="" type="checkbox"/>
+Error states visible without color (text, icons, position)</li>
+</ul>
+<h3 id="step-3-document-results-3-min"><a class="header" href="#step-3-document-results-3-min">Step 3: Document results (3 min)</a></h3>
+<p><strong>Fill in <code>pass</code> column</strong>: <code>yes</code>, <code>no</code>, <code>n/a</code></p>
+<p><strong>Fill in <code>notes</code> column</strong> for failures or concerns:</p>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-csv">category,check,pass,notes
+Screen Reader,Error messages announced (role=alert),yes,"NVDA announces immediately after submit"
+No-JS,Error summary focusable and keyboard-navigable,yes,"Focus indicator visible, Tab order correct"
+Visual,Focus indicators meet contrast requirements,no,"Blue outline has 2.8:1 contrast—needs 3:1. Log backlog item wk10-07"
+</code></pre>
+<p><strong>If failures found</strong>:</p>
+<ul>
+<li><strong>Critical</strong> (blocks task completion): Fix immediately before proceeding</li>
+<li><strong>High</strong> (accessibility barrier): Log backlog item, document in notes</li>
+<li><strong>Medium/Low</strong>: Acceptable if documented in constraints/known issues</li>
+</ul>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Regression checklist complete (all rows filled)</li>
+<li><input disabled="" type="checkbox"/>
+No critical failures (or fixed)</li>
+<li><input disabled="" type="checkbox"/>
+Evidence captured (screenshots if needed for failures)</li>
+</ul>
+<hr />
+<h2 id="activity-c-collect-post-change-metrics-25-min"><a class="header" href="#activity-c-collect-post-change-metrics-25-min">Activity C: Collect Post-Change Metrics (25 min)</a></h2>
+<p><strong>Goal</strong>: Run targeted pilots to measure improvement.</p>
+<h3 id="step-1-prepare-verification-pilots-5-min"><a class="header" href="#step-1-prepare-verification-pilots-5-min">Step 1: Prepare verification pilots (5 min)</a></h3>
+<p><strong>Minimal protocol</strong> (adapted from Week 9):</p>
+<ul>
+<li><strong>n=3 participants</strong> (yourself + 2 peers, or 3 quick runs with different variants)</li>
+<li><strong>Focus on changed task</strong> (T2 edit in our example)</li>
+<li><strong>Variants</strong>: 1× standard (HTMX), 1× keyboard/SR, 1× no-JS</li>
+</ul>
+<p><strong>Generate session IDs</strong>:</p>
+<pre><code class="language-bash"># P6: Standard (HTMX, JS-on)
+# P7: Keyboard + NVDA (SR)
+# P8: No-JS
+</code></pre>
+<p><strong>Set cookies</strong>:</p>
+<pre><code class="language-javascript">document.cookie = "sid=P6_post; path=/";
+</code></pre>
+<h3 id="step-2-run-verification-pilots-15-min"><a class="header" href="#step-2-run-verification-pilots-15-min">Step 2: Run verification pilots (15 min)</a></h3>
+<p><strong>For each participant</strong>:</p>
+<ol>
+<li>Read consent (quick version: "Testing post-fix, ~5 min, can stop anytime")</li>
+<li>Navigate to <code>/tasks</code></li>
+<li>Run T2 (Edit task): "Change 'Submit invoices' to 'Submit invoices by Friday'"</li>
+<li><strong>Intentionally trigger error</strong> once (submit blank) to test error handling</li>
+<li>Then complete successfully</li>
+<li>Note completion (yes/no), errors (count), time (from logs), confidence (1-5)</li>
+</ol>
+<p><strong>Example pilot P7 (keyboard + SR)</strong>:</p>
+<pre><code>P7_post (NVDA, keyboard-only):
+- T2 attempt 1: Blank submission → Error announced "Alert. Title is required..." ✓
+- T2 attempt 2: Success → "Updated Submit invoices by Friday" announced ✓
+- Completion: yes
+- Errors: 1 (intentional blank)
+- Time: 1356ms (from metrics.csv)
+- Confidence: 5
+- Notes: "Error was clear this time, heard it immediately"
+</code></pre>
+<h3 id="step-3-analyze-post-change-data-5-min"><a class="header" href="#step-3-analyze-post-change-data-5-min">Step 3: Analyze post-change data (5 min)</a></h3>
+<p><strong>Open <code>data/metrics.csv</code></strong>, filter for session IDs <code>P6_post</code>, <code>P7_post</code>, <code>P8_post</code>.</p>
+<p><strong>Calculate same metrics as Week 9</strong>:</p>
+<ul>
+<li>Completion rate: 3/3 = 100% ✓ (was 80% JS-on, 0% JS-off)</li>
+<li>Error rate: 1/4 attempts = 25% (was 33%—slight improvement)</li>
+<li>Median time (success only): median([1356, 1289, 3201]) = 1356ms
+<ul>
+<li>JS-on: 1322ms (was 1400ms—faster)</li>
+<li>JS-off: 3201ms (was N/A—now functional!)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Update <code>analysis/summary.md</code></strong>:</p>
+<pre><code class="language-markdown">## Before/After Comparison
+
+### Task T2 (Edit Task)
+
+| Metric | Before (Week 9) | After (Week 10) | Δ | Interpretation |
+|--------|-----------------|-----------------|---|----------------|
+| Completion (JS-on) | 4/5 (80%) | 2/2 (100%) | +20% | All participants succeeded |
+| Completion (JS-off) | 0/1 (0%) | 1/1 (100%) | +100% | **Parity restored** |
+| Completion (all) | 4/6 (67%) | 3/3 (100%) | +33% | Fix eliminated failures |
+| Error rate (all) | 2/6 (33%) | 1/4 (25%) | -8% | Improved affordances |
+| Median time (JS-on) | 1400ms | 1322ms | -78ms | Slightly faster (less confusion) |
+| Median time (JS-off) | N/A | 3201ms | — | Functional (expected slower) |
+
+### Key Improvements
+
+**Accessibility**:
+- Screen reader users: Error messages now announced immediately (`role="alert"`)
+- Keyboard-only users: Error summary keyboard-navigable (`tabindex="-1"`, auto-focus)
+- No-JS users: Can now complete task (was blocked before)
+
+**WCAG Compliance**:
+- ✅ 3.3.1 Error Identification (Level A): Errors identified in text and programmatically
+- ✅ 4.1.3 Status Messages (Level AA): Validation errors announced without focus change
+- ✅ 3.2.1 On Focus (Level A): Focus managed predictably (error summary → input)
+
+**Impact**:
+- **Who benefits**: Estimated 2-5% UK population (SR users) + keyboard-only + no-JS users
+- **Severity**: High → Resolved (task was previously impossible for no-JS, difficult for SR)
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Post-change metrics collected (n=3 minimum)</li>
+<li><input disabled="" type="checkbox"/>
+Before/after comparison table complete</li>
+<li><input disabled="" type="checkbox"/>
+Narrative interpretation written</li>
+<li><input disabled="" type="checkbox"/>
+Evidence captured (SR transcript, screenshots)</li>
+</ul>
+<hr />
+<h2 id="activity-d-package-task-2-evidence-bundle-20-min"><a class="header" href="#activity-d-package-task-2-evidence-bundle-20-min">Activity D: Package Task 2 Evidence Bundle (20 min)</a></h2>
+<p><strong>Goal</strong>: Assemble all artefacts for Gradescope submission.</p>
+<p><strong>Directory structure</strong>: <code>wk10/gradescope/task2/</code></p>
+<h3 id="step-1-copycreate-core-documents-10-min"><a class="header" href="#step-1-copycreate-core-documents-10-min">Step 1: Copy/create core documents (10 min)</a></h3>
+<p><strong>1. <code>01-redesign-brief.md</code></strong>:</p>
+<ul>
+<li>Copy from <code>wk10/lab-wk10/docs/redesign-brief.md</code></li>
+<li>Update "Success Criteria Summary" section with actual results</li>
+</ul>
+<p><strong>2. <code>02-regression-checklist.csv</code></strong>:</p>
+<ul>
+<li>Copy from <code>wk10/lab-wk10/a11y/regression-checklist.csv</code></li>
+<li>Ensure all rows filled with pass/notes</li>
+</ul>
+<p><strong>3. <code>03-before-after-summary.md</code></strong>:</p>
+<ul>
+<li>Copy before/after table from <code>analysis/summary.md</code></li>
+<li>Add 2-3 paragraph narrative:
+<ul>
+<li>What changed (code + UX)</li>
+<li>Who benefits (inclusion impact)</li>
+<li>Evidence of improvement (completion +33%, parity restored)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown"># Before/After Summary — Task 2
+
+## Problem Addressed
+
+Task T2 (Edit Task) had 67% overall completion in Week 9 pilots, with 0% completion for no-JS participants. Root cause: validation errors not accessible to screen readers or keyboard users.
+
+## Solution Implemented
+
+Added accessible error handling:
+- HTMX: `role="alert"` + `aria-live="assertive"` for immediate SR announcement
+- No-JS: Error summary with `tabindex="-1"` + auto-focus on page load
+- Both: `aria-describedby` linking inputs to error messages
+
+## Results
+
+[Insert before/after table from Activity C]
+
+## Impact
+
+Fix restored functional parity for no-JS users (0% → 100% completion) and improved accessibility for screen reader and keyboard-only users. WCAG 2.2 Level AA compliance achieved (3.3.1, 4.1.3, 3.2.1).
+</code></pre>
+<p><strong>4. <code>04-key-diffs.md</code></strong>:</p>
+<p>Generate code diffs:</p>
+<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/tasks/index.peb src/main/kotlin/routes/Tasks.kt &gt; wk10/gradescope/task2/04-key-diffs.md
+</code></pre>
+<p>Annotate with explanations:</p>
+<pre><code class="language-markdown"># Key Code Changes — Task 2
+
+## File: `src/main/kotlin/routes/Tasks.kt` (Line 45)
+
+### Before
+```kotlin
+val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+</code></pre>
+<h3 id="after"><a class="header" href="#after">After</a></h3>
+<pre><code class="language-kotlin">val status = """&lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
+    Title is required. Please enter at least one character.
+&lt;/div&gt;"""
+</code></pre>
+<p><strong>Change</strong>: Added <code>role="alert"</code> + <code>aria-live="assertive"</code></p>
+<p><strong>Rationale</strong>: Ensures screen readers announce validation errors immediately without focus change (WCAG 4.1.3 Status Messages).</p>
+<hr />
+<h2 id="file-templatestasksindexpeb-line-23"><a class="header" href="#file-templatestasksindexpeb-line-23">File: <code>templates/tasks/index.peb</code> (Line 23)</a></h2>
+<h3 id="before"><a class="header" href="#before">Before</a></h3>
+<pre><code class="language-twig">{% if error %}
+&lt;div class="alert"&gt;Could not save&lt;/div&gt;
+{% endif %}
+</code></pre>
+<h3 id="after-1"><a class="header" href="#after-1">After</a></h3>
+<pre><code class="language-twig">{% if error %}
+&lt;div id="error-summary" class="error-summary" role="alert" aria-live="assertive" tabindex="-1"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#title"&gt;Title is required. Please enter at least one character.&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  (function() {
+    var errorSummary = document.getElementById('error-summary');
+    if (errorSummary) { errorSummary.focus(); }
+  })();
+&lt;/script&gt;
+{% endif %}
+</code></pre>
+<p><strong>Changes</strong>:</p>
+<ol>
+<li>Structured error summary (heading + list of errors)</li>
+<li><code>tabindex="-1"</code> makes div focusable programmatically</li>
+<li>Auto-focus script (progressive enhancement)</li>
+<li><code>role="alert"</code> announces to SR on page load</li>
+</ol>
+<p><strong>Rationale</strong>: No-JS users can now navigate to error summary with keyboard, fixing 0% completion rate (WCAG 3.3.1, 3.2.1).</p>
+<pre><code>
+### Step 2: Collect evidence artefacts (5 min)
+
+**Create `05-evidence/` directory**:
+
+</code></pre>
+<p>wk10/gradescope/task2/05-evidence/
+├── screenshots/
+│   ├── before-htmx-error.png (no role=alert visible in devtools)
+│   ├── after-htmx-error.png (role=alert visible)
+│   ├── before-nojs-error.png (error present but not focused)
+│   ├── after-nojs-error.png (error summary with focus outline)
+│   └── annotations.md
+├── sr-transcripts/
+│   ├── before-nvda.txt ("Title is required" not announced)
+│   └── after-nvda.txt ("Alert. Title is required..." announced)
+└── metrics/
+├── before-analysis.csv (copy of Week 9 analysis.csv)
+└── after-analysis.csv (post-change metrics)</p>
+<pre><code>
+**Screenshot annotations.md**:
+```markdown
+# Evidence Annotations
+
+## before-htmx-error.png
+**Alt text**: "Browser devtools showing div#status with text 'Title is required' but no ARIA attributes"
+
+**Context**: Week 9 baseline. Error appears visually but screen readers don't announce it.
+
+## after-htmx-error.png
+**Alt text**: "Browser devtools showing div#status with role=alert, aria-live=assertive, and text 'Title is required. Please enter at least one character.'"
+
+**Context**: Week 10 fix. Error now has semantic markup for SR announcement.
+
+## after-nojs-error.png
+**Alt text**: "Task list page with error summary at top highlighted with blue focus outline. Error reads 'There is a problem' with link to title field."
+
+**Context**: Week 10 fix, no-JS path. Error summary receives focus on page load, keyboard-navigable.
+</code></pre>
+<h3 id="step-3-create-readme-5-min"><a class="header" href="#step-3-create-readme-5-min">Step 3: Create README (5 min)</a></h3>
+<p><strong>Create <code>wk10/gradescope/task2/README.md</code></strong>:</p>
+<pre><code class="language-markdown"># COMP2850 HCI — Gradescope Task 2 Submission
+
+**Student**: [Your name]
+**Date**: 2025-10-22
+**Module**: COMP2850 HCI
+
+---
+
+## Contents
+
+1. **01-redesign-brief.md** — Problem statement, proposed changes, acceptance criteria
+2. **02-regression-checklist.csv** — Accessibility verification (keyboard, SR, no-JS)
+3. **03-before-after-summary.md** — Quantitative metrics comparison (Week 9 vs Week 10)
+4. **04-key-diffs.md** — Annotated code changes with WCAG rationale
+5. **05-evidence/** — Screenshots, SR transcripts, metrics CSVs
+
+---
+
+## Summary
+
+**Problem**: Task T2 (Edit Task) had 67% completion rate in Week 9 pilots (0% for no-JS). Validation errors not accessible to screen readers or keyboard users.
+
+**Fix**: Added accessible error handling (`role="alert"`, `aria-describedby`, `tabindex="-1"`, auto-focus).
+
+**Result**: 100% completion rate (all variants), WCAG 2.2 Level AA compliance (3.3.1, 4.1.3, 3.2.1).
+
+**Impact**: Restored functional parity for no-JS users, improved accessibility for SR and keyboard-only users (estimated 2-5% UK population).
+
+---
+
+## Evidence Chain
+
+1. **Raw data**: `05-evidence/metrics/before-analysis.csv` (Week 9 pilots)
+2. **Analysis**: `03-before-after-summary.md` (completion 67% → 100%)
+3. **Prioritisation**: `01-redesign-brief.md` (Priority 1, Score 8)
+4. **Implementation**: `04-key-diffs.md` (code changes with WCAG rationale)
+5. **Verification**: `02-regression-checklist.csv` + `05-evidence/screenshots/` (post-change testing)
+6. **Measurement**: `05-evidence/metrics/after-analysis.csv` (post-change pilots)
+
+All files reference each other for full traceability.
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+All 5 core documents present in <code>task2/</code></li>
+<li><input disabled="" type="checkbox"/>
+Evidence artefacts organized in <code>05-evidence/</code></li>
+<li><input disabled="" type="checkbox"/>
+README.md complete with summary</li>
+<li><input disabled="" type="checkbox"/>
+All files sanitized (no PII)</li>
+<li><input disabled="" type="checkbox"/>
+File names match spec exactly</li>
+</ul>
+<hr />
+<h2 id="commit--reflect-10-min"><a class="header" href="#commit--reflect-10-min">Commit &amp; Reflect (10 min)</a></h2>
+<h3 id="commit-message"><a class="header" href="#commit-message">Commit message</a></h3>
+<pre><code class="language-bash">git add templates/ src/main/kotlin/ data/metrics.csv analysis/ wk10/gradescope/task2/ wk10/lab-wk10/a11y/ backlog/backlog.csv
+
+git commit -m "$(cat &lt;&lt;'EOF'
+wk10s2: implemented inclusive redesign, verified, packaged Task 2
+
+- Implemented Priority 1 fix: accessible validation error handling (T2 edit)
+  - HTMX: Added role=alert + aria-live=assertive for SR announcement
+  - No-JS: Added error summary with tabindex=-1 + auto-focus
+  - Both: Added aria-describedby linking inputs to errors
+- Completed accessibility regression checklist (21/22 pass, 1 contrast issue logged)
+- Ran verification pilots (n=3): T2 completion 67% → 100%, parity restored for no-JS
+- Collected before/after metrics: completion +33%, error rate -8%, median time -78ms (JS-on)
+- Packaged Gradescope Task 2 bundle: brief, checklist, metrics, code diffs, evidence
+- Updated backlog: wk9-01, wk9-03 marked fixed with verification evidence
+
+Key results:
+- No-JS users: 0% → 100% completion (functional parity restored)
+- SR users: Errors now announced immediately (WCAG 4.1.3 compliance)
+- Keyboard users: Error summary keyboard-navigable (WCAG 3.2.1 compliance)
+- All variants: WCAG 2.2 Level AA achieved (3.3.1, 4.1.3, 3.2.1)
+
+Task 2 ready for submission.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+EOF
+)"
+</code></pre>
+<h3 id="reflection-questions"><a class="header" href="#reflection-questions">Reflection questions</a></h3>
+<p><strong>Answer in <code>wk10/reflection.md</code></strong>:</p>
+<ol>
+<li>
+<p><strong>Implementation challenges</strong>: What was harder than expected? Did you encounter unexpected regressions?</p>
+</li>
+<li>
+<p><strong>Verification insights</strong>: Did post-change pilots reveal new issues? How confident are you in the ≥90% completion claim?</p>
+</li>
+<li>
+<p><strong>Trade-offs</strong>: Did you make any compromises (e.g., auto-focus script requires JS)? How do you justify them?</p>
+</li>
+<li>
+<p><strong>Before/after impact</strong>: Looking at the metrics table, which improvement matters most for inclusion? Why?</p>
+</li>
+<li>
+<p><strong>Evidence quality</strong>: Is your evidence chain complete (data → analysis → fix → verification)? What's missing or weak?</p>
+</li>
+<li>
+<p><strong>Week 11 readiness</strong>: Can you present this fix in 5 minutes (problem → data → solution → proof)? Practice your narrative.</p>
+</li>
+</ol>
+<hr />
+<h2 id="looking-ahead-week-11-studio-crit"><a class="header" href="#looking-ahead-week-11-studio-crit">Looking Ahead: Week 11 Studio Crit</a></h2>
+<p>Next week:</p>
+<ul>
+<li><strong>Lab 1</strong>: Present evidence chains to peers (5 min each)</li>
+<li>Receive critique: Is evidence convincing? Are claims justified?</li>
+<li>Give critique: Check peers' evidence chains, WCAG compliance</li>
+<li><strong>Lab 2</strong>: Final refinements, portfolio assembly, submission prep</li>
+</ul>
+<p><strong>Before Week 11</strong>:</p>
+<ul>
+<li>Review Task 2 bundle—can you explain every file?</li>
+<li>Practice 5-min presentation (problem → data → fix → verification)</li>
+<li>Identify 1-2 backup issues (if your main fix gets critiqued)</li>
+</ul>
+<hr />
+<h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
+<h3 id="essential"><a class="header" href="#essential">Essential</a></h3>
+<ul>
+<li>Review <a href="../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li>Skim the <a href="../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
+<li>Review <a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG 2.2 Quick Reference</a></li>
+</ul>
+<h3 id="accessible-error-handling-1"><a class="header" href="#accessible-error-handling-1">Accessible Error Handling</a></h3>
+<ul>
+<li><a href="https://webaim.org/techniques/forms/">WebAIM: Creating Accessible Forms</a></li>
+<li><a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a></li>
+<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/">ARIA Authoring Practices: Alert</a></li>
+</ul>
+<h3 id="beforeafter-studies"><a class="header" href="#beforeafter-studies">Before/After Studies</a></h3>
+<ul>
+<li><a href="https://measuringux.com/before-after/">Measuring UX: Before/After Studies</a></li>
+<li><a href="https://www.nngroup.com/articles/measure-learnability/">Nielsen: Measuring Improvement</a></li>
+</ul>
+<h3 id="code-evidence"><a class="header" href="#code-evidence">Code Evidence</a></h3>
+<ul>
+<li><a href="https://git-scm.com/docs/git-diff">Git: Generating Diffs</a></li>
+<li><a href="https://www.gov.uk/service-manual/service-standard/point-15-document-how-you-have-evaluated-your-service">GOV.UK: Documenting decisions</a></li>
+</ul>
+<h3 id="academic"><a class="header" href="#academic">Academic</a></h3>
+<ul>
+<li><strong>Lazar et al. (2017).</strong> <em>Research Methods in HCI</em> (2nd ed.). Chapter 12: Reporting results</li>
+<li><strong>Sauro &amp; Lewis (2016).</strong> <em>Quantifying the User Experience</em> (2nd ed.). Chapter 9: Before/after comparisons</li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
+<tr><td><strong>Regression testing</strong></td><td>Verifying new changes don't break existing functionality</td></tr>
+<tr><td><strong>Before/after metrics</strong></td><td>Quantitative comparison showing improvement from intervention</td></tr>
+<tr><td><strong>Accessible error handling</strong></td><td>Errors perceivable, understandable, recoverable for all participants</td></tr>
+<tr><td><strong>Code diffs</strong></td><td>Side-by-side comparison showing what changed (for evidence)</td></tr>
+<tr><td><strong>role="alert"</strong></td><td>ARIA role announcing content immediately to screen readers</td></tr>
+<tr><td><strong>aria-live="assertive"</strong></td><td>Live region that interrupts SR to announce urgent changes</td></tr>
+<tr><td><strong>aria-describedby</strong></td><td>Links element to descriptive text (hints, errors)</td></tr>
+<tr><td><strong>tabindex="-1"</strong></td><td>Makes non-interactive element focusable programmatically (not in tab order)</td></tr>
+<tr><td><strong>Progressive enhancement</strong></td><td>Baseline works without JS; JS adds enhancements</td></tr>
+<tr><td><strong>Evidence chain</strong></td><td>Traceability from data → analysis → fix → verification</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Lab complete!</strong> You have an implemented, verified, documented inclusive redesign ready for Week 11 critique and final submission.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../wk10/src/wk10-lab1-analysis-prioritisation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../wk10/src/wk10-lab1-analysis-prioritisation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Glossary - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="glossary"><a class="header" href="#glossary">Glossary</a></h1>
+<p>Quick reference for technical terms, acronyms, and HCI concepts used throughout COMP2850.</p>
+<p><strong>Categories</strong>: <img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /> <img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /> <img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /> <img src="https://img.shields.io/badge/HTTP-Protocol-red" alt="HTTP" /> <img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /> <img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /> <img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /> <img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong><a href="#acronyms-quick-reference">Jump to Acronyms Quick Reference ↓</a></strong></p>
+<hr />
+<h3 id="accessibility"><a class="header" href="#accessibility">Accessibility (a11y)</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Practice of designing products usable by people with disabilities (visual, auditory, motor, cognitive). "a11y" is numeronym (a + 11 letters + y).</p>
+<p><strong>Core principles (POUR)</strong>:</p>
+<ul>
+<li><strong>Perceivable</strong> - Can see/hear content (alt text, captions, contrast)</li>
+<li><strong>Operable</strong> - Can use keyboard/mouse/voice (keyboard nav, focus indicators)</li>
+<li><strong>Understandable</strong> - Clear language, predictable behaviour, error messages</li>
+<li><strong>Robust</strong> - Works with assistive technologies (semantic HTML, ARIA)</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: WCAG 2.2 AA compliance is mandatory from Week 6.</p>
+<p><strong>See also</strong>: <a href="#wcag">WCAG</a>, <a href="#aria">ARIA</a>, <a href="#semantic-html">Semantic HTML</a></p>
+<hr />
+<h3 id="ajax"><a class="header" href="#ajax">AJAX</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Full name</strong>: Asynchronous JavaScript and XML</p>
+<p><strong>Definition</strong>: Technique for updating parts of a web page without a full reload. The browser sends a request in the background (via JavaScript), receives a response, and updates the DOM.</p>
+<p><strong>History</strong>: Name comes from early 2000s when XML was common. Modern AJAX typically uses JSON or HTML.</p>
+<p><strong>Used in COMP2850</strong>: HTMX uses AJAX under the hood, but you write HTML attributes instead of JavaScript <code>XMLHttpRequest</code> or <code>fetch()</code> code.</p>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#dom">DOM</a></p>
+<hr />
+<h3 id="aria"><a class="header" href="#aria">ARIA</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Full name</strong>: Accessible Rich Internet Applications</p>
+<p><strong>Definition</strong>: Set of HTML attributes that provide semantic information to assistive technologies (screen readers, voice control). Includes roles (<code>role="alert"</code>), properties (<code>aria-label</code>), and states (<code>aria-expanded</code>).</p>
+<p><strong>When to use</strong>: Only when semantic HTML isn't sufficient. <strong>First rule of ARIA</strong>: Don't use ARIA if you can use semantic HTML instead.</p>
+<p><strong>Used in COMP2850</strong>: <code>role="status"</code>, <code>aria-live="polite"</code>, <code>aria-label</code> for context-specific buttons.</p>
+<p><strong>Reference</strong>: <a href="https://www.w3.org/WAI/ARIA/apg/">WAI-ARIA Authoring Practices</a></p>
+<p><strong>See also</strong>: <a href="#aria-live-region">ARIA Live Region</a>, <a href="#semantic-html">Semantic HTML</a></p>
+<hr />
+<h3 id="aria-live-region"><a class="header" href="#aria-live-region">ARIA Live Region</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Element that screen readers monitor for changes and announce automatically, without moving focus.</p>
+<p><strong>Why it matters</strong>: HTMX updates the page dynamically. Without live regions, screen reader users don't know anything changed.</p>
+<p><strong>Attributes</strong>:</p>
+<ul>
+<li><code>role="status"</code> or <code>role="alert"</code> - What type of announcement</li>
+<li><code>aria-live="polite"</code> - Wait for user to pause before announcing</li>
+<li><code>aria-live="assertive"</code> - Interrupt immediately (errors only)</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-html">&lt;div id="status" role="status" aria-live="polite" class="visually-hidden"&gt;
+  Task added successfully
+&lt;/div&gt;
+</code></pre>
+<p><strong>Used in COMP2850</strong>: Every HTMX action must update a live region via OOB swap.</p>
+<p><strong>See also</strong>: <a href="#oob-swap">OOB Swap</a>, <a href="#screen-reader">Screen Reader</a></p>
+<hr />
+<h3 id="css"><a class="header" href="#css">CSS</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Full name</strong>: Cascading Style Sheets</p>
+<p><strong>Definition</strong>: Language for styling HTML (colors, fonts, layout, animations, etc.).</p>
+<p><strong>Used in COMP2850</strong>: Pico CSS framework for baseline styles, custom CSS for accessibility (skip links, focus indicators).</p>
+<hr />
+<h3 id="dom"><a class="header" href="#dom">DOM</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Full name</strong>: Document Object Model</p>
+<p><strong>Definition</strong>: Tree-like representation of an HTML document in memory. The browser parses HTML into the DOM, which JavaScript can then read and manipulate.</p>
+<p><strong>Key concepts</strong>:</p>
+<ul>
+<li><strong>Nodes</strong>: Each element, attribute, and piece of text is a node in the tree</li>
+<li><strong>Manipulation</strong>: JavaScript can add, remove, or change nodes (e.g., <code>document.getElementById()</code>)</li>
+<li><strong>HTMX updates</strong>: HTMX modifies the DOM by swapping HTML fragments without full page reload</li>
+</ul>
+<p><strong>Example</strong>: <code>&lt;ul id="tasks"&gt;&lt;li&gt;Task 1&lt;/li&gt;&lt;/ul&gt;</code> becomes a tree: <code>ul</code> (parent) → <code>li</code> (child) → text node "Task 1"</p>
+<p><strong>Why it matters</strong>: Understanding the DOM helps debug HTMX swaps and accessibility issues (screen readers navigate the DOM tree).</p>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#ajax">AJAX</a>, <a href="#html">HTML</a></p>
+<hr />
+<h3 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: Process of measuring how well an interface meets user needs and usability goals.</p>
+<p><strong>Types</strong>:</p>
+<ul>
+<li><strong>Formative</strong> - During design/development to guide iteration</li>
+<li><strong>Summative</strong> - After release to measure success</li>
+</ul>
+<p><strong>Metrics (COMP2850)</strong>:</p>
+<ul>
+<li><strong>Utility</strong> - Does it solve the problem?</li>
+<li><strong>Efficiency</strong> - How quickly can people complete tasks?</li>
+<li><strong>Learnability</strong> - How quickly can new users learn it?</li>
+<li><strong>Satisfaction</strong> - How pleasant is it to use?</li>
+<li><strong>Affect</strong> - Emotional response (confidence, frustration)</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: Week 9 peer pilots, Week 10 analysis.</p>
+<p><strong>See also</strong>: <a href="#task-based-evaluation">Task-Based Evaluation</a></p>
+<hr />
+<h3 id="focus-indicator"><a class="header" href="#focus-indicator">Focus Indicator</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Visual outline or highlight that shows which element currently has keyboard focus.</p>
+<p><strong>Why it matters</strong>: WCAG 2.4.7 (Focus Visible). Keyboard users need to see where they are on the page.</p>
+<p><strong>Requirements</strong>: Minimum 3:1 contrast ratio against background, 2px minimum thickness (WCAG 2.2).</p>
+<p><strong>Example</strong>: Browser default blue outline, or custom CSS <code>outline: 3px solid #0066A1;</code>.</p>
+<p><strong>See also</strong>: <a href="#accessibility">Accessibility</a>, <a href="#wcag">WCAG</a></p>
+<hr />
+<h3 id="fragment"><a class="header" href="#fragment">Fragment</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: A partial HTML snippet (e.g., <code>&lt;li&gt;New item&lt;/li&gt;</code> or <code>&lt;div&gt;...&lt;/div&gt;</code>) returned by the server, rather than a complete page with <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>.</p>
+<p><strong>Used in COMP2850</strong>: When HTMX makes a request, the server detects <code>HX-Request: true</code> header and returns a fragment instead of the full page.</p>
+<p><strong>Example</strong>: Server renders <code>tasks/_item.peb</code> (just the <code>&lt;li&gt;</code>) instead of <code>tasks/index.peb</code> (full page).</p>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#template-factoring">Template Factoring</a>, <a href="#partial">Partial</a></p>
+<hr />
+<h3 id="hateoas"><a class="header" href="#hateoas">HATEOAS</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Full name</strong>: Hypermedia As The Engine Of Application State</p>
+<p><strong>Definition</strong>: REST principle where the server's responses include hyperlinks/forms that tell the client what actions are possible next. The client doesn't need hardcoded URLs.</p>
+<p><strong>Example</strong>: Task list HTML includes <code>&lt;form action="/tasks" method="post"&gt;</code> (server tells client "you can add tasks here").</p>
+<p><strong>See also</strong>: <a href="#hypermedia">Hypermedia</a></p>
+<hr />
+<h3 id="heuristics"><a class="header" href="#heuristics">Heuristics</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: General rules or principles for evaluating interface usability, not strict guidelines.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Nielsen's 10 Usability Heuristics</strong> (visibility of status, user control, consistency, error prevention, etc.)</li>
+<li><strong>Shneiderman's 8 Golden Rules</strong> (consistency, shortcuts, feedback, closure, error handling, etc.)</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: Week 7 accessibility audit uses heuristics + WCAG.</p>
+<p><strong>See also</strong>: <a href="#wcag">WCAG</a>, <a href="#accessibility">Accessibility</a></p>
+<hr />
+<h3 id="html"><a class="header" href="#html">HTML</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Full name</strong>: HyperText Markup Language</p>
+<p><strong>Definition</strong>: Standard markup language for web pages. Defines structure and semantics (headings, paragraphs, forms, links, etc.).</p>
+<p><strong>Why it matters</strong>: Semantic HTML (using correct tags like <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;button&gt;</code>) is essential for accessibility.</p>
+<p><strong>See also</strong>: <a href="#semantic-html">Semantic HTML</a></p>
+<hr />
+<h3 id="htmx"><a class="header" href="#htmx">HTMX</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: JavaScript library that extends HTML with attributes (<code>hx-get</code>, <code>hx-post</code>, <code>hx-target</code>, <code>hx-swap</code>) to enable AJAX requests and DOM updates without writing JavaScript.</p>
+<p><strong>Key idea</strong>: Server sends HTML fragments (not JSON), HTMX swaps them into the page.</p>
+<p><strong>Example</strong>: <code>&lt;button hx-get="/tasks/123" hx-target="#content"&gt;Load&lt;/button&gt;</code> → Click → AJAX GET → Server returns HTML → HTMX replaces <code>#content</code>.</p>
+<p><strong>Why it matters</strong>: Simpler than React/Vue, accessible by default, progressive enhancement friendly.</p>
+<p><strong>Documentation</strong>: <a href="https://htmx.org/">htmx.org</a> | <a href="https://hypermedia.systems/">hypermedia.systems</a></p>
+<p><strong>See also</strong>: <a href="#ajax">AJAX</a>, <a href="#oob-swap">OOB Swap</a>, <a href="#progressive-enhancement">Progressive Enhancement</a></p>
+<hr />
+<h3 id="http-methods"><a class="header" href="#http-methods">HTTP Methods</a></h3>
+<p><img src="https://img.shields.io/badge/HTTP-Protocol-red" alt="HTTP" /></p>
+<p><strong>Definition</strong>: Verbs that indicate the type of request being made to the server.</p>
+<p><strong>Common methods</strong>:</p>
+<ul>
+<li><strong>GET</strong> - Retrieve data (safe, idempotent, cacheable)</li>
+<li><strong>POST</strong> - Create new resource or submit data</li>
+<li><strong>PUT</strong> - Update/replace entire resource</li>
+<li><strong>PATCH</strong> - Partial update</li>
+<li><strong>DELETE</strong> - Remove resource</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: GET for viewing, POST for forms (add/edit/delete). HTMX supports all methods.</p>
+<p><strong>See also</strong>: <a href="#prg">PRG</a></p>
+<hr />
+<h3 id="http-status-codes"><a class="header" href="#http-status-codes">HTTP Status Codes</a></h3>
+<p><img src="https://img.shields.io/badge/HTTP-Protocol-red" alt="HTTP" /></p>
+<p><strong>Definition</strong>: 3-digit codes indicating the result of an HTTP request.</p>
+<p><strong>Common codes</strong>:</p>
+<ul>
+<li><strong>200 OK</strong> - Success</li>
+<li><strong>201 Created</strong> - Resource created successfully</li>
+<li><strong>303 See Other</strong> - Redirect after POST (PRG pattern)</li>
+<li><strong>400 Bad Request</strong> - Client error (validation failed)</li>
+<li><strong>404 Not Found</strong> - Resource doesn't exist</li>
+<li><strong>500 Internal Server Error</strong> - Server error</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: 303 for PRG redirects, 201 for successful creation, 400 for validation errors.</p>
+<p><strong>See also</strong>: <a href="#prg">PRG</a></p>
+<hr />
+<h3 id="hx-swap"><a class="header" href="#hx-swap">hx-swap</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: HTMX attribute specifying <strong>how</strong> to insert the server's response into the target.</p>
+<p><strong>Common values</strong>:</p>
+<ul>
+<li><code>innerHTML</code> (default) - Replace target's contents</li>
+<li><code>outerHTML</code> - Replace target itself</li>
+<li><code>beforeend</code> - Append to target (inside, at end)</li>
+<li><code>afterend</code> - Insert after target (outside)</li>
+<li><code>beforebegin</code> - Insert before target (outside)</li>
+</ul>
+<p><strong>Example</strong>: <code>hx-swap="beforeend"</code> → append new task to list.</p>
+<p><strong>See also</strong>: <a href="#hx-target">hx-target</a>, <a href="#htmx">HTMX</a></p>
+<hr />
+<h3 id="hx-target"><a class="header" href="#hx-target">hx-target</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: HTMX attribute specifying which element to update with the server's response. Uses CSS selector syntax.</p>
+<p><strong>Example</strong>: <code>hx-target="#task-list"</code> → response goes into element with <code>id="task-list"</code>.</p>
+<p><strong>Default</strong>: If not specified, targets the element that triggered the request.</p>
+<p><strong>See also</strong>: <a href="#hx-swap">hx-swap</a>, <a href="#htmx">HTMX</a></p>
+<hr />
+<h3 id="hx-trigger"><a class="header" href="#hx-trigger">hx-trigger</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: HTMX attribute specifying what event triggers the AJAX request.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><code>hx-trigger="click"</code> (default for buttons)</li>
+<li><code>hx-trigger="submit"</code> (default for forms)</li>
+<li><code>hx-trigger="keyup changed delay:300ms"</code> (debounced search)</li>
+<li><code>hx-trigger="revealed"</code> (lazy load when scrolled into view)</li>
+</ul>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a></p>
+<hr />
+<h3 id="hypermedia"><a class="header" href="#hypermedia">Hypermedia</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Definition</strong>: Media (HTML) that contains hyperlinks and forms as controls for navigating and manipulating application state. The server tells the client what actions are available via links (<code>&lt;a&gt;</code>) and forms (<code>&lt;form&gt;</code>).</p>
+<p><strong>Why it matters</strong>: Follows REST/HATEOAS principles. The UI is the API. No separate JSON API needed.</p>
+<p><strong>Used in COMP2850</strong>: We build hypermedia systems following <a href="https://hypermedia.systems/">hypermedia.systems</a>.</p>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#rest">REST</a>, <a href="#hateoas">HATEOAS</a></p>
+<hr />
+<h3 id="javascript"><a class="header" href="#javascript">JavaScript</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Definition</strong>: Programming language that runs in the browser to add interactivity.</p>
+<p><strong>Used in COMP2850</strong>: Minimal JavaScript via HTMX library. All features must work without JavaScript (progressive enhancement).</p>
+<p><strong>See also</strong>: <a href="#progressive-enhancement">Progressive Enhancement</a>, <a href="#htmx">HTMX</a></p>
+<hr />
+<h3 id="job-stories"><a class="header" href="#job-stories">Job Stories</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: Format for capturing user needs based on context, motivation, and outcome. Structure: <strong>"When [situation], I want [motivation], so I can [outcome], because [reasoning]."</strong></p>
+<p><strong>Example</strong>: "When I'm reviewing my weekly tasks on Sunday evening, I want to see incomplete items highlighted, so I can prioritize tomorrow's work, because I need to meet Friday's deadline."</p>
+<p><strong>Why not user stories</strong>: User stories ("As a user, I want...") focus on demographics. Job stories focus on context and causality.</p>
+<p><strong>Used in COMP2850</strong>: Week 6 Lab 2.</p>
+<p><strong>See also</strong>: <a href="#needs-finding">Needs-Finding</a></p>
+<hr />
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p><img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
+<p><strong>Full name</strong>: JavaScript Object Notation</p>
+<p><strong>Definition</strong>: Lightweight data format for exchanging data between server and client. Common in REST APIs.</p>
+<p><strong>Used in COMP2850</strong>: We <strong>do not</strong> use JSON APIs. Server sends HTML fragments, not JSON.</p>
+<p><strong>Why</strong>: Hypermedia approach. HTML is the data format.</p>
+<p><strong>See also</strong>: <a href="#hypermedia">Hypermedia</a></p>
+<hr />
+<h3 id="kotlin"><a class="header" href="#kotlin">Kotlin</a></h3>
+<p><img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /></p>
+<p><strong>Definition</strong>: Modern programming language for JVM (Java Virtual Machine). Statically typed, null-safe, concise syntax.</p>
+<p><strong>Used in COMP2850</strong>: Server-side code (routes, data models, storage).</p>
+<p><strong>See also</strong>: <a href="#ktor">Ktor</a></p>
+<hr />
+<h3 id="ktor"><a class="header" href="#ktor">Ktor</a></h3>
+<p><img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /></p>
+<p><strong>Definition</strong>: Kotlin web framework for building server applications. Lightweight, asynchronous, uses coroutines.</p>
+<p><strong>Used in COMP2850</strong>: HTTP server, routing, template rendering (via Pebble plugin).</p>
+<p><strong>Documentation</strong>: <a href="https://ktor.io/">ktor.io</a></p>
+<p><strong>See also</strong>: <a href="#kotlin">Kotlin</a>, <a href="#pebble">Pebble</a></p>
+<hr />
+<h3 id="needs-finding"><a class="header" href="#needs-finding">Needs-Finding</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: Research method to understand what people actually need (not what they say they want). Uses observation, interviews, job stories, contextual inquiry.</p>
+<p><strong>Why not "requirements gathering"</strong>: Implies people know what they need and can articulate it. Needs-finding acknowledges we must discover unstated needs.</p>
+<p><strong>Used in COMP2850</strong>: Week 6 Lab 2 - conduct peer interviews, write job stories.</p>
+<p><strong>See also</strong>: <a href="#job-stories">Job Stories</a>, <a href="#people-centred-language">People-Centred Language</a></p>
+<hr />
+<h3 id="no-js-parity"><a class="header" href="#no-js-parity">No-JS Parity</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Definition</strong>: Requirement that every feature must work identically with JavaScript disabled. The user experience may differ (page reload vs. instant swap), but functionality must be identical.</p>
+<p><strong>Why it matters</strong>: Accessibility, resilience, progressive enhancement compliance.</p>
+<p><strong>Example</strong>: Add task button works via form POST → redirect (no-JS) OR HTMX AJAX → fragment swap (JS-enabled).</p>
+<p><strong>See also</strong>: <a href="#progressive-enhancement">Progressive Enhancement</a></p>
+<hr />
+<h3 id="oob-swap"><a class="header" href="#oob-swap">OOB Swap (Out-of-Band Swap)</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Full name</strong>: Out-of-Band Swap</p>
+<p><strong>Definition</strong>: HTMX feature that updates an element <strong>outside</strong> the main target. The server includes <code>hx-swap-oob="true"</code> on an element, and HTMX updates it based on its <code>id</code>, even if it's not the primary target.</p>
+<p><strong>Why it matters</strong>: Lets you update multiple parts of the page from one response (e.g., update task list + update status message).</p>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-html">&lt;!-- Main target --&gt;
+&lt;li id="task-3"&gt;Updated task&lt;/li&gt;
+
+&lt;!-- OOB swap (updates #status even though target is #task-list) --&gt;
+&lt;div id="status" hx-swap-oob="true"&gt;Task added!&lt;/div&gt;
+</code></pre>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#aria-live-region">ARIA Live Region</a></p>
+<hr />
+<h3 id="partial"><a class="header" href="#partial">Partial</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: A reusable template file (e.g., <code>_item.peb</code>, <code>_list.peb</code>, <code>_header.peb</code>) designed to be included in other templates or rendered independently as a fragment.</p>
+<p><strong>Naming convention</strong>: Prefixed with underscore (<code>_</code>) to distinguish from full-page templates.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li><code>templates/tasks/_list.peb</code> - Partial template (source code)</li>
+<li><code>templates/tasks/index.peb</code> - Full page template (includes partials)</li>
+</ul>
+<p><strong>How it works</strong>: The server renders a partial template to produce a <a href="#fragment">fragment</a> of HTML that can be:</p>
+<ul>
+<li>Included in a full page via <code>{% include "tasks/_list.peb" %}</code></li>
+<li>Returned directly for HTMX requests: <code>GET /tasks/fragment</code> renders <code>_list.peb</code> → HTML fragment</li>
+</ul>
+<p><strong>Why it matters</strong>: Partials eliminate duplication—accessibility fixes, ARIA attributes, and markup stay in one source file, ensuring consistency across full-page and HTMX-enhanced flows.</p>
+<p><strong>See also</strong>: <a href="#fragment">Fragment</a>, <a href="#template-factoring">Template Factoring</a></p>
+<hr />
+<h3 id="participant"><a class="header" href="#participant">Participant</a></h3>
+<p><img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /></p>
+<p><strong>Definition</strong>: Person taking part in research (pilots, interviews, usability tests). Preferred term over "user" or "subject."</p>
+<p><strong>Why</strong>: More respectful, acknowledges agency, aligns with ethics protocols.</p>
+<p><strong>Used in COMP2850</strong>: Module-wide standard term.</p>
+<p><strong>See also</strong>: <a href="#people-centred-language">People-Centred Language</a></p>
+<hr />
+<h3 id="pebble"><a class="header" href="#pebble">Pebble</a></h3>
+<p><img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /></p>
+<p><strong>Definition</strong>: Template engine for Java/Kotlin. Similar to Jinja2 (Python) or Twig (PHP). Renders HTML with dynamic data.</p>
+<p><strong>Syntax</strong>:</p>
+<ul>
+<li><code>{{ variable }}</code> - Output</li>
+<li><code>{% for item in list %}...{% endfor %}</code> - Logic</li>
+<li><code>{% extends "base.peb" %}</code> - Inheritance</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: Server-side HTML rendering.</p>
+<p><strong>Documentation</strong>: <a href="https://pebbletemplates.io/">pebbletemplates.io</a></p>
+<p><strong>See also</strong>: <a href="#ktor">Ktor</a>, <a href="#template-factoring">Template Factoring</a></p>
+<hr />
+<h3 id="people-centred-language"><a class="header" href="#people-centred-language">People-Centred Language</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: Putting the person first, not the disability or technology. Avoids deficit-based terms.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li>✅ "Person using a screen reader" (not "blind user")</li>
+<li>✅ "Keyboard user" (not "disabled person")</li>
+<li>✅ "Person with low vision" (not "visually impaired user")</li>
+</ul>
+<p><strong>Why it matters</strong>: Disability arises from environmental barriers (bad design), not individual impairment. Language shapes how we think about accessibility.</p>
+<p><strong>Used in COMP2850</strong>: Module-wide terminology standard.</p>
+<p><strong>See also</strong>: <a href="#accessibility">Accessibility</a></p>
+<hr />
+<h3 id="pii"><a class="header" href="#pii">PII (Personally Identifiable Information)</a></h3>
+<p><img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /></p>
+<p><strong>Full name</strong>: Personally Identifiable Information</p>
+<p><strong>Definition</strong>: Data that can identify a specific individual (name, email, photo, student ID, IP address).</p>
+<p><strong>Used in COMP2850</strong>: We collect <strong>no PII</strong>. Only anonymous session IDs and timestamps. UK GDPR compliant.</p>
+<p><strong>See also</strong>: <a href="#privacy-by-design">Privacy by Design</a></p>
+<hr />
+<h3 id="pico-css"><a class="header" href="#pico-css">Pico CSS</a></h3>
+<p><img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /></p>
+<p><strong>Definition</strong>: Minimal CSS framework with semantic styling. Classless (styles semantic HTML tags) + optional utility classes.</p>
+<p><strong>Why Pico</strong>: Accessibility-first, no-JS, works with semantic HTML, lightweight (~10KB).</p>
+<p><strong>Used in COMP2850</strong>: Baseline styling for student web apps.</p>
+<p><strong>Documentation</strong>: <a href="https://picocss.com/">picocss.com</a></p>
+<p><strong>See also</strong>: <a href="#css">CSS</a>, <a href="#semantic-html">Semantic HTML</a></p>
+<hr />
+<h3 id="prg"><a class="header" href="#prg">PRG (Post-Redirect-Get)</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Full name</strong>: Post-Redirect-Get pattern</p>
+<p><strong>Definition</strong>: After processing a POST request (form submission), the server returns an HTTP 303 redirect to a GET URL instead of rendering a page directly. This prevents duplicate submissions if the user refreshes.</p>
+<p><strong>How it works</strong>:</p>
+<ol>
+<li>User submits form → POST <code>/tasks</code> (create task)</li>
+<li>Server validates, saves to database</li>
+<li>Server returns HTTP 303 redirect to GET <code>/tasks</code></li>
+<li>Browser follows redirect → GET <code>/tasks</code> (displays updated list)</li>
+<li>User refreshes → safe GET request (no duplicate)</li>
+</ol>
+<p><strong>Used in COMP2850</strong>: Every form POST must use PRG for the no-JS path.</p>
+<p><strong>See also</strong>: <a href="#http-methods">HTTP Methods</a></p>
+<hr />
+<h3 id="privacy-by-design"><a class="header" href="#privacy-by-design">Privacy by Design</a></h3>
+<p><img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /></p>
+<p><strong>Definition</strong>: Approach to system design where privacy protections are built in from the start, not added later.</p>
+<p><strong>Principles</strong>:</p>
+<ol>
+<li>Proactive (prevent, don't react)</li>
+<li>Privacy as default setting</li>
+<li>Privacy embedded in design</li>
+<li>Full functionality (positive-sum, not zero-sum)</li>
+<li>End-to-end security</li>
+<li>Visibility and transparency</li>
+<li>Respect for user privacy</li>
+</ol>
+<p><strong>Used in COMP2850</strong>: No PII collection, anonymous instrumentation, module-wide blanket consent.</p>
+<p><strong>Reference</strong>: <code>references/privacy-by-design.md</code></p>
+<p><strong>See also</strong>: <a href="#pii">PII</a></p>
+<hr />
+<h3 id="progressive-enhancement"><a class="header" href="#progressive-enhancement">Progressive Enhancement</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Definition</strong>: Design philosophy where you build a baseline experience that works for everyone (HTML), then add optional layers (CSS for styling, JavaScript for interactivity) that enhance the experience when available.</p>
+<p><strong>Why it matters</strong>: If JavaScript fails to load (network error, corporate firewall, assistive tech incompatibility), users still get full functionality.</p>
+<p><strong>Example</strong>: Form submits via POST/redirect (no-JS baseline) + HTMX intercepts and does AJAX swap (enhanced).</p>
+<p><strong>See also</strong>: <a href="#server-first">Server-First</a>, <a href="#no-js-parity">No-JS Parity</a></p>
+<hr />
+<h3 id="request-headers"><a class="header" href="#request-headers">Request Headers</a></h3>
+<p><img src="https://img.shields.io/badge/HTTP-Protocol-red" alt="HTTP" /></p>
+<p><strong>Definition</strong>: Key-value pairs sent by the browser with each HTTP request, providing metadata about the request.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><code>User-Agent: Mozilla/5.0...</code> (browser identity)</li>
+<li><code>Accept: text/html</code> (what content types browser accepts)</li>
+<li><code>HX-Request: true</code> (HTMX adds this to identify AJAX requests)</li>
+<li><code>Content-Type: application/x-www-form-urlencoded</code> (form data format)</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: Server checks <code>HX-Request</code> header to decide whether to return full page or fragment.</p>
+<p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#fragment">Fragment</a></p>
+<hr />
+<h3 id="rest"><a class="header" href="#rest">REST</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Full name</strong>: Representational State Transfer</p>
+<p><strong>Definition</strong>: Architectural style for web services that uses standard HTTP methods (GET, POST, PUT, DELETE) to operate on resources identified by URLs. Key principles include stateless communication, resource-based URLs, and hypermedia as the engine of application state.</p>
+<p><strong>HTTP methods</strong>:</p>
+<ul>
+<li><strong>GET</strong> <code>/tasks</code> - Retrieve resources (safe, idempotent)</li>
+<li><strong>POST</strong> <code>/tasks</code> - Create new resource</li>
+<li><strong>PUT</strong> <code>/tasks/123</code> - Update entire resource</li>
+<li><strong>DELETE</strong> <code>/tasks/123</code> - Remove resource</li>
+</ul>
+<p><strong>Why it matters</strong>: REST principles guide our route design. We use hypermedia (HTML) instead of JSON APIs, following the original REST vision.</p>
+<p><strong>Used in COMP2850</strong>: All routes follow RESTful conventions. GET for reading, POST for creating, DELETE for removing.</p>
+<p><strong>See also</strong>: <a href="#hateoas">HATEOAS</a>, <a href="#http-methods">HTTP Methods</a>, <a href="#hypermedia">Hypermedia</a></p>
+<hr />
+<h3 id="screen-reader"><a class="header" href="#screen-reader">Screen Reader</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Assistive technology that converts on-screen text and UI elements into synthesized speech or braille. Used by people who are blind or have low vision.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>NVDA</strong> (Windows, free)</li>
+<li><strong>JAWS</strong> (Windows, commercial)</li>
+<li><strong>VoiceOver</strong> (macOS/iOS, built-in)</li>
+<li><strong>Orca</strong> (Linux, built-in)</li>
+</ul>
+<p><strong>Used in COMP2850</strong>: All features must be tested with NVDA or VoiceOver to verify labels, announcements, and keyboard navigation.</p>
+<p><strong>See also</strong>: <a href="#aria-live-region">ARIA Live Region</a>, <a href="#accessibility">Accessibility</a></p>
+<hr />
+<h3 id="semantic-html"><a class="header" href="#semantic-html">Semantic HTML</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Using HTML elements that convey <strong>meaning</strong> (semantics), not just structure or appearance.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li>✅ Good: <code>&lt;button type="submit"&gt;Add&lt;/button&gt;</code></li>
+<li>❌ Bad: <code>&lt;div onclick="submit()"&gt;Add&lt;/div&gt;</code></li>
+<li>✅ Good: <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code></li>
+<li>❌ Bad: <code>&lt;div class="nav"&gt;</code>, <code>&lt;div class="main"&gt;</code></li>
+</ul>
+<p><strong>Why it matters</strong>: Assistive technologies (screen readers, voice control) rely on semantic elements to understand page structure and functionality.</p>
+<p><strong>See also</strong>: <a href="#html">HTML</a>, <a href="#accessibility">Accessibility</a></p>
+<hr />
+<h3 id="server-first"><a class="header" href="#server-first">Server-First Architecture</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Definition</strong>: Architecture where the server generates complete HTML pages and sends them to the browser, rather than sending JavaScript that builds the page client-side.</p>
+<p><strong>Why it matters</strong>: Pages load faster, work without JavaScript, and are accessible by default because the server controls the semantic HTML structure.</p>
+<p><strong>Example</strong>: Ktor renders a Pebble template → sends complete HTML → browser displays immediately.</p>
+<p><strong>See also</strong>: <a href="#progressive-enhancement">Progressive Enhancement</a>, <a href="#ssr">SSR</a></p>
+<hr />
+<h3 id="skip-link"><a class="header" href="#skip-link">Skip Link</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Definition</strong>: Link at the top of a page that lets keyboard users jump directly to main content, bypassing repeated navigation.</p>
+<p><strong>Why it matters</strong>: WCAG 2.4.1 (Bypass Blocks). Users shouldn't have to tab through 50 nav links on every page.</p>
+<p><strong>Implementation</strong>:</p>
+<pre><code class="language-html">&lt;a href="#main" class="skip-link"&gt;Skip to main content&lt;/a&gt;
+&lt;!-- ... nav ... --&gt;
+&lt;main id="main" tabindex="-1"&gt;Content here&lt;/main&gt;
+</code></pre>
+<p><strong>Styling</strong>: Hidden visually until keyboard-focused (<code>:focus</code>).</p>
+<p><strong>See also</strong>: <a href="#accessibility">Accessibility</a>, <a href="#wcag">WCAG</a></p>
+<hr />
+<h3 id="ssr"><a class="header" href="#ssr">SSR (Server-Side Rendering)</a></h3>
+<p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
+<p><strong>Full name</strong>: Server-Side Rendering</p>
+<p><strong>Definition</strong>: The server generates the final HTML and sends it to the browser. The browser receives complete markup, not an empty shell that JavaScript fills in.</p>
+<p><strong>Contrast with CSR</strong>: Client-side rendering (CSR) sends minimal HTML + JavaScript bundle → browser runs JS → JS fetches data → JS builds DOM. Slower, accessibility-unfriendly.</p>
+<p><strong>Used in COMP2850</strong>: Ktor + Pebble templates = SSR.</p>
+<p><strong>See also</strong>: <a href="#server-first">Server-First</a></p>
+<hr />
+<h3 id="task-based-evaluation"><a class="header" href="#task-based-evaluation">Task-Based Evaluation</a></h3>
+<p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
+<p><strong>Definition</strong>: Usability testing where participants attempt realistic tasks while you measure performance (time, errors, completion rate) and gather qualitative observations.</p>
+<p><strong>Example</strong>: "Add a task called 'Buy milk', mark it complete, then delete it" (measures core CRUD functionality).</p>
+<p><strong>Used in COMP2850</strong>: Week 9 Lab 2 - 4-person peer pilots with 4 tasks.</p>
+<p><strong>See also</strong>: <a href="#evaluation">Evaluation</a></p>
+<hr />
+<h3 id="template-factoring"><a class="header" href="#template-factoring">Template Factoring</a></h3>
+<p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
+<p><strong>Definition</strong>: Breaking templates into reusable partials so the server can render full pages OR just fragments for HTMX.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li><code>base.peb</code> - Full page layout</li>
+<li><code>tasks/index.peb</code> - Full page (extends base)</li>
+<li><code>tasks/_list.peb</code> - Partial (just the <code>&lt;ul&gt;</code>)</li>
+<li><code>tasks/_item.peb</code> - Partial (just one <code>&lt;li&gt;</code>)</li>
+</ul>
+<p><strong>Why it matters</strong>: Server returns <code>_list.peb</code> for HTMX requests, <code>index.peb</code> for full page loads.</p>
+<p><strong>See also</strong>: <a href="#partial">Partial</a>, <a href="#fragment">Fragment</a>, <a href="#htmx">HTMX</a></p>
+<hr />
+<h3 id="uk-gdpr"><a class="header" href="#uk-gdpr">UK GDPR</a></h3>
+<p><img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /></p>
+<p><strong>Full name</strong>: UK General Data Protection Regulation (Data Protection Act 2018)</p>
+<p><strong>Definition</strong>: UK law governing personal data collection, storage, and processing.</p>
+<p><strong>Key principles</strong>: Lawfulness, fairness, transparency, purpose limitation, data minimization, accuracy, storage limitation, integrity/confidentiality, accountability.</p>
+<p><strong>Used in COMP2850</strong>: All instrumentation must be GDPR-compliant (no PII, verbal consent, opt-out supported).</p>
+<p><strong>See also</strong>: <a href="#privacy-by-design">Privacy by Design</a>, <a href="#pii">PII</a></p>
+<hr />
+<h3 id="wcag"><a class="header" href="#wcag">WCAG</a></h3>
+<p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
+<p><strong>Full name</strong>: Web Content Accessibility Guidelines</p>
+<p><strong>Definition</strong>: International standard for web accessibility published by W3C. Defines success criteria at 3 levels: A (minimum), AA (target), AAA (enhanced).</p>
+<p><strong>Used in COMP2850</strong>: We target <strong>WCAG 2.2 Level AA</strong> compliance for all features.</p>
+<p><strong>Reference</strong>: <a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C WCAG 2.2 Quick Reference</a></p>
+<p><strong>See also</strong>: <a href="#accessibility">Accessibility</a></p>
+<hr />
+<h2 id="acronyms-quick-reference"><a class="header" href="#acronyms-quick-reference">Acronyms Quick Reference</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Acronym</th><th>Full Name</th><th>Link</th></tr></thead><tbody>
+<tr><td><strong>a11y</strong></td><td>Accessibility (a + 11 letters + y)</td><td><a href="#accessibility">↑</a></td></tr>
+<tr><td><strong>AJAX</strong></td><td>Asynchronous JavaScript and XML</td><td><a href="#ajax">↑</a></td></tr>
+<tr><td><strong>ARIA</strong></td><td>Accessible Rich Internet Applications</td><td><a href="#aria">↑</a></td></tr>
+<tr><td><strong>CSS</strong></td><td>Cascading Style Sheets</td><td><a href="#css">↑</a></td></tr>
+<tr><td><strong>CSR</strong></td><td>Client-Side Rendering</td><td><a href="#ssr">↑</a></td></tr>
+<tr><td><strong>GDPR</strong></td><td>General Data Protection Regulation</td><td><a href="#uk-gdpr">↑</a></td></tr>
+<tr><td><strong>HATEOAS</strong></td><td>Hypermedia As The Engine Of Application State</td><td><a href="#hateoas">↑</a></td></tr>
+<tr><td><strong>HTML</strong></td><td>HyperText Markup Language</td><td><a href="#html">↑</a></td></tr>
+<tr><td><strong>HTTP</strong></td><td>HyperText Transfer Protocol</td><td><a href="#http-methods">↑</a></td></tr>
+<tr><td><strong>JSON</strong></td><td>JavaScript Object Notation</td><td><a href="#json">↑</a></td></tr>
+<tr><td><strong>OOB</strong></td><td>Out-of-Band (swap)</td><td><a href="#oob-swap">↑</a></td></tr>
+<tr><td><strong>PII</strong></td><td>Personally Identifiable Information</td><td><a href="#pii">↑</a></td></tr>
+<tr><td><strong>PRG</strong></td><td>Post-Redirect-Get</td><td><a href="#prg">↑</a></td></tr>
+<tr><td><strong>SSR</strong></td><td>Server-Side Rendering</td><td><a href="#ssr">↑</a></td></tr>
+<tr><td><strong>WCAG</strong></td><td>Web Content Accessibility Guidelines</td><td><a href="#wcag">↑</a></td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Version</strong>: 0.2
+<strong>Last updated</strong>: 2025-01-07
+<strong>Module</strong>: COMP2850 HCI, University of Leeds</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assessment/marking-rubric.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/learning-outcomes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assessment/marking-rubric.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/learning-outcomes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

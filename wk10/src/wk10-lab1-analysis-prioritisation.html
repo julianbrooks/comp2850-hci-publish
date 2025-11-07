@@ -1,0 +1,1161 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Analyse metrics, prioritise redesign - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../css/admonish.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/retro-theme.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-10--lab-1--analyse-metrics-prioritise-fixes-plan-inclusive-redesign"><a class="header" href="#week-10--lab-1--analyse-metrics-prioritise-fixes-plan-inclusive-redesign">Week 10 • Lab 1 — Analyse Metrics, Prioritise Fixes, Plan Inclusive Redesign</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-10-orange" alt="Week 10" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
+<hr />
+<h2 id="before-lab-required-reading-15-mins"><a class="header" href="#before-lab-required-reading-15-mins">Before Lab: Required Reading (15 mins)</a></h2>
+<p>📖 <strong>Essential</strong>:</p>
+<ul>
+<li>Review <a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas for median, MAD, error rates)</li>
+<li>Review Week 9 Lab 2 findings (<code>wk09/lab-wk9/submission/task1-draft/05-findings.md</code>)</li>
+<li><a href="https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/">Nielsen: Prioritizing Web Usability Issues</a></li>
+</ul>
+<p>📖 <strong>Contextual</strong>:</p>
+<ul>
+<li><a href="https://www.gov.uk/service-manual/measuring-success/using-data-to-improve-your-service">GOV.UK: Using data to improve your service</a></li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/report/">W3C: Prioritizing Accessibility Issues</a></li>
+</ul>
+<hr />
+<h2 id="introduction-from-data-to-decisions"><a class="header" href="#introduction-from-data-to-decisions">Introduction: From Data to Decisions</a></h2>
+<p>Week 9 collected raw pilot data: logs, times, errors, quotes. <strong>Today you turn that data into actionable insights</strong>.</p>
+<p><strong>Data analysis is NOT just number-crunching</strong>. It's:</p>
+<ul>
+<li><strong>Interpretation</strong>: What do the numbers <em>mean</em> for real people?</li>
+<li><strong>Prioritisation</strong>: Which issues matter most for inclusion + usability?</li>
+<li><strong>Planning</strong>: What specific changes will fix the highest-impact problems?</li>
+</ul>
+<p><strong>Why this matters</strong>:</p>
+<ul>
+<li><strong>Gradescope Task 2</strong>: Requires before/after metrics + evidence of data-driven redesign</li>
+<li><strong>Week 10 Lab 2</strong>: You'll implement Priority 1 fixes—planning today prevents thrashing tomorrow</li>
+<li><strong>Professional practice</strong>: Product decisions require justification (stakeholders ask "why this fix?")</li>
+</ul>
+<p><strong>Inclusion lens</strong>: Numbers alone don't show <strong>who</strong> is excluded. Must combine quantitative (completion rates, times) with qualitative (SR didn't announce, keyboard trap) to understand barriers.</p>
+<hr />
+<h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p>By the end of this session, you will have:</p>
+<ul>
+<li>Calculated summary statistics (median, MAD, completion rate, error rate) per task</li>
+<li>Analysed pilot data (quantitative + qualitative)</li>
+<li>Interpreted metrics to identify inclusion impacts (SR users, keyboard-only, no-JS)</li>
+<li>Prioritised issues using (Impact + Inclusion) – Effort matrix</li>
+<li>Created redesign brief with evidence chains</li>
+</ul>
+<h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
+<p>This lab contributes to the following module Learning Outcomes (<a href="../../references/learning-outcomes.html">full definitions</a>):</p>
+<ul>
+<li><strong>LO6</strong>: Apply iterative design — evidenced by data-driven prioritisation</li>
+<li><strong>LO8</strong>: Design and execute evaluation — evidenced by metric analysis</li>
+<li><strong>LO9</strong>: Apply inclusive design — evidenced by inclusion weighting in prioritisation</li>
+</ul>
+<hr />
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h3 id="descriptive-statistics"><a class="header" href="#descriptive-statistics">Descriptive Statistics</a></h3>
+<blockquote>
+<p><strong>Descriptive Statistics</strong> [GLOSSARY]</p>
+<p>Summarize and describe main features of a dataset. <strong>Not inferential</strong> (we don't generalize beyond our 5 pilots).</p>
+<p><strong>Key measures for HCI</strong>:</p>
+<ul>
+<li><strong>Median</strong>: Middle value when sorted (50th percentile)</li>
+<li><strong>MAD</strong>: Median Absolute Deviation (robust measure of spread)</li>
+<li><strong>Range</strong>: Min–max (shows extremes)</li>
+<li><strong>Count</strong>: Number of observations (sample size)</li>
+</ul>
+<p><strong>Why median, not mean?</strong> Completion times are often skewed (outliers from distractions, confusion). Median represents "typical" experience.</p>
+<p><strong>Example</strong>:
+Task times: [12s, 15s, 18s, 20s, 120s]</p>
+<ul>
+<li>Mean = 37s ← skewed by 120s outlier</li>
+<li>Median = 18s ← typical experience</li>
+</ul>
+<p><strong>HCI Connection</strong>: Descriptive stats make evaluation findings <strong>communicable</strong>—stakeholders understand "typical task takes 18s" better than raw logs.</p>
+<p>🔗 <a href="https://measuringux.com/median/">Measuring UX: Median</a></p>
+</blockquote>
+<h3 id="median-absolute-deviation-mad"><a class="header" href="#median-absolute-deviation-mad">Median Absolute Deviation (MAD)</a></h3>
+<blockquote>
+<p><strong>MAD (Median Absolute Deviation)</strong> [GLOSSARY]</p>
+<p>Robust measure of variability. Less sensitive to outliers than standard deviation.</p>
+<p><strong>Formula</strong>:</p>
+<pre><code>MAD = median(|x_i - median(x)|)
+</code></pre>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Find median of dataset</li>
+<li>Calculate absolute deviations: <code>|each value - median|</code></li>
+<li>Find median of those deviations</li>
+</ol>
+<p><strong>Example</strong>:
+Times: [12s, 15s, 18s, 20s, 25s]</p>
+<ol>
+<li>Median = 18s</li>
+<li>Deviations: |12-18|=6, |15-18|=3, |18-18|=0, |20-18|=2, |25-18|=7</li>
+<li>MAD = median([6, 3, 0, 2, 7]) = 3s</li>
+</ol>
+<p><strong>Interpretation</strong>: Low MAD (e.g., 2s) = consistent experiences. High MAD (e.g., 15s) = varied experiences—often signals accessibility barriers (some participants breeze through, others struggle).</p>
+<p><strong>HCI Connection</strong>: MAD flags <strong>inclusion issues</strong>—if SR users take 40s and sighted users take 15s, MAD will be high.</p>
+<p>🔗 <a href="https://en.wikipedia.org/wiki/Median_absolute_deviation">Wikipedia: Median Absolute Deviation</a></p>
+</blockquote>
+<h3 id="completion-rate"><a class="header" href="#completion-rate">Completion Rate</a></h3>
+<blockquote>
+<p><strong>Completion Rate</strong> [GLOSSARY]</p>
+<p>Proportion of task attempts that succeeded.</p>
+<p><strong>Formula</strong>:</p>
+<pre><code>Completion rate = n_success / n_total_attempts
+</code></pre>
+<p><strong>Range</strong>: 0 (no one succeeded) to 1.0 (everyone succeeded)</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>4 participants completed T2 successfully</li>
+<li>1 participant gave up (marked <code>fail</code> in logs)</li>
+<li>Total: 5 attempts</li>
+<li>Completion rate = 4/5 = 0.80 = 80%</li>
+</ul>
+<p><strong>Interpretation</strong>:</p>
+<ul>
+<li><strong>1.0</strong>: Task is achievable by all participants (baseline expectation)</li>
+<li><strong>0.8–0.99</strong>: Minor issues—some participants struggled but most succeeded</li>
+<li><strong>&lt;0.8</strong>: Serious usability/accessibility problem—1 in 5+ people can't complete</li>
+</ul>
+<p><strong>Split by js_mode</strong>: If <code>js_mode=on</code> has 1.0 but <code>js_mode=off</code> has 0.5, you have <strong>parity failure</strong> (no-JS path broken).</p>
+<p><strong>HCI Connection</strong>: Completion rate is <strong>effectiveness</strong> measure (ISO 9241-11). If people can't complete tasks, system is not usable.</p>
+<p>🔗 <a href="https://www.iso.org/standard/63500.html">ISO 9241-11: Usability Definitions</a></p>
+</blockquote>
+<h3 id="error-rate"><a class="header" href="#error-rate">Error Rate</a></h3>
+<blockquote>
+<p><strong>Error Rate</strong> [GLOSSARY]</p>
+<p>Proportion of task attempts that triggered validation errors.</p>
+<p><strong>Formula</strong>:</p>
+<pre><code>Error rate = n_validation_errors / (n_success + n_validation_errors)
+</code></pre>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>T3 (Add Task): 5 success, 1 validation_error (blank title submitted)</li>
+<li>Error rate = 1 / (5 + 1) = 0.17 = 17%</li>
+</ul>
+<p><strong>Interpretation</strong>:</p>
+<ul>
+<li><strong>0–10%</strong>: Acceptable—rare mistakes</li>
+<li><strong>10–30%</strong>: Moderate—form could be clearer</li>
+<li><strong>&gt;30%</strong>: High—likely affordance issues, missing labels, or confusing instructions</li>
+</ul>
+<p><strong>Root causes</strong>:</p>
+<ul>
+<li>Missing affordances ("I didn't know it was required")</li>
+<li>Unclear constraints ("How long can the title be?")</li>
+<li>Focus management ("I accidentally submitted blank")</li>
+<li>Cognitive load ("Too many fields, got confused")</li>
+</ul>
+<p><strong>HCI Connection</strong>: Error rate measures <strong>efficiency</strong> (ISO 9241-11). High error rates → wasted time, frustration, accessibility barriers.</p>
+<p>🔗 <a href="https://www.w3.org/WAI/WCAG22/Understanding/input-assistance">WCAG 3.3: Input Assistance</a></p>
+</blockquote>
+<h3 id="prioritisation-framework"><a class="header" href="#prioritisation-framework">Prioritisation Framework</a></h3>
+<blockquote>
+<p><strong>Prioritisation Framework</strong> [GLOSSARY]</p>
+<p>Systematic method to rank backlog items by urgency/importance.</p>
+<p><strong>This module's framework</strong>:</p>
+<pre><code>Priority score = (Impact + Inclusion) - Effort
+</code></pre>
+<p><strong>Dimensions (1–5 scale)</strong>:</p>
+<ul>
+<li><strong>Impact</strong>: How many people affected? How severe?
+<ul>
+<li>5 = Blocks task completion for most participants</li>
+<li>3 = Slows down or frustrates some participants</li>
+<li>1 = Minor annoyance, rare</li>
+</ul>
+</li>
+<li><strong>Inclusion</strong>: Does it disproportionately affect disabled people?
+<ul>
+<li>5 = SR/keyboard/cognitive disability users can't complete</li>
+<li>3 = Affects some disabled participants (e.g., low vision)</li>
+<li>1 = Affects everyone equally</li>
+</ul>
+</li>
+<li><strong>Effort</strong>: How hard to fix?
+<ul>
+<li>5 = Major refactor, &gt;8 hours</li>
+<li>3 = Moderate, 2–4 hours</li>
+<li>1 = Quick fix, &lt;1 hour</li>
+</ul>
+</li>
+</ul>
+<p><strong>Score interpretation</strong>:</p>
+<ul>
+<li><strong>8–10</strong>: Critical—fix immediately (Week 10 Lab 2)</li>
+<li><strong>5–7</strong>: High priority—fix if time permits</li>
+<li><strong>&lt;5</strong>: Defer or document as known issue</li>
+</ul>
+<p><strong>Example</strong>:
+Issue: "Validation errors not announced by SR"</p>
+<ul>
+<li>Impact: 5 (blocks T2 completion for SR users)</li>
+<li>Inclusion: 5 (disproportionately affects SR users)</li>
+<li>Effort: 2 (add <code>role=alert</code>, update template)</li>
+<li><strong>Score</strong>: (5+5)-2 = <strong>8</strong> → <strong>Priority 1</strong></li>
+</ul>
+<p><strong>HCI Connection</strong>: Prioritisation makes <strong>inclusion explicit</strong>—not just "fix the bugs" but "fix barriers first."</p>
+<p>🔗 <a href="https://www.w3.org/WAI/test-evaluate/report/#prioritise">W3C: Prioritizing Accessibility Issues</a></p>
+</blockquote>
+<h3 id="evidence-chain-revisited"><a class="header" href="#evidence-chain-revisited">Evidence Chain (Revisited)</a></h3>
+<blockquote>
+<p><strong>Evidence Chain</strong> [GLOSSARY]</p>
+<p>Traceability from raw data → analysis → finding → fix → verification.</p>
+<p><strong>Week 10 adds analysis layer</strong>:</p>
+<ol>
+<li><strong>Raw data</strong>: <code>metrics.csv</code> shows <code>T2_edit, js_mode=off, completion_rate=0.5</code></li>
+<li><strong>Analysis</strong>: <code>analysis/analysis.csv</code> confirms: median 2300ms, MAD 450ms, error rate 0.5</li>
+<li><strong>Interpretation</strong>: No-JS path lacks accessible error feedback (pilot notes confirm)</li>
+<li><strong>Finding</strong>: "No-JS edit has 50% completion due to non-focusable error summary"</li>
+<li><strong>Prioritisation</strong>: Impact=5, Inclusion=5, Effort=2 → Score=8 (Priority 1)</li>
+<li><strong>Fix plan</strong>: Add <code>tabindex="-1"</code> to error summary, auto-focus on page load</li>
+<li><strong>Verification</strong> (Week 10 Lab 2): Retest with no-JS, measure completion rate ≥0.9</li>
+</ol>
+<p><strong>Gradescope Task 2 requires</strong>:</p>
+<ul>
+<li>Before metrics (Week 9)</li>
+<li>Analysis + prioritisation (Week 10 Lab 1)</li>
+<li>After metrics (Week 10 Lab 2)</li>
+<li>Evidence chain documented throughout</li>
+</ul>
+<p>🔗 Review Week 9 Lab 2 for initial evidence chain guidance</p>
+</blockquote>
+<hr />
+<h2 id="activity-a-prepare-analysis-workspace-5-min"><a class="header" href="#activity-a-prepare-analysis-workspace-5-min">Activity A: Prepare Analysis Workspace (5 min)</a></h2>
+<p><strong>Goal</strong>: Set up directory structure and verify data integrity before analysis.</p>
+<h3 id="step-1-create-analysis-directory-2-min"><a class="header" href="#step-1-create-analysis-directory-2-min">Step 1: Create analysis directory (2 min)</a></h3>
+<pre><code class="language-bash">mkdir -p analysis
+mkdir -p wk10/lab-wk10/docs
+mkdir -p wk10/gradescope/task2
+</code></pre>
+<h3 id="step-2-verify-raw-data-3-min"><a class="header" href="#step-2-verify-raw-data-3-min">Step 2: Verify raw data (3 min)</a></h3>
+<p><strong>Open <code>data/metrics.csv</code></strong> and check:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Contains rows for all 5 pilots (session IDs: P1, P2, P3, P4, P5)</li>
+<li><input disabled="" type="checkbox"/>
+All task codes present (T1, T2, T3, T4)</li>
+<li><input disabled="" type="checkbox"/>
+<code>step</code> values valid (<code>success</code>, <code>validation_error</code>, <code>fail</code>)</li>
+<li><input disabled="" type="checkbox"/>
+Durations plausible (not negative, not &gt;10000ms unless noted)</li>
+<li><input disabled="" type="checkbox"/>
+<code>js_mode</code> correctly set (<code>on</code> for Pilots 1,2,4,5; <code>off</code> for Pilot 3)</li>
+</ul>
+<p><strong>If issues found</strong>: Review Week 9 <code>data-notes.md</code> for documented anomalies. Exclude corrupt rows or correct manually.</p>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<code>analysis/</code> directory exists</li>
+<li><input disabled="" type="checkbox"/>
+<code>data/metrics.csv</code> verified complete</li>
+<li><input disabled="" type="checkbox"/>
+Ready to run analysis script</li>
+</ul>
+<hr />
+<h2 id="activity-b-calculate-summary-statistics-25-min"><a class="header" href="#activity-b-calculate-summary-statistics-25-min">Activity B: Calculate Summary Statistics (25 min)</a></h2>
+<p><strong>Goal</strong>: Generate <code>analysis/analysis.csv</code> with median, MAD, completion, error rates per task.</p>
+<h3 id="step-1-run-analysis-script-15-min"><a class="header" href="#step-1-run-analysis-script-15-min">Step 1: Run analysis script (15 min)</a></h3>
+<p><strong>Option A: Use provided Kotlin script</strong> (if available at <code>wk10/lab-wk10/scripts/Analyse.kt</code>):</p>
+<pre><code class="language-bash">kotlinc wk10/lab-wk10/scripts/Analyse.kt -include-runtime -d analyse.jar
+java -jar analyse.jar
+</code></pre>
+<p><strong>Option B: Manual calculation with spreadsheet</strong>:</p>
+<ol>
+<li>Import <code>data/metrics.csv</code> into Google Sheets / Excel</li>
+<li>Create pivot table grouping by <code>task_code</code> + <code>js_mode</code></li>
+<li>Calculate for each group:</li>
+</ol>
+<p><strong>Median time</strong> (filter <code>step=success</code> only):</p>
+<pre><code>=MEDIAN(IF((task=$A2)*(step="success"), ms, ""))
+</code></pre>
+<p><strong>MAD</strong> (median absolute deviation):</p>
+<pre><code>1. Calculate median for group
+2. Create column: ABS(ms - median)
+3. MEDIAN of that column
+</code></pre>
+<p><strong>Completion rate</strong>:</p>
+<pre><code>=COUNTIF(step, "success") / (COUNTIF(step, "success") + COUNTIF(step, "fail"))
+</code></pre>
+<p><strong>Error rate</strong>:</p>
+<pre><code>=COUNTIF(step, "validation_error") / (COUNTIF(step, "success") + COUNTIF(step, "validation_error"))
+</code></pre>
+<p><strong>Option C: Python script</strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+
+# Load data
+df = pd.read_csv('data/metrics.csv')
+
+# Filter success rows for timing
+success = df[df['step'] == 'success']
+
+# Group by task and js_mode
+grouped = success.groupby(['task_code', 'js_mode'])
+
+# Calculate statistics
+stats = grouped['ms'].agg([
+    ('n_success', 'count'),
+    ('median_ms', 'median'),
+    ('mad_ms', lambda x: np.median(np.abs(x - np.median(x))))
+]).reset_index()
+
+# Calculate completion rate (per task+js_mode)
+total_attempts = df.groupby(['task_code', 'js_mode']).size().reset_index(name='n_total')
+success_count = df[df['step']=='success'].groupby(['task_code', 'js_mode']).size().reset_index(name='n_success')
+completion = total_attempts.merge(success_count, on=['task_code', 'js_mode'], how='left')
+completion['completion_rate'] = completion['n_success'] / completion['n_total']
+
+# Calculate error rate
+errors = df[df['step']=='validation_error'].groupby(['task_code', 'js_mode']).size().reset_index(name='n_errors')
+error_rate = success_count.merge(errors, on=['task_code', 'js_mode'], how='left').fillna(0)
+error_rate['error_rate'] = error_rate['n_errors'] / (error_rate['n_success'] + error_rate['n_errors'])
+
+# Merge all
+final = stats.merge(completion[['task_code', 'js_mode', 'completion_rate']], on=['task_code', 'js_mode'])
+final = final.merge(error_rate[['task_code', 'js_mode', 'error_rate']], on=['task_code', 'js_mode'])
+
+# Save
+final.to_csv('analysis/analysis.csv', index=False)
+print(final)
+</code></pre>
+<h3 id="step-2-verify-output-5-min"><a class="header" href="#step-2-verify-output-5-min">Step 2: Verify output (5 min)</a></h3>
+<p><strong>Open <code>analysis/analysis.csv</code></strong>:</p>
+<p><strong>Expected columns</strong>:</p>
+<pre><code class="language-csv">task_code,js_mode,n_success,median_ms,mad_ms,completion_rate,error_rate
+T1_filter,on,5,1899,203,1.00,0.00
+T1_filter,off,1,3245,0,1.00,0.00
+T2_edit,on,4,1400,184,0.80,0.33
+T2_edit,off,0,,,0.00,
+T3_add,on,5,567,78,1.00,0.20
+T3_add,off,1,3456,0,1.00,0.00
+T4_delete,on,5,210,12,1.00,0.00
+T4_delete,off,1,198,0,1.00,0.00
+</code></pre>
+<p><strong>Sanity checks</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Median times plausible (T3 &lt; T2 &lt; T1, since T3 is simplest)</li>
+<li><input disabled="" type="checkbox"/>
+No-JS times slower than JS-on (expected—full page reloads)</li>
+<li><input disabled="" type="checkbox"/>
+Completion rates ≤1.0</li>
+<li><input disabled="" type="checkbox"/>
+Error rates between 0 and 1</li>
+<li><input disabled="" type="checkbox"/>
+No NaN/blank for tasks with data</li>
+</ul>
+<p><strong>If anomalies</strong>: Cross-reference with <code>data/metrics.csv</code>. Document in <code>analysis/data-notes.md</code>.</p>
+<h3 id="step-3-add-all-js_mode-aggregate-5-min"><a class="header" href="#step-3-add-all-js_mode-aggregate-5-min">Step 3: Add "all" js_mode aggregate (5 min)</a></h3>
+<p>Calculate combined stats (all participants regardless of JS):</p>
+<pre><code class="language-python"># Add 'all' js_mode (combines on+off)
+all_stats = success.groupby(['task_code'])['ms'].agg([
+    ('n_success', 'count'),
+    ('median_ms', 'median'),
+    ('mad_ms', lambda x: np.median(np.abs(x - np.median(x))))
+]).reset_index()
+all_stats['js_mode'] = 'all'
+# ... repeat for completion/error rates, append to analysis.csv
+</code></pre>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<code>analysis/analysis.csv</code> exists with correct columns</li>
+<li><input disabled="" type="checkbox"/>
+All tasks present (T1, T2, T3, T4)</li>
+<li><input disabled="" type="checkbox"/>
+Stats calculated for <code>js_mode=on</code>, <code>off</code>, <code>all</code></li>
+<li><input disabled="" type="checkbox"/>
+Values plausible (no negative times, completion ≤1.0)</li>
+</ul>
+<hr />
+<h2 id="activity-c-interpret-metrics-with-inclusion-lens-25-min"><a class="header" href="#activity-c-interpret-metrics-with-inclusion-lens-25-min">Activity C: Interpret Metrics with Inclusion Lens (25 min)</a></h2>
+<p><strong>Goal</strong>: Write narrative interpretation of statistics linking to inclusion barriers.</p>
+<h3 id="step-1-create-summary-document-5-min"><a class="header" href="#step-1-create-summary-document-5-min">Step 1: Create summary document (5 min)</a></h3>
+<p><strong>Create <code>analysis/summary.md</code></strong>:</p>
+<pre><code class="language-markdown"># Pilot Data Analysis Summary — Week 10
+
+**Study**: Peer pilots (n=5) conducted Week 9
+**Purpose**: Identify usability and accessibility barriers through quantitative + qualitative analysis
+
+---
+
+## Summary Statistics
+
+[Insert tables from analysis.csv]
+
+## Task-by-Task Interpretation
+
+[Analysis for each task with inclusion lens]
+
+## Priority Findings
+
+[Top 3-5 issues for redesign]
+</code></pre>
+<h3 id="step-2-build-metrics-tables-10-min"><a class="header" href="#step-2-build-metrics-tables-10-min">Step 2: Build metrics tables (10 min)</a></h3>
+<p><strong>Copy data from <code>analysis/analysis.csv</code> into Markdown tables</strong>:</p>
+<pre><code class="language-markdown">## Task Completion Times (Median ± MAD)
+
+| Task | JS-On | JS-Off | All | Notes |
+|------|-------|--------|-----|-------|
+| T1 (Filter) | 1899ms ± 203ms (n=5) | 3245ms ± 0ms (n=1) | 2015ms ± 380ms (n=6) | No-JS 71% slower |
+| T2 (Edit) | 1400ms ± 184ms (n=4) | — (n=0) | 1400ms ± 184ms (n=4) | No-JS: 0% completion |
+| T3 (Add) | 567ms ± 78ms (n=5) | 3456ms ± 0ms (n=1) | 850ms ± 890ms (n=6) | No-JS 6× slower |
+| T4 (Delete) | 210ms ± 12ms (n=5) | 198ms ± 0ms (n=1) | 208ms ± 12ms (n=6) | Consistent |
+
+## Completion &amp; Error Rates
+
+| Task | JS-On Completion | JS-Off Completion | JS-On Errors | JS-Off Errors |
+|------|------------------|-------------------|--------------|---------------|
+| T1 | 5/5 (100%) | 1/1 (100%) | 0% | 0% |
+| T2 | 4/5 (80%) | 0/1 (0%) | 33% | — |
+| T3 | 5/5 (100%) | 1/1 (100%) | 20% | 0% |
+| T4 | 5/5 (100%) | 1/1 (100%) | 0% | 0% |
+</code></pre>
+<h3 id="step-3-write-task-by-task-interpretations-10-min"><a class="header" href="#step-3-write-task-by-task-interpretations-10-min">Step 3: Write task-by-task interpretations (10 min)</a></h3>
+<p><strong>For each task, write 2-3 paragraphs</strong>:</p>
+<p><strong>Template</strong>:</p>
+<pre><code class="language-markdown">### Task T2: Edit Task
+
+**Quantitative findings**:
+- JS-on: 80% completion (4/5), median 1400ms, 33% error rate
+- JS-off: 0% completion (0/1)—participant gave up after 2 validation errors
+- MAD 184ms (moderate variability—some participants breezed through, others struggled)
+
+**Qualitative evidence** (from `pilots/P2-notes.md`, `pilots/P3-notes.md`):
+- P2 (keyboard-only): "Blank submission error—SR didn't announce error message"
+- P3 (no-JS): "Gave up after 2 validation errors—error summary not focusable, couldn't find it with Tab"
+
+**Inclusion impact**: **Critical**
+- Screen reader users: Error messages not announced (`role="status"` missing)
+- Keyboard-only users: Error summary exists but not in tab order (`tabindex="-1"` missing)
+- No-JS users: Cannot complete task—error summary not focusable, no auto-focus on page load
+
+**WCAG violations**:
+- 3.3.1 Error Identification (Level A): Errors not programmatically determinable
+- 4.1.3 Status Messages (Level AA): Validation errors not announced
+- 3.2.1 On Focus (Level A): Focus not managed after error
+
+**Root cause**: Dual-path error handling incomplete. HTMX path has `hx-swap-oob` status but no `role=alert`. No-JS path renders error summary but doesn't set `tabindex="-1"` or auto-focus.
+
+**Proposed fix** (Priority 1):
+- Add `role="alert"` to HTMX error responses
+- Add `tabindex="-1"` to no-JS error summary `&lt;div id="error-summary"&gt;`
+- Auto-focus error summary on page load (server-side or small progressive enhancement script)
+- Add `aria-describedby` linking input to error message
+
+**Expected impact**: Completion rate ≥90% for all variants, error rate &lt;10% (with improved affordances).
+</code></pre>
+<p><strong>Repeat for all 4 tasks</strong>, prioritising those with issues.</p>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Metrics tables complete and formatted</li>
+<li><input disabled="" type="checkbox"/>
+Task-by-task interpretations written</li>
+<li><input disabled="" type="checkbox"/>
+Inclusion impacts identified (SR, keyboard, no-JS, cognitive)</li>
+<li><input disabled="" type="checkbox"/>
+WCAG violations referenced</li>
+<li><input disabled="" type="checkbox"/>
+Root causes hypothesized</li>
+</ul>
+<hr />
+<h2 id="activity-d-prioritise-backlog-with-scoring-20-min"><a class="header" href="#activity-d-prioritise-backlog-with-scoring-20-min">Activity D: Prioritise Backlog with Scoring (20 min)</a></h2>
+<p><strong>Goal</strong>: Rank backlog items by Priority score = (Impact + Inclusion) - Effort.</p>
+<h3 id="step-1-create-prioritisation-spreadsheet-5-min"><a class="header" href="#step-1-create-prioritisation-spreadsheet-5-min">Step 1: Create prioritisation spreadsheet (5 min)</a></h3>
+<p><strong>Create <code>analysis/prioritisation.csv</code></strong>:</p>
+<pre><code class="language-csv">id,title,task_code,problem,impact,inclusion,effort,score,evidence,proposed_fix,candidate_fix
+</code></pre>
+<h3 id="step-2-score-top-issues-10-min"><a class="header" href="#step-2-score-top-issues-10-min">Step 2: Score top issues (10 min)</a></h3>
+<p><strong>For each issue identified in Activity C</strong>:</p>
+<ol>
+<li><strong>Impact</strong> (1–5): How many participants affected? How severely?</li>
+<li><strong>Inclusion</strong> (1–5): Disproportionate effect on disabled participants?</li>
+<li><strong>Effort</strong> (1–5): Time to implement fix?</li>
+<li><strong>Score</strong>: (Impact + Inclusion) - Effort</li>
+</ol>
+<blockquote>
+<p><strong>🎯 Worked Examples: Scoring Prioritisation</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Issue</th><th>Impact</th><th>Inclusion</th><th>Effort</th><th>Score</th><th>Rationale</th></tr></thead><tbody>
+<tr><td><strong>Validation errors not announced (SR)</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td>2</td><td><strong>8</strong></td><td>Impact=5 (all SR users blocked on edit task), Inclusion=5 (SR-specific barrier), Effort=2 (add <code>role=alert</code>), Score=(5+5)-2=8</td></tr>
+<tr><td><strong>No-JS error summary not focusable</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td>2</td><td><strong>8</strong></td><td>Impact=5 (all no-JS users affected), Inclusion=5 (keyboard/no-mouse users can't navigate), Effort=2 (add <code>tabindex=-1</code>), Score=(5+5)-2=8</td></tr>
+<tr><td><strong>Filter result count not announced</strong></td><td><strong>3</strong></td><td><strong>4</strong></td><td>1</td><td><strong>6</strong></td><td>Impact=3 (minor: doesn't block task, but confusing), Inclusion=4 (SR users miss feedback), Effort=1 (move text to live region), Score=(3+4)-1=6</td></tr>
+<tr><td><strong>Auto-search confuses some</strong></td><td><strong>3</strong></td><td><strong>2</strong></td><td>2</td><td><strong>3</strong></td><td>Impact=3 (affects 2/5 pilots, minor confusion), Inclusion=2 (not equity-specific), Effort=2 (add button + help text), Score=(3+2)-2=3</td></tr>
+<tr><td><strong>No-JS delete lacks confirmation</strong></td><td><strong>2</strong></td><td><strong>2</strong></td><td>4</td><td><strong>0</strong></td><td>Impact=2 (rare: only no-JS + delete use case), Inclusion=2 (low risk, recoverable), Effort=4 (new route + page + tests), Score=(2+2)-4=0 → <strong>Deprioritise</strong></td></tr>
+</tbody></table>
+</div>
+<p><strong>Key distinctions</strong>:</p>
+<ul>
+<li><strong>Impact vs Inclusion</strong>: Impact = "how many people?" / Inclusion = "who is disproportionately affected?"
+<ul>
+<li>Example 1: High impact (5) + high inclusion (5) = SR validation errors block <strong>everyone</strong> using SR</li>
+<li>Example 4: Medium impact (3) + low inclusion (2) = auto-search confusion is <strong>general usability</strong> issue, not equity-specific</li>
+</ul>
+</li>
+<li><strong>When Effort &gt; Benefit</strong>: Example 5 scores 0 (even though impact+inclusion=4) because effort=4 makes ROI negative</li>
+<li><strong>Tie-breaking</strong>: Examples 1 &amp; 2 both score 8 → prioritise together if they relate to same task (T2_edit)</li>
+</ul>
+<p><strong>Decision-making</strong>:</p>
+<ul>
+<li><strong>Priority 1</strong> (fix in Lab 2): Score ≥8 + WCAG violation + feasible in 2 hours</li>
+<li><strong>Priority 2</strong> (semester 2 backlog): Score 5-7</li>
+<li><strong>Deprioritise</strong>: Score &lt;5 or effort outweighs benefit</li>
+</ul>
+</blockquote>
+<p><strong>Example entries</strong>:</p>
+<pre><code class="language-csv">wk9-01,"Validation errors not announced by SR",T2_edit,"SR users can't identify validation errors",5,5,2,8,"analysis/summary.md#T2; pilots/P2-notes.md L12","Add role=alert + aria-describedby to error messages",true
+
+wk9-03,"No-JS error summary not focusable",T2_edit,"Keyboard users can't navigate to error summary in no-JS mode",5,5,2,8,"analysis/summary.md#T2; pilots/P3-notes.md L10","Add tabindex=-1, auto-focus on page load",true
+
+wk9-05,"Filter result count not announced",T1_filter,"SR users don't hear how many results remain after filtering",3,4,1,6,"pilots/P2-notes.md L8","Move result count into live region (role=status)",false
+
+wk9-02,"Filter auto-search confuses some",T1_filter,"Some participants expected explicit Apply button",3,2,2,3,"pilots/P1-notes.md L6","Add visible Apply button or help text",false
+
+wk9-04,"No-JS delete has no confirmation",T4_delete,"No-JS participants can't confirm before deleting (documented trade-off)",2,2,4,0,"pilots/P3-notes.md L12; wk08/docs/prototyping-constraints.md","Add /tasks/{id}/delete/confirm page",false
+</code></pre>
+<h3 id="step-3-rank-and-mark-candidates-5-min"><a class="header" href="#step-3-rank-and-mark-candidates-5-min">Step 3: Rank and mark candidates (5 min)</a></h3>
+<p><strong>Sort by <code>score</code> descending</strong>.</p>
+<p><strong>Mark top 2-3 items</strong> as <code>candidate_fix=true</code> (these are Priority 1 for Week 10 Lab 2).</p>
+<p><strong>Criteria for Priority 1</strong>:</p>
+<ul>
+<li>Score ≥8</li>
+<li>WCAG Level A or AA violation</li>
+<li>Blocks task completion for disabled participants</li>
+<li>Feasible to fix in 2-hour lab session</li>
+</ul>
+<p><strong>In example above</strong>: wk9-01 and wk9-03 both score 8, both relate to T2 edit, both fixable together → <strong>Priority 1</strong>.</p>
+<p>✋ <strong>Stop and check</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<code>analysis/prioritisation.csv</code> complete with scores</li>
+<li><input disabled="" type="checkbox"/>
+Issues ranked by score (highest first)</li>
+<li><input disabled="" type="checkbox"/>
+2-3 Priority 1 items marked <code>candidate_fix=true</code></li>
+<li><input disabled="" type="checkbox"/>
+Evidence links present for all items</li>
+</ul>
+<hr />
+<h2 id="activity-e-draft-inclusive-redesign-brief-20-min"><a class="header" href="#activity-e-draft-inclusive-redesign-brief-20-min">Activity E: Draft Inclusive Redesign Brief (20 min)</a></h2>
+<p><strong>Goal</strong>: Document planned fix with measurable goals and acceptance criteria.</p>
+<h3 id="step-1-create-redesign-brief-document-5-min"><a class="header" href="#step-1-create-redesign-brief-document-5-min">Step 1: Create redesign brief document (5 min)</a></h3>
+<p><strong>Create <code>wk10/lab-wk10/docs/redesign-brief.md</code></strong>:</p>
+<pre><code class="language-markdown"># Inclusive Redesign Brief — Week 10 Lab 2
+
+**Target**: [Issue title from prioritisation.csv]
+**Priority**: 1 (Score: X)
+**Assignee**: [Your name/pair]
+**Date**: 2025-10-20
+
+---
+
+## Problem Statement
+
+[2-3 sentences describing the issue backed by data]
+
+---
+
+## Goal
+
+[Measurable target improvement]
+
+---
+
+## Inclusion Impact
+
+[Who benefits and why]
+
+---
+
+## Proposed Changes
+
+[Specific implementation steps]
+
+---
+
+## Acceptance Criteria
+
+[How will we know it's fixed?]
+
+---
+
+## Verification Plan
+
+[Testing protocol]
+
+---
+
+## Risk &amp; Constraints
+
+[Trade-offs, technical limitations]
+</code></pre>
+<h3 id="step-2-fill-in-sections-15-min"><a class="header" href="#step-2-fill-in-sections-15-min">Step 2: Fill in sections (15 min)</a></h3>
+<p><strong>Using T2 edit accessibility issue as example</strong>:</p>
+<pre><code class="language-markdown"># Inclusive Redesign Brief — Week 10 Lab 2
+
+**Target**: Validation errors not announced by screen readers (wk9-01, wk9-03)
+**Priority**: 1 (Score: 8)
+**Assignee**: [Your name]
+**Date**: 2025-10-20
+
+---
+
+## Problem Statement
+
+Task T2 (Edit Task) has 80% completion for JS-on participants and 0% completion for JS-off participants. Analysis shows:
+- 33% error rate (2 validation errors in 6 attempts)
+- Median time 1400ms with MAD 184ms (moderate variability)
+- Qualitative evidence: "SR didn't announce error message" (P2), "Error summary not focusable" (P3)
+
+**Root cause**: Validation error messages not accessible. HTMX path lacks `role="alert"`. No-JS path renders error summary but doesn't focus it or make it keyboard-navigable.
+
+**WCAG violations**: 3.3.1 Error Identification (A), 4.1.3 Status Messages (AA), 3.2.1 On Focus (A)
+
+---
+
+## Goal
+
+**Target metrics** (Week 10 Lab 2 verification):
+- T2 completion rate ≥90% for all variants (JS-on, JS-off, keyboard-only, SR)
+- T2 error rate &lt;10% (improved affordances reduce accidental blank submissions)
+- Zero WCAG 3.3.1 / 4.1.3 violations on retest
+
+**Success means**: Screen reader users hear validation errors immediately. Keyboard-only users can navigate to error summary with Tab. No-JS users see error summary on page load with focus.
+
+---
+
+## Inclusion Impact
+
+**Who benefits**:
+- **Screen reader users** (estimated 2-5% of UK population): Can identify and recover from errors independently
+- **Keyboard-only users** (motor disabilities, power users): Can navigate to error without mouse
+- **Cognitive disabilities**: Clear, announced errors reduce confusion and repeated mistakes
+- **Low-bandwidth users** (no-JS fallback): Can complete tasks even with JS disabled
+
+**Equity**: Current design excludes disabled participants—completion rate 0% for no-JS, SR users struggled. Fix restores parity.
+
+---
+
+## Proposed Changes
+
+### Change 1: Add ARIA live region for HTMX errors
+
+**File**: `src/main/kotlin/routes/Tasks.kt`
+
+**Before**:
+```kotlin
+if (title.isBlank()) {
+    val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+    return@post call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+}
+</code></pre>
+<p><strong>After</strong>:</p>
+<pre><code class="language-kotlin">if (title.isBlank()) {
+    val status = """&lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;Title is required. Please enter at least one character.&lt;/div&gt;"""
+    return@post call.respondText(status, ContentType.Text.Html, HttpStatusCode.BadRequest)
+}
+</code></pre>
+<p><strong>Rationale</strong>: <code>role="alert"</code> + <code>aria-live="assertive"</code> ensures SR announces error immediately.</p>
+<hr />
+<h3 id="change-2-make-no-js-error-summary-keyboard-focusable"><a class="header" href="#change-2-make-no-js-error-summary-keyboard-focusable">Change 2: Make no-JS error summary keyboard-focusable</a></h3>
+<p><strong>File</strong>: <code>templates/tasks/index.peb</code></p>
+<p><strong>Before</strong>:</p>
+<pre><code class="language-twig">{% if error %}
+&lt;div class="error-summary" id="error-summary"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#title"&gt;Title is required&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+{% endif %}
+</code></pre>
+<p><strong>After</strong>:</p>
+<pre><code class="language-twig">{% if error %}
+&lt;div class="error-summary" id="error-summary" tabindex="-1" role="alert" aria-live="assertive"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#title"&gt;{% if msg == "too_long" %}Title is too long (max 200 characters){% else %}Title is required{% endif %}&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  // Progressive enhancement: auto-focus error summary (no-JS users rely on visual scan)
+  if (document.getElementById('error-summary')) {
+    document.getElementById('error-summary').focus();
+  }
+&lt;/script&gt;
+{% endif %}
+</code></pre>
+<p><strong>Rationale</strong>:</p>
+<ul>
+<li><code>tabindex="-1"</code> makes div focusable programmatically (not in natural tab order)</li>
+<li><code>role="alert"</code> + <code>aria-live="assertive"</code> announces to SR on page load</li>
+<li>Tiny <code>&lt;script&gt;</code> auto-focuses error (progressive enhancement—still works if JS fails)</li>
+</ul>
+<hr />
+<h3 id="change-3-link-input-to-error-message"><a class="header" href="#change-3-link-input-to-error-message">Change 3: Link input to error message</a></h3>
+<p><strong>File</strong>: <code>templates/tasks/index.peb</code></p>
+<p><strong>Update input</strong>:</p>
+<pre><code class="language-twig">&lt;input id="title" name="title" type="text"
+       {% if error == "title" %}aria-invalid="true" aria-describedby="title-error"{% endif %}
+       required&gt;
+{% if error == "title" %}
+&lt;p id="title-error" class="error-message" role="alert"&gt;
+  {% if msg == "too_long" %}Title is too long (max 200 characters){% else %}Title is required{% endif %}
+&lt;/p&gt;
+{% endif %}
+</code></pre>
+<p><strong>Rationale</strong>: <code>aria-describedby</code> links input to error message. SR reads error when focus lands on input.</p>
+<hr />
+<h2 id="acceptance-criteria"><a class="header" href="#acceptance-criteria">Acceptance Criteria</a></h2>
+<h3 id="functional"><a class="header" href="#functional">Functional</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Blank title submission triggers validation error (both HTMX and no-JS)</li>
+<li><input disabled="" type="checkbox"/>
+HTMX error appears in <code>#status</code> live region with <code>role="alert"</code></li>
+<li><input disabled="" type="checkbox"/>
+No-JS error summary appears at top of page</li>
+<li><input disabled="" type="checkbox"/>
+Error summary has <code>tabindex="-1"</code> and receives focus on page load</li>
+</ul>
+<h3 id="accessibility-wcag-22-level-aa"><a class="header" href="#accessibility-wcag-22-level-aa">Accessibility (WCAG 2.2 Level AA)</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>3.3.1 Error Identification (A)</strong>: Error described in text ✓</li>
+<li><input disabled="" type="checkbox"/>
+<strong>4.1.3 Status Messages (AA)</strong>: Error announced by SR without focus change ✓</li>
+<li><input disabled="" type="checkbox"/>
+<strong>3.2.1 On Focus (A)</strong>: Focus managed predictably (lands on error summary) ✓</li>
+<li><input disabled="" type="checkbox"/>
+<strong>1.3.1 Info &amp; Relationships (A)</strong>: <code>aria-describedby</code> links input to error ✓</li>
+</ul>
+<h3 id="testing-protocol"><a class="header" href="#testing-protocol">Testing Protocol</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Keyboard-only</strong>: Tab to form, submit blank, Tab to error summary link, press Enter → focus lands on <code>#title</code> input</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Screen reader (NVDA/Orca)</strong>: Submit blank → SR announces "Alert. Title is required. Please enter at least one character."</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No-JS</strong>: Disable JS, submit blank → page reloads with error summary focused, Tab order correct</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Re-run T2 pilot</strong>: 3 participants (1 SR, 1 keyboard, 1 no-JS), measure completion rate</li>
+</ul>
+<hr />
+<h2 id="verification-plan"><a class="header" href="#verification-plan">Verification Plan</a></h2>
+<h3 id="quantitative-week-10-lab-2"><a class="header" href="#quantitative-week-10-lab-2">Quantitative (Week 10 Lab 2)</a></h3>
+<p>Re-run T2 (Edit Task) with 3 participants:</p>
+<ol>
+<li><strong>P6</strong>: Standard (HTMX, mouse, JS-on)</li>
+<li><strong>P7</strong>: Keyboard-only + NVDA (SR)</li>
+<li><strong>P8</strong>: No-JS</li>
+</ol>
+<p><strong>Measure</strong>:</p>
+<ul>
+<li>Completion rate (target: 3/3 = 100%)</li>
+<li>Error rate (target: &lt;1 error across 3 attempts = &lt;33%)</li>
+<li>Median time (expect similar to Week 9: ~1400ms for JS-on)</li>
+</ul>
+<p><strong>Document in</strong>: <code>wk10/lab-wk10/research/verification-notes.md</code></p>
+<h3 id="qualitative"><a class="header" href="#qualitative">Qualitative</a></h3>
+<ul>
+<li>Capture SR output (transcript snippet) confirming error announcement</li>
+<li>Screenshot of no-JS error summary with focus indicator visible</li>
+<li>Note any remaining confusion or hesitation</li>
+</ul>
+<h3 id="backlog-update"><a class="header" href="#backlog-update">Backlog Update</a></h3>
+<p>Mark wk9-01 and wk9-03 as <code>status=fixed</code>, append evidence links:</p>
+<pre><code class="language-csv">wk9-01,...,fixed,"wk10/lab-wk10/research/verification-notes.md; wk10/lab-wk10/evidence/sr-error-announcement.png"
+</code></pre>
+<hr />
+<h2 id="risk--constraints"><a class="header" href="#risk--constraints">Risk &amp; Constraints</a></h2>
+<h3 id="technical-constraints"><a class="header" href="#technical-constraints">Technical Constraints</a></h3>
+<ul>
+<li><strong>No major refactor</strong>: Must stay within 2-hour lab session</li>
+<li><strong>Server-first principle</strong>: Keep HTMX enhancement, ensure no-JS parity</li>
+<li><strong>Template complexity</strong>: Adding <code>aria-*</code> attributes increases template size—acceptable trade-off for accessibility</li>
+</ul>
+<h3 id="potential-issues"><a class="header" href="#potential-issues">Potential Issues</a></h3>
+<ul>
+<li><strong>Progressive enhancement script</strong>: Tiny <code>&lt;script&gt;</code> auto-focuses error. If JS fails to load, user must visually scan for error summary—<strong>acceptable fallback</strong> (error still visible, focusable with Tab).</li>
+<li><strong>Multiple errors</strong>: Currently handles one error field. If expanding to multiple fields, need error summary list—<strong>defer to future</strong> (out of scope for Week 10).</li>
+</ul>
+<h3 id="trade-offs-accepted"><a class="header" href="#trade-offs-accepted">Trade-offs Accepted</a></h3>
+<ul>
+<li><strong>No client-side validation</strong>: Sticking with server-side only. Could add <code>maxlength</code> attribute for instant feedback—<strong>defer</strong> (progressive enhancement for later).</li>
+</ul>
+<hr />
+<h2 id="success-criteria-summary"><a class="header" href="#success-criteria-summary">Success Criteria Summary</a></h2>
+<p><strong>Definition of Done</strong>:</p>
+<ol>
+<li>Code changes committed with tests passing</li>
+<li>Verification pilots completed (n=3)</li>
+<li>T2 completion rate ≥90% (all variants)</li>
+<li>Zero WCAG 3.3.1 / 4.1.3 violations</li>
+<li>Evidence captured (screenshots, SR transcripts, metrics)</li>
+<li>Backlog updated (wk9-01, wk9-03 marked fixed)</li>
+<li>Task 2 evidence pack updated with before/after data</li>
+</ol>
+<p><strong>If not met</strong>: Document blockers, revert changes, choose lower-priority fix.</p>
+<pre><code>
+✋ **Stop and check**:
+- [ ] Redesign brief complete with all sections
+- [ ] Problem backed by Week 9 data
+- [ ] Changes specific (file paths, before/after code)
+- [ ] Acceptance criteria measurable
+- [ ] Verification plan includes quantitative + qualitative testing
+
+---
+
+## Commit &amp; Reflect (10 min)
+
+### Commit message
+
+```bash
+git add analysis wk10/lab-wk10/docs/redesign-brief.md backlog/backlog.csv
+
+git commit -m "$(cat &lt;&lt;'EOF'
+wk10s1: analysed metrics, prioritised fixes, drafted redesign brief
+
+- Generated analysis/analysis.csv: medians, MAD, completion/error rates per task+js_mode
+- Interpreted metrics with inclusion lens: T2 edit has 0% no-JS completion, 33% error rate
+- Identified WCAG violations: 3.3.1, 4.1.3 (validation errors not announced/focusable)
+- Prioritised backlog using (Impact+Inclusion)-Effort: wk9-01/wk9-03 score=8 (Priority 1)
+- Drafted inclusive redesign brief targeting T2 validation error accessibility
+- Proposed changes: role=alert for HTMX, tabindex=-1 + auto-focus for no-JS, aria-describedby linking
+- Defined acceptance criteria: ≥90% completion, zero WCAG violations on retest
+
+Key findings:
+- T2 (Edit): 80% JS-on completion, 0% JS-off completion → parity failure
+- T2 error rate: 33% (blank submissions due to poor affordances)
+- T1 (Filter): 100% completion but no-JS 71% slower (acceptable—functional parity maintained)
+
+Ready for Week 10 Lab 2 implementation and verification.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+EOF
+)"
+</code></pre>
+<h3 id="reflection-questions"><a class="header" href="#reflection-questions">Reflection questions</a></h3>
+<p><strong>Answer in <code>wk10/reflection.md</code></strong>:</p>
+<ol>
+<li>
+<p><strong>Data interpretation</strong>: What surprised you most in the numbers? Were any findings unexpected based on Week 9 observations?</p>
+</li>
+<li>
+<p><strong>Inclusion lens</strong>: How did the prioritisation framework change which issues you focused on? Would you have chosen differently without the Inclusion dimension?</p>
+</li>
+<li>
+<p><strong>Trade-offs</strong>: Which issues did you deprioritise and why? How comfortable are you with those decisions?</p>
+</li>
+<li>
+<p><strong>Redesign confidence</strong>: How confident are you that the proposed fix will achieve ≥90% completion? What uncertainties remain?</p>
+</li>
+<li>
+<p><strong>Evidence chains</strong>: Can you trace wk9-01 from raw <code>metrics.csv</code> → <code>analysis/summary.md</code> → <code>prioritisation.csv</code> → <code>redesign-brief.md</code>? Is anything missing?</p>
+</li>
+<li>
+<p><strong>Week 10 Lab 2 readiness</strong>: What could go wrong during implementation? How will you mitigate?</p>
+</li>
+</ol>
+<hr />
+<h2 id="looking-ahead-week-10-lab-2"><a class="header" href="#looking-ahead-week-10-lab-2">Looking Ahead: Week 10 Lab 2</a></h2>
+<p>Next session:</p>
+<ul>
+<li><strong>Implement</strong> Priority 1 fix (T2 validation error accessibility)</li>
+<li><strong>Verify</strong> with 3 participants (SR, keyboard, no-JS)</li>
+<li><strong>Measure</strong> completion rate, error rate, qualitative observations</li>
+<li><strong>Update</strong> backlog with verification evidence</li>
+<li><strong>Prepare</strong> Task 2 draft pack (before/after metrics, code diffs, evidence)</li>
+</ul>
+<p><strong>Before Lab 2</strong>:</p>
+<ul>
+<li>Review redesign brief (<code>wk10/lab-wk10/docs/redesign-brief.md</code>)</li>
+<li>Refresh ARIA syntax (<code>role="alert"</code>, <code>aria-describedby</code>, <code>aria-live</code>)</li>
+<li>Prepare verification pilot script (similar to Week 9 protocol)</li>
+<li>Check that Week 9 data is committed (don't lose baseline!)</li>
+</ul>
+<hr />
+<h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
+<h3 id="essential"><a class="header" href="#essential">Essential</a></h3>
+<ul>
+<li>Review <a href="../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas reference)</li>
+<li><a href="https://www.gov.uk/service-manual/measuring-success/using-data-to-improve-your-service">GOV.UK: Using data to improve your service</a></li>
+</ul>
+<h3 id="statistical-analysis"><a class="header" href="#statistical-analysis">Statistical Analysis</a></h3>
+<ul>
+<li><a href="https://measuringux.com/">Measuring UX</a> — Quantitative UX metrics handbook</li>
+<li><a href="https://hci-stats.com/">Statistics for HCI</a> — Practical guide for small-sample HCI studies</li>
+</ul>
+<h3 id="prioritisation"><a class="header" href="#prioritisation">Prioritisation</a></h3>
+<ul>
+<li><a href="https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/">Nielsen: Prioritizing Web Usability Problems</a></li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/report/#prioritise">W3C: Prioritizing Accessibility Issues</a></li>
+<li><a href="https://www.gov.uk/service-manual/user-research/analyse-a-research-session#prioritise-findings">GOV.UK: Prioritising user research findings</a></li>
+</ul>
+<h3 id="inclusive-design"><a class="header" href="#inclusive-design">Inclusive Design</a></h3>
+<ul>
+<li><a href="https://www.microsoft.com/design/inclusive/">Microsoft Inclusive Design Toolkit</a></li>
+<li><a href="https://www.w3.org/WAI/test-evaluate/involving-users/">W3C: Involving Users in Evaluating Web Accessibility</a></li>
+</ul>
+<h3 id="academic"><a class="header" href="#academic">Academic</a></h3>
+<ul>
+<li><strong>Lazar et al. (2017).</strong> <em>Research Methods in Human-Computer Interaction</em> (2nd ed.). Chapter 11: Statistical analysis</li>
+<li><strong>Sauro &amp; Lewis (2016).</strong> <em>Quantifying the User Experience</em> (2nd ed.). Chapters 2-5: Metrics selection and interpretation</li>
+</ul>
+<hr />
+<h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
+<tr><td><strong>Descriptive statistics</strong></td><td>Summarize and describe main features of a dataset (median, range, count)</td></tr>
+<tr><td><strong>Median</strong></td><td>Middle value in sorted dataset; 50th percentile; resistant to outliers</td></tr>
+<tr><td><strong>MAD (Median Absolute Deviation)</strong></td><td>Robust measure of variability; median of</td></tr>
+<tr><td><strong>Completion rate</strong></td><td>Proportion of task attempts that succeeded (effectiveness measure)</td></tr>
+<tr><td><strong>Error rate</strong></td><td>Proportion of attempts that triggered validation errors</td></tr>
+<tr><td><strong>Prioritisation framework</strong></td><td>Systematic method to rank backlog items by (Impact+Inclusion)-Effort</td></tr>
+<tr><td><strong>Evidence chain</strong></td><td>Traceability from raw data → analysis → finding → fix → verification</td></tr>
+<tr><td><strong>Impact</strong></td><td>How many people affected and how severely (1-5 scale)</td></tr>
+<tr><td><strong>Inclusion</strong></td><td>Does issue disproportionately affect disabled people? (1-5 scale)</td></tr>
+<tr><td><strong>Effort</strong></td><td>Time/complexity to implement fix (1-5 scale)</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Lab complete!</strong> You have data-driven insights, prioritised backlog, and a detailed redesign plan. Week 10 Lab 2 will implement and verify the fixes.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../wk10/src/wk10-lab2-redesign-reverify-package.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../wk10/src/wk10-lab2-redesign-reverify-package.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

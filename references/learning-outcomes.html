@@ -1,0 +1,521 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Learning Outcomes Reference - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="learning-outcomes-reference"><a class="header" href="#learning-outcomes-reference">Learning Outcomes Reference</a></h1>
+<blockquote>
+<p><strong>Purpose</strong> This document is the <strong>definitive reference</strong> for all Learning Outcomes in COMP2850 HCI. It clarifies terminology, maps outcomes to weeks/labs, and ensures consistency across all teaching materials.</p>
+</blockquote>
+<hr />
+<h2 id="understanding-the-hierarchy"><a class="header" href="#understanding-the-hierarchy">Understanding the Hierarchy</a></h2>
+<p>There are <strong>three levels</strong> of learning specifications in this module:</p>
+<div class="table-wrapper"><table><thead><tr><th>Level</th><th>Scope</th><th>Purpose</th><th>Where Used</th></tr></thead><tbody>
+<tr><td><strong>Module Aims</strong></td><td>Broad, aspirational statements about overall module goals</td><td>High-level intentions; what the module sets out to achieve</td><td>Homepage, module outline</td></tr>
+<tr><td><strong>Learning Outcomes (LOs)</strong></td><td>Specific, measurable competencies students will demonstrate</td><td>Assessment criteria; aligned to accreditation standards (ACM CS2023)</td><td>Week/lab mappings, assessment rubrics, portfolio</td></tr>
+<tr><td><strong>Lab Objectives</strong></td><td>Session-specific tasks and activities</td><td>What students will do in this lab to work toward LOs</td><td>Individual lab pages</td></tr>
+</tbody></table>
+</div>
+<p><strong>Key distinction</strong>:</p>
+<ul>
+<li><strong>Aims</strong> are broad intentions ("enable students to...")</li>
+<li><strong>Outcomes</strong> are measurable achievements ("students will be able to...")</li>
+<li><strong>Objectives</strong> are specific activities ("implement a consent form", "run 4 pilots")</li>
+</ul>
+<hr />
+<h2 id="module-wide-learning-outcomes-comp2850"><a class="header" href="#module-wide-learning-outcomes-comp2850">Module-Wide Learning Outcomes (COMP2850)</a></h2>
+<p>These <strong>10 outcomes</strong> apply to the <strong>entire COMP2850 module</strong> (Weeks 1-11, covering OOP + HCI). The HCI component (Weeks 6-11) contributes to these outcomes alongside the OOP component (Weeks 1-5).</p>
+<p>On successful completion of COMP2850, students will have demonstrated the ability to:</p>
+<ol>
+<li>
+<p><strong>Apply subject specific knowledge and engineering design principles</strong> to design and implement software artefacts which satisfy complex real-world requirements, considering accessibility and inclusive design principles <em>(C1, M1, C2, M2, C5, M5, C6, M6, C11, M11)</em></p>
+</li>
+<li>
+<p><strong>Select and interpret sources of information</strong> to solve complex real-world problems <em>(C4, M4)</em></p>
+</li>
+<li>
+<p><strong>Use appropriately selected tools and processes</strong> to design, test, analyse and evaluate computer systems and identify limitations <em>(C12, M12, C13, M13)</em></p>
+</li>
+<li>
+<p><strong>Identify and analyse ethical and sustainability concerns</strong> when designing and implementing software and make reasoned decisions informed by ethical frameworks and codes of conduct to minimise adverse impacts <em>(C7, M7, C8, M8)</em></p>
+</li>
+<li>
+<p><strong>Identify and interpret risk</strong> assessing the potential impact and plan mitigation approaches <em>(C9, M9, C10, M10)</em></p>
+</li>
+<li>
+<p><strong>Apply and discuss the principles of quality management</strong> in software engineering and systems design <em>(C14, M14)</em></p>
+</li>
+<li>
+<p><strong>Operate effectively as a member of a team</strong> in various roles <em>(C16, M16)</em></p>
+</li>
+<li>
+<p><strong>Apply and discuss engineering management principles</strong> demonstrating awareness of commercial context, project and change management, and relevant legal matters <em>(C15, M15)</em></p>
+</li>
+<li>
+<p><strong>Communicate effectively complex topics</strong> related to programming and software engineering to technical and non-technical audiences <em>(C17, M17)</em></p>
+</li>
+<li>
+<p><strong>Reflect on their level of mastery</strong> of subject knowledge and skills and plan for personal development <em>(C18, M18)</em></p>
+</li>
+</ol>
+<p><strong>HCI contribution</strong>: Weeks 6-11 primarily contribute to outcomes <strong>1, 2, 3, 4, 7, 9, and 10</strong>.</p>
+<hr />
+<h2 id="hci-specific-learning-outcomes-weeks-6-11"><a class="header" href="#hci-specific-learning-outcomes-weeks-6-11">HCI-Specific Learning Outcomes (Weeks 6-11)</a></h2>
+<p>These <strong>13 outcomes</strong> are specific to the <strong>HCI component</strong> (Weeks 6-11). They elaborate on how the module-wide outcomes are achieved through HCI activities. They are numbered <strong>LO1 through LO13</strong> and should be referenced consistently across all lab materials.</p>
+<p><strong>Source</strong>: <code>learning-outcomes-condensed.md</code></p>
+<h3 id="lo1-differentiate-people-centred-design-and-evaluation-methodologies"><a class="header" href="#lo1-differentiate-people-centred-design-and-evaluation-methodologies">LO1: Differentiate people-centred design and evaluation methodologies</a></h3>
+<p><strong>Description</strong>: Distinguish between design methodologies (e.g., participatory design, user-centred design) and evaluation methods (e.g., heuristic evaluation, task-based testing, A/B testing).</p>
+<p><strong>Evidenced in</strong>: Week 6 Lab 2 (needs-finding, job stories), Week 9 Lab 1 (evaluation planning, method selection)</p>
+<p><strong>ACM strands</strong>: Understanding People (UP/1-3), HCI-Evaluation (HC/5)</p>
+<hr />
+<h3 id="lo2-design-and-conduct-needs-finding-activities"><a class="header" href="#lo2-design-and-conduct-needs-finding-activities">LO2: Design and conduct needs-finding activities</a></h3>
+<p><strong>Description</strong>: Plan and run structured needs-finding sessions (interviews, observation, job story extraction) following ethical protocols including informed consent.</p>
+<p><strong>Evidenced in</strong>: Week 6 Lab 2 (job stories, consent forms), Week 7 Lab 1 (user scenarios)</p>
+<p><strong>ACM strands</strong>: Understanding People (UP/1-2), Requirements Engineering</p>
+<hr />
+<h3 id="lo3-analyse-ethical-implications-of-design-decisions"><a class="header" href="#lo3-analyse-ethical-implications-of-design-decisions">LO3: Analyse ethical implications of design decisions</a></h3>
+<p><strong>Description</strong>: Identify ethical concerns (privacy, consent, data retention, bias) in interface designs and propose mitigation strategies informed by frameworks like UK GDPR, BCS Code of Conduct.</p>
+<p><strong>Evidenced in</strong>: Week 7 Lab 1 (consent modal, privacy by design), Week 6 Lab 2 (data handling), Week 10 Lab 2 (inclusive redesign)</p>
+<p><strong>ACM strands</strong>: Social and Professional Issues (SP/1-2), Privacy &amp; Security</p>
+<hr />
+<h3 id="lo4-evaluate-software-interfaces-for-accessibility-concerns"><a class="header" href="#lo4-evaluate-software-interfaces-for-accessibility-concerns">LO4: Evaluate software interfaces for accessibility concerns</a></h3>
+<p><strong>Description</strong>: Conduct accessibility audits using automated tools (axe DevTools) and manual testing (keyboard navigation, screen readers) against WCAG 2.2 AA standards.</p>
+<p><strong>Evidenced in</strong>: Week 7 Lab 2 (accessibility audit, WCAG mapping), Week 8 Lab 2 (no-JS verification), Week 10 Lab 2 (regression testing)</p>
+<p><strong>ACM strands</strong>: Designing Interaction (HC/2), Accessibility (WCAG 2.2 AA)</p>
+<hr />
+<h3 id="lo5-create-interface-prototypes-using-appropriate-fidelity-levels"><a class="header" href="#lo5-create-interface-prototypes-using-appropriate-fidelity-levels">LO5: Create interface prototypes using appropriate fidelity levels</a></h3>
+<p><strong>Description</strong>: Build prototypes ranging from paper sketches to functional HTML/HTMX implementations, selecting fidelity appropriate to the design question.</p>
+<p><strong>Evidenced in</strong>: Week 8 Lab 1 (HTMX prototypes, partials), Week 10 Lab 2 (redesign implementation)</p>
+<p><strong>ACM strands</strong>: Prototyping Techniques (HC/3)</p>
+<hr />
+<h3 id="lo6-apply-iterative-design-processes"><a class="header" href="#lo6-apply-iterative-design-processes">LO6: Apply iterative design processes</a></h3>
+<p><strong>Description</strong>: Execute design-test-refine cycles, incorporating evaluation findings into redesigns and documenting rationale with evidence.</p>
+<p><strong>Evidenced in</strong>: Week 9 Lab 2 (pilots, debrief), Week 10 Lab 1 (analysis, prioritisation), Week 10 Lab 2 (redesign, re-verification)</p>
+<p><strong>ACM strands</strong>: Iterative Design (HC/4)</p>
+<hr />
+<h3 id="lo7-analyse-how-design-constraints-affect-interface-decisions"><a class="header" href="#lo7-analyse-how-design-constraints-affect-interface-decisions">LO7: Analyse how design constraints affect interface decisions</a></h3>
+<p><strong>Description</strong>: Identify technical, accessibility, and no-JS constraints; explain trade-offs in design decisions (e.g., progressive enhancement vs SPA, server-first vs client-first).</p>
+<p><strong>Evidenced in</strong>: Week 8 Lab 1 (pagination, filtering constraints), Week 8 Lab 2 (no-JS parity, routing trade-offs)</p>
+<p><strong>ACM strands</strong>: Design Constraints (HC/4), Software Architecture</p>
+<hr />
+<h3 id="lo8-design-and-execute-appropriate-evaluation-methods"><a class="header" href="#lo8-design-and-execute-appropriate-evaluation-methods">LO8: Design and execute appropriate evaluation methods</a></h3>
+<p><strong>Description</strong>: Develop task-based evaluation protocols, define metrics (time-on-task, errors, SUS), run pilots with n=4 participants, and analyse quantitative/qualitative data.</p>
+<p><strong>Evidenced in</strong>: Week 9 Lab 1 (evaluation plan, metrics, instrumentation), Week 9 Lab 2 (pilots, observer notes), Week 10 Lab 1 (data analysis)</p>
+<p><strong>ACM strands</strong>: HCI-Evaluation (HC/5), Empirical Methods</p>
+<hr />
+<h3 id="lo9-apply-universal-and-inclusive-design-principles"><a class="header" href="#lo9-apply-universal-and-inclusive-design-principles">LO9: Apply universal and inclusive design principles</a></h3>
+<p><strong>Description</strong>: Design interfaces that work for diverse users (keyboard-only, screen reader, low vision, cognitive differences) using techniques like semantic HTML, ARIA, focus management.</p>
+<p><strong>Evidenced in</strong>: Week 7 Lab 2 (inclusive fix), Week 8 Lab 2 (no-JS parity), Week 10 Lab 2 (inclusive redesign)</p>
+<p><strong>ACM strands</strong>: Accessibility (HC/2), Universal Design (UP/3)</p>
+<hr />
+<h3 id="lo10-critique-potential-impacts-of-designs-on-society"><a class="header" href="#lo10-critique-potential-impacts-of-designs-on-society">LO10: Critique potential impacts of designs on society</a></h3>
+<p><strong>Description</strong>: Analyse societal implications of design choices (surveillance, exclusion, environmental cost) and propose alternatives that reduce harm.</p>
+<p><strong>Evidenced in</strong>: Week 7 Lab 1 (ethics analysis), Week 6 Lab 2 (privacy considerations)</p>
+<p><strong>ACM strands</strong>: Social and Professional Issues (SP/1-2), Ethics</p>
+<hr />
+<h3 id="lo11-collaborate-effectively-in-multidisciplinary-teams"><a class="header" href="#lo11-collaborate-effectively-in-multidisciplinary-teams">LO11: Collaborate effectively in multidisciplinary teams</a></h3>
+<p><strong>Description</strong>: Work in teams using version control (Git), code review, and shared documentation; communicate design rationale to technical and non-technical peers.</p>
+<p><strong>Evidenced in</strong>: Week 9 Lab 2 (peer pilots, observer role), Week 11 Lab 1 (studio crit, peer feedback)</p>
+<p><strong>ACM strands</strong>: Teamwork (Professional Skills)</p>
+<hr />
+<h3 id="lo12-demonstrate-professional-dispositions"><a class="header" href="#lo12-demonstrate-professional-dispositions">LO12: Demonstrate professional dispositions</a></h3>
+<p><strong>Description</strong>: Show responsibility (meet deadlines, follow protocols), integrity (cite sources, report honestly), and respect (use people-centred language, honour consent).</p>
+<p><strong>Evidenced in</strong>: All labs (consent adherence, evidence-based claims, inclusive language)</p>
+<p><strong>ACM strands</strong>: Professional Skills, Ethics</p>
+<hr />
+<h3 id="lo13-integrate-people-centred-design-with-se-lifecycle"><a class="header" href="#lo13-integrate-people-centred-design-with-se-lifecycle">LO13: Integrate people-centred design with SE lifecycle</a></h3>
+<p><strong>Description</strong>: Embed HCI practices (needs-finding, evaluation, iteration) within software engineering workflows (version control, testing, deployment).</p>
+<p><strong>Evidenced in</strong>: Week 8 Lab 1 (server-first patterns), Week 9 Lab 1 (instrumentation in code), Week 10 Lab 2 (regression testing)</p>
+<p><strong>ACM strands</strong>: Software Engineering Processes, Requirements Engineering</p>
+<hr />
+<h2 id="cross-reference-los-to-weeks--activities"><a class="header" href="#cross-reference-los-to-weeks--activities">Cross-Reference: LOs to Weeks &amp; Activities</a></h2>
+<p>This table maps each HCI Learning Outcome to specific weeks, labs, and deliverables. Use this for curriculum planning, assessment design, and student progress tracking.</p>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome (condensed)</th><th>Primary Evidence</th><th>Secondary Evidence</th><th>Assessment Task</th><th>ACM Strands</th></tr></thead><tbody>
+<tr><td><strong>LO1</strong></td><td>Differentiate people-centred methods</td><td>W6 L2 (needs-finding, job stories)</td><td>W9 L1 (evaluation methods)</td><td>Task 1: Evaluation plan</td><td>UP/1-3, HC/5</td></tr>
+<tr><td><strong>LO2</strong></td><td>Design and conduct needs-finding</td><td>W6 L2 (job stories, consent)</td><td>W7 L1 (scenarios)</td><td>Backlog (user needs)</td><td>UP/1-2</td></tr>
+<tr><td><strong>LO3</strong></td><td>Analyse ethical implications</td><td>W7 L1 (consent modal, GDPR)</td><td>W6 L2 (privacy), W10 L2 (bias)</td><td>Task 2: Privacy audit</td><td>SP/1-2</td></tr>
+<tr><td><strong>LO4</strong></td><td>Evaluate for accessibility</td><td>W7 L2 (audit, WCAG map)</td><td>W8 L2 (no-JS), W10 L2 (regression)</td><td>Task 2: Accessibility fixes</td><td>HC/2, WCAG 2.2 AA</td></tr>
+<tr><td><strong>LO5</strong></td><td>Create prototypes</td><td>W8 L1 (HTMX partials)</td><td>W10 L2 (redesign)</td><td>Code submissions</td><td>HC/3</td></tr>
+<tr><td><strong>LO6</strong></td><td>Apply iterative design</td><td>W9 L2 (pilots), W10 (analysis + redesign)</td><td>W11 L1 (critique)</td><td>Tasks 1 &amp; 2: Full cycle</td><td>HC/4</td></tr>
+<tr><td><strong>LO7</strong></td><td>Analyse design constraints</td><td>W8 L1 (pagination, filtering)</td><td>W8 L2 (no-JS trade-offs)</td><td>Task 2: Trade-offs doc</td><td>HC/4</td></tr>
+<tr><td><strong>LO8</strong></td><td>Design and execute evaluation</td><td>W9 L1 (plan, metrics), W9 L2 (pilots)</td><td>W10 L1 (analysis)</td><td>Task 1: Pilots &amp; findings</td><td>HC/5</td></tr>
+<tr><td><strong>LO9</strong></td><td>Apply inclusive design</td><td>W7 L2 (inclusive fix)</td><td>W8 L2 (no-JS), W10 L2 (redesign)</td><td>Task 2: WCAG compliance</td><td>HC/2, UP/3</td></tr>
+<tr><td><strong>LO10</strong></td><td>Critique societal impacts</td><td>W7 L1 (ethics overlay)</td><td>W6 L2 (privacy)</td><td>Reflections</td><td>SP/1-2</td></tr>
+<tr><td><strong>LO11</strong></td><td>Collaborate in teams</td><td>W9 L2 (peer pilots)</td><td>W11 L1 (studio crit)</td><td>Peer feedback forms</td><td>Professional Skills</td></tr>
+<tr><td><strong>LO12</strong></td><td>Demonstrate professionalism</td><td>All labs (consent, citations)</td><td>Portfolio (integrity)</td><td>All submissions</td><td>Professional Skills</td></tr>
+<tr><td><strong>LO13</strong></td><td>Integrate HCI with SE</td><td>W8 L1 (server patterns), W9 L1 (instrumentation)</td><td>W10 L2 (regression)</td><td>Codebase quality</td><td>SE Processes</td></tr>
+</tbody></table>
+</div>
+<p><strong>How to use this table</strong>:</p>
+<ul>
+<li><strong>Curriculum planning</strong>: Ensure each LO has sufficient coverage across weeks</li>
+<li><strong>Student progress</strong>: Track which LOs are being addressed in each lab</li>
+<li><strong>Assessment design</strong>: Align rubrics to LOs</li>
+<li><strong>Accreditation</strong>: Map LOs to ACM/BCS requirements</li>
+</ul>
+<hr />
+<h2 id="module-aims-not-learning-outcomes"><a class="header" href="#module-aims-not-learning-outcomes">Module Aims (Not Learning Outcomes)</a></h2>
+<p>These <strong>four aims</strong> appear on the homepage (<code>index.md</code>). They are <strong>broad aspirational statements</strong> about what the module enables students to do. They are <strong>not</strong> the same as Learning Outcomes (which are specific and measurable).</p>
+<p><strong>Current wording</strong> (to be updated with correct terminology):</p>
+<ol>
+<li>Apply HCI principles to design inclusive interfaces</li>
+<li>Evaluate accessibility and ethics in interactive systems</li>
+<li>Implement server-first architecture with progressive enhancement</li>
+<li>Communicate design decisions with evidence</li>
+</ol>
+<p><strong>Recommendation</strong>: Relabel this section on the homepage as <strong>"Module Aims"</strong> (not "Learning Outcomes") and add a link to this reference page.</p>
+<hr />
+<h2 id="terminology-clarification"><a class="header" href="#terminology-clarification">Terminology Clarification</a></h2>
+<h3 id="module-aims"><a class="header" href="#module-aims">Module Aims</a></h3>
+<p><strong>Definition</strong>: Broad, aspirational statements about what the module sets out to achieve.</p>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>High-level, conceptual</li>
+<li>Focus on "enabling" or "equipping" students</li>
+<li>Not directly assessed (but outcomes derived from aims are assessed)</li>
+</ul>
+<p><strong>Example</strong>: "This module aims to enable students to design accessible web interfaces."</p>
+<h3 id="learning-outcomes-los"><a class="header" href="#learning-outcomes-los">Learning Outcomes (LOs)</a></h3>
+<p><strong>Definition</strong>: Specific, measurable competencies that students will demonstrate by the end of the module.</p>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Use action verbs (apply, analyse, design, evaluate)</li>
+<li>Aligned to Bloom's Taxonomy</li>
+<li>Directly assessed</li>
+<li>Mapped to accreditation standards (ACM, BCS)</li>
+</ul>
+<p><strong>Example</strong>: "LO4: Evaluate software interfaces for accessibility concerns using WCAG 2.2 AA standards."</p>
+<h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
+<p><strong>Definition</strong>: Session-specific tasks and activities that contribute to achieving Learning Outcomes.</p>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Concrete, actionable</li>
+<li>Time-bound (this lab session)</li>
+<li>Contribute to one or more LOs</li>
+</ul>
+<p><strong>Example</strong>: "Run an axe DevTools audit and document 5+ WCAG violations" (contributes to LO4).</p>
+<hr />
+<h2 id="acm-cs2023-mapping"><a class="header" href="#acm-cs2023-mapping">ACM CS2023 Mapping</a></h2>
+<p>The 13 HCI Learning Outcomes map to the following ACM Computer Science 2023 curriculum standards:</p>
+<h3 id="human-computer-interaction-hc"><a class="header" href="#human-computer-interaction-hc">Human-Computer Interaction (HC)</a></h3>
+<ul>
+<li><strong>HC/2</strong>: Designing Interaction (LO4, LO9)</li>
+<li><strong>HC/3</strong>: Prototyping Techniques (LO5)</li>
+<li><strong>HC/4</strong>: Iterative Design (LO6, LO7)</li>
+<li><strong>HC/5</strong>: Evaluation (LO1, LO8)</li>
+</ul>
+<h3 id="understanding-people-up"><a class="header" href="#understanding-people-up">Understanding People (UP)</a></h3>
+<ul>
+<li><strong>UP/1</strong>: User Research (LO1, LO2)</li>
+<li><strong>UP/2</strong>: Needs Finding (LO2)</li>
+<li><strong>UP/3</strong>: Accessibility &amp; Universal Design (LO9)</li>
+</ul>
+<h3 id="social-and-professional-issues-sp"><a class="header" href="#social-and-professional-issues-sp">Social and Professional Issues (SP)</a></h3>
+<ul>
+<li><strong>SP/1</strong>: Ethics in Computing (LO3, LO10)</li>
+<li><strong>SP/2</strong>: Privacy &amp; Security (LO3)</li>
+<li><strong>SP/Professional Skills</strong>: Teamwork, Communication (LO11, LO12)</li>
+</ul>
+<h3 id="software-engineering-processes-sep"><a class="header" href="#software-engineering-processes-sep">Software Engineering Processes (SEP)</a></h3>
+<ul>
+<li><strong>SEP/2</strong>: Requirements Engineering (LO2, LO13)</li>
+<li><strong>SEP/3</strong>: Design Patterns &amp; Architecture (LO7, LO13)</li>
+</ul>
+<h3 id="web--mobile-systems"><a class="header" href="#web--mobile-systems">Web &amp; Mobile Systems</a></h3>
+<ul>
+<li><strong>Server-first patterns</strong> (LO5, LO7, LO13)</li>
+<li><strong>Progressive enhancement</strong> (LO7, LO9)</li>
+</ul>
+<hr />
+<h2 id="wcag-22-mapping"><a class="header" href="#wcag-22-mapping">WCAG 2.2 Mapping</a></h2>
+<p>Learning Outcomes with direct WCAG 2.2 AA compliance requirements:</p>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>WCAG Principles</th><th>Key Success Criteria</th></tr></thead><tbody>
+<tr><td><strong>LO4</strong></td><td>All (Perceivable, Operable, Understandable, Robust)</td><td>1.3.1 Info &amp; Relationships, 1.4.3 Contrast, 2.1.1 Keyboard, 2.4.7 Focus Visible, 4.1.2 Name/Role/Value</td></tr>
+<tr><td><strong>LO9</strong></td><td>Operable, Understandable</td><td>2.1.1 Keyboard, 2.4.1 Skip Links, 2.4.3 Focus Order, 3.3.2 Labels, 4.1.3 Status Messages</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="for-students-self-assessment"><a class="header" href="#for-students-self-assessment">For Students: Self-Assessment</a></h2>
+<p>Use this checklist to track your progress across the 13 HCI Learning Outcomes:</p>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>Confidence (1–5)</th><th>Evidence Location</th></tr></thead><tbody>
+<tr><td>LO1</td><td>Differentiate people-centred methods</td><td>☐☐☐☐☐</td><td>W6 L2 job stories, W9 L1 eval plan</td></tr>
+<tr><td>LO2</td><td>Design and conduct needs-finding</td><td>☐☐☐☐☐</td><td>W6 L2 consent protocol</td></tr>
+<tr><td>LO3</td><td>Analyse ethical implications</td><td>☐☐☐☐☐</td><td>W7 L1 consent modal, privacy audit</td></tr>
+<tr><td>LO4</td><td>Evaluate for accessibility</td><td>☐☐☐☐☐</td><td>W7 L2 axe audit, WCAG map</td></tr>
+<tr><td>LO5</td><td>Create prototypes</td><td>☐☐☐☐☐</td><td>W8 L1 HTMX features</td></tr>
+<tr><td>LO6</td><td>Apply iterative design</td><td>☐☐☐☐☐</td><td>W9 L2 pilots → W10 L2 redesign</td></tr>
+<tr><td>LO7</td><td>Analyse design constraints</td><td>☐☐☐☐☐</td><td>W8 L2 no-JS trade-offs doc</td></tr>
+<tr><td>LO8</td><td>Design and execute evaluation</td><td>☐☐☐☐☐</td><td>W9 L1 metrics + W9 L2 pilots</td></tr>
+<tr><td>LO9</td><td>Apply inclusive design</td><td>☐☐☐☐☐</td><td>W7 L2 fix, W10 L2 redesign</td></tr>
+<tr><td>LO10</td><td>Critique societal impacts</td><td>☐☐☐☐☐</td><td>W7 L1 ethics reflection</td></tr>
+<tr><td>LO11</td><td>Collaborate in teams</td><td>☐☐☐☐☐</td><td>W9 L2 peer pilots, W11 L1 crit</td></tr>
+<tr><td>LO12</td><td>Demonstrate professionalism</td><td>☐☐☐☐☐</td><td>All labs: consent, citations</td></tr>
+<tr><td>LO13</td><td>Integrate HCI with SE</td><td>☐☐☐☐☐</td><td>W8 L1 Ktor patterns, W9 L1 instrumentation</td></tr>
+</tbody></table>
+</div>
+<p><strong>Confidence scale</strong>: 1 = Not confident, 3 = Moderately confident, 5 = Very confident</p>
+<hr />
+<h2 id="for-teaching-staff-using-this-reference"><a class="header" href="#for-teaching-staff-using-this-reference">For Teaching Staff: Using This Reference</a></h2>
+<h3 id="curriculum-design"><a class="header" href="#curriculum-design">Curriculum Design</a></h3>
+<ul>
+<li>Ensure each LO has ≥2 touchpoints across weeks</li>
+<li>Balance formative (practice) and summative (assessed) evidence</li>
+<li>Check ACM/WCAG coverage for accreditation</li>
+</ul>
+<h3 id="assessment-design"><a class="header" href="#assessment-design">Assessment Design</a></h3>
+<ul>
+<li>Tasks 1 &amp; 2 should collectively assess all 13 LOs</li>
+<li>Use cross-reference table to verify coverage</li>
+<li>Map rubric criteria to specific LOs</li>
+</ul>
+<h3 id="student-support"><a class="header" href="#student-support">Student Support</a></h3>
+<ul>
+<li>Link to this reference in feedback ("see LO4 for accessibility criteria")</li>
+<li>Use self-assessment checklist in tutorials</li>
+<li>Explain aims vs outcomes vs objectives in Week 6</li>
+</ul>
+<h3 id="quality-assurance"><a class="header" href="#quality-assurance">Quality Assurance</a></h3>
+<ul>
+<li>Annual review: verify LO mappings still accurate</li>
+<li>External examiner reports: reference this document</li>
+<li>Student feedback: check if LO structure is clear</li>
+</ul>
+<hr />
+<h2 id="version-history"><a class="header" href="#version-history">Version History</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Version</th><th>Date</th><th>Changes</th></tr></thead><tbody>
+<tr><td>1.0</td><td>2025-10-15</td><td>Initial definitive reference created; standardized terminology; mapped 13 HCI LOs + 10 module LOs</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Questions?</strong> See <a href="glossary.html">Glossary</a> for term definitions or contact module lead.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../references/glossary.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/server-first.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../references/glossary.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/server-first.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
