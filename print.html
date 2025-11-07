@@ -289,7 +289,6 @@ People-first language centres the person, not a diagnostic label.</p>
 <li><strong>Independent Study</strong>: We expect you to manage your time and complete all module requirements</li>
 </ol>
 <hr />
-<p>a solutionmore complex solution</p>
 <h2 id="support"><a class="header" href="#support">Support</a></h2>
 <ul>
 <li><strong>Lab sessions</strong>: Staff on hand for questions (2-hour taught labs &amp; open lab sessions with TA's available)</li>
@@ -1350,6 +1349,7 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
 <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO (2024). "Guide to Data Protection by Design and Default"</a></li>
 <li><a href="wk06/../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> (module ethics guidance)</li>
 <li><a href="wk06/../../references/privacy-by-design.html">Privacy by Design</a> (UK GDPR compliance framework)</li>
+<li><a href="wk06/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide for Weeks 6-11)</li>
 </ul>
 <p><strong>Recommended</strong></p>
 <ul>
@@ -3034,7 +3034,6 @@ None. All tests passed.
 <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C (2024). WCAG 2.2 Quick Reference</a></li>
 <li><a href="https://www.deque.com/axe/devtools/">axe DevTools Documentation</a></li>
 <li><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/making-your-service-accessible-an-introduction">GOV.UK: Making Your Service Accessible</a></li>
-<li><a href="wk07/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide)</li>
 </ul>
 <p><strong>Recommended</strong></p>
 <ul>
@@ -3998,8 +3997,18 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <blockquote>
 <p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
 </blockquote>
-<p>{{#include ../../references/visuals/template-hierarchy.md}}</p>
-<p><small>Full legend in <a href="wk08/../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
+<pre class="mermaid">graph TD
+  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
+  Base --&gt; Index[tasks/index.peb]
+  Index --&gt; List[tasks/_list.peb]
+  List --&gt; Item[tasks/_item.peb]
+  Index --&gt; Pager[tasks/_pager.peb]
+  Item --&gt;|Forms| Routes[(Ktor routes)]
+  Pager --&gt;|Links| Routes
+  Routes --&gt; HTMX[HTMX fragment responses]
+  Routes --&gt; PRG[Full-page PRG responses]
+</pre>
+<p><small>Full legend in <a href="wk08/../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
 <h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
 <p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
 <pre><code class="language-html">&lt;form action="/tasks" method="get"
@@ -9490,8 +9499,15 @@ EOF
 <blockquote>
 <p><strong>Visual</strong>: Evidence-led critique loop</p>
 </blockquote>
-<p>{{#include ../../references/visuals/crit-loop.md}}</p>
-<p><small>See <a href="wk11/../../references/process-visuals.html#crit-loop">Process Visuals</a> for captioned steps.</small></p>
+<pre class="mermaid">graph TD
+  Present[Evidence-led demo]
+  Present --&gt; Feedback[Peer &amp; staff critique]
+  Feedback --&gt; Notes[Crit notes &amp; backlog updates]
+  Notes --&gt; Portfolio[Portfolio &amp; wrap-up]
+  Portfolio --&gt; Plan[Semester 2 planning]
+  Plan --&gt; Present
+</pre>
+<p><small>See <a href="wk11/../references/process-visuals.html#crit-loop">Process Visuals</a> for captioned steps.</small></p>
 <hr />
 <h2 id="learning-focus-10"><a class="header" href="#learning-focus-10">Learning Focus</a></h2>
 <h3 id="lab-objectives-10"><a class="header" href="#lab-objectives-10">Lab Objectives</a></h3>
@@ -9514,16 +9530,16 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <h2 id="key-concepts-9"><a class="header" href="#key-concepts-9">Key Concepts</a></h2>
 <h3 id="design-critique"><a class="header" href="#design-critique">Design Critique</a></h3>
 <blockquote>
-<p><strong>Design Critique</strong> [GLOSSARY]</p>
+<p><strong>Design Critique</strong> (<a href="wk11/../references/glossary.html">Glossary</a>)</p>
 <p>Structured peer review of design work. <strong>Not personal feedback</strong>—focuses on work, evidence, impact.</p>
-<p><strong>Characteristics</strong>:</p>
+<p><strong>Characteristics</strong></p>
 <ul>
 <li><strong>Specific</strong>: "Error summary not keyboard-focusable" (good) vs "errors bad" (vague)</li>
 <li><strong>Constructive</strong>: Suggest alternatives, not just problems</li>
 <li><strong>Evidence-based</strong>: Reference data, WCAG, observations (not opinions)</li>
 <li><strong>Respectful</strong>: Assume positive intent, acknowledge constraints</li>
 </ul>
-<p><strong>Format</strong> (this module):</p>
+<p><strong>Format</strong> (this module)</p>
 <ul>
 <li>Presenter shows work + evidence</li>
 <li>Audience asks clarifying questions</li>
@@ -9531,13 +9547,13 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <li>Presenter notes feedback (doesn't defend in real-time)</li>
 </ul>
 <p><strong>HCI Connection</strong>: Critique improves design through <strong>external perspective</strong>—you're too close to your work to see all issues.</p>
-<p><strong>Not a critique</strong>:</p>
+<p><strong>Not a critique</strong></p>
 <ul>
-<li>"I don't like the color" (subjective preference without rationale)</li>
+<li>"I don't like the colour" (subjective preference without rationale)</li>
 <li>"This sucks" (not constructive)</li>
 <li>"You should have..." (hindsight, not helpful)</li>
 </ul>
-<p><strong>Good critique</strong>:</p>
+<p><strong>Good critique</strong></p>
 <ul>
 <li>"The error message says 'Title required' but doesn't explain the max length constraint. Pilot P3 hit this—could you add that info?"</li>
 </ul>
@@ -9545,16 +9561,16 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 </blockquote>
 <h3 id="evidence-led-presentation"><a class="header" href="#evidence-led-presentation">Evidence-Led Presentation</a></h3>
 <blockquote>
-<p><strong>Evidence-Led Presentation</strong> [GLOSSARY]</p>
+<p><strong>Evidence-Led Presentation</strong> (<a href="wk11/../references/glossary.html">Glossary</a>)</p>
 <p>Presentation style where every claim is backed by artifacts (data, screenshots, quotes).</p>
-<p><strong>Structure</strong>:</p>
+<p><strong>Structure</strong></p>
 <ol>
 <li><strong>Problem</strong>: "T2 edit had 67% completion (0% no-JS)" ← metric</li>
 <li><strong>Root cause</strong>: "Validation errors not announced to SR" ← pilot quote + WCAG reference</li>
 <li><strong>Fix</strong>: "Added <code>role=alert</code>" ← code diff</li>
 <li><strong>Verification</strong>: "Post-change: 100% completion" ← after-metrics + screenshot</li>
 </ol>
-<p><strong>What NOT to do</strong>:</p>
+<p><strong>What NOT to do</strong></p>
 <ul>
 <li>"We made it better" (vague—better how?)</li>
 <li>"Users struggled" (who? how many? with what?)</li>
@@ -9566,9 +9582,9 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 </blockquote>
 <h3 id="accessibility-demonstration"><a class="header" href="#accessibility-demonstration">Accessibility Demonstration</a></h3>
 <blockquote>
-<p><strong>Accessibility Demonstration</strong> [GLOSSARY]</p>
+<p><strong>Accessibility Demonstration</strong> (<a href="wk11/../references/glossary.html">Glossary</a>)</p>
 <p>Live proof that inclusive design works. <strong>Show, don't tell</strong>.</p>
-<p><strong>Examples</strong>:</p>
+<p><strong>Examples</strong></p>
 <ul>
 <li><strong>Keyboard</strong>: Tab through form → submit error → Tab to error link → press Enter → focus lands on input</li>
 <li><strong>Screen reader</strong>: Turn on NVDA/Orca → navigate to form → submit error → SR announces "Alert. Title is required"</li>
@@ -9576,13 +9592,13 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 </ul>
 <p><strong>Why live demo?</strong> Screenshots can be faked. Live demo proves system works right now.</p>
 <p><strong>Backup plan</strong>: If live demo fails (demo gremlins), have <strong>video recording</strong> or <strong>annotated screenshots</strong> ready.</p>
-<p><strong>What to show</strong>:</p>
+<p><strong>What to show</strong></p>
 <ul>
 <li>Before state (broken or suboptimal)</li>
 <li>After state (fixed)</li>
 <li>Evidence it meets WCAG (checklist row, transcript)</li>
 </ul>
-<p><strong>Common mistakes</strong>:</p>
+<p><strong>Common mistakes</strong></p>
 <ul>
 <li>Only showing HTMX path (ignoring no-JS)</li>
 <li>Not narrating what's happening ("I'm pressing Tab, now I'm on the error link...")</li>
@@ -9592,25 +9608,25 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 </blockquote>
 <h3 id="constructive-feedback"><a class="header" href="#constructive-feedback">Constructive Feedback</a></h3>
 <blockquote>
-<p><strong>Constructive Feedback</strong> [GLOSSARY]</p>
+<p><strong>Constructive Feedback</strong> (<a href="wk11/../references/glossary.html">Glossary</a>)</p>
 <p>Feedback that helps recipient improve. Has three parts: observation + impact + suggestion.</p>
-<p><strong>Formula</strong>:</p>
+<p><strong>Formula</strong></p>
 <ol>
 <li><strong>Observation</strong>: "I noticed X" (specific, factual)</li>
 <li><strong>Impact</strong>: "This might affect Y" (consequence, not judgment)</li>
 <li><strong>Suggestion</strong>: "Have you considered Z?" (alternative, not mandate)</li>
 </ol>
-<p><strong>Example (good)</strong>:</p>
+<p><strong>Example (good)</strong></p>
 <ul>
 <li>Observation: "Your error summary uses <code>aria-live=assertive</code>, which I saw announced in your SR demo"</li>
 <li>Impact: "In my testing, <code>assertive</code> interrupted mid-sentence when I was reading other content"</li>
 <li>Suggestion: "Have you tested with <code>aria-live=polite</code> to see if it's less disruptive? Might be a good trade-off if errors aren't time-critical."</li>
 </ul>
-<p><strong>Example (bad)</strong>:</p>
+<p><strong>Example (bad)</strong></p>
 <ul>
 <li>"You should use <code>polite</code> not <code>assertive</code>" ← prescriptive, no context</li>
 </ul>
-<p><strong>Receiving feedback</strong>:</p>
+<p><strong>Receiving feedback</strong></p>
 <ul>
 <li><strong>Listen</strong>: Don't defend immediately (note it, reflect later)</li>
 <li><strong>Clarify</strong>: "Can you show me where you saw that?"</li>
@@ -9625,11 +9641,11 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <p><strong>Use Markdown slides</strong> (e.g., Marp) or <strong>simple slide deck</strong> (Google Slides, PowerPoint).</p>
 <p><strong>5-slide structure</strong>:</p>
 <ol>
-<li><strong>Title slide</strong>: Project name, team, date</li>
-<li><strong>Problem + Evidence</strong>: What was broken? (metrics, quotes, WCAG violations)</li>
-<li><strong>Solution</strong>: What changed? (code diff, screenshots)</li>
-<li><strong>Verification</strong>: How do we know it worked? (after-metrics, regression checklist)</li>
-<li><strong>Next Steps</strong>: What remains? (backlog, Semester 2 plans)</li>
+<li><strong>Title slide</strong> — Project name, team, date</li>
+<li><strong>Problem + Evidence</strong> — What was broken? (metrics, quotes, WCAG violations)</li>
+<li><strong>Solution</strong> — What changed? (code diff, screenshots)</li>
+<li><strong>Verification</strong> — How do we know it worked? (after-metrics, regression checklist)</li>
+<li><strong>Next Steps</strong> — What remains? (backlog, Semester 2 plans)</li>
 </ol>
 <p><strong>Example</strong>:</p>
 <p><strong>Slide 2: Problem + Evidence</strong></p>
@@ -15033,6 +15049,83 @@ call.respondText(fragment + status, ContentType.Text.Html)
 &lt;/div&gt;
 </code></pre>
 <p>Keep parity: every pattern must have a server-rendered fallback so the same request works without HTMX attributes present.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="worked-example--accessible-inline-edit-week-7-lab-2"><a class="header" href="#worked-example--accessible-inline-edit-week-7-lab-2">Worked Example — Accessible Inline Edit (Week 7 Lab 2)</a></h1>
+<h2 id="scenario"><a class="header" href="#scenario">Scenario</a></h2>
+<p>Inline edit form for updating a task title.
+Original implementation failed accessibility checks:</p>
+<ul>
+<li>No label tied to the input generated for editing</li>
+<li>Error message appended visually but not announced</li>
+<li>Focus jumped unexpectedly after save</li>
+</ul>
+<h2 id="before-problematic-code"><a class="header" href="#before-problematic-code">Before (problematic code)</a></h2>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}"&gt;
+  &lt;span&gt;{{ task.title }}&lt;/span&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"&gt;
+    &lt;input name="title" value="{{ task.title }}"&gt;
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p>Issues found in audit:</p>
+<ul>
+<li>Missing <code>&lt;label&gt;</code> and <code>id</code> → fails WCAG 1.3.1 (A)</li>
+<li>No error summary or field-level association</li>
+<li>Screen readers received no confirmation message</li>
+</ul>
+<h2 id="after-fixed-version"><a class="header" href="#after-fixed-version">After (fixed version)</a></h2>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;label class="visually-hidden" for="title-{{ task.id }}"&gt;
+      Edit title for {{ task.title }}
+    &lt;/label&gt;
+    &lt;input id="title-{{ task.id }}" name="title" value="{{ task.title }}"
+           aria-describedby="hint-{{ task.id }}"&gt;
+    &lt;small id="hint-{{ task.id }}" class="visually-hidden"&gt;
+      Keep titles concise; changes announce in status area.
+    &lt;/small&gt;
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p>Server route (Ktor) now logs validation errors and returns OOB status updates:</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.BadRequest)
+    val title = call.receiveParameters()["title"].orEmpty().trim()
+    if (title.isBlank()) {
+        val fragment = PebbleRender.render("tasks/edit-error.peb", mapOf("task" to repo.get(id)))
+        val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+        // Logger implementation covered in Week 9; shown here for completeness
+        Logger.write(session = sid(call), req = reqId(call), task = "T2_edit", step = "validation_error", outcome = "blank_title", ms = 0, status = 400, js = jsMode(call))
+        return@post call.respondText(fragment + status, ContentType.Text.Html)
+    }
+
+    repo.update(id, title)
+    val fragment = PebbleRender.render("tasks/item.peb", mapOf("task" to repo.get(id)))
+    val status = """&lt;div id="status" hx-swap-oob="true"&gt;Updated "$title".&lt;/div&gt;"""
+    call.respondText(fragment + status, ContentType.Text.Html)
+}
+</code></pre>
+<p>Checklist we ticked off:</p>
+<ul>
+<li>✅ Field has a label (visually hidden) and <code>aria-describedby</code></li>
+<li>✅ Error path returns fragment with inline message + status update</li>
+<li>✅ Success path announces change via live region (<code>status</code> element in base template)</li>
+<li>✅ Focus management: HTMX attempts to restore focus to the matching <code>id="title-{{ task.id }}"</code> after swap; test with keyboard navigation to verify behaviour</li>
+<li>✅ Logger records validation errors for metrics analysis (Week 9 addition)</li>
+</ul>
+<h2 id="evidence-to-capture-for-task-1"><a class="header" href="#evidence-to-capture-for-task-1">Evidence to capture (for Task 1)</a></h2>
+<ul>
+<li>Screenshot of before/after (with annotations on label / status)</li>
+<li>Screen reader transcript (NVDA) confirming: “Updated "Submit report".”</li>
+<li>Backlog entry referencing WCAG 1.3.1 and 4.1.3</li>
+</ul>
+<p>Use this pattern as a blueprint: the key is tying markup + server response + evidence together.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="assistive-technology-testing-checklist-week-6--week-11"><a class="header" href="#assistive-technology-testing-checklist-week-6--week-11">Assistive Technology Testing Checklist (Week 6 → Week 11)</a></h1>
 <h2 id="what-is-accessibility-first-design"><a class="header" href="#what-is-accessibility-first-design">What is Accessibility-First Design?</a></h2>
 <p><strong>Accessibility-first design</strong> means building interfaces that work for everyone from the start—not retrofitting accessible features after the fact. In this module, we prioritise:</p>
@@ -15057,6 +15150,24 @@ call.respondText(fragment + status, ContentType.Text.Html)
 </tbody></table>
 </div>
 <h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<ul>
+<li>Pair up: one person drives, another logs issues in <code>backlog/backlog.csv</code>.</li>
+<li>If a check fails, capture it immediately—auditors and Week 7-10 labs rely on real evidence.</li>
+<li>Create an <code>evidence/</code> directory in your repo and store artefacts per week (e.g., <code>evidence/wk6/</code>, <code>evidence/wk7/</code>) to keep things tidy.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assistive-technology-testing-checklist-week-6--week-11-1"><a class="header" href="#assistive-technology-testing-checklist-week-6--week-11-1">Assistive Technology Testing Checklist (Week 6 → Week 11)</a></h1>
+<p>Use this mini-check at the end of every lab to capture evidence quickly. Print it or keep it in your repo (<code>testing/checklist.md</code>).</p>
+<div class="table-wrapper"><table><thead><tr><th>Area</th><th>Steps</th><th>Evidence to capture</th></tr></thead><tbody>
+<tr><td>Keyboard-only</td><td>Tab through the entire flow: skip link → forms → buttons. Ensure visible focus.</td><td>Screenshot or short note confirming order + any issues.</td></tr>
+<tr><td>No-JS parity</td><td>Disable JS (DevTools) and repeat the task. Watch network panel to confirm only full-page requests.</td><td>Browser screenshot + note. If broken, log backlog item.</td></tr>
+<tr><td>Screen reader (SR)</td><td>NVDA (Windows) or Orca (RHEL): navigate headings (<code>H</code>), forms (<code>F</code>), run the interaction, listen for live status.</td><td>Transcript snippet or notes of announcements.</td></tr>
+<tr><td>Zoom &amp; reflow</td><td>Zoom to 200%; ensure layout doesn’t break and no horizontal scroll on desktop widths.</td><td>Screenshot at 200% zoom.</td></tr>
+<tr><td>Colour/contrast</td><td>Use built-in contrast checker or extension (e.g. Chrome DevTools → CSS overview).</td><td>Contrast report or note with values.</td></tr>
+<tr><td>Error messaging</td><td>Trigger validation errors; confirm focus stays in context and SR announces the message.</td><td>Screenshot of error + note on announcement.</td></tr>
+<tr><td>Metrics logging (when added)</td><td>Confirm <code>data/metrics.csv</code> records success + validation_error rows.</td><td>Copy of latest rows or summary in notes.</td></tr>
+</tbody></table>
+</div>
+<h2 id="tips-1"><a class="header" href="#tips-1">Tips</a></h2>
 <ul>
 <li>Pair up: one person drives, another logs issues in <code>backlog/backlog.csv</code>.</li>
 <li>If a check fails, capture it immediately—auditors and Week 7-10 labs rely on real evidence.</li>

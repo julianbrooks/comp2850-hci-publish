@@ -239,8 +239,18 @@
 <blockquote>
 <p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
 </blockquote>
-<p>{{#include ../../references/visuals/template-hierarchy.md}}</p>
-<p><small>Full legend in <a href="../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
+<pre class="mermaid">graph TD
+  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
+  Base --&gt; Index[tasks/index.peb]
+  Index --&gt; List[tasks/_list.peb]
+  List --&gt; Item[tasks/_item.peb]
+  Index --&gt; Pager[tasks/_pager.peb]
+  Item --&gt;|Forms| Routes[(Ktor routes)]
+  Pager --&gt;|Links| Routes
+  Routes --&gt; HTMX[HTMX fragment responses]
+  Routes --&gt; PRG[Full-page PRG responses]
+</pre>
+<p><small>Full legend in <a href="../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
 <h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
 <p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
 <pre><code class="language-html">&lt;form action="/tasks" method="get"

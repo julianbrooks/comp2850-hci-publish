@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Accessibility Testing Guide - COMP2850 • Human-Computer Interaction</title>
+        <title>Example: Accessible Inline Edit - COMP2850 • Human-Computer Interaction</title>
 
 
         <!-- Custom HTML head -->
@@ -179,45 +179,93 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="assistive-technology-testing-checklist-week-6--week-11"><a class="header" href="#assistive-technology-testing-checklist-week-6--week-11">Assistive Technology Testing Checklist (Week 6 → Week 11)</a></h1>
-<h2 id="what-is-accessibility-first-design"><a class="header" href="#what-is-accessibility-first-design">What is Accessibility-First Design?</a></h2>
-<p><strong>Accessibility-first design</strong> means building interfaces that work for everyone from the start—not retrofitting accessible features after the fact. In this module, we prioritise:</p>
+                        <h1 id="worked-example--accessible-inline-edit-week-7-lab-2"><a class="header" href="#worked-example--accessible-inline-edit-week-7-lab-2">Worked Example — Accessible Inline Edit (Week 7 Lab 2)</a></h1>
+<h2 id="scenario"><a class="header" href="#scenario">Scenario</a></h2>
+<p>Inline edit form for updating a task title.
+Original implementation failed accessibility checks:</p>
 <ul>
-<li><strong><a href="glossary.html#wcag">WCAG</a> 2.2 AA compliance</strong> as the minimum standard for all features</li>
-<li><strong><a href="glossary.html#screen-reader">Screen reader</a> compatibility</strong> verified through NVDA/Orca testing in every lab</li>
-<li><strong>Keyboard navigation</strong> ensuring all interactions work without a mouse</li>
-<li><strong><a href="glossary.html#no-js-parity">No-JS parity</a></strong> so core functionality remains available when JavaScript fails or is unavailable</li>
-<li><strong>Inclusive design</strong> informed by people-centred language and real customer needs</li>
+<li>No label tied to the input generated for editing</li>
+<li>Error message appended visually but not announced</li>
+<li>Focus jumped unexpectedly after save</li>
 </ul>
-<p>Unlike "accessibility as an audit" (checking compliance at the end), accessibility-first means every design decision—from route structure to <a href="glossary.html#aria">ARIA</a> attributes to colour contrast—is evaluated for inclusion before implementation. This approach reduces technical debt, improves usability for all users, and ensures legal compliance with the Equality Act 2010 and UK GDPR.</p>
-<h2 id="testing-checklist"><a class="header" href="#testing-checklist">Testing Checklist</a></h2>
-<p>Use this mini-check at the end of every lab to capture evidence quickly. Print it or keep it in your repo (<code>testing/checklist.md</code>).</p>
-<div class="table-wrapper"><table><thead><tr><th>Area</th><th>Steps</th><th>Evidence to capture</th></tr></thead><tbody>
-<tr><td>Keyboard-only</td><td>Tab through the entire flow: skip link → forms → buttons. Ensure visible focus.</td><td>Screenshot or short note confirming order + any issues.</td></tr>
-<tr><td>No-JS parity</td><td>Disable JS (DevTools) and repeat the task. Watch network panel to confirm only full-page requests.</td><td>Browser screenshot + note. If broken, log backlog item.</td></tr>
-<tr><td>Screen reader (SR)</td><td>NVDA (Windows) or Orca (RHEL): navigate headings (<code>H</code>), forms (<code>F</code>), run the interaction, listen for live status.</td><td>Transcript snippet or notes of announcements.</td></tr>
-<tr><td>Zoom &amp; reflow</td><td>Zoom to 200%; ensure layout doesn’t break and no horizontal scroll on desktop widths.</td><td>Screenshot at 200% zoom.</td></tr>
-<tr><td>Colour/contrast</td><td>Use built-in contrast checker or extension (e.g. Chrome DevTools → CSS overview).</td><td>Contrast report or note with values.</td></tr>
-<tr><td>Error messaging</td><td>Trigger validation errors; confirm focus stays in context and SR announces the message.</td><td>Screenshot of error + note on announcement.</td></tr>
-<tr><td>Metrics logging (when added)</td><td>Confirm <code>data/metrics.csv</code> records success + validation_error rows.</td><td>Copy of latest rows or summary in notes.</td></tr>
-</tbody></table>
-</div>
-<h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<h2 id="before-problematic-code"><a class="header" href="#before-problematic-code">Before (problematic code)</a></h2>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}"&gt;
+  &lt;span&gt;{{ task.title }}&lt;/span&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"&gt;
+    &lt;input name="title" value="{{ task.title }}"&gt;
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p>Issues found in audit:</p>
 <ul>
-<li>Pair up: one person drives, another logs issues in <code>backlog/backlog.csv</code>.</li>
-<li>If a check fails, capture it immediately—auditors and Week 7-10 labs rely on real evidence.</li>
-<li>Create an <code>evidence/</code> directory in your repo and store artefacts per week (e.g., <code>evidence/wk6/</code>, <code>evidence/wk7/</code>) to keep things tidy.</li>
+<li>Missing <code>&lt;label&gt;</code> and <code>id</code> → fails WCAG 1.3.1 (A)</li>
+<li>No error summary or field-level association</li>
+<li>Screen readers received no confirmation message</li>
 </ul>
+<h2 id="after-fixed-version"><a class="header" href="#after-fixed-version">After (fixed version)</a></h2>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;label class="visually-hidden" for="title-{{ task.id }}"&gt;
+      Edit title for {{ task.title }}
+    &lt;/label&gt;
+    &lt;input id="title-{{ task.id }}" name="title" value="{{ task.title }}"
+           aria-describedby="hint-{{ task.id }}"&gt;
+    &lt;small id="hint-{{ task.id }}" class="visually-hidden"&gt;
+      Keep titles concise; changes announce in status area.
+    &lt;/small&gt;
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p>Server route (Ktor) now logs validation errors and returns OOB status updates:</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.BadRequest)
+    val title = call.receiveParameters()["title"].orEmpty().trim()
+    if (title.isBlank()) {
+        val fragment = PebbleRender.render("tasks/edit-error.peb", mapOf("task" to repo.get(id)))
+        val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;"""
+        // Logger implementation covered in Week 9; shown here for completeness
+        Logger.write(session = sid(call), req = reqId(call), task = "T2_edit", step = "validation_error", outcome = "blank_title", ms = 0, status = 400, js = jsMode(call))
+        return@post call.respondText(fragment + status, ContentType.Text.Html)
+    }
+
+    repo.update(id, title)
+    val fragment = PebbleRender.render("tasks/item.peb", mapOf("task" to repo.get(id)))
+    val status = """&lt;div id="status" hx-swap-oob="true"&gt;Updated "$title".&lt;/div&gt;"""
+    call.respondText(fragment + status, ContentType.Text.Html)
+}
+</code></pre>
+<p>Checklist we ticked off:</p>
+<ul>
+<li>✅ Field has a label (visually hidden) and <code>aria-describedby</code></li>
+<li>✅ Error path returns fragment with inline message + status update</li>
+<li>✅ Success path announces change via live region (<code>status</code> element in base template)</li>
+<li>✅ Focus management: HTMX attempts to restore focus to the matching <code>id="title-{{ task.id }}"</code> after swap; test with keyboard navigation to verify behaviour</li>
+<li>✅ Logger records validation errors for metrics analysis (Week 9 addition)</li>
+</ul>
+<h2 id="evidence-to-capture-for-task-1"><a class="header" href="#evidence-to-capture-for-task-1">Evidence to capture (for Task 1)</a></h2>
+<ul>
+<li>Screenshot of before/after (with annotations on label / status)</li>
+<li>Screen reader transcript (NVDA) confirming: “Updated "Submit report".”</li>
+<li>Backlog entry referencing WCAG 1.3.1 and 4.1.3</li>
+</ul>
+<p>Use this pattern as a blueprint: the key is tying markup + server response + evidence together.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../references/example-accessible-inline-edit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../references/htmx-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../references/assistive-testing-checklist.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../references/accessibility-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -227,11 +275,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../references/example-accessible-inline-edit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../references/htmx-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../references/assistive-testing-checklist.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../references/accessibility-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
