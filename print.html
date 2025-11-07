@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="navy sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -39,7 +39,7 @@
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "";
-            const default_light_theme = "light";
+            const default_light_theme = "navy";
             const default_dark_theme = "navy";
             window.path_to_searchindex_js = "searchindex.js";
         </script>
@@ -82,7 +82,7 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
-            html.classList.remove('light')
+            html.classList.remove('navy')
             html.classList.add(theme);
             html.classList.add("js");
         </script>
@@ -202,12 +202,12 @@
 <h3 id="weeks-1-5-object-oriented-programming-oop"><a class="header" href="#weeks-1-5-object-oriented-programming-oop">Weeks 1-5: Object-Oriented Programming (OOP)</a></h3>
 <p>Foundation in Kotlin, classes, inheritance, interfaces. See <a href="https://python33r.github.io/comp2850-kotlin/index.html">OOP mdBook</a>.</p>
 <h3 id="weeks-6-11-human-computer-interaction-hci"><a class="header" href="#weeks-6-11-human-computer-interaction-hci">Weeks 6-11: Human-Computer Interaction (HCI)</a></h3>
-<p><strong><a href="wk06/src/wk6-lab1-html-css-htmx.html">Week 6</a></strong> — Intro: Server-first foundations + needs-finding</p>
-<p><strong><a href="wk07/src/wk7-lab1-ethics-inline-edit.html">Week 7</a></strong> — Ethics in practice + accessibility audit</p>
-<p><strong><a href="wk08/src/wk8-lab1-prototyping-constraints.html">Week 8</a></strong> — Prototyping, constraints, no-JS parity</p>
-<p><strong><a href="wk09/src/wk9-lab1-eval-plan-instrumentation.html">Week 9</a></strong> — Evaluation planning + instrumentation</p>
-<p><strong><a href="wk10/src/wk10-lab1-analysis-prioritisation.html">Week 10</a></strong> — Analysis, prioritisation, redesign</p>
-<p><strong><a href="wk11/src/wk11-lab1-studio-crit.html">Week 11</a></strong> — Studio critique + portfolio wrap-up</p>
+<p><strong><a href="wk06/wk6-lab1-html-css-htmx.html">Week 6</a></strong> — Intro: Server-first foundations + needs-finding</p>
+<p><strong><a href="wk07/wk7-lab1-ethics-inline-edit.html">Week 7</a></strong> — Ethics in practice + accessibility audit</p>
+<p><strong><a href="wk08/wk8-lab1-prototyping-constraints.html">Week 8</a></strong> — Prototyping, constraints, no-JS parity</p>
+<p><strong><a href="wk09/wk9-lab1-eval-plan-instrumentation.html">Week 9</a></strong> — Evaluation planning + instrumentation</p>
+<p><strong><a href="wk10/wk10-lab1-analysis-prioritisation.html">Week 10</a></strong> — Analysis, prioritisation, redesign</p>
+<p><strong><a href="wk11/wk11-lab1-studio-crit.html">Week 11</a></strong> — Studio critique + portfolio wrap-up</p>
 <h3 id="semester-flow-weeks-6-11"><a class="header" href="#semester-flow-weeks-6-11">Semester Flow (Weeks 6-11)</a></h3>
 <pre class="mermaid">graph LR
   W6[Week 6&lt;br/&gt;Server-first&lt;br/&gt;Needs-finding]
@@ -282,13 +282,14 @@ People-first language centres the person, not a diagnostic label.</p>
 <hr />
 <h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
 <ol>
-<li><strong>Read Week 6 Lab 1</strong>: <a href="wk06/src/wk6-lab1-html-css-htmx.html">Server-first foundations with HTMX</a></li>
+<li><strong>Read Week 6 Lab 1</strong>: <a href="wk06/wk6-lab1-html-css-htmx.html">Server-first foundations with HTMX</a></li>
 <li><strong>Clone starter pack</strong>: <code>git clone [repo URL]</code> (see Minerva for link)</li>
 <li><strong>Install/setup tools</strong>: JDK 17+, Gradle 8+, axe DevTools, IntelliJ IDEA (or) VSCode (or) Codespaces - choose one</li>
 <li><strong>Attend lab sessions</strong>: Bragg 2.05 Main Lab (check your timetable for days/times)</li>
 <li><strong>Independent Study</strong>: We expect you to manage your time and complete all module requirements</li>
 </ol>
 <hr />
+<p>a solutionmore complex solution</p>
 <h2 id="support"><a class="header" href="#support">Support</a></h2>
 <ul>
 <li><strong>Lab sessions</strong>: Staff on hand for questions (2-hour taught labs &amp; open lab sessions with TA's available)</li>
@@ -330,10 +331,10 @@ Ofili, Jonathan Pickering, Xiao Wang]
 <ul>
 <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C (2024). WCAG 2.2 Quick Reference</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements">MDN: Semantic HTML</a></li>
-<li><a href="wk06/src/../../references/privacy-by-design.html">Privacy by Design</a> (module-specific ethics guidance)</li>
+<li><a href="wk06/../../references/privacy-by-design.html">Privacy by Design</a> (module-specific ethics guidance)</li>
 </ul>
 <blockquote>
-<p><strong>Starter code</strong>: Clone the <a href="wk06/src/../../resources/code-resources.html#week-6">starter repository</a> or download the zip before the lab.</p>
+<p><strong>Starter code</strong>: Clone the <a href="wk06/../../resources/code-resources.html#week-6">starter repository</a> or download the zip before the lab.</p>
 </blockquote>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <h3 id="context"><a class="header" href="#context">Context</a></h3>
@@ -371,7 +372,7 @@ Ofili, Jonathan Pickering, Xiao Wang]
 <li>Verified keyboard navigation, screen reader announcements, and no-JS parity</li>
 </ul>
 <h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk06/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk06/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO5</strong>: Create interface prototypes — evidenced by functional HTMX task list</li>
 <li><strong>LO7</strong>: Analyse design constraints — evidenced by no-JS parity verification</li>
@@ -494,7 +495,7 @@ Ofili, Jonathan Pickering, Xiao Wang]
 <p><strong>Time</strong>: 15 minutes
 <strong>Materials</strong>: Starter pack (Gradle project with Ktor + Pebble)</p>
 <blockquote>
-<p>Keep the <a href="wk06/src/../../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> handy for syntax reminders.</p>
+<p>Keep the <a href="wk06/../../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> handy for syntax reminders.</p>
 </blockquote>
 <h3 id="step-1-clone-starter-pack"><a class="header" href="#step-1-clone-starter-pack">Step 1: Clone Starter Pack</a></h3>
 <pre><code class="language-bash"># Clone starter repository (URL provided on Minerva)
@@ -810,7 +811,7 @@ fun Application.module() {
 <li><code>{{ title | escape }}</code> - HTML-escape (auto-enabled in Pebble)</li>
 <li><code>{{ price | default(0) }}</code> - Fallback value if null</li>
 </ul>
-<p><strong>Reference</strong>: <a href="https://pebbletemplates.io/">Pebble Documentation</a> • <a href="wk06/src/../../references/pebble-intro.html">Pebble Intro</a></p>
+<p><strong>Reference</strong>: <a href="https://pebbletemplates.io/">Pebble Documentation</a> • <a href="wk06/../../references/pebble-intro.html">Pebble Intro</a></p>
 </blockquote>
 <p>Edit <code>src/main/resources/templates/tasks/index.peb</code>:</p>
 <pre><code class="language-html">{% extends "base.peb" %}
@@ -1324,7 +1325,7 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
 </ol>
 <p><strong>Preparation</strong>:</p>
 <ul>
-<li>Read <a href="wk06/src/../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> and <a href="wk06/src/../../references/privacy-by-design.html">Privacy by Design</a></li>
+<li>Read <a href="wk06/../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> and <a href="wk06/../../references/privacy-by-design.html">Privacy by Design</a></li>
 <li>Bring laptop with working scaffold (Lab 1 code)</li>
 <li>Be ready to pair with a classmate for interviews</li>
 </ul>
@@ -1347,8 +1348,8 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
 <li>Clone/update your Week 6 starter repo (same baseline code) to ensure tasks work before research session</li>
 <li><a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). "Know Your Customers' Jobs to Be Done"</a></li>
 <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO (2024). "Guide to Data Protection by Design and Default"</a></li>
-<li><a href="wk06/src/../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> (module ethics guidance)</li>
-<li><a href="wk06/src/../../references/privacy-by-design.html">Privacy by Design</a> (UK GDPR compliance framework)</li>
+<li><a href="wk06/../../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> (module ethics guidance)</li>
+<li><a href="wk06/../../references/privacy-by-design.html">Privacy by Design</a> (UK GDPR compliance framework)</li>
 </ul>
 <p><strong>Recommended</strong></p>
 <ul>
@@ -1387,7 +1388,7 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
 <li>Created a prioritised backlog linking features to user needs with severity and inclusion-risk tagging</li>
 </ul>
 <h3 id="learning-outcomes-addressed-1"><a class="header" href="#learning-outcomes-addressed-1">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk06/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk06/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO1</strong>: Differentiate people-centred methods — evidenced by job story methodology</li>
 <li><strong>LO2</strong>: Design and conduct needs-finding — evidenced by structured interview + synthesis</li>
@@ -2147,13 +2148,13 @@ In **Week 7 Lab 1** you will:
 <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html">W3C (2024). WCAG 2.2: 3.3.1 Error Identification</a></li>
 <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html">W3C (2024). WCAG 2.2: 4.1.3 Status Messages</a></li>
 <li><a href="https://htmx.org/examples/click-to-edit/">HTMX: Click to Edit Pattern</a></li>
-<li><a href="wk07/src/../../references/example-accessible-inline-edit.html">Example: Accessible Inline Edit</a> (worked example)</li>
+<li><a href="wk07/../../references/example-accessible-inline-edit.html">Example: Accessible Inline Edit</a> (worked example)</li>
 </ul>
 <p><strong>Recommended</strong></p>
 <ul>
 <li><a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a></li>
 <li><a href="https://www.deque.com/blog/aria-live-regions-updated/">Deque: ARIA Live Regions</a></li>
-<li><a href="wk07/src/../../references/privacy-by-design.html">Privacy by Design</a> (ethics framework)</li>
+<li><a href="wk07/../../references/privacy-by-design.html">Privacy by Design</a> (ethics framework)</li>
 </ul>
 <hr />
 <h2 id="introduction-2"><a class="header" href="#introduction-2">Introduction</a></h2>
@@ -2186,7 +2187,7 @@ In **Week 7 Lab 1** you will:
 <li>Documented ethical trade-offs in design decisions</li>
 </ul>
 <h3 id="learning-outcomes-addressed-2"><a class="header" href="#learning-outcomes-addressed-2">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk07/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk07/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO3</strong>: Analyse ethical implications — evidenced by consent modal implementation</li>
 <li><strong>LO5</strong>: Create interface prototypes — evidenced by inline-edit feature</li>
@@ -3033,7 +3034,7 @@ None. All tests passed.
 <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C (2024). WCAG 2.2 Quick Reference</a></li>
 <li><a href="https://www.deque.com/axe/devtools/">axe DevTools Documentation</a></li>
 <li><a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/making-your-service-accessible-an-introduction">GOV.UK: Making Your Service Accessible</a></li>
-<li><a href="wk07/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide)</li>
+<li><a href="wk07/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide)</li>
 </ul>
 <p><strong>Recommended</strong></p>
 <ul>
@@ -3078,7 +3079,7 @@ None. All tests passed.
 <li>Implemented one priority accessibility fix with regression testing</li>
 </ul>
 <h3 id="learning-outcomes-addressed-3"><a class="header" href="#learning-outcomes-addressed-3">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk07/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk07/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO4</strong>: Evaluate for accessibility — evidenced by axe audit + WCAG mapping</li>
 <li><strong>LO6</strong>: Apply iterative design — evidenced by fix implementation</li>
@@ -3957,12 +3958,12 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <hr />
 <h2 id="pre-lab-reading-15-min"><a class="header" href="#pre-lab-reading-15-min">Pre-lab reading (15 min)</a></h2>
 <ul>
-<li><a href="wk08/src/../../references/template-map-week8.html">Template Map for Week 8</a> (structure overview of the partials you will build)</li>
+<li><a href="wk08/../../references/template-map-week8.html">Template Map for Week 8</a> (structure overview of the partials you will build)</li>
 <li><a href="https://hypermedia.systems/active-search/">hypermedia.systems — Active Search</a></li>
 <li><a href="https://htmx.org/attributes/hx-push-url/">HTMX reference: <code>hx-push-url</code></a> and <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a></li>
 <li><a href="https://pebbletemplates.io/wiki/guide/extending/">Pebble template inheritance</a> and include syntax</li>
 </ul>
-<p>Keep the <a href="wk08/src/../../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="wk08/src/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> open for copy/paste snippets.</p>
+<p>Keep the <a href="wk08/../../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="wk08/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> open for copy/paste snippets.</p>
 <hr />
 <h2 id="learning-focus-4"><a class="header" href="#learning-focus-4">Learning Focus</a></h2>
 <h3 id="lab-objectives-4"><a class="header" href="#lab-objectives-4">Lab Objectives</a></h3>
@@ -3976,7 +3977,7 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <li>Documented trade-offs in server-side vs client-side filtering</li>
 </ul>
 <h3 id="learning-outcomes-addressed-4"><a class="header" href="#learning-outcomes-addressed-4">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk08/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk08/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO5</strong>: Create interface prototypes — evidenced by HTMX partials implementation</li>
 <li><strong>LO7</strong>: Analyse design constraints — evidenced by pagination trade-offs document</li>
@@ -3989,7 +3990,7 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <p>Pagination and filtering are not just performance tricks; they control cognitive load, especially for screen-reader participants who would otherwise wade through hundreds of list items. Implement them with inclusive defaults: predictable focus, result announcements, and URLs that respect the back button.</p>
 <p>Keep these references handy while you work:</p>
 <ul>
-<li><a href="wk08/src/references/pebble-cheatsheet.html">Pebble Cheatsheet</a></li>
+<li><a href="wk08/references/pebble-cheatsheet.html">Pebble Cheatsheet</a></li>
 <li><code>../../references/template-map-week8.md</code> (visual map of the partials you are about to create)</li>
 <li><code>../../references/htmx-pattern-cheatsheet.md</code> (Active Search, OOB status, indicators)</li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Navigation_and_orienting#pagination">MDN: Accessible Pagination Patterns</a></li>
@@ -3997,18 +3998,8 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <blockquote>
 <p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
 </blockquote>
-<pre class="mermaid">graph TD
-  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
-  Base --&gt; Index[tasks/index.peb]
-  Index --&gt; List[tasks/_list.peb]
-  List --&gt; Item[tasks/_item.peb]
-  Index --&gt; Pager[tasks/_pager.peb]
-  Item --&gt;|Forms| Routes[(Ktor routes)]
-  Pager --&gt;|Links| Routes
-  Routes --&gt; HTMX[HTMX fragment responses]
-  Routes --&gt; PRG[Full-page PRG responses]
-</pre>
-<p><small>Full legend in <a href="wk08/src/../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
+<p>{{#include ../../references/visuals/template-hierarchy.md}}</p>
+<p><small>Full legend in <a href="wk08/../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
 <h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
 <p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
 <pre><code class="language-html">&lt;form action="/tasks" method="get"
@@ -4084,11 +4075,11 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <p>Create <code>templates/tasks/_list.peb</code> containing:</p>
 <pre><code class="language-pebble">&lt;ul id="task-list" aria-describedby="result-count"&gt;
   {% for task in page.items %}
-    {% include "tasks/_item.peb" with t=task %}
+    {% include "tasks/_item.peb" with {"task": task} %}
   {% endfor %}
 &lt;/ul&gt;
 &lt;p id="result-count" class="visually-hidden"&gt;
-  Showing {{ page.items|length }} of {{ page.total }} tasks{% if query %} matching "{{ query }}"{% endif %}
+  Showing {{ page.items|length }} of {{ page.totalItems }} tasks{% if query %} matching "{{ query }}"{% endif %}
 &lt;/p&gt;
 </code></pre>
 <p>This ensures screen readers hear the result count whenever the list changes.</p>
@@ -4300,21 +4291,21 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <p>Create <code>templates/tasks/_pager.peb</code>:</p>
 <pre><code class="language-pebble">&lt;nav aria-label="Pagination"&gt;
   &lt;ul class="pagination"&gt;
-    {% if page.page &gt; 1 %}
+    {% if page.currentPage &gt; 1 %}
       &lt;li&gt;
-        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
-           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.currentPage - 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.currentPage - 1 }}"
            hx-target="#task-area"
            hx-push-url="true"&gt;
           Previous
         &lt;/a&gt;
       &lt;/li&gt;
     {% endif %}
-    &lt;li aria-current="page"&gt;Page {{ page.page }} of {{ page.pages }}&lt;/li&gt;
-    {% if page.page &lt; page.pages %}
+    &lt;li aria-current="page"&gt;Page {{ page.currentPage }} of {{ page.totalPages }}&lt;/li&gt;
+    {% if page.currentPage &lt; page.totalPages %}
       &lt;li&gt;
-        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
-           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.currentPage + 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.currentPage + 1 }}"
            hx-target="#task-area"
            hx-push-url="true"&gt;
           Next
@@ -4402,9 +4393,42 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 - documented rendering splits and trade-offs in wk08/docs/prototyping-constraints.md
 </code></pre>
 <hr />
-<h2 id="whats-next"><a class="header" href="#whats-next">What’s next?</a></h2>
+<h2 id="advanced-template-view-adapter-pattern-optional"><a class="header" href="#advanced-template-view-adapter-pattern-optional">Advanced: Template View Adapter Pattern (Optional)</a></h2>
+<p><strong>For students comfortable with abstraction layers</strong>:</p>
+<p>The current approach passes the <code>Page</code> object directly to templates (<code>"page" to data</code>), which keeps templates coupled to the Kotlin data class structure. If you change <code>Page.currentPage</code> to <code>Page.number</code>, all templates break.</p>
+<p><strong>Alternative: View adapter method</strong></p>
+<p>Add a <code>toPebbleContext()</code> method to <code>Page</code> that flattens properties into template-friendly names:</p>
+<pre><code class="language-kotlin">fun toPebbleContext(itemsKey: String = "items"): Map&lt;String, Any&gt; = mapOf(
+    itemsKey to items,
+    "currentPage" to currentPage,
+    "totalPages" to totalPages,
+    "totalItems" to totalItems,
+    "pageSize" to pageSize,
+    "hasPrevious" to hasPrevious,
+    "hasNext" to hasNext,
+    "previousPage" to previousPage,
+    "nextPage" to nextPage
+)
+</code></pre>
+<p>Then routes can use:</p>
+<pre><code class="language-kotlin">val model = page.toPebbleContext("tasks") + mapOf("query" to query)
+</code></pre>
+<p>And templates access flattened variables:</p>
+<pre><code class="language-pebble">{{ tasks|length }} of {{ totalItems }}
+&lt;li&gt;Page {{ currentPage }} of {{ totalPages }}&lt;/li&gt;
+</code></pre>
+<p><strong>Trade-offs</strong>:</p>
+<ul>
+<li>✅ Decouples templates from Kotlin internals (can rename properties safely)</li>
+<li>✅ Cleaner template syntax (shorter variable names)</li>
+<li>❌ Extra abstraction layer to understand</li>
+<li>❌ "Magic" variable names (harder to trace where they come from)</li>
+</ul>
+<p><strong>When to use</strong>: Production codebases where template stability matters. For learning, the direct approach (<code>page.items</code>, <code>page.page</code>) is clearer.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
 <p>Week 8 Lab 2 focuses on wiring additional routes, error handling, and no-JS verification scripts. Keep your server running and your documentation open—we will extend the same patterns immediately.</p>
-<p>Optional stretch this week: add a “mark complete” flow using the same partials and log any accessibility considerations.</p>
+<p>Optional stretch this week: add a "mark complete" flow using the same partials and log any accessibility considerations.</p>
 <hr />
 <h2 id="further-resources"><a class="header" href="#further-resources">Further resources</a></h2>
 <ul>
@@ -4433,8 +4457,8 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 </ul>
 <p>📖 <strong>Contextual</strong>:</p>
 <ul>
-<li>Review <a href="wk08/src/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> (OOB pattern)</li>
-<li>Review <a href="wk08/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li>Review <a href="wk08/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> (OOB pattern)</li>
+<li>Review <a href="wk08/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
 <li>Review Week 7 Lab 1 inline edit implementation</li>
 </ul>
 <hr />
@@ -4467,7 +4491,7 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 <li>Verified accessibility of error states with keyboard and screen reader</li>
 </ul>
 <h3 id="learning-outcomes-addressed-5"><a class="header" href="#learning-outcomes-addressed-5">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk08/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk08/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO7</strong>: Analyse design constraints — evidenced by no-JS parity testing + trade-offs doc</li>
 <li><strong>LO9</strong>: Apply inclusive design — evidenced by no-JS accessibility verification</li>
@@ -5365,7 +5389,7 @@ EOF
 <ul>
 <li>Verify all flows work (HTMX + no-JS)</li>
 <li>Ensure backlog is up to date</li>
-<li>Review <a href="wk08/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> to understand what data you'll collect</li>
+<li>Review <a href="wk08/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> to understand what data you'll collect</li>
 </ul>
 <hr />
 <h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
@@ -5377,13 +5401,13 @@ EOF
 </ul>
 <h3 id="htmx-patterns"><a class="header" href="#htmx-patterns">HTMX Patterns</a></h3>
 <ul>
-<li><a href="wk08/src/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> — OOB status, confirmation, error handling</li>
+<li><a href="wk08/../../references/htmx-pattern-cheatsheet.html">HTMX Pattern Cheatsheet</a> — OOB status, confirmation, error handling</li>
 <li><a href="https://htmx.org/examples/inline-validation/">HTMX: Validation Example</a> — Alternative inline pattern</li>
 <li><a href="https://htmx.org/attributes/hx-confirm/">HTMX: hx-confirm</a> — Confirmation dialogs</li>
 </ul>
 <h3 id="testing"><a class="header" href="#testing">Testing</a></h3>
 <ul>
-<li><a href="wk08/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> — Weekly testing checklist</li>
+<li><a href="wk08/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> — Weekly testing checklist</li>
 <li><a href="https://www.gov.uk/service-manual/technology/testing-with-assistive-technologies">GOV.UK: Testing with Assistive Technologies</a></li>
 <li><a href="https://webaim.org/articles/screenreader_testing/">WebAIM: Screen Reader Testing</a></li>
 </ul>
@@ -5428,8 +5452,8 @@ EOF
 <li>Pull Week 9 starter repo branch (baseline instrumentation stubs):</li>
 <li><a href="https://www.nngroup.com/articles/usability-testing-101/">Nielsen Norman Group: How to Conduct a Usability Test</a></li>
 <li><a href="https://www.w3.org/WAI/test-evaluate/metrics/">W3C: Measuring Accessibility</a></li>
-<li>Review <a href="wk09/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
-<li>Review <a href="wk09/src/../../references/consent-pii-faq.html">Consent and PII FAQ</a></li>
+<li>Review <a href="wk09/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li>Review <a href="wk09/../../references/consent-pii-faq.html">Consent and PII FAQ</a></li>
 </ul>
 <p>📖 <strong>Contextual</strong>:</p>
 <ul>
@@ -5457,7 +5481,7 @@ EOF
 <h2 id="learning-focus-6"><a class="header" href="#learning-focus-6">Learning Focus</a></h2>
 <h3 id="lab-objectives-6"><a class="header" href="#lab-objectives-6">Lab Objectives</a></h3>
 <blockquote>
-<p><strong>Staff reference</strong>: Full instrumentation implementation lives in the <a href="wk09/src/../../resources/code-resources.html#week-9">solution repository</a>.
+<p><strong>Staff reference</strong>: Full instrumentation implementation lives in the <a href="wk09/../../resources/code-resources.html#week-9">solution repository</a>.
 By the end of this session, you will have:</p>
 </blockquote>
 <ul>
@@ -5468,7 +5492,7 @@ By the end of this session, you will have:</p>
 <li>Verified instrumentation captures data correctly for JS-on and JS-off paths</li>
 </ul>
 <h3 id="learning-outcomes-addressed-6"><a class="header" href="#learning-outcomes-addressed-6">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk09/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk09/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO1</strong>: Differentiate people-centred methods — evidenced by method selection rationale</li>
 <li><strong>LO8</strong>: Design and execute evaluation — evidenced by protocol + metrics + instrumentation</li>
@@ -5592,7 +5616,7 @@ Success: Reports correct count within 2 minutes, no validation errors
 </code></pre>
 <p>✅ Anonymous, minimal, fit-for-purpose</p>
 <p><strong>UK context</strong>: Data Protection Act 2018 + UK GDPR require <strong>lawful basis</strong> for processing. Low-risk peer studies at universities typically use "legitimate interest" or "consent" basis. <strong>Must document</strong> in protocol.</p>
-<p>🔗 Review <a href="wk09/src/../../references/consent-pii-faq.html">Consent and PII FAQ</a> for full guidance
+<p>🔗 Review <a href="wk09/../../references/consent-pii-faq.html">Consent and PII FAQ</a> for full guidance
 🔗 <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/data-protection-by-design-and-default/">ICO: Privacy by Design</a></p>
 </blockquote>
 <h3 id="median-vs-mean"><a class="header" href="#median-vs-mean">Median vs Mean</a></h3>
@@ -6630,6 +6654,23 @@ fun newReqId(): String = "r${String.format("%04d", ++requestCounter)}"
 <li><code>POST /tasks/{id}/edit</code> with <code>T2_edit</code></li>
 <li><code>DELETE /tasks/{id}</code> with <code>T4_delete</code></li>
 </ul>
+<p><strong>Note on task codes</strong>:</p>
+<ul>
+<li><strong>Evaluation tasks</strong> (T1-T4): These match the tasks defined in your evaluation protocol
+<ul>
+<li><code>T1_filter</code> — Search and filter the task list</li>
+<li><code>T2_edit</code> — Edit or toggle task status</li>
+<li><code>T3_add</code> — Add a new task</li>
+<li><code>T4_delete</code> — Delete a task</li>
+</ul>
+</li>
+<li><strong>Baseline logging</strong> (optional): You may also log general interactions not part of the evaluation
+<ul>
+<li><code>T0_list</code> — General task list view (not timed in evaluation)</li>
+<li>Helps distinguish evaluation sessions from general usage analytics</li>
+</ul>
+</li>
+</ul>
 <p>✋ <strong>Stop and check</strong>:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
@@ -6770,8 +6811,8 @@ EOF
 <h2 id="further-reading--resources-1"><a class="header" href="#further-reading--resources-1">Further Reading &amp; Resources</a></h2>
 <h3 id="essential-1"><a class="header" href="#essential-1">Essential</a></h3>
 <ul>
-<li><a href="wk09/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Median, MAD, error rate calculations</li>
-<li><a href="wk09/src/../../references/consent-pii-faq.html">Consent and PII FAQ</a> — PII definitions, opt-out procedures</li>
+<li><a href="wk09/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Median, MAD, error rate calculations</li>
+<li><a href="wk09/../../references/consent-pii-faq.html">Consent and PII FAQ</a> — PII definitions, opt-out procedures</li>
 <li><a href="https://www.nngroup.com/articles/how-many-test-users/">Nielsen: How Many Test Users?</a> — 5 users find 85% of issues</li>
 </ul>
 <h3 id="hci-evaluation-methods"><a class="header" href="#hci-evaluation-methods">HCI Evaluation Methods</a></h3>
@@ -6829,9 +6870,9 @@ EOF
 </ul>
 <p>📖 <strong>Quick reference</strong>:</p>
 <ul>
-<li><a href="wk09/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
-<li><a href="wk09/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
-<li><a href="wk09/src/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
+<li><a href="wk09/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li><a href="wk09/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li><a href="wk09/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
 </ul>
 <hr />
 <h2 id="introduction-from-plan-to-data"><a class="header" href="#introduction-from-plan-to-data">Introduction: From Plan to Data</a></h2>
@@ -6853,7 +6894,7 @@ EOF
 <h2 id="learning-focus-7"><a class="header" href="#learning-focus-7">Learning Focus</a></h2>
 <h3 id="lab-objectives-7"><a class="header" href="#lab-objectives-7">Lab Objectives</a></h3>
 <blockquote>
-<p><strong>Staff reference</strong>: Sample data + completed pilot pack available in the <a href="wk09/src/../../resources/code-resources.html#week-9">solution repository</a>.
+<p><strong>Staff reference</strong>: Sample data + completed pilot pack available in the <a href="wk09/../../resources/code-resources.html#week-9">solution repository</a>.
 By the end of this session, you will have:</p>
 </blockquote>
 <ul>
@@ -6865,7 +6906,7 @@ By the end of this session, you will have:</p>
 <li>Assembled draft Task 1 evidence pack</li>
 </ul>
 <h3 id="learning-outcomes-addressed-7"><a class="header" href="#learning-outcomes-addressed-7">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk09/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk09/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO6</strong>: Apply iterative design — evidenced by pilot data → findings synthesis</li>
 <li><strong>LO8</strong>: Design and execute evaluation — evidenced by 4 pilot sessions + data</li>
@@ -7616,7 +7657,7 @@ EOF
 </ul>
 <p><strong>Before Week 10</strong>:</p>
 <ul>
-<li>Review <a href="wk09/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> for analysis formulas</li>
+<li>Review <a href="wk09/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> for analysis formulas</li>
 <li>Refresh WCAG 2.2 guidelines for fixes (3.3.1, 4.1.3)</li>
 <li>Think about trade-offs: which fixes are quick wins vs major refactors?</li>
 </ul>
@@ -7625,7 +7666,7 @@ EOF
 <h3 id="essential-2"><a class="header" href="#essential-2">Essential</a></h3>
 <ul>
 <li>Review Week 9 Lab 1 (evaluation planning) for context</li>
-<li><a href="wk09/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Median, MAD, error rate formulas</li>
+<li><a href="wk09/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Median, MAD, error rate formulas</li>
 <li><a href="https://www.gov.uk/service-manual/user-research/analyse-a-research-session">GOV.UK: Analysing user research</a></li>
 </ul>
 <h3 id="hci-evaluation"><a class="header" href="#hci-evaluation">HCI Evaluation</a></h3>
@@ -7671,7 +7712,7 @@ EOF
 <h2 id="before-lab-required-reading-15-mins-1"><a class="header" href="#before-lab-required-reading-15-mins-1">Before Lab: Required Reading (15 mins)</a></h2>
 <p>📖 <strong>Essential</strong>:</p>
 <ul>
-<li>Review <a href="wk10/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas for median, MAD, error rates)</li>
+<li>Review <a href="wk10/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas for median, MAD, error rates)</li>
 <li>Review Week 9 Lab 2 findings (<code>wk09/lab-wk9/submission/task1-draft/05-findings.md</code>)</li>
 <li><a href="https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/">Nielsen: Prioritizing Web Usability Issues</a></li>
 </ul>
@@ -7708,7 +7749,7 @@ EOF
 <li>Created redesign brief with evidence chains</li>
 </ul>
 <h3 id="learning-outcomes-addressed-8"><a class="header" href="#learning-outcomes-addressed-8">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk10/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk10/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO6</strong>: Apply iterative design — evidenced by data-driven prioritisation</li>
 <li><strong>LO8</strong>: Design and execute evaluation — evidenced by metric analysis</li>
@@ -8546,7 +8587,7 @@ EOF
 <h2 id="further-reading--resources-3"><a class="header" href="#further-reading--resources-3">Further Reading &amp; Resources</a></h2>
 <h3 id="essential-3"><a class="header" href="#essential-3">Essential</a></h3>
 <ul>
-<li>Review <a href="wk10/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas reference)</li>
+<li>Review <a href="wk10/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> (formulas reference)</li>
 <li><a href="https://www.gov.uk/service-manual/measuring-success/using-data-to-improve-your-service">GOV.UK: Using data to improve your service</a></li>
 </ul>
 <h3 id="statistical-analysis"><a class="header" href="#statistical-analysis">Statistical Analysis</a></h3>
@@ -8597,8 +8638,8 @@ EOF
 <p>📖 <strong>Essential</strong>:</p>
 <ul>
 <li>Review your redesign brief (<code>wk10/lab-wk10/docs/redesign-brief.md</code>)</li>
-<li>Review <a href="wk10/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
-<li>Skim the <a href="wk10/src/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
+<li>Review <a href="wk10/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li>Skim the <a href="wk10/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
 <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG 2.2 Quick Reference</a> (sections 3.3, 4.1)</li>
 </ul>
 <p>📖 <strong>Contextual</strong>:</p>
@@ -8636,7 +8677,7 @@ EOF
 <li>Packaged Task 2 submission with before/after data</li>
 </ul>
 <h3 id="learning-outcomes-addressed-9"><a class="header" href="#learning-outcomes-addressed-9">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk10/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk10/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO4</strong>: Evaluate for accessibility — evidenced by regression testing</li>
 <li><strong>LO6</strong>: Apply iterative design — evidenced by redesign → re-verification cycle</li>
@@ -9368,9 +9409,9 @@ EOF
 <h2 id="further-reading--resources-4"><a class="header" href="#further-reading--resources-4">Further Reading &amp; Resources</a></h2>
 <h3 id="essential-4"><a class="header" href="#essential-4">Essential</a></h3>
 <ul>
-<li>Review <a href="wk10/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
-<li>Skim the <a href="wk10/src/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
-<li>Review <a href="wk10/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li>Review <a href="wk10/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li>Skim the <a href="wk10/../../references/screenshot-guide.html">Screenshot Evidence Guide</a></li>
+<li>Review <a href="wk10/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
 <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG 2.2 Quick Reference</a></li>
 </ul>
 <h3 id="accessible-error-handling-1"><a class="header" href="#accessible-error-handling-1">Accessible Error Handling</a></h3>
@@ -9427,8 +9468,8 @@ EOF
 </ul>
 <p>📖 <strong>Quick reference</strong>:</p>
 <ul>
-<li><a href="wk11/src/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
-<li><a href="wk11/src/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li><a href="wk11/../../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+<li><a href="wk11/../../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
 </ul>
 <hr />
 <h2 id="introduction-from-evidence-to-narrative"><a class="header" href="#introduction-from-evidence-to-narrative">Introduction: From Evidence to Narrative</a></h2>
@@ -9449,15 +9490,8 @@ EOF
 <blockquote>
 <p><strong>Visual</strong>: Evidence-led critique loop</p>
 </blockquote>
-<pre class="mermaid">graph TD
-  Present[Evidence-led demo]
-  Present --&gt; Feedback[Peer &amp; staff critique]
-  Feedback --&gt; Notes[Crit notes &amp; backlog updates]
-  Notes --&gt; Portfolio[Portfolio &amp; wrap-up]
-  Portfolio --&gt; Plan[Semester 2 planning]
-  Plan --&gt; Present
-</pre>
-<p><small>See <a href="wk11/src/../../references/process-visuals.html#crit-loop">Process Visuals</a> for captioned steps.</small></p>
+<p>{{#include ../../references/visuals/crit-loop.md}}</p>
+<p><small>See <a href="wk11/../../references/process-visuals.html#crit-loop">Process Visuals</a> for captioned steps.</small></p>
 <hr />
 <h2 id="learning-focus-10"><a class="header" href="#learning-focus-10">Learning Focus</a></h2>
 <h3 id="lab-objectives-10"><a class="header" href="#lab-objectives-10">Lab Objectives</a></h3>
@@ -9470,7 +9504,7 @@ EOF
 <li>Documented crit insights for portfolio</li>
 </ul>
 <h3 id="learning-outcomes-addressed-10"><a class="header" href="#learning-outcomes-addressed-10">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk11/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk11/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO11</strong>: Collaborate in teams — evidenced by peer critique participation</li>
 <li><strong>LO12</strong>: Demonstrate professionalism — evidenced by constructive feedback + respectful critique
@@ -10118,7 +10152,7 @@ EOF
 <li>Finalised portfolio with reflections</li>
 </ul>
 <h3 id="learning-outcomes-addressed-11"><a class="header" href="#learning-outcomes-addressed-11">Learning Outcomes Addressed</a></h3>
-<p>This lab contributes to the following module Learning Outcomes (<a href="wk11/src/../../references/learning-outcomes.html">full definitions</a>):</p>
+<p>This lab contributes to the following module Learning Outcomes (<a href="wk11/../../references/learning-outcomes.html">full definitions</a>):</p>
 <ul>
 <li><strong>LO12</strong>: Demonstrate professionalism — evidenced by complete, honest self-assessment</li>
 <li><strong>All 13 LOs</strong> — evidenced by portfolio demonstrating cumulative achievement across Weeks 6-11</li>
@@ -10838,7 +10872,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <strong>Materials</strong>: Lab notes from Weeks 6–11, backlog, peer feedback</p>
 <h3 id="step-1-self-assessment--learning-outcomes"><a class="header" href="#step-1-self-assessment--learning-outcomes">Step 1: Self-Assessment — Learning Outcomes</a></h3>
 <p>Review your evidence against all <strong>13 HCI Learning Outcomes</strong> you've addressed across Weeks 6-11. Rate your confidence (1 = not confident, 5 = very confident) and note where the evidence lives.</p>
-<p>See <a href="wk11/src/../../references/learning-outcomes.html">Learning Outcomes Reference</a> for full LO definitions.</p>
+<p>See <a href="wk11/../../references/learning-outcomes.html">Learning Outcomes Reference</a> for full LO definitions.</p>
 <div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>Confidence (1–5)</th><th>Evidence Location</th></tr></thead><tbody>
 <tr><td><strong>LO1</strong></td><td>Differentiate people-centred methods</td><td>☐☐☐☐☐</td><td>W6 L2 job stories, W9 L1 eval plan</td></tr>
 <tr><td><strong>LO2</strong></td><td>Design and conduct needs-finding</td><td>☐☐☐☐☐</td><td>W6 L2 consent protocol</td></tr>
@@ -11973,8 +12007,8 @@ A: Yes, but you miss Week 9 Lab 2 time for data verification. Use the full 2 wee
 </ul>
 <h3 id="week-9-lab-materials"><a class="header" href="#week-9-lab-materials">Week 9 Lab Materials</a></h3>
 <ul>
-<li><a href="assessment/../../wk09/src/wk9-lab1-eval-plan-instrumentation.html">Week 9 Lab 1: Evaluation Planning &amp; Instrumentation</a></li>
-<li><a href="assessment/../../wk09/src/wk9-lab2-pilots-debrief-draft.html">Week 9 Lab 2: Peer Pilots, Debrief, and Task 1 Draft Pack</a></li>
+<li><a href="assessment/../../wk09/wk9-lab1-eval-plan-instrumentation.html">Week 9 Lab 1: Evaluation Planning &amp; Instrumentation</a></li>
+<li><a href="assessment/../../wk09/wk9-lab2-pilots-debrief-draft.html">Week 9 Lab 2: Peer Pilots, Debrief, and Task 1 Draft Pack</a></li>
 </ul>
 <hr />
 <h2 id="quick-checklist"><a class="header" href="#quick-checklist">Quick Checklist</a></h2>
@@ -12698,10 +12732,10 @@ A: Minimum 2 required. Start recruiting early (Week 10). Use lab sessions to fin
 </ul>
 <h3 id="week-10-11-lab-materials"><a class="header" href="#week-10-11-lab-materials">Week 10-11 Lab Materials</a></h3>
 <ul>
-<li><a href="assessment/../../wk10/src/wk10-lab1-analysis-prioritisation.html">Week 10 Lab 1: Analysis &amp; Prioritisation</a></li>
-<li><a href="assessment/../../wk10/src/wk10-lab2-redesign-reverify-package.html">Week 10 Lab 2: Redesign, Re-verification, Package</a></li>
-<li><a href="assessment/../../wk11/src/wk11-lab1-studio-crit.html">Week 11 Lab 1: Studio Critique</a></li>
-<li><a href="assessment/../../wk11/src/wk11-lab2-wrapup-portfolio.html">Week 11 Lab 2: Wrap-up &amp; Portfolio</a></li>
+<li><a href="assessment/../../wk10/wk10-lab1-analysis-prioritisation.html">Week 10 Lab 1: Analysis &amp; Prioritisation</a></li>
+<li><a href="assessment/../../wk10/wk10-lab2-redesign-reverify-package.html">Week 10 Lab 2: Redesign, Re-verification, Package</a></li>
+<li><a href="assessment/../../wk11/wk11-lab1-studio-crit.html">Week 11 Lab 1: Studio Critique</a></li>
+<li><a href="assessment/../../wk11/wk11-lab2-wrapup-portfolio.html">Week 11 Lab 2: Wrap-up &amp; Portfolio</a></li>
 </ul>
 <hr />
 <h2 id="quick-checklist-1"><a class="header" href="#quick-checklist-1">Quick Checklist</a></h2>

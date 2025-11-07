@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="navy sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -12,38 +12,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../favicon.svg">
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
-        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../../css/admonish.css">
-        <link rel="stylesheet" href="../../css/custom.css">
-        <link rel="stylesheet" href="../../css/retro-theme.css">
-        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../../";
-            const default_light_theme = "light";
+            const path_to_root = "../";
+            const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -81,7 +81,7 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
-            html.classList.remove('light')
+            html.classList.remove('navy')
             html.classList.add(theme);
             html.classList.add("js");
         </script>
@@ -110,7 +110,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -145,7 +145,7 @@
                     <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -239,17 +239,7 @@
 <blockquote>
 <p><strong>Visual</strong>: Template hierarchy for the tasks UI</p>
 </blockquote>
-<pre class="mermaid">graph TD
-  Base[_layout/base.peb&lt;br/&gt;skip link, live region, Pico.css]
-  Base --&gt; Index[tasks/index.peb]
-  Index --&gt; List[tasks/_list.peb]
-  List --&gt; Item[tasks/_item.peb]
-  Index --&gt; Pager[tasks/_pager.peb]
-  Item --&gt;|Forms| Routes[(Ktor routes)]
-  Pager --&gt;|Links| Routes
-  Routes --&gt; HTMX[HTMX fragment responses]
-  Routes --&gt; PRG[Full-page PRG responses]
-</pre>
+<p>{{#include ../../references/visuals/template-hierarchy.md}}</p>
 <p><small>Full legend in <a href="../../references/process-visuals.html#template-hierarchy">Process Visuals</a>.</small></p>
 <h3 id="worked-example-active-search-with-parity"><a class="header" href="#worked-example-active-search-with-parity">Worked example: Active Search with parity</a></h3>
 <p>The filter form uses HTMX for fast updates, but must still function when JS is disabled. Compare the enhanced and fallback behaviours:</p>
@@ -326,11 +316,11 @@
 <p>Create <code>templates/tasks/_list.peb</code> containing:</p>
 <pre><code class="language-pebble">&lt;ul id="task-list" aria-describedby="result-count"&gt;
   {% for task in page.items %}
-    {% include "tasks/_item.peb" with t=task %}
+    {% include "tasks/_item.peb" with {"task": task} %}
   {% endfor %}
 &lt;/ul&gt;
 &lt;p id="result-count" class="visually-hidden"&gt;
-  Showing {{ page.items|length }} of {{ page.total }} tasks{% if query %} matching "{{ query }}"{% endif %}
+  Showing {{ page.items|length }} of {{ page.totalItems }} tasks{% if query %} matching "{{ query }}"{% endif %}
 &lt;/p&gt;
 </code></pre>
 <p>This ensures screen readers hear the result count whenever the list changes.</p>
@@ -542,21 +532,21 @@
 <p>Create <code>templates/tasks/_pager.peb</code>:</p>
 <pre><code class="language-pebble">&lt;nav aria-label="Pagination"&gt;
   &lt;ul class="pagination"&gt;
-    {% if page.page &gt; 1 %}
+    {% if page.currentPage &gt; 1 %}
       &lt;li&gt;
-        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
-           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page - 1 }}"
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.currentPage - 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.currentPage - 1 }}"
            hx-target="#task-area"
            hx-push-url="true"&gt;
           Previous
         &lt;/a&gt;
       &lt;/li&gt;
     {% endif %}
-    &lt;li aria-current="page"&gt;Page {{ page.page }} of {{ page.pages }}&lt;/li&gt;
-    {% if page.page &lt; page.pages %}
+    &lt;li aria-current="page"&gt;Page {{ page.currentPage }} of {{ page.totalPages }}&lt;/li&gt;
+    {% if page.currentPage &lt; page.totalPages %}
       &lt;li&gt;
-        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
-           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.page + 1 }}"
+        &lt;a href="/tasks?q={{ query|default('') }}&amp;page={{ page.currentPage + 1 }}"
+           hx-get="/tasks/fragment?q={{ query|default('') }}&amp;page={{ page.currentPage + 1 }}"
            hx-target="#task-area"
            hx-push-url="true"&gt;
           Next
@@ -644,9 +634,42 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 - documented rendering splits and trade-offs in wk08/docs/prototyping-constraints.md
 </code></pre>
 <hr />
-<h2 id="whats-next"><a class="header" href="#whats-next">What’s next?</a></h2>
+<h2 id="advanced-template-view-adapter-pattern-optional"><a class="header" href="#advanced-template-view-adapter-pattern-optional">Advanced: Template View Adapter Pattern (Optional)</a></h2>
+<p><strong>For students comfortable with abstraction layers</strong>:</p>
+<p>The current approach passes the <code>Page</code> object directly to templates (<code>"page" to data</code>), which keeps templates coupled to the Kotlin data class structure. If you change <code>Page.currentPage</code> to <code>Page.number</code>, all templates break.</p>
+<p><strong>Alternative: View adapter method</strong></p>
+<p>Add a <code>toPebbleContext()</code> method to <code>Page</code> that flattens properties into template-friendly names:</p>
+<pre><code class="language-kotlin">fun toPebbleContext(itemsKey: String = "items"): Map&lt;String, Any&gt; = mapOf(
+    itemsKey to items,
+    "currentPage" to currentPage,
+    "totalPages" to totalPages,
+    "totalItems" to totalItems,
+    "pageSize" to pageSize,
+    "hasPrevious" to hasPrevious,
+    "hasNext" to hasNext,
+    "previousPage" to previousPage,
+    "nextPage" to nextPage
+)
+</code></pre>
+<p>Then routes can use:</p>
+<pre><code class="language-kotlin">val model = page.toPebbleContext("tasks") + mapOf("query" to query)
+</code></pre>
+<p>And templates access flattened variables:</p>
+<pre><code class="language-pebble">{{ tasks|length }} of {{ totalItems }}
+&lt;li&gt;Page {{ currentPage }} of {{ totalPages }}&lt;/li&gt;
+</code></pre>
+<p><strong>Trade-offs</strong>:</p>
+<ul>
+<li>✅ Decouples templates from Kotlin internals (can rename properties safely)</li>
+<li>✅ Cleaner template syntax (shorter variable names)</li>
+<li>❌ Extra abstraction layer to understand</li>
+<li>❌ "Magic" variable names (harder to trace where they come from)</li>
+</ul>
+<p><strong>When to use</strong>: Production codebases where template stability matters. For learning, the direct approach (<code>page.items</code>, <code>page.page</code>) is clearer.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
 <p>Week 8 Lab 2 focuses on wiring additional routes, error handling, and no-JS verification scripts. Keep your server running and your documentation open—we will extend the same patterns immediately.</p>
-<p>Optional stretch this week: add a “mark complete” flow using the same partials and log any accessibility considerations.</p>
+<p>Optional stretch this week: add a "mark complete" flow using the same partials and log any accessibility considerations.</p>
 <hr />
 <h2 id="further-resources"><a class="header" href="#further-resources">Further resources</a></h2>
 <ul>
@@ -661,11 +684,11 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../wk08/src/wk8-lab2-routing-nojs-tradeoffs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -675,11 +698,11 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../wk08/src/wk8-lab2-routing-nojs-tradeoffs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -694,17 +717,17 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
         </script>
 
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mermaid.min.js"></script>
-        <script src="../../mermaid-init.js"></script>
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
 
 
 
