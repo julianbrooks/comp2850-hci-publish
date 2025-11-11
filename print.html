@@ -14577,7 +14577,7 @@ call.respondHtml(PebbleRender.render("tasks/index.peb", model))
 <hr />
 <h2 id="2-variables--output"><a class="header" href="#2-variables--output">2. Variables &amp; Output</a></h2>
 <h3 id="simple-variables"><a class="header" href="#simple-variables">Simple Variables</a></h3>
-<pre><code class="language-pebble">{{ taskTitle }}           {# Outputs: "Buy groceries" #}
+<pre><code class="language-pebble">{{ taskTitle }}           {# Outputs: "Buy Groceries" #}
 {{ taskCount }}           {# Outputs: 5 #}
 {{ isCompleted }}         {# Outputs: true or false #}
 </code></pre>
@@ -14602,7 +14602,7 @@ mapOf("task" to task.toPebbleContext())
 <tr><td><code>length</code></td><td>Get collection size</td><td><code>{{ tasks | length }}</code></td><td><code>5</code></td></tr>
 <tr><td><code>upper</code></td><td>Uppercase</td><td><code>{{ title | upper }}</code></td><td><code>"BUY GROCERIES"</code></td></tr>
 <tr><td><code>lower</code></td><td>Lowercase</td><td><code>{{ title | lower }}</code></td><td><code>"buy groceries"</code></td></tr>
-<tr><td><code>capitalize</code></td><td>Capitalize first letter</td><td><code>{{ status | capitalize }}</code></td><td><code>"Complete"</code></td></tr>
+<tr><td><code>capitalise</code></td><td>Capitalise first letter</td><td><code>{{ status | capitalize }}</code></td><td><code>"Complete"</code></td></tr>
 <tr><td><code>escape</code></td><td>HTML escape (auto in Pebble)</td><td><code>{{ userInput | escape }}</code></td><td><code>&amp;lt;script&amp;gt;</code></td></tr>
 <tr><td><code>default</code></td><td>Fallback if null/empty</td><td><code>{{ title | default("Untitled") }}</code></td><td><code>"Untitled"</code> if title is null</td></tr>
 <tr><td><code>date</code></td><td>Format date</td><td><code>{{ createdAt | date("yyyy-MM-dd") }}</code></td><td><code>"2025-10-14"</code></td></tr>
