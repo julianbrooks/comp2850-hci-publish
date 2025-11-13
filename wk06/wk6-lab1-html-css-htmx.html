@@ -649,7 +649,7 @@ fun Route.taskRoutes() {
 import io.ktor.server.routing.*
 import routes.taskRoutes
 
-fun Application.module() {
+fun Application.configureRouting() {
     routing {
         taskRoutes()
     }
