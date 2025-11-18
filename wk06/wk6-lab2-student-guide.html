@@ -1,0 +1,584 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Needs-Finding &amp; Research Ethics - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-6--lab-2--student-guide-needs-finding--research-ethics"><a class="header" href="#week-6--lab-2--student-guide-needs-finding--research-ethics">Week 6 • Lab 2 — Student Guide: Needs-Finding &amp; Research Ethics</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-6-orange" alt="Week 6" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 6 Lab 2 is about understanding real people’s needs through peer interviews, documenting ethical consent, and building an inclusive backlog. This is research work, not coding.</p>
+</blockquote>
+<hr />
+<h2 id="what-youll-create"><a class="header" href="#what-youll-create">What You’ll Create</a></h2>
+<p>By the end of this lab:</p>
+<ul>
+<li>✅ <code>wk06/research/consent-protocol.md</code> - Ethical consent documentation</li>
+<li>✅ <code>wk06/research/notes.md</code> - Interview notes (2-3 participants)</li>
+<li>✅ <code>wk06/research/stories.md</code> - 5-6 job stories</li>
+<li>✅ <code>backlog/backlog.csv</code> - Prioritised inclusive backlog (8+ items)</li>
+<li>✅ <code>wk06/instrumentation/plan.md</code> - Sketch of Week 9 metrics</li>
+</ul>
+<hr />
+<h2 id="quick-start-create-files"><a class="header" href="#quick-start-create-files">Quick Start: Create Files</a></h2>
+<pre><code class="language-bash">cd your-repo
+mkdir -p wk06/research backlog wk06/instrumentation
+touch wk06/research/consent-protocol.md
+touch wk06/research/notes.md
+touch wk06/research/stories.md
+touch backlog/backlog.csv
+touch wk06/instrumentation/plan.md
+</code></pre>
+<hr />
+<h2 id="part-1-consent-protocol-10-minutes"><a class="header" href="#part-1-consent-protocol-10-minutes">Part 1: Consent Protocol (10 minutes)</a></h2>
+<p><strong>Copy this template</strong> into <code>wk06/research/consent-protocol.md</code>:</p>
+<details>
+<summary>Click to expand: Consent Protocol Template</summary>
+<pre><code class="language-markdown"># Informed Consent Protocol — Week 6 Peer Interviews
+
+**Module**: COMP2850 Human-Computer Interaction
+**Activity**: Low-risk needs-finding (peer interviews)
+**Date**: [YYYY-MM-DD]
+**Researcher**: [Your Name/Student ID]
+
+---
+
+## Purpose
+
+Short peer interviews (5-10 minutes) to understand task manager needs and identify accessibility improvements for COMP2850 coursework (Weeks 6-11).
+
+## What You'll Do
+
+I'll ask 3-5 questions about task management experiences. Brief notes only. **No recordings** unless you explicitly agree.
+
+## Data Collected
+
+**Will collect**:
+- Pseudonymised notes ("Participant A said...")
+- Interview timestamp
+- Context tags ("Uses keyboard only", "Prefers dark mode")
+
+**Will NOT collect**:
+- Your name (unless you want acknowledgement credit)
+- Student ID, email, or any personally identifiable information (PII)
+
+## Data Storage
+
+- **Where**: Private Git repository on my laptop (not shared publicly)
+- **Access**: Me, lab partner, teaching staff (if requested for marking)
+- **Duration**: Until end of Semester 1 (January 2025), then deleted OR anonymised for portfolio
+
+## Your Rights (UK GDPR / Data Protection Act 2018)
+
+- **Withdraw**: Stop anytime, no explanation needed
+- **Access**: Ask to see your data (I'll show notes)
+- **Erasure**: Request deletion (email me with date/pseudonym)
+- **Complain**: University Data Protection Officer: dpo@leeds.ac.uk
+
+## Consent Confirmation
+
+Before starting, I will ask:
+- [ ] Purpose explained clearly?
+- [ ] Understand what data I'll collect?
+- [ ] Know you can stop anytime?
+- [ ] Consent to participate?
+
+**Verbal consent sufficient**. If yes, I'll note:
+- Date/time: [YYYY-MM-DD HH:MM]
+- Pseudonym: [e.g., "Participant A"]
+- Consent confirmed: [Initials]
+
+---
+
+## Opt-Out Process
+
+If you change your mind:
+1. Email: [your-university-email]
+2. Include: interview date + pseudonym
+3. I'll delete notes within 48 hours
+4. Confirm deletion via email
+
+---
+
+## Contact
+
+**Researcher**: [Your Name], [your-email@leeds.ac.uk]
+**Module Lead**: Dr. [Name], [module-email]
+**University Ethics**: ethics@leeds.ac.uk
+
+---
+
+**Template source**: COMP2850 HCI, University of Leeds
+**Reference**: ICO (2024). Guide to GDPR, &lt;https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/&gt;
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Filled in your name, date, email</li>
+<li><input disabled="" type="checkbox"/>
+Peer-reviewed by lab partner (get initials)</li>
+<li><input disabled="" type="checkbox"/>
+Saved in repo</li>
+</ul>
+<hr />
+<h2 id="part-2-conduct-peer-interviews-40-minutes"><a class="header" href="#part-2-conduct-peer-interviews-40-minutes">Part 2: Conduct Peer Interviews (40 minutes)</a></h2>
+<h3 id="interview-prompts"><a class="header" href="#interview-prompts">Interview Prompts</a></h3>
+<p>Use these 6 open-ended questions:</p>
+<ol>
+<li>“Tell me about the last time you used a to-do list or task manager. What were you trying to accomplish?”</li>
+<li>“What frustrates you most about managing tasks? Give me a specific example.”</li>
+<li>“Have you ever lost track of an important task? What happened?”</li>
+<li>“Do you ever work without a mouse (trackpad broken, on train)? How does that change how you interact with apps?”</li>
+<li>“Have you used a task manager with your eyes closed or in bright sunlight? What was hard?”</li>
+<li>“If you could add one feature to make task management less stressful, what would it be?”</li>
+</ol>
+<p><strong>Follow-up probes</strong>:</p>
+<ul>
+<li>“Tell me more about that”</li>
+<li>“How did that make you feel?”</li>
+<li>“What did you do to work around it?”</li>
+</ul>
+<h3 id="note-taking-template"><a class="header" href="#note-taking-template">Note-Taking Template</a></h3>
+<p><strong>Copy into</strong> <code>wk06/research/notes.md</code>:</p>
+<details>
+<summary>Click to expand: Notes Template</summary>
+<pre><code class="language-markdown"># Interview Notes — Week 6
+
+## Participant A
+**Date**: [YYYY-MM-DD HH:MM]
+**Context**: [e.g., Uses keyboard only, ADHD, prefers dark mode]
+**Consent**: ✅ Confirmed verbally
+**Duration**: ~10 minutes
+
+---
+
+### Q1: Last time using task manager?
+**Response**: [Quote or paraphrase]
+
+**Observations**: [What stood out? Frustration? Workaround?]
+
+**Themes**: `[tag1]`, `[tag2]`
+
+---
+
+### Q2: Biggest frustration?
+**Response**: [Quote]
+
+**Observations**:
+
+**Themes**:
+
+---
+
+[Repeat for Q3-Q6]
+
+---
+
+## Summary (Participant A)
+**Top pain points**:
+1. [Issue with evidence]
+2. [Issue with evidence]
+
+**Job story ideas**:
+- "When [situation], I want [motivation] so [outcome]."
+</code></pre>
+</details>
+<p><strong>Tips</strong>:</p>
+<ul>
+<li>Write direct quotes when possible</li>
+<li>Tag themes consistently (<code>keyboard</code>, <code>confirmation</code>, <code>contrast</code>)</li>
+<li>Note non-verbal cues (frustration, confusion)</li>
+</ul>
+<p><strong>Swap roles</strong>: Interview 2-3 people, take turns being researcher/participant.</p>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Completed 2-3 interviews</li>
+<li><input disabled="" type="checkbox"/>
+Notes saved with themes tagged</li>
+<li><input disabled="" type="checkbox"/>
+Identified overlapping pain points</li>
+</ul>
+<hr />
+<h2 id="part-3-write-job-stories-25-minutes"><a class="header" href="#part-3-write-job-stories-25-minutes">Part 3: Write Job Stories (25 minutes)</a></h2>
+<p>Job stories connect situations to needs. Format:</p>
+<pre><code>When [situation/context],
+I want [motivation/capability],
+So [outcome/benefit],
+Because [underlying need].
+</code></pre>
+<p><strong>Copy into</strong> <code>wk06/research/stories.md</code>:</p>
+<details>
+<summary>Click to expand: Job Stories Template</summary>
+<pre><code class="language-markdown"># Job Stories — Week 6 Needs-Finding
+
+## Story S1: [Short Title]
+**Situation**: When I'm [doing specific task in specific context]
+**Motivation**: I want [capability or feature]
+**Outcome**: So I can [accomplish goal]
+**Underlying need**: Because [why this matters, what pain it solves]
+
+**Evidence**: Participant A (notes L5), Participant B (notes L3)
+**Inclusion risk**: [e.g., Cognitive, Motor, Screen reader]
+**Type**: Job story
+**WCAG**: [If applicable, e.g., 2.1.1 Keyboard (A)]
+
+---
+
+## Story S2: Confirmation Feedback
+**Situation**: When I submit a form (add/edit/delete task)
+**Motivation**: I want immediate, explicit confirmation that the action succeeded
+**Outcome**: So I can trust the interface without refreshing to verify
+**Underlying need**: Because uncertainty about save status causes anxiety and inefficient workarounds
+
+**Evidence**: [Your notes references]
+**Inclusion risk**: Cognitive, Screen reader, Low digital literacy
+**Type**: Job story
+**WCAG**: 4.1.3 Status Messages (AA)
+
+---
+
+[Write 5-6 total stories based on your interviews]
+</code></pre>
+</details>
+<p><strong>Map to WCAG</strong>:</p>
+<ul>
+<li>S1: Keyboard access → 2.1.1 Keyboard (A)</li>
+<li>S2: Confirmation → 4.1.3 Status Messages (AA)</li>
+<li>S3: Contrast → 1.4.3 Contrast Minimum (AA)</li>
+<li>S4: Error messages → 3.3.1 Error Identification (A)</li>
+</ul>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+5-6 job stories written</li>
+<li><input disabled="" type="checkbox"/>
+Each cites evidence (participant + line number)</li>
+<li><input disabled="" type="checkbox"/>
+Inclusion risk tags added</li>
+<li><input disabled="" type="checkbox"/>
+At least 2 map to WCAG criteria</li>
+</ul>
+<hr />
+<h2 id="part-4-build-inclusive-backlog-30-minutes"><a class="header" href="#part-4-build-inclusive-backlog-30-minutes">Part 4: Build Inclusive Backlog (30 minutes)</a></h2>
+<p><strong>Copy into</strong> <code>backlog/backlog.csv</code>:</p>
+<details>
+<summary>Click to expand: Backlog Template</summary>
+<pre><code class="language-csv">id,title,story_ref,story_type,need,type,severity,inclusion_risk,evidence,notes,candidate_fix
+1,Filter selection resets on page reload,stories.md#S1,Job story,Reduce cognitive load,Usability,Medium,"Cognitive,Memory","P-A notes L5",Doesn't persist filter state in session or URL,false
+2,No confirmation after form submission,stories.md#S2,Job story,Trust &amp; feedback,Accessibility,High,"Cognitive,SR,Low digital literacy","P-A notes L12",HTMX good but no-JS gives no feedback (PRG redirect),true
+3,Delete button not keyboard-accessible,stories.md#S3,Job story,Full keyboard access,Accessibility,High,"Keyboard,Motor","P-A notes L20; WCAG 2.1.1",Focus order unclear; needs Tab-only test,true
+4,Text contrast below 4.5:1,stories.md#S4,Job story,Visibility,Accessibility,Medium,"Low vision,Colour-blind","P-A notes L28; WCAG 1.4.3",Pico.css gray = 4.2:1 (fails AA),false
+5,No progress indicator,stories.md#S5,Job story,Motivation,Usability,Low,Cognitive,"P-A notes L35",Nice-to-have; defer,false
+6,Error messages not persistent in no-JS,Internal,Pain point,Error recovery,Accessibility,High,"Cognitive,SR","WCAG 3.3.1",PRG redirect loses error context,true
+7,Skip link not SR-tested,Internal audit,WCAG check,Bypass blocks,Accessibility,Medium,SR,"WCAG 2.4.1",Keyboard tested but not SR announcement,false
+8,Live region polite (should be assertive for errors),Internal audit,WCAG check,Error announcement,Accessibility,High,SR,"WCAG 4.1.3",Errors need aria-live=assertive,false
+</code></pre>
+</details>
+<p><strong>Column guide</strong>:</p>
+<ul>
+<li><strong>severity</strong>: High (blocks), Medium (hinders), Low (cosmetic)</li>
+<li><strong>inclusion_risk</strong>: SR, Keyboard, Cognitive, Motor, Low vision, Colour-blind</li>
+<li><strong>candidate_fix</strong>: Mark 1-2 items <code>true</code> to fix in Week 7 Lab 2</li>
+</ul>
+<p><strong>Prioritisation</strong>:</p>
+<ul>
+<li>High severity + multiple groups + WCAG Level A = fix first</li>
+<li>Low severity + single group + no WCAG = defer</li>
+</ul>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+8+ backlog items (mix of research + audit)</li>
+<li><input disabled="" type="checkbox"/>
+Severity and inclusion risk assigned</li>
+<li><input disabled="" type="checkbox"/>
+1-2 items marked <code>candidate_fix=true</code></li>
+<li><input disabled="" type="checkbox"/>
+Evidence column links to notes or WCAG</li>
+</ul>
+<hr />
+<h2 id="part-5-instrumentation-sketch-15-minutes"><a class="header" href="#part-5-instrumentation-sketch-15-minutes">Part 5: Instrumentation Sketch (15 minutes)</a></h2>
+<p><strong>Create</strong> <code>wk06/instrumentation/plan.md</code>:</p>
+<pre><code class="language-markdown"># Week 9 Evaluation Planning Sketch
+
+## Events to Log
+
+Based on backlog priorities:
+- Task creation (time, validation errors)
+- Task deletion (confirmation shown?)
+- Filter usage (reset frequency)
+- Keyboard navigation (Tab presses per task)
+
+## Metrics to Capture
+
+- **Time-on-task**: How long to add/edit/delete?
+- **Error rate**: How often do validation errors occur?
+- **Completion rate**: Can people complete tasks without help?
+- **Confidence ratings**: Post-task subjective feedback
+
+## Test Scenarios
+
+1. Add 3 tasks (test confirmation feedback)
+2. Delete task with keyboard only (test accessibility)
+3. Filter then page-reload (test filter persistence)
+
+Details in Week 9 Lab 1.
+</code></pre>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Listed 4-5 events to log</li>
+<li><input disabled="" type="checkbox"/>
+Identified 3-4 metrics</li>
+<li><input disabled="" type="checkbox"/>
+Sketched 2-3 test scenarios</li>
+</ul>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash">git add wk06/ backlog/
+git commit -m "feat(wk6-lab2): needs-finding, consent protocol, inclusive backlog
+
+- Conducted 2-3 peer interviews on task management needs
+- Wrote 5-6 job stories with inclusion-risk tagging
+- Built prioritised backlog (8+ items) mapping to WCAG criteria
+- Documented GDPR-compliant consent protocol
+- Sketched Week 9 instrumentation plan
+
+Addresses Week 6 Lab 2 requirements. Ready for Week 7 accessibility fixes."
+</code></pre>
+<p><strong>Next</strong>: Week 7 Lab 1 - Ethics overlay and accessible inline edit.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -186,7 +186,7 @@
 <img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
 <hr />
 <h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
-<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., “person using a screen reader”) rather than deficit-based terms (e.g., “blind user”). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
 <hr />
 <h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
 <p><strong>Essential</strong></p>
@@ -199,20 +199,20 @@
 <p><strong>Recommended</strong></p>
 <ul>
 <li><a href="https://webaim.org/standards/wcag/checklist">WebAIM: WCAG 2 Checklist</a></li>
-<li><a href="https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/">Nielsen, J. (1994). "Heuristic Evaluation"</a></li>
+<li><a href="https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/">Nielsen, J. (1994). “Heuristic Evaluation”</a></li>
 <li><a href="https://www.cs.umd.edu/~ben/">Shneiderman et al. (2016). <em>Designing the User Interface</em>, Ch. 3: Guidelines</a></li>
 </ul>
 <hr />
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <h3 id="context"><a class="header" href="#context">Context</a></h3>
 <p>In <strong>Week 7 Lab 1</strong> you implemented accessible inline edit with dual-path support (HTMX + no-JS), ARIA error identification, and status message announcements. You tested with keyboard and screen reader (NVDA/VoiceOver) and collected evidence.</p>
-<p><strong>Now you'll audit the entire application systematically</strong> using:</p>
+<p><strong>Now you’ll audit the entire application systematically</strong> using:</p>
 <ol>
 <li><strong>WCAG 2.2 AA checklist</strong> (technical compliance)</li>
-<li><strong>Heuristics</strong> (Nielsen's 10 Usability Heuristics + Shneiderman's Golden Rules)</li>
+<li><strong>Heuristics</strong> (Nielsen’s 10 Usability Heuristics + Shneiderman’s Golden Rules)</li>
 <li><strong>Assistive technology testing</strong> (keyboard, screen reader, no-JS, zoom)</li>
 </ol>
-<p>You'll log findings in your inclusive backlog (from Week 6), prioritise using <em>severity × inclusion risk</em>, and
+<p>You’ll log findings in your inclusive backlog (from Week 6), prioritise using <em>severity × inclusion risk</em>, and
 <strong>implement one high-priority fix end-to-end</strong> (code → verification → evidence).</p>
 <p>This lab directly feeds <strong>Gradescope Task 1</strong> (evaluation &amp; findings) and sets up <strong>Task 2</strong> (redesign &amp; verification).</p>
 <h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
@@ -253,7 +253,7 @@
 <ul>
 <li>Tools: axe DevTools, WAVE, Lighthouse</li>
 <li>Fast, repeatable, catches low-hanging fruit</li>
-<li><strong>Limitations</strong>: Can't detect non-semantic HTML, focus order issues, SR announcements</li>
+<li><strong>Limitations</strong>: Can’t detect non-semantic HTML, focus order issues, SR announcements</li>
 </ul>
 <p><strong>Level 2: Manual testing</strong> (keyboard, screen reader)</p>
 <ul>
@@ -265,7 +265,7 @@
 <ul>
 <li>Catches 90%+ of issues</li>
 <li>Gold standard, but expensive and slow</li>
-<li><strong>Week 9</strong>: You'll run task-based pilots (mini user tests)</li>
+<li><strong>Week 9</strong>: You’ll run task-based pilots (mini user tests)</li>
 </ul>
 <p><strong>COMP2850 approach</strong>: Levels 1 + 2 in Labs 7-8; Level 3 in Week 9.</p>
 <h3 id="2-wcag-22-conformance-levels"><a class="header" href="#2-wcag-22-conformance-levels">2. WCAG 2.2 Conformance Levels</a></h3>
@@ -302,7 +302,7 @@
 <li>WCAG AAA or best practice (not required)</li>
 </ul>
 <h3 id="4-inclusion-risk-tagging"><a class="header" href="#4-inclusion-risk-tagging">4. Inclusion Risk Tagging</a></h3>
-<p><strong>Tags</strong> identify who's affected:</p>
+<p><strong>Tags</strong> identify who’s affected:</p>
 <ul>
 <li><strong>SR</strong> (Screen reader): NVDA, JAWS, VoiceOver, TalkBack</li>
 <li><strong>Keyboard</strong>: Keyboard-only users, motor impairments, RSI</li>
@@ -312,8 +312,8 @@
 <li><strong>Hearing</strong>: Caption/transcript needs (not applicable to this project yet)</li>
 <li><strong>Situational</strong>: Bright light, broken mouse, noisy environment</li>
 </ul>
-<p><strong>Example</strong>: "Delete button lacks keyboard access" = <strong>Keyboard + Motor</strong> tags.</p>
-<h3 id="5-nielsens-10-usability-heuristics-applied-to-accessibility"><a class="header" href="#5-nielsens-10-usability-heuristics-applied-to-accessibility">5. Nielsen's 10 Usability Heuristics (Applied to Accessibility)</a></h3>
+<p><strong>Example</strong>: “Delete button lacks keyboard access” = <strong>Keyboard + Motor</strong> tags.</p>
+<h3 id="5-nielsens-10-usability-heuristics-applied-to-accessibility"><a class="header" href="#5-nielsens-10-usability-heuristics-applied-to-accessibility">5. Nielsen’s 10 Usability Heuristics (Applied to Accessibility)</a></h3>
 <ol>
 <li><strong>Visibility of system status</strong>: Screen readers announce state changes</li>
 <li><strong>Match between system and real world</strong>: Plain language (not jargon)</li>
@@ -334,21 +334,21 @@
 <p><strong>Chrome</strong>:</p>
 <ol>
 <li>Visit <a href="https://chrome.google.com/webstore">Chrome Web Store</a></li>
-<li>Search "axe DevTools"</li>
+<li>Search “axe DevTools”</li>
 <li>Install extension</li>
 </ol>
 <p><strong>Firefox</strong>:</p>
 <ol>
 <li>Visit <a href="https://addons.mozilla.org/">Firefox Add-ons</a></li>
-<li>Search "axe DevTools"</li>
+<li>Search “axe DevTools”</li>
 <li>Install add-on</li>
 </ol>
 <h3 id="step-2-run-automated-scan"><a class="header" href="#step-2-run-automated-scan">Step 2: Run Automated Scan</a></h3>
 <ol>
 <li><strong>Open http://localhost:8080/tasks</strong> (ensure server running)</li>
 <li><strong>Open DevTools</strong> (F12)</li>
-<li><strong>Navigate to "axe DevTools" tab</strong></li>
-<li><strong>Click "Scan ALL of my page"</strong></li>
+<li><strong>Navigate to “axe DevTools” tab</strong></li>
+<li><strong>Click “Scan ALL of my page”</strong></li>
 <li><strong>Wait 5-10 seconds</strong> for results</li>
 </ol>
 <h3 id="step-3-review-findings"><a class="header" href="#step-3-review-findings">Step 3: Review Findings</a></h3>
@@ -579,8 +579,8 @@ None detected.
 <hr />
 <h2 id="activity-3-heuristic-evaluation"><a class="header" href="#activity-3-heuristic-evaluation">Activity 3: Heuristic Evaluation</a></h2>
 <p><strong>Time</strong>: 20 minutes
-<strong>Materials</strong>: Nielsen's heuristics, Shneiderman's Golden Rules</p>
-<h3 id="step-1-apply-nielsens-heuristics"><a class="header" href="#step-1-apply-nielsens-heuristics">Step 1: Apply Nielsen's Heuristics</a></h3>
+<strong>Materials</strong>: Nielsen’s heuristics, Shneiderman’s Golden Rules</p>
+<h3 id="step-1-apply-nielsens-heuristics"><a class="header" href="#step-1-apply-nielsens-heuristics">Step 1: Apply Nielsen’s Heuristics</a></h3>
 <p>Create <code>wk07/audit/heuristics.md</code>:</p>
 <pre><code class="language-markdown"># Heuristic Evaluation — Week 7
 
@@ -861,7 +861,7 @@ button {
 <h3 id="step-1-visual-inspection"><a class="header" href="#step-1-visual-inspection">Step 1: Visual Inspection</a></h3>
 <ul>
 <li>Load http://localhost:8080/tasks</li>
-<li>Inspect "Delete" button</li>
+<li>Inspect “Delete” button</li>
 <li>Confirm text appears darker</li>
 </ul>
 <h3 id="step-2-contrast-check"><a class="header" href="#step-2-contrast-check">Step 2: Contrast Check</a></h3>
@@ -1011,7 +1011,7 @@ Files changed: `base.peb` (+3 lines)
 </li>
 <li>
 <p><strong>Prioritisation</strong>: You had 5 new backlog items. How did the scoring formula (severity × inclusion × WCAG) change
-which one you fixed first? Would your decision differ if time wasn't limited?</p>
+which one you fixed first? Would your decision differ if time wasn’t limited?</p>
 </li>
 <li>
 <p><strong>Evidence chains</strong>: Trace the evidence chain for your fix: audit finding → backlog item → fix implementation → verification. What would happen if you skipped any step?</p>
@@ -1030,7 +1030,7 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 </ul>
 <p><strong>Heuristic evaluation</strong></p>
 <ul>
-<li>Nielsen, J. (1994). "Heuristic Evaluation." <em>Usability Inspection Methods</em>, 25-62.</li>
+<li>Nielsen, J. (1994). “Heuristic Evaluation.” <em>Usability Inspection Methods</em>, 25-62.</li>
 <li>Shneiderman, B. et al. (2016). <em>Designing the User Interface</em> (6th ed.), Ch. 3.</li>
 </ul>
 <p><strong>Inclusive backlogs</strong></p>
@@ -1045,10 +1045,10 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <tr><td><strong>Automated testing</strong></td><td>Tools that scan code for issues (20-30% coverage)</td><td>axe DevTools, WAVE, Lighthouse</td></tr>
 <tr><td><strong>Manual testing</strong></td><td>Human evaluation (keyboard, SR, heuristics)</td><td>Tab through page, listen with NVDA</td></tr>
 <tr><td><strong>Severity</strong></td><td>Impact on task completion (High/Medium/Low)</td><td>High = blocks; Medium = hinders; Low = cosmetic</td></tr>
-<tr><td><strong>Inclusion risk</strong></td><td>Who's affected (SR, Keyboard, Cognitive, etc.)</td><td>"Affects SR + Keyboard users"</td></tr>
-<tr><td><strong>Heuristic evaluation</strong></td><td>Expert review using usability principles</td><td>Nielsen's 10 Heuristics, Shneiderman's Golden Rules</td></tr>
+<tr><td><strong>Inclusion risk</strong></td><td>Who’s affected (SR, Keyboard, Cognitive, etc.)</td><td>“Affects SR + Keyboard users”</td></tr>
+<tr><td><strong>Heuristic evaluation</strong></td><td>Expert review using usability principles</td><td>Nielsen’s 10 Heuristics, Shneiderman’s Golden Rules</td></tr>
 <tr><td><strong>Contrast ratio</strong></td><td>Luminance difference (text vs. background)</td><td>4.5:1 (AA), 7:1 (AAA)</td></tr>
-<tr><td><strong>Regression testing</strong></td><td>Verifying fixes don't break existing features</td><td>After contrast fix, confirm buttons still work</td></tr>
+<tr><td><strong>Regression testing</strong></td><td>Verifying fixes don’t break existing features</td><td>After contrast fix, confirm buttons still work</td></tr>
 <tr><td><strong>Evidence chain</strong></td><td>Traceable path: audit → backlog → fix → verification</td><td>Finding → Item #9 → CSS change → 7:1 verified</td></tr>
 </tbody></table>
 </div>
@@ -1061,7 +1061,7 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <li><input disabled="" type="checkbox"/>
 <strong>WCAG checklist filled</strong>: At least 15 criteria evaluated (Pass/Fail/N/A)</li>
 <li><input disabled="" type="checkbox"/>
-<strong>Heuristic evaluation done</strong>: Nielsen's 10 applied, issues logged</li>
+<strong>Heuristic evaluation done</strong>: Nielsen’s 10 applied, issues logged</li>
 <li><input disabled="" type="checkbox"/>
 <strong>Backlog updated</strong>: 5+ new items added with severity + inclusion risk</li>
 <li><input disabled="" type="checkbox"/>
@@ -1091,7 +1091,7 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 <ul>
 <li>Ensure backlog up-to-date with Week 7 findings</li>
 <li>Have working task manager (add, edit, delete functional)</li>
-<li>Review audit evidence (you'll reference it in Task 1)</li>
+<li>Review audit evidence (you’ll reference it in Task 1)</li>
 </ul>
 <hr />
 <p><strong>Lab authored by</strong>: COMP2850 Teaching Team, University of Leeds
@@ -1102,11 +1102,11 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk07/wk7-lab1-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk07/wk7-lab2-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1116,11 +1116,11 @@ which one you fixed first? Would your decision differ if time wasn't limited?</p
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk07/wk7-lab1-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk07/wk7-lab2-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

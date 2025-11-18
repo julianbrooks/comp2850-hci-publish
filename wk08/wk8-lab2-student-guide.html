@@ -1,0 +1,670 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Validation &amp; No-JS Parity - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-8--lab-2--student-guide-validation--no-js-parity"><a class="header" href="#week-8--lab-2--student-guide-validation--no-js-parity">Week 8 • Lab 2 — Student Guide: Validation &amp; No-JS Parity</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-8-orange" alt="Week 8" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 8 Lab 2 hardens your prototype with server-side validation, accessible error messaging, and dual-path architecture (HTMX + no-JS). This guide provides working code and testing scripts so you can focus on understanding trade-offs and documenting design decisions.</p>
+</blockquote>
+<hr />
+<h2 id="how-to-use-this-guide"><a class="header" href="#how-to-use-this-guide">How to Use This Guide</a></h2>
+<p><strong>If you’ve implemented validation and dual-path logic:</strong> Skip Part 1, go to Part 2 (testing script) and Part 3 (documentation).</p>
+<p><strong>If you need implementation help:</strong> Use Part 1 code, then complete Parts 2 &amp; 3.</p>
+<hr />
+<h2 id="part-1-working-implementation-optional"><a class="header" href="#part-1-working-implementation-optional">Part 1: Working Implementation (Optional)</a></h2>
+<details>
+<summary>Click to reveal: Task validation model (<code>src/main/kotlin/model/Task.kt</code>)</summary>
+<pre><code class="language-kotlin">data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val completed: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now()
+) {
+    companion object {
+        const val MIN_TITLE_LENGTH = 3
+        const val MAX_TITLE_LENGTH = 100
+
+        fun validate(title: String): ValidationResult =
+            when {
+                title.isBlank() -&gt;
+                    ValidationResult.Error("Title is required. Please enter a task description.")
+                title.length &lt; MIN_TITLE_LENGTH -&gt;
+                    ValidationResult.Error(
+                        "Title must be at least $MIN_TITLE_LENGTH characters. Currently: ${title.length} characters."
+                    )
+                title.length &gt; MAX_TITLE_LENGTH -&gt;
+                    ValidationResult.Error(
+                        "Title must be less than $MAX_TITLE_LENGTH characters. Currently: ${title.length} characters."
+                    )
+                else -&gt; ValidationResult.Success
+            }
+    }
+}
+
+sealed class ValidationResult {
+    data object Success : ValidationResult()
+    data class Error(val message: String) : ValidationResult()
+}
+</code></pre>
+</details>
+<details>
+<summary>Click to reveal: Create task with validation (<code>TaskRoutes.kt</code>)</summary>
+<pre><code class="language-kotlin">post("/tasks") {
+    val params = receiveParameters()
+    val title = params["title"]?.trim() ?: ""
+    val query = params["q"]?.trim() ?: ""
+
+    when (val validation = Task.validate(title)) {
+        is ValidationResult.Error -&gt; {
+            // Validation failed
+            if (isHtmxRequest()) {
+                // HTMX path: return error status via live region
+                val paginated = paginateTasks(store, query, 1)
+                val statusHtml = """&lt;div id="status" hx-swap-oob="true" role="alert" aria-live="assertive" class="error"&gt;${validation.message}&lt;/div&gt;"""
+                val list = renderTemplate("tasks/_list.peb", mapOf("page" to paginated, "q" to query))
+                val pager = renderTemplate("tasks/_pager.peb", mapOf("page" to paginated, "q" to query))
+                respondText(list + pager + statusHtml, ContentType.Text.Html)
+            } else {
+                // No-JS path: redirect with error query parameter
+                respondRedirect("/tasks?error=title")
+            }
+        }
+        ValidationResult.Success -&gt; {
+            // Validation passed - create task
+            val task = Task(title = title)
+            store.add(task)
+
+            if (isHtmxRequest()) {
+                val paginated = paginateTasks(store, query, 1)
+                val statusHtml = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task "${task.title}" added successfully.&lt;/div&gt;"""
+                val list = renderTemplate("tasks/_list.peb", mapOf("page" to paginated, "q" to query))
+                val pager = renderTemplate("tasks/_pager.peb", mapOf("page" to paginated, "q" to query))
+                respondText(list + pager + statusHtml, ContentType.Text.Html)
+            } else {
+                respondRedirect("/tasks")
+            }
+        }
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary>Click to reveal: No-JS error display (<code>templates/tasks/index.peb</code>)</summary>
+<pre><code class="language-pebble">{% extends "_layout/base.peb" %}
+{% block content %}
+
+&lt;h1&gt;Tasks&lt;/h1&gt;
+
+{# Error summary for no-JS mode #}
+{% if error %}
+&lt;div role="alert" aria-live="assertive" class="error-summary" id="error-summary" tabindex="-1"&gt;
+  &lt;h2&gt;There is a problem&lt;/h2&gt;
+  &lt;ul&gt;
+    {% if error == "title" %}
+    &lt;li&gt;&lt;a href="#title"&gt;Title is required&lt;/a&gt;&lt;/li&gt;
+    {% endif %}
+  &lt;/ul&gt;
+&lt;/div&gt;
+{% endif %}
+
+{# Add Task Form #}
+&lt;form action="/tasks" method="post"
+      hx-post="/tasks"
+      hx-target="#task-area"
+      hx-swap="innerHTML"
+      hx-on::after-request="this.reset()"&gt;
+  &lt;label for="title"&gt;Title&lt;/label&gt;
+  &lt;input id="title" name="title" type="text"
+         {% if error == "title" %}aria-invalid="true" aria-describedby="title-error"{% endif %}
+         required&gt;
+  {% if error == "title" %}
+  &lt;p id="title-error" class="error-message"&gt;Title is required&lt;/p&gt;
+  {% endif %}
+  &lt;button type="submit"&gt;Add Task&lt;/button&gt;
+&lt;/form&gt;
+
+{# ...rest of template... #}
+{% endblock %}
+</code></pre>
+<p><strong>Don’t forget</strong>: Update <code>GET /tasks</code> to pass <code>error</code> parameter to template:</p>
+<pre><code class="language-kotlin">get("/tasks") {
+    val error = request.queryParameters["error"]
+    val q = request.queryParameters["q"]?.trim() ?: ""
+    // ...pass error to template context
+}
+</code></pre>
+</details>
+<details>
+<summary>Click to reveal: Delete with dual-path support (<code>templates/tasks/_item.peb</code>)</summary>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
+  &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
+
+  {# Delete form with dual attributes #}
+  &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
+        hx-post="/tasks/{{ task.id }}/delete"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Delete the task '{{ task.title }}'?"&gt;
+    &lt;button type="submit" aria-label="Delete task: {{ task.title }}"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Route handler</strong>:</p>
+<pre><code class="language-kotlin">post("/tasks/{id}/delete") {
+    val id = parameters["id"] ?: return@post respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+    store.delete(id)
+
+    if (isHtmxRequest()) {
+        val statusHtml = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task "${task?.title ?: "Unknown"}" deleted.&lt;/div&gt;"""
+        respondText(statusHtml, ContentType.Text.Html)
+    } else {
+        respondRedirect("/tasks")
+    }
+}
+</code></pre>
+</details>
+<hr />
+<h2 id="part-2-no-js-parity-verification-script"><a class="header" href="#part-2-no-js-parity-verification-script">Part 2: No-JS Parity Verification Script</a></h2>
+<p>Create <code>wk08/scripts/nojs-check.md</code> with this testing script:</p>
+<pre><code class="language-markdown"># No-JS Parity Verification Script — Week 8
+
+**Purpose**: Verify all task flows work identically with JavaScript disabled.
+
+**Setup**:
+1. Open browser DevTools → Settings → Disable JavaScript
+2. Hard refresh (Ctrl+Shift+R / Cmd+Shift+R)
+
+---
+
+## Test 1: Add Task (Success Case)
+
+**Steps**:
+1. Navigate to `/tasks`
+2. Enter title "No-JS test task"
+3. Click "Add Task"
+
+**Expected**:
+- Full page reload
+- New task appears in list
+- URL remains `/tasks`
+- No error messages
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 2: Add Task (Validation Error)
+
+**Steps**:
+1. Leave title field empty
+2. Click "Add Task"
+
+**Expected**:
+- Full page reload
+- URL shows `/tasks?error=title`
+- Error summary appears at top
+- Input has `aria-invalid="true"`
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 3: Filter Tasks
+
+**Steps**:
+1. Add tasks "Alpha", "Bravo", "Charlie"
+2. Enter "ra" in filter box
+3. Click "Apply" button
+
+**Expected**:
+- Full page reload
+- URL shows `/tasks?q=ra&amp;page=1`
+- Only "Bravo" and "Charlie" visible
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 4: Pagination
+
+**Steps**:
+1. Add 15 tasks
+2. Click "Next" link
+
+**Expected**:
+- Full page reload
+- URL shows `/tasks?page=2`
+- Tasks 11-15 visible
+- "Previous" link appears
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 5: Delete Task
+
+**Steps**:
+1. Click "Delete" button on a task
+
+**Expected**:
+- Form submits to `POST /tasks/{id}/delete`
+- Full page reload
+- Task removed from list
+- **No confirmation dialog** (documented trade-off)
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 6: Keyboard Navigation
+
+**Steps**:
+1. Tab through entire page
+2. Press Enter on "Add Task"
+3. Tab to error link, press Enter
+
+**Expected**:
+- Focus order matches visual order
+- All interactive elements reachable
+- Error link moves focus to input
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Test 7: Browser History
+
+**Steps**:
+1. Start at `/tasks`
+2. Filter to "test"
+3. Go to page 2
+4. Click browser Back button twice
+
+**Expected**:
+- Back #1 → filtered, page 1
+- Back #2 → unfiltered
+
+**Result**: [ ] Pass  [ ] Fail
+
+---
+
+## Summary
+
+**Passed**: _____ / 7
+**Failed**: _____ / 7
+
+**Issues found**: (log in `wk08/backlog/issues.csv`)
+
+**Evidence**: Capture screenshots in `wk08/evidence/nojs-parity/`
+
+---
+
+**Verified by**: __________
+**Date**: __________
+</code></pre>
+<p>Run this script and capture evidence.</p>
+<hr />
+<h2 id="part-3-documentation--reflection"><a class="header" href="#part-3-documentation--reflection">Part 3: Documentation &amp; Reflection</a></h2>
+<h3 id="update-wk08docsprototyping-constraintsmd"><a class="header" href="#update-wk08docsprototyping-constraintsmd">Update <code>wk08/docs/prototyping-constraints.md</code></a></h3>
+<p>Add these sections to your existing file from Lab 1:</p>
+<pre><code class="language-markdown">## Dual-Path Architecture (Lab 2)
+
+### Design Decision
+Every route handles both HTMX (enhanced) and no-JS (baseline) requests.
+
+### Benefits
+- Works for everyone regardless of JS availability
+- Resilience if JS fails to load
+- Testing baseline proves server-first architecture
+
+### Costs
+- Code complexity (conditional logic in every route)
+- Testing burden (two paths per feature)
+- Template maintenance
+
+### Mitigations
+- Shared partials (`_item.peb`, `_list.peb`)
+- Verification script (`scripts/nojs-check.md`)
+- Backlog tracking for parity issues
+
+---
+
+## Validation Strategy
+
+### Design Decision
+All validation on server. No client-side enforcement.
+
+### Benefits
+- Security (client-side can be bypassed)
+- Consistency across HTMX/no-JS paths
+- Accessible error responses
+
+### Costs
+- Latency (round-trip for validation)
+- No instant feedback
+
+### Mitigations
+- Clear error messages (WCAG 3.3.1)
+- `aria-invalid`, `aria-describedby` for screen readers
+- Focus management (error link → input)
+
+---
+
+## Delete Confirmation Trade-off
+
+### Design Decision
+HTMX uses `hx-confirm`. No-JS has no confirmation.
+
+### Risk
+People might accidentally delete tasks in no-JS mode.
+
+### Mitigation
+- Documented in constraints doc
+- Backlog item: consider adding `/tasks/{id}/delete/confirm` page
+- Future: "Undo" feature (restore from soft-delete)
+
+---
+
+## Evidence
+
+**Verification script**: `wk08/scripts/nojs-check.md`
+**Test results**: [7/7 passed - date]
+**Evidence folder**: `wk08/evidence/nojs-parity/`
+**Backlog items**: wk8-01 (delete confirmation), wk8-02 (...)
+</code></pre>
+<h3 id="create-wk08reflectionmd"><a class="header" href="#create-wk08reflectionmd">Create <code>wk08/reflection.md</code></a></h3>
+<p>Answer these 6 questions (keep responses concise):</p>
+<pre><code class="language-markdown"># Week 8 Lab 2 Reflection
+
+## 1. Dual-path complexity
+Was it harder to maintain HTMX and no-JS paths than you expected? What helped keep them in sync?
+
+[Your answer]
+
+---
+
+## 2. Error handling
+How did accessible error identification change your approach? Did you discover any WCAG requirements you hadn't considered?
+
+[Your answer]
+
+---
+
+## 3. Trade-offs
+Which trade-off (e.g., no-JS delete confirmation) felt most significant? Would you design it differently with more time?
+
+[Your answer]
+
+---
+
+## 4. Testing
+How useful was the scripted no-JS verification? Will you use similar scripts in future projects?
+
+[Your answer]
+
+---
+
+## 5. Inclusion impact
+Who specifically benefits from the dual-path architecture? Think about connectivity, device age, organisational policies.
+
+[Your answer]
+
+---
+
+## 6. Next steps
+What would you improve before Week 9 instrumentation? Any technical debt to address?
+
+[Your answer]
+</code></pre>
+<hr />
+<h2 id="assessment"><a class="header" href="#assessment">Assessment</a></h2>
+<p>Your work is assessed on:</p>
+<ul>
+<li><strong>Verification evidence</strong>: Completed nojs-check.md with results</li>
+<li><strong>Trade-off documentation</strong>: Clear explanation of design decisions, risks, mitigations</li>
+<li><strong>Reflection quality</strong>: Thoughtful answers showing understanding of inclusion and constraints</li>
+</ul>
+<p><strong>Not assessed</strong>: Whether you wrote validation code from scratch.</p>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash">git add src/ templates/ wk08/scripts/ wk08/docs/ wk08/reflection.md wk08/evidence/
+git commit -m "wk8s2: dual-path validation, no-JS parity, trade-offs doc"
+</code></pre>
+<p>Proceed to <strong>Week 9</strong> for evaluation instrumentation.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk09/wk9-lab1-eval-plan-instrumentation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk09/wk9-lab1-eval-plan-instrumentation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

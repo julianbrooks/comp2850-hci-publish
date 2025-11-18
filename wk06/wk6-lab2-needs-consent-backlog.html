@@ -186,14 +186,14 @@
 <img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
 <hr />
 <h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
-<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., “person using a screen reader”) rather than deficit-based terms (e.g., “blind user”). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
 <hr />
 <h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
 <p><strong>Essential</strong></p>
 <ul>
 <li>Clone/update your Week 6 starter repo (same baseline code) to ensure tasks work before research session</li>
-<li><a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). "Know Your Customers' Jobs to Be Done"</a></li>
-<li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO (2024). "Guide to Data Protection by Design and Default"</a></li>
+<li><a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">Christensen, C. M., Hall, T., Dillon, K., &amp; Duncan, D. S. (2016). “Know Your Customers’ Jobs to Be Done”</a></li>
+<li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/">ICO (2024). “Guide to Data Protection by Design and Default”</a></li>
 <li><a href="../references/consent-pii-faq.html">Consent &amp; PII FAQ</a> (module ethics guidance)</li>
 <li><a href="../references/privacy-by-design.html">Privacy by Design</a> (UK GDPR compliance framework)</li>
 <li><a href="../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> (module testing guide for Weeks 6-11)</li>
@@ -202,16 +202,16 @@
 <ul>
 <li><a href="https://inclusive.microsoft.design/">Microsoft Inclusive Design Toolkit</a></li>
 <li><a href="https://www.jpattonassociates.com/user-story-mapping/">Patton, J. (2014). <em>User Story Mapping</em>, Ch. 1-3</a></li>
-<li><a href="https://www.nngroup.com/articles/interviewing-users/">Nielsen, J. (1993). "Usability Engineering", Ch. 5: User Interviews</a></li>
+<li><a href="https://www.nngroup.com/articles/interviewing-users/">Nielsen, J. (1993). “Usability Engineering”, Ch. 5: User Interviews</a></li>
 </ul>
 <hr />
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <h3 id="context"><a class="header" href="#context">Context</a></h3>
 <p>In <strong>Week 6 Lab 1</strong> you built a server-first task manager with progressive enhancement (HTMX). The scaffold is technically sound: it works without JavaScript, keyboard navigation is accessible, and ARIA live regions announce status messages.</p>
-<p><strong>But we don't yet know if it meets real people's needs.</strong></p>
-<p>This lab introduces <strong>needs-finding</strong>: a lightweight research activity to understand how people work with task managers, what frustrates them, and what inclusive features would help. You'll capture insights using <strong>job stories</strong> (a people-centred alternative to user stories), document an <strong>ethical consent protocol</strong> for peer interviews, and build an <strong>inclusive backlog</strong> that will drive your accessibility work in Weeks 7-10.</p>
+<p><strong>But we don’t yet know if it meets real people’s needs.</strong></p>
+<p>This lab introduces <strong>needs-finding</strong>: a lightweight research activity to understand how people work with task managers, what frustrates them, and what inclusive features would help. You’ll capture insights using <strong>job stories</strong> (a people-centred alternative to user stories), document an <strong>ethical consent protocol</strong> for peer interviews, and build an <strong>inclusive backlog</strong> that will drive your accessibility work in Weeks 7-10.</p>
 <h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
-<p><strong>Professionally</strong>, needs-finding prevents "solution looking for a problem":</p>
+<p><strong>Professionally</strong>, needs-finding prevents “solution looking for a problem”:</p>
 <ul>
 <li><strong>Basecamp</strong> (project management) conducts customer interviews every sprint</li>
 <li><strong>GOV.UK</strong> runs user research sessions before building new services</li>
@@ -247,16 +247,16 @@
 <h3 id="1-needs-finding-vs-requirements-gathering"><a class="header" href="#1-needs-finding-vs-requirements-gathering">1. Needs-Finding vs. Requirements Gathering</a></h3>
 <p><strong>Traditional requirements gathering</strong>:</p>
 <blockquote>
-<p>"The system shall allow users to filter tasks by status (complete/incomplete)."</p>
+<p>“The system shall allow users to filter tasks by status (complete/incomplete).”</p>
 </blockquote>
 <p><strong>Needs-finding</strong>:</p>
 <blockquote>
-<p>"When I'm preparing for a crit, I want to focus only on deliverable tasks so I can check I haven't missed anything, because I get anxious about deadlines."</p>
+<p>“When I’m preparing for a crit, I want to focus only on deliverable tasks so I can check I haven’t missed anything, because I get anxious about deadlines.”</p>
 </blockquote>
 <p><strong>Difference</strong>:</p>
 <ul>
-<li><strong>Requirements</strong> specify <em>solutions</em> ("filter by status")</li>
-<li><strong>Needs</strong> uncover <em>motivations</em> ("reduce anxiety about missed deadlines")</li>
+<li><strong>Requirements</strong> specify <em>solutions</em> (“filter by status”)</li>
+<li><strong>Needs</strong> uncover <em>motivations</em> (“reduce anxiety about missed deadlines”)</li>
 </ul>
 <p><strong>Why this matters</strong>: Solutions can change (filter, search, tags, AI assistant), but needs stay constant. Understanding needs lets you pivot to better solutions as technology evolves.</p>
 <h3 id="2-jobs-to-be-done-jtbd-framework"><a class="header" href="#2-jobs-to-be-done-jtbd-framework">2. Jobs-to-Be-Done (JTBD) Framework</a></h3>
@@ -274,13 +274,13 @@ because re-scanning 20 items to confirm deletion is time-consuming and error-pro
 </code></pre>
 <p><strong>Contrast with persona-based user story</strong>:</p>
 <blockquote>
-<p>"As a blind user, I want screen reader support so I can use the app."</p>
+<p>“As a blind user, I want screen reader support so I can use the app.”</p>
 </blockquote>
 <p><strong>Problems with persona stories</strong>:</p>
 <ul>
-<li>Assumes all "blind users" have same needs (heterogeneity ignored)</li>
+<li>Assumes all “blind users” have same needs (heterogeneity ignored)</li>
 <li>Focuses on disability label, not situational context</li>
-<li>Doesn't explain <em>why</em> the need exists</li>
+<li>Doesn’t explain <em>why</em> the need exists</li>
 </ul>
 <p><strong>JTBD advantages</strong>:</p>
 <ul>
@@ -300,7 +300,7 @@ because re-scanning 20 items to confirm deletion is time-consuming and error-pro
 </ol>
 <p><strong>Low-risk peer research</strong> (COMP2850 context):</p>
 <ul>
-<li><strong>No PII</strong>: Use pseudonyms ("Participant A"), not names</li>
+<li><strong>No PII</strong>: Use pseudonyms (“Participant A”), not names</li>
 <li><strong>Local storage</strong>: CSV files on your machine, not cloud services</li>
 <li><strong>Opt-out</strong>: Participant can withdraw at any time</li>
 <li><strong>No recordings</strong>: Text notes only (unless explicit consent for audio)</li>
@@ -308,11 +308,11 @@ because re-scanning 20 items to confirm deletion is time-consuming and error-pro
 </ul>
 <p><strong>Consent script elements</strong>:</p>
 <ol>
-<li>Purpose ("We're researching task manager usability")</li>
-<li>What you'll do ("5-minute interview, taking notes")</li>
-<li>Data stored ("Pseudonymised notes in local Git repo")</li>
-<li>Rights ("You can stop at any time, request deletion")</li>
-<li>Contact ("Email <module> to opt out")</li>
+<li>Purpose (“We’re researching task manager usability”)</li>
+<li>What you’ll do (“5-minute interview, taking notes”)</li>
+<li>Data stored (“Pseudonymised notes in local Git repo”)</li>
+<li>Rights (“You can stop at any time, request deletion”)</li>
+<li>Contact (“Email <module> to opt out”)</li>
 </ol>
 <h3 id="4-inclusive-backlog-structure"><a class="header" href="#4-inclusive-backlog-structure">4. Inclusive Backlog Structure</a></h3>
 <p><strong>Standard backlog</strong>:</p>
@@ -326,13 +326,13 @@ because re-scanning 20 items to confirm deletion is time-consuming and error-pro
 <p><strong>Why additional columns</strong>:</p>
 <ul>
 <li><strong>Story Ref</strong>: Traceable to research evidence</li>
-<li><strong>Inclusion Risk</strong>: Tags who's affected (SR, keyboard, low-vision, cognitive, motor)</li>
+<li><strong>Inclusion Risk</strong>: Tags who’s affected (SR, keyboard, low-vision, cognitive, motor)</li>
 <li><strong>Evidence</strong>: Links to pilot notes, WCAG audits, screenshots</li>
 <li><strong>Severity</strong>: Impact on task completion (High = blocks, Medium = hinders, Low = cosmetic)</li>
 </ul>
 <p><strong>Benefits</strong>:</p>
 <ul>
-<li>Transparent prioritisation (not just "gut feel")</li>
+<li>Transparent prioritisation (not just “gut feel”)</li>
 <li>Ensures diverse needs considered (not just mouse + sighted users)</li>
 <li>Creates evidence chain for assessments (Task 1, Task 2, studio crit)</li>
 </ul>
@@ -343,7 +343,7 @@ because re-scanning 20 items to confirm deletion is time-consuming and error-pro
 <li><strong>Read notes</strong>: Highlight key phrases</li>
 <li><strong>Code observations</strong>: Tag with themes (e.g., <code>status_feedback</code>, <code>keyboard_nav</code>, <code>cognitive_load</code>)</li>
 <li><strong>Group codes</strong>: Cluster similar tags</li>
-<li><strong>Synthesise themes</strong>: "Participants struggle to confirm actions succeeded" → backlog item: "Add persistent confirmation messages"</li>
+<li><strong>Synthesise themes</strong>: “Participants struggle to confirm actions succeeded” → backlog item: “Add persistent confirmation messages”</li>
 </ol>
 <p><strong>Tools</strong> (COMP2850 level):</p>
 <ul>
@@ -452,7 +452,7 @@ If you change your mind after the interview:
 <h3 id="step-3-review-with-lab-partner"><a class="header" href="#step-3-review-with-lab-partner">Step 3: Review with Lab Partner</a></h3>
 <p>Pair up with a classmate and:</p>
 <ol>
-<li>Read each other's consent protocols</li>
+<li>Read each other’s consent protocols</li>
 <li>Check for <strong>missing elements</strong>:
 <ul>
 <li>✅ Purpose clearly stated?</li>
@@ -477,19 +477,19 @@ If you change your mind after the interview:
 <p>Use these open-ended prompts (adapt as needed):</p>
 <p><strong>General task management</strong>:</p>
 <ol>
-<li>"Tell me about the last time you used a to-do list or task manager. What were you trying to accomplish?"</li>
-<li>"What frustrates you most about managing tasks? Can you give me a specific example?"</li>
-<li>"Have you ever lost track of an important task? What happened?"</li>
+<li>“Tell me about the last time you used a to-do list or task manager. What were you trying to accomplish?”</li>
+<li>“What frustrates you most about managing tasks? Can you give me a specific example?”</li>
+<li>“Have you ever lost track of an important task? What happened?”</li>
 </ol>
 <p><strong>Accessibility &amp; interaction</strong>:
-4. "Do you ever work without a mouse (e.g., trackpad broken, using laptop on train)? How does that change how you interact with apps?"
-5. "Have you used a task manager with your eyes closed or in bright sunlight? What was hard?"
-6. "If you could add one feature to make task management less stressful, what would it be?"</p>
+4. “Do you ever work without a mouse (e.g., trackpad broken, using laptop on train)? How does that change how you interact with apps?”
+5. “Have you used a task manager with your eyes closed or in bright sunlight? What was hard?”
+6. “If you could add one feature to make task management less stressful, what would it be?”</p>
 <p><strong>Follow-up probes</strong>:</p>
 <ul>
-<li>"Can you tell me more about that?"</li>
-<li>"How did that make you feel?"</li>
-<li>"What did you do to work around it?"</li>
+<li>“Can you tell me more about that?”</li>
+<li>“How did that make you feel?”</li>
+<li>“What did you do to work around it?”</li>
 </ul>
 <h3 id="step-2-note-taking-template"><a class="header" href="#step-2-note-taking-template">Step 2: Note-Taking Template</a></h3>
 <p>Create <code>wk06/research/notes.md</code>:</p>
@@ -702,7 +702,7 @@ If you change your mind after the interview:
 <tr><td>S6 (Error messages)</td><td>3.3.1 Error Identification</td><td>A</td></tr>
 </tbody></table>
 </div>
-<p><strong>Why this matters</strong>: When you build the backlog, you can justify priority with "This is a WCAG Level A failure" vs. "This is a nice-to-have."</p>
+<p><strong>Why this matters</strong>: When you build the backlog, you can justify priority with “This is a WCAG Level A failure” vs. “This is a nice-to-have.”</p>
 <p><strong>Stop and check</strong>:</p>
 <ul>
 <li>✅ 5-6 job stories written</li>
@@ -720,12 +720,12 @@ If you change your mind after the interview:
 </code></pre>
 <p><strong>Column definitions</strong>:</p>
 <ul>
-<li><strong>id</strong>: Unique number (1, 2, 3...)</li>
+<li><strong>id</strong>: Unique number (1, 2, 3…)</li>
 <li><strong>title</strong>: Short summary (&lt; 10 words)</li>
 <li><strong>story_ref</strong>: Link to <code>stories.md#S1</code> or <code>notes.md#L15</code></li>
-<li><strong>story_type</strong>: "Job story", "Pain point", "WCAG violation", "Research insight"</li>
-<li><strong>need</strong>: High-level category ("Confirmation feedback", "Keyboard access")</li>
-<li><strong>type</strong>: "Accessibility", "Usability", "Performance", "Tech debt"</li>
+<li><strong>story_type</strong>: “Job story”, “Pain point”, “WCAG violation”, “Research insight”</li>
+<li><strong>need</strong>: High-level category (“Confirmation feedback”, “Keyboard access”)</li>
+<li><strong>type</strong>: “Accessibility”, “Usability”, “Performance”, “Tech debt”</li>
 <li><strong>severity</strong>: High (blocks task), Medium (hinders), Low (cosmetic)</li>
 <li><strong>inclusion_risk</strong>: Comma-separated tags (SR, Keyboard, Cognitive, Motor, Low vision)</li>
 <li><strong>evidence</strong>: Path to notes, screenshot, WCAG reference</li>
@@ -772,7 +772,7 @@ If you change your mind after the interview:
 <li><strong>Total priority</strong>: 1 → <strong>Defer to Semester 2</strong></li>
 </ul>
 <h3 id="step-4-select-candidate-fixes"><a class="header" href="#step-4-select-candidate-fixes">Step 4: Select Candidate Fixes</a></h3>
-<p>Mark 1-2 items with <code>candidate_fix=true</code>. These are the issues you'll fix in <strong>Week 7 Lab 2</strong>. Criteria:</p>
+<p>Mark 1-2 items with <code>candidate_fix=true</code>. These are the issues you’ll fix in <strong>Week 7 Lab 2</strong>. Criteria:</p>
 <ul>
 <li>High severity + high inclusion risk</li>
 <li>Fixable in 1-2 hours (scoped for lab time)</li>
@@ -795,7 +795,7 @@ If you change your mind after the interview:
 <h2 id="activity-5-instrumentation-planning-teaser"><a class="header" href="#activity-5-instrumentation-planning-teaser">Activity 5: Instrumentation Planning (Teaser)</a></h2>
 <p><strong>Time</strong>: 15 minutes
 <strong>Materials</strong>: <code>wk06/instrumentation/plan.md</code></p>
-<p>In <strong>Week 9</strong> you'll run task-based pilots and collect metrics (time-on-task, error rate, completion rate). Today you'll sketch what data to capture.</p>
+<p>In <strong>Week 9</strong> you’ll run task-based pilots and collect metrics (time-on-task, error rate, completion rate). Today you’ll sketch what data to capture.</p>
 <h3 id="step-1-identify-events-to-log"><a class="header" href="#step-1-identify-events-to-log">Step 1: Identify Events to Log</a></h3>
 <p>Based on your backlog, list key events:</p>
 <div class="table-wrapper"><table><thead><tr><th>Event</th><th>Why Log It</th><th>Fields to Capture</th></tr></thead><tbody>
@@ -983,11 +983,11 @@ In **Week 7 Lab 1** you will:
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../wk06/wk6-lab1-html-css-htmx.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk06/wk6-lab1-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk06/wk6-lab2-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -997,11 +997,11 @@ In **Week 7 Lab 1** you will:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../wk06/wk6-lab1-html-css-htmx.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk06/wk6-lab1-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk06/wk6-lab2-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

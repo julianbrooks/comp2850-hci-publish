@@ -183,7 +183,7 @@
 <p><strong>COMP2850 HCI - Privacy-Safe Screenshot Practices</strong></p>
 <hr />
 <h2 id="why-screenshots-matter"><a class="header" href="#why-screenshots-matter">Why Screenshots Matter</a></h2>
-<p>For Task 1 (Week 9) and Task 2 (Week 10-11) submissions, you'll include <strong>screenshot evidence</strong> showing:</p>
+<p>For Task 1 (Week 9) and Task 2 (Week 10-11) submissions, you’ll include <strong>screenshot evidence</strong> showing:</p>
 <ul>
 <li>Interface states (before/after redesign)</li>
 <li>Accessibility features (ARIA live regions, focus indicators)</li>
@@ -196,7 +196,7 @@
 <h3 id="windows"><a class="header" href="#windows">Windows</a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Use Case</th><th>How to Access</th></tr></thead><tbody>
 <tr><td><strong>Snipping Tool</strong></td><td>Quick screenshots, built-in</td><td><code>Win + Shift + S</code></td></tr>
-<tr><td><strong>Windows Snip &amp; Sketch</strong></td><td>Annotate after capture</td><td>Windows Search → "Snip &amp; Sketch"</td></tr>
+<tr><td><strong>Windows Snip &amp; Sketch</strong></td><td>Annotate after capture</td><td>Windows Search → “Snip &amp; Sketch”</td></tr>
 <tr><td><strong>ShareX</strong> (free)</td><td>Advanced (regions, scrolling pages)</td><td>Download: https://getsharex.com/</td></tr>
 <tr><td><strong>Greenshot</strong> (free)</td><td>Annotate, auto-save to folders</td><td>Download: https://getgreenshot.org/</td></tr>
 </tbody></table>
@@ -238,8 +238,8 @@
 </ul>
 <h3 id="-keep-these-useful-evidence"><a class="header" href="#-keep-these-useful-evidence">✅ Keep These (Useful Evidence)</a></h3>
 <ul>
-<li><strong>Browser Name/Version</strong>: "Chrome 120.0" (shows compatibility)</li>
-<li><strong>Window Title</strong>: "Task Manager - localhost:8080" (shows page context)</li>
+<li><strong>Browser Name/Version</strong>: “Chrome 120.0” (shows compatibility)</li>
+<li><strong>Window Title</strong>: “Task Manager - localhost:8080” (shows page context)</li>
 <li><strong>DevTools Panel</strong>: HTML inspector, Console, Network tab</li>
 <li><strong>Code Line Numbers</strong>: In DevTools Elements panel</li>
 <li><strong>ARIA Attributes</strong>: <code>role="status"</code>, <code>aria-label="..."</code></li>
@@ -255,7 +255,7 @@
 <li><input disabled="" type="checkbox"/>
 <strong>No email addresses</strong> visible</li>
 <li><input disabled="" type="checkbox"/>
-<strong>No personal task titles</strong> (use test data: "Buy milk", "Pay bills")</li>
+<strong>No personal task titles</strong> (use test data: “Buy milk”, “Pay bills”)</li>
 <li><input disabled="" type="checkbox"/>
 <strong>No usernames in file paths</strong> (crop or blur <code>C:\Users\YourName\</code>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -263,7 +263,7 @@
 <li><input disabled="" type="checkbox"/>
 <strong>Screenshot is readable</strong> (text legible, not too small)</li>
 <li><input disabled="" type="checkbox"/>
-<strong>Relevant content in focus</strong> (crop to show only what's needed)</li>
+<strong>Relevant content in focus</strong> (crop to show only what’s needed)</li>
 <li><input disabled="" type="checkbox"/>
 <strong>Annotations added</strong> (if needed: arrows, boxes, labels)</li>
 </ul>
@@ -456,7 +456,7 @@ convert input.png -region 100x50+10+10 -blur 0x8 output.png
 <p><strong>ExifTool</strong> (all platforms):</p>
 <pre><code class="language-bash">exiftool -all= screenshot.png
 </code></pre>
-<p><strong>Or</strong>: Most screenshot tools don't embed EXIF data by default (unlike phone cameras), but verify if submitting to external sites.</p>
+<p><strong>Or</strong>: Most screenshot tools don’t embed EXIF data by default (unlike phone cameras), but verify if submitting to external sites.</p>
 <hr />
 <h2 id="9-annotation-best-practices"><a class="header" href="#9-annotation-best-practices">9. Annotation Best Practices</a></h2>
 <p>When adding <strong>arrows, boxes, or text</strong> to explain screenshots:</p>
@@ -467,13 +467,13 @@ convert input.png -region 100x50+10+10 -blur 0x8 output.png
 <li><strong>Contrast</strong>: Red/yellow on light backgrounds, white/yellow on dark</li>
 <li><strong>Purpose</strong>: Point to specific ARIA attribute, error message, focus indicator</li>
 </ul>
-<p><strong>Example</strong>: Red arrow pointing to <code>role="status"</code> in DevTools with label "Live region"</p>
+<p><strong>Example</strong>: Red arrow pointing to <code>role="status"</code> in DevTools with label “Live region”</p>
 <h3 id="bad-annotations-"><a class="header" href="#bad-annotations-">Bad Annotations ❌</a></h3>
 <ul>
 <li><strong>Too many arrows</strong>: Cluttered, confusing</li>
 <li><strong>Tiny text</strong>: Labels must be 14pt+ to read in PDF</li>
-<li><strong>Vague labels</strong>: "This part" instead of "ARIA live region"</li>
-<li><strong>Covering content</strong>: Arrow/box blocks the code you're highlighting</li>
+<li><strong>Vague labels</strong>: “This part” instead of “ARIA live region”</li>
+<li><strong>Covering content</strong>: Arrow/box blocks the code you’re highlighting</li>
 </ul>
 <hr />
 <h2 id="10-testing-screenshot-readability"><a class="header" href="#10-testing-screenshot-readability">10. Testing Screenshot Readability</a></h2>
@@ -502,7 +502,7 @@ convert input.png -region 100x50+10+10 -blur 0x8 output.png
 <strong>Fix</strong>: Increase browser zoom to 125-150% before screenshot, OR use higher DPI export</p>
 <hr />
 <h3 id="mistake-3-personal-bookmarks-visible"><a class="header" href="#mistake-3-personal-bookmarks-visible">Mistake 3: Personal Bookmarks Visible</a></h3>
-<p><strong>Problem</strong>: Bookmark bar shows "Personal Email", "Work Project", "Bank Login"
+<p><strong>Problem</strong>: Bookmark bar shows “Personal Email”, “Work Project”, “Bank Login”
 <strong>Fix</strong>: Hide bookmark bar (<code>Ctrl + Shift + B</code>) OR crop it out OR blur it</p>
 <hr />
 <h3 id="mistake-4-username-in-file-path"><a class="header" href="#mistake-4-username-in-file-path">Mistake 4: Username in File Path</a></h3>
@@ -543,7 +543,7 @@ The status div has role="status" and aria-live="polite", ensuring screen readers
 <h2 id="13-quick-reference-screenshot-workflow"><a class="header" href="#13-quick-reference-screenshot-workflow">13. Quick Reference: Screenshot Workflow</a></h2>
 <ol>
 <li><strong>Before</strong>: Hide bookmark bar, close extra tabs, use test data</li>
-<li><strong>Capture</strong>: Use tool's region select (not full screen)</li>
+<li><strong>Capture</strong>: Use tool’s region select (not full screen)</li>
 <li><strong>Inspect</strong>: Check for PII (usernames, emails, file paths)</li>
 <li><strong>Scrub</strong>: Blur or crop sensitive areas</li>
 <li><strong>Annotate</strong> (if needed): Add red arrows/boxes to highlight</li>
@@ -553,7 +553,7 @@ The status div has role="status" and aria-live="polite", ensuring screen readers
 </ol>
 <hr />
 <h2 id="14-example-evidence-package"><a class="header" href="#14-example-evidence-package">14. Example Evidence Package</a></h2>
-<p>Here's what a complete screenshot evidence folder might look like for <strong>Task 1 (Week 9)</strong>:</p>
+<p>Here’s what a complete screenshot evidence folder might look like for <strong>Task 1 (Week 9)</strong>:</p>
 <pre><code>wk09/evidence/screenshots/
 ├── 01-baseline-interface/
 │   ├── task-list-full-view.png              (1280x720, 156KB)

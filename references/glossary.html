@@ -186,7 +186,7 @@
 <hr />
 <h3 id="accessibility"><a class="header" href="#accessibility">Accessibility (a11y)</a></h3>
 <p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
-<p><strong>Definition</strong>: Practice of designing products usable by people with disabilities (visual, auditory, motor, cognitive). "a11y" is numeronym (a + 11 letters + y).</p>
+<p><strong>Definition</strong>: Practice of designing products usable by people with disabilities (visual, auditory, motor, cognitive). “a11y” is numeronym (a + 11 letters + y).</p>
 <p><strong>Core principles (POUR)</strong>:</p>
 <ul>
 <li><strong>Perceivable</strong> - Can see/hear content (alt text, captions, contrast)</li>
@@ -209,7 +209,7 @@
 <p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
 <p><strong>Full name</strong>: Accessible Rich Internet Applications</p>
 <p><strong>Definition</strong>: Set of HTML attributes that provide semantic information to assistive technologies (screen readers, voice control). Includes roles (<code>role="alert"</code>), properties (<code>aria-label</code>), and states (<code>aria-expanded</code>).</p>
-<p><strong>When to use</strong>: Only when semantic HTML isn't sufficient. <strong>First rule of ARIA</strong>: Don't use ARIA if you can use semantic HTML instead.</p>
+<p><strong>When to use</strong>: Only when semantic HTML isn’t sufficient. <strong>First rule of ARIA</strong>: Don’t use ARIA if you can use semantic HTML instead.</p>
 <p><strong>Used in COMP2850</strong>: <code>role="status"</code>, <code>aria-live="polite"</code>, <code>aria-label</code> for context-specific buttons.</p>
 <p><strong>Reference</strong>: <a href="https://www.w3.org/WAI/ARIA/apg/">WAI-ARIA Authoring Practices</a></p>
 <p><strong>See also</strong>: <a href="#aria-live-region">ARIA Live Region</a>, <a href="#semantic-html">Semantic HTML</a></p>
@@ -217,7 +217,7 @@
 <h3 id="aria-live-region"><a class="header" href="#aria-live-region">ARIA Live Region</a></h3>
 <p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
 <p><strong>Definition</strong>: Element that screen readers monitor for changes and announce automatically, without moving focus.</p>
-<p><strong>Why it matters</strong>: HTMX updates the page dynamically. Without live regions, screen reader users don't know anything changed.</p>
+<p><strong>Why it matters</strong>: HTMX updates the page dynamically. Without live regions, screen reader users don’t know anything changed.</p>
 <p><strong>Attributes</strong>:</p>
 <ul>
 <li><code>role="status"</code> or <code>role="alert"</code> - What type of announcement</li>
@@ -248,7 +248,7 @@
 <li><strong>Manipulation</strong>: JavaScript can add, remove, or change nodes (e.g., <code>document.getElementById()</code>)</li>
 <li><strong>HTMX updates</strong>: HTMX modifies the DOM by swapping HTML fragments without full page reload</li>
 </ul>
-<p><strong>Example</strong>: <code>&lt;ul id="tasks"&gt;&lt;li&gt;Task 1&lt;/li&gt;&lt;/ul&gt;</code> becomes a tree: <code>ul</code> (parent) → <code>li</code> (child) → text node "Task 1"</p>
+<p><strong>Example</strong>: <code>&lt;ul id="tasks"&gt;&lt;li&gt;Task 1&lt;/li&gt;&lt;/ul&gt;</code> becomes a tree: <code>ul</code> (parent) → <code>li</code> (child) → text node “Task 1”</p>
 <p><strong>Why it matters</strong>: Understanding the DOM helps debug HTMX swaps and accessibility issues (screen readers navigate the DOM tree).</p>
 <p><strong>See also</strong>: <a href="#htmx">HTMX</a>, <a href="#ajax">AJAX</a>, <a href="#html">HTML</a></p>
 <hr />
@@ -289,8 +289,8 @@
 <h3 id="hateoas"><a class="header" href="#hateoas">HATEOAS</a></h3>
 <p><img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /></p>
 <p><strong>Full name</strong>: Hypermedia As The Engine Of Application State</p>
-<p><strong>Definition</strong>: REST principle where the server's responses include hyperlinks/forms that tell the client what actions are possible next. The client doesn't need hardcoded URLs.</p>
-<p><strong>Example</strong>: Task list HTML includes <code>&lt;form action="/tasks" method="post"&gt;</code> (server tells client "you can add tasks here").</p>
+<p><strong>Definition</strong>: REST principle where the server’s responses include hyperlinks/forms that tell the client what actions are possible next. The client doesn’t need hardcoded URLs.</p>
+<p><strong>Example</strong>: Task list HTML includes <code>&lt;form action="/tasks" method="post"&gt;</code> (server tells client “you can add tasks here”).</p>
 <p><strong>See also</strong>: <a href="#hypermedia">Hypermedia</a></p>
 <hr />
 <h3 id="heuristics"><a class="header" href="#heuristics">Heuristics</a></h3>
@@ -298,8 +298,8 @@
 <p><strong>Definition</strong>: General rules or principles for evaluating interface usability, not strict guidelines.</p>
 <p><strong>Examples</strong>:</p>
 <ul>
-<li><strong>Nielsen's 10 Usability Heuristics</strong> (visibility of status, user control, consistency, error prevention, etc.)</li>
-<li><strong>Shneiderman's 8 Golden Rules</strong> (consistency, shortcuts, feedback, closure, error handling, etc.)</li>
+<li><strong>Nielsen’s 10 Usability Heuristics</strong> (visibility of status, user control, consistency, error prevention, etc.)</li>
+<li><strong>Shneiderman’s 8 Golden Rules</strong> (consistency, shortcuts, feedback, closure, error handling, etc.)</li>
 </ul>
 <p><strong>Used in COMP2850</strong>: Week 7 accessibility audit uses heuristics + WCAG.</p>
 <p><strong>See also</strong>: <a href="#wcag">WCAG</a>, <a href="#accessibility">Accessibility</a></p>
@@ -343,7 +343,7 @@
 <li><strong>201 Created</strong> - Resource created successfully</li>
 <li><strong>303 See Other</strong> - Redirect after POST (PRG pattern)</li>
 <li><strong>400 Bad Request</strong> - Client error (validation failed)</li>
-<li><strong>404 Not Found</strong> - Resource doesn't exist</li>
+<li><strong>404 Not Found</strong> - Resource doesn’t exist</li>
 <li><strong>500 Internal Server Error</strong> - Server error</li>
 </ul>
 <p><strong>Used in COMP2850</strong>: 303 for PRG redirects, 201 for successful creation, 400 for validation errors.</p>
@@ -351,10 +351,10 @@
 <hr />
 <h3 id="hx-swap"><a class="header" href="#hx-swap">hx-swap</a></h3>
 <p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
-<p><strong>Definition</strong>: HTMX attribute specifying <strong>how</strong> to insert the server's response into the target.</p>
+<p><strong>Definition</strong>: HTMX attribute specifying <strong>how</strong> to insert the server’s response into the target.</p>
 <p><strong>Common values</strong>:</p>
 <ul>
-<li><code>innerHTML</code> (default) - Replace target's contents</li>
+<li><code>innerHTML</code> (default) - Replace target’s contents</li>
 <li><code>outerHTML</code> - Replace target itself</li>
 <li><code>beforeend</code> - Append to target (inside, at end)</li>
 <li><code>afterend</code> - Insert after target (outside)</li>
@@ -365,7 +365,7 @@
 <hr />
 <h3 id="hx-target"><a class="header" href="#hx-target">hx-target</a></h3>
 <p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
-<p><strong>Definition</strong>: HTMX attribute specifying which element to update with the server's response. Uses CSS selector syntax.</p>
+<p><strong>Definition</strong>: HTMX attribute specifying which element to update with the server’s response. Uses CSS selector syntax.</p>
 <p><strong>Example</strong>: <code>hx-target="#task-list"</code> → response goes into element with <code>id="task-list"</code>.</p>
 <p><strong>Default</strong>: If not specified, targets the element that triggered the request.</p>
 <p><strong>See also</strong>: <a href="#hx-swap">hx-swap</a>, <a href="#htmx">HTMX</a></p>
@@ -397,9 +397,9 @@
 <hr />
 <h3 id="job-stories"><a class="header" href="#job-stories">Job Stories</a></h3>
 <p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
-<p><strong>Definition</strong>: Format for capturing user needs based on context, motivation, and outcome. Structure: <strong>"When [situation], I want [motivation], so I can [outcome], because [reasoning]."</strong></p>
-<p><strong>Example</strong>: "When I'm reviewing my weekly tasks on Sunday evening, I want to see incomplete items highlighted, so I can prioritize tomorrow's work, because I need to meet Friday's deadline."</p>
-<p><strong>Why not user stories</strong>: User stories ("As a user, I want...") focus on demographics. Job stories focus on context and causality.</p>
+<p><strong>Definition</strong>: Format for capturing user needs based on context, motivation, and outcome. Structure: <strong>“When [situation], I want [motivation], so I can [outcome], because [reasoning].”</strong></p>
+<p><strong>Example</strong>: “When I’m reviewing my weekly tasks on Sunday evening, I want to see incomplete items highlighted, so I can prioritize tomorrow’s work, because I need to meet Friday’s deadline.”</p>
+<p><strong>Why not user stories</strong>: User stories (“As a user, I want…”) focus on demographics. Job stories focus on context and causality.</p>
 <p><strong>Used in COMP2850</strong>: Week 6 Lab 2.</p>
 <p><strong>See also</strong>: <a href="#needs-finding">Needs-Finding</a></p>
 <hr />
@@ -427,7 +427,7 @@
 <h3 id="needs-finding"><a class="header" href="#needs-finding">Needs-Finding</a></h3>
 <p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
 <p><strong>Definition</strong>: Research method to understand what people actually need (not what they say they want). Uses observation, interviews, job stories, contextual inquiry.</p>
-<p><strong>Why not "requirements gathering"</strong>: Implies people know what they need and can articulate it. Needs-finding acknowledges we must discover unstated needs.</p>
+<p><strong>Why not “requirements gathering”</strong>: Implies people know what they need and can articulate it. Needs-finding acknowledges we must discover unstated needs.</p>
 <p><strong>Used in COMP2850</strong>: Week 6 Lab 2 - conduct peer interviews, write job stories.</p>
 <p><strong>See also</strong>: <a href="#job-stories">Job Stories</a>, <a href="#people-centred-language">People-Centred Language</a></p>
 <hr />
@@ -441,7 +441,7 @@
 <h3 id="oob-swap"><a class="header" href="#oob-swap">OOB Swap (Out-of-Band Swap)</a></h3>
 <p><img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /></p>
 <p><strong>Full name</strong>: Out-of-Band Swap</p>
-<p><strong>Definition</strong>: HTMX feature that updates an element <strong>outside</strong> the main target. The server includes <code>hx-swap-oob="true"</code> on an element, and HTMX updates it based on its <code>id</code>, even if it's not the primary target.</p>
+<p><strong>Definition</strong>: HTMX feature that updates an element <strong>outside</strong> the main target. The server includes <code>hx-swap-oob="true"</code> on an element, and HTMX updates it based on its <code>id</code>, even if it’s not the primary target.</p>
 <p><strong>Why it matters</strong>: Lets you update multiple parts of the page from one response (e.g., update task list + update status message).</p>
 <p><strong>Example</strong>:</p>
 <pre><code class="language-html">&lt;!-- Main target --&gt;
@@ -471,7 +471,7 @@
 <hr />
 <h3 id="participant"><a class="header" href="#participant">Participant</a></h3>
 <p><img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /></p>
-<p><strong>Definition</strong>: Person taking part in research (pilots, interviews, usability tests). Preferred term over "user" or "subject."</p>
+<p><strong>Definition</strong>: Person taking part in research (pilots, interviews, usability tests). Preferred term over “user” or “subject.”</p>
 <p><strong>Why</strong>: More respectful, acknowledges agency, aligns with ethics protocols.</p>
 <p><strong>Used in COMP2850</strong>: Module-wide standard term.</p>
 <p><strong>See also</strong>: <a href="#people-centred-language">People-Centred Language</a></p>
@@ -494,9 +494,9 @@
 <p><strong>Definition</strong>: Putting the person first, not the disability or technology. Avoids deficit-based terms.</p>
 <p><strong>Examples</strong>:</p>
 <ul>
-<li>✅ "Person using a screen reader" (not "blind user")</li>
-<li>✅ "Keyboard user" (not "disabled person")</li>
-<li>✅ "Person with low vision" (not "visually impaired user")</li>
+<li>✅ “Person using a screen reader” (not “blind user”)</li>
+<li>✅ “Keyboard user” (not “disabled person”)</li>
+<li>✅ “Person with low vision” (not “visually impaired user”)</li>
 </ul>
 <p><strong>Why it matters</strong>: Disability arises from environmental barriers (bad design), not individual impairment. Language shapes how we think about accessibility.</p>
 <p><strong>Used in COMP2850</strong>: Module-wide terminology standard.</p>
@@ -537,7 +537,7 @@
 <p><strong>Definition</strong>: Approach to system design where privacy protections are built in from the start, not added later.</p>
 <p><strong>Principles</strong>:</p>
 <ol>
-<li>Proactive (prevent, don't react)</li>
+<li>Proactive (prevent, don’t react)</li>
 <li>Privacy as default setting</li>
 <li>Privacy embedded in design</li>
 <li>Full functionality (positive-sum, not zero-sum)</li>
@@ -620,7 +620,7 @@
 <h3 id="skip-link"><a class="header" href="#skip-link">Skip Link</a></h3>
 <p><img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /></p>
 <p><strong>Definition</strong>: Link at the top of a page that lets keyboard users jump directly to main content, bypassing repeated navigation.</p>
-<p><strong>Why it matters</strong>: WCAG 2.4.1 (Bypass Blocks). Users shouldn't have to tab through 50 nav links on every page.</p>
+<p><strong>Why it matters</strong>: WCAG 2.4.1 (Bypass Blocks). Users shouldn’t have to tab through 50 nav links on every page.</p>
 <p><strong>Implementation</strong>:</p>
 <pre><code class="language-html">&lt;a href="#main" class="skip-link"&gt;Skip to main content&lt;/a&gt;
 &lt;!-- ... nav ... --&gt;
@@ -640,7 +640,7 @@
 <h3 id="task-based-evaluation"><a class="header" href="#task-based-evaluation">Task-Based Evaluation</a></h3>
 <p><img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /></p>
 <p><strong>Definition</strong>: Usability testing where participants attempt realistic tasks while you measure performance (time, errors, completion rate) and gather qualitative observations.</p>
-<p><strong>Example</strong>: "Add a task called 'Buy milk', mark it complete, then delete it" (measures core CRUD functionality).</p>
+<p><strong>Example</strong>: “Add a task called ‘Buy milk’, mark it complete, then delete it” (measures core CRUD functionality).</p>
 <p><strong>Used in COMP2850</strong>: Week 9 Lab 2 - 4-person peer pilots with 4 tasks.</p>
 <p><strong>See also</strong>: <a href="#evaluation">Evaluation</a></p>
 <hr />

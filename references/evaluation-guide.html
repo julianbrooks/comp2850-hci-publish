@@ -187,7 +187,7 @@
 <li><strong>Objective metrics</strong> - Measurable performance data (time, error rates, completion rates) captured through instrumentation</li>
 <li><strong>Subjective metrics</strong> - Self-reported experiences (confidence, satisfaction, perceived difficulty) captured through questionnaires</li>
 </ul>
-<p>For COMP2850, we focus on <strong>task-based evaluation</strong>: participants attempt specific tasks (e.g., "filter tasks by status") while we measure completion time, success rates, and errors. This approach reveals usability issues that might not surface through inspection methods alone.</p>
+<p>For COMP2850, we focus on <strong>task-based evaluation</strong>: participants attempt specific tasks (e.g., “filter tasks by status”) while we measure completion time, success rates, and errors. This approach reveals usability issues that might not surface through inspection methods alone.</p>
 <p><strong>Why metrics matter:</strong></p>
 <ul>
 <li><strong>Data-driven redesign</strong> - Identify which tasks cause the most friction</li>
@@ -202,33 +202,33 @@
 <p><strong>Task-based usability evaluation</strong> has its roots in cognitive psychology and human factors research from the 1980s-90s. Rather than measuring abstract performance (e.g., reaction time, motor precision), task-based methods assess how well people can accomplish <strong>realistic goals</strong> with a system.</p>
 <p><strong>Key foundations:</strong></p>
 <ul>
-<li><strong>ISO 9241-11 (2018)</strong>: Defines usability as "the extent to which a system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use"</li>
-<li><strong>Nielsen &amp; Landauer (1993)</strong>: Established the "5-user rule" - testing with 5 participants identifies ~85% of usability issues</li>
+<li><strong>ISO 9241-11 (2018)</strong>: Defines usability as “the extent to which a system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use”</li>
+<li><strong>Nielsen &amp; Landauer (1993)</strong>: Established the “5-user rule” - testing with 5 participants identifies ~85% of usability issues</li>
 <li><strong>Dumas &amp; Redish (1993)</strong>: <em>A Practical Guide to Usability Testing</em> - formalized task-based protocols for industry</li>
 <li><strong>Lewis (1982, 2014)</strong>: Developed task-based metrics (completion rate, time-on-task, subjective ratings) still used today</li>
 </ul>
 <p><strong>Why task-based over alternatives?</strong></p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>What it measures</th><th>When to use</th><th>Why we don't use it here</th></tr></thead><tbody>
-<tr><td><strong>Fitts' Law / ISO 9241-9</strong></td><td>Motor performance (pointing, clicking speed)</td><td>Low-level widget design (button size, target distance)</td><td>Too low-level; doesn't capture real workflow issues</td></tr>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>What it measures</th><th>When to use</th><th>Why we don’t use it here</th></tr></thead><tbody>
+<tr><td><strong>Fitts’ Law / ISO 9241-9</strong></td><td>Motor performance (pointing, clicking speed)</td><td>Low-level widget design (button size, target distance)</td><td>Too low-level; doesn’t capture real workflow issues</td></tr>
 <tr><td><strong>GOMS / KLM</strong></td><td>Expert performance (keystroke-level model)</td><td>Predict expert task time for routine operations</td><td>Assumes error-free performance; misses novice struggles</td></tr>
-<tr><td><strong>Reaction time tests</strong></td><td>Perceptual-motor speed (stimulus → response)</td><td>Attention research, cognitive load studies</td><td>Doesn't reflect real task complexity</td></tr>
+<tr><td><strong>Reaction time tests</strong></td><td>Perceptual-motor speed (stimulus → response)</td><td>Attention research, cognitive load studies</td><td>Doesn’t reflect real task complexity</td></tr>
 <tr><td><strong>Task-based evaluation</strong></td><td>Effectiveness, efficiency, satisfaction on realistic tasks</td><td>Formative evaluation, iterative design, accessibility testing</td><td>✅ Matches our goal: find usability + accessibility issues in real workflows</td></tr>
 </tbody></table>
 </div>
 <h3 id="ecological-validity"><a class="header" href="#ecological-validity">Ecological Validity</a></h3>
-<p>Task-based evaluation prioritizes <strong>ecological validity</strong> - the extent to which findings generalize to real-world use. By asking participants to complete realistic scenarios ("add a task with a deadline"), we uncover issues that matter in practice:</p>
+<p>Task-based evaluation prioritizes <strong>ecological validity</strong> - the extent to which findings generalize to real-world use. By asking participants to complete realistic scenarios (“add a task with a deadline”), we uncover issues that matter in practice:</p>
 <ul>
 <li>Form validation errors that block task completion</li>
 <li>Missing labels that confuse screen reader navigation</li>
 <li>Keyboard traps that prevent no-mouse workflows</li>
 <li>Performance differences between JS-on and JS-off conditions</li>
 </ul>
-<p>These issues don't surface in abstract performance tests but critically affect real users.</p>
+<p>These issues don’t surface in abstract performance tests but critically affect real users.</p>
 <h3 id="our-approach-in-comp2850"><a class="header" href="#our-approach-in-comp2850">Our Approach in COMP2850</a></h3>
 <p>We use <strong>lightweight task-based testing</strong> inspired by:</p>
 <ul>
-<li><strong>Nielsen's discount usability engineering</strong>: Small samples (n=4-5), qualitative + quantitative data, rapid iteration</li>
-<li><strong>Lewis's task-based metrics</strong>: Completion rate, time-on-task, error rate, confidence ratings</li>
+<li><strong>Nielsen’s discount usability engineering</strong>: Small samples (n=4-5), qualitative + quantitative data, rapid iteration</li>
+<li><strong>Lewis’s task-based metrics</strong>: Completion rate, time-on-task, error rate, confidence ratings</li>
 <li><strong>WCAG evaluation methodology</strong>: Test with assistive technology variants (keyboard, screen reader, no-JS)</li>
 </ul>
 <p><strong>What we test:</strong></p>

@@ -1,0 +1,715 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Evaluation Planning &amp; Instrumentation - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-9--lab-1--student-guide-evaluation-planning--instrumentation"><a class="header" href="#week-9--lab-1--student-guide-evaluation-planning--instrumentation">Week 9 • Lab 1 — Student Guide: Evaluation Planning &amp; Instrumentation</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-9-orange" alt="Week 9" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 9 Lab 1 is about planning your evaluation - creating test tasks, defining metrics, writing an ethical protocol, and adding instrumentation to capture data during Week 9 Lab 2 pilots.</p>
+</blockquote>
+<hr />
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<p>By the end of this lab:</p>
+<ul>
+<li>✅ <code>wk09/research/tasks.md</code> - 3-4 realistic test scenarios</li>
+<li>✅ <code>wk09/research/measures.md</code> - Metrics definition</li>
+<li>✅ <code>wk09/research/protocol.md</code> - Evaluation protocol (consent + procedure)</li>
+<li>✅ <code>wk09/research/data-notes.md</code> - Data recording guidance</li>
+<li>✅ Basic instrumentation code (optional logging in routes)</li>
+</ul>
+<hr />
+<h2 id="quick-start-create-files"><a class="header" href="#quick-start-create-files">Quick Start: Create Files</a></h2>
+<pre><code class="language-bash">mkdir -p wk09/research wk09/evidence
+touch wk09/research/tasks.md
+touch wk09/research/measures.md
+touch wk09/research/protocol.md
+touch wk09/research/data-notes.md
+</code></pre>
+<hr />
+<h2 id="part-1-define-test-tasks-20-minutes"><a class="header" href="#part-1-define-test-tasks-20-minutes">Part 1: Define Test Tasks (20 minutes)</a></h2>
+<p>Based on your backlog priorities, create 3-4 realistic tasks.</p>
+<p><strong>Copy into</strong> <code>wk09/research/tasks.md</code>:</p>
+<details>
+<summary>Click to expand: Test Tasks Template</summary>
+<pre><code class="language-markdown"># Evaluation Tasks — Week 9
+
+## Task 1: Filter and Complete
+**Scenario**: You've just finished your COMP2850 HCI lab write-up.
+
+**Instructions**:
+1. Find the task titled "Write HCI lab notes"
+2. Mark it as complete
+3. Verify it's marked correctly
+
+**Success criteria**:
+- Participant finds correct task within 30 seconds
+- Toggle works (checkbox/button responds)
+- Visual confirmation shown (strikethrough, badge, status message)
+
+**Inclusion focus**: Keyboard access, screen reader announcement
+
+---
+
+## Task 2: Add New Task
+**Scenario**: You've just been assigned a new coursework deadline.
+
+**Instructions**:
+1. Add a new task: "Submit COMP2870 Assignment 2"
+2. Confirm it appears in the list
+
+**Success criteria**:
+- Form submission works (HTMX + no-JS)
+- New task appears immediately (or after reload for no-JS)
+- Confirmation message shown
+
+**Inclusion focus**: Error handling (if blank title), status announcements
+
+---
+
+## Task 3: Edit Task Inline
+**Scenario**: You made a typo in a task title.
+
+**Instructions**:
+1. Find task "Buy milk"
+2. Edit it to "Buy oat milk"
+3. Save the change
+
+**Success criteria**:
+- Edit mode activates (input appears)
+- Save updates the title
+- Focus returns to edited task
+
+**Inclusion focus**: Focus management, keyboard-only editing, Cancel button
+
+---
+
+## Task 4: Delete Completed Task
+**Scenario**: You've completed "Email supervisor" and want to remove it.
+
+**Instructions**:
+1. Find task "Email supervisor"
+2. Delete it
+3. Confirm it's gone
+
+**Success criteria**:
+- Confirmation shown (HTMX) OR form submits (no-JS)
+- Task removed from list
+- Status message announced
+
+**Inclusion focus**: Confirmation (HTMX has `hx-confirm`, no-JS has none - documented trade-off)
+
+---
+
+## Metrics per Task
+
+For each task, record:
+- **Time-on-task** (seconds from start to completion)
+- **Success** (1 = completed, 0 = abandoned)
+- **Error count** (validation errors, wrong clicks)
+- **Mode** (HTMX or no-JS)
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+3-4 tasks written with scenarios</li>
+<li><input disabled="" type="checkbox"/>
+Success criteria defined</li>
+<li><input disabled="" type="checkbox"/>
+Inclusion focus identified per task</li>
+</ul>
+<hr />
+<h2 id="part-2-define-metrics-25-minutes"><a class="header" href="#part-2-define-metrics-25-minutes">Part 2: Define Metrics (25 minutes)</a></h2>
+<p><strong>Copy into</strong> <code>wk09/research/measures.md</code>:</p>
+<details>
+<summary>Click to expand: Measures Template</summary>
+<pre><code class="language-markdown"># Evaluation Metrics — Week 9
+
+## Quantitative Measures
+
+### 1. Time-on-Task (Efficiency)
+**Definition**: Seconds from task start to successful completion
+**How to collect**: Manual stopwatch OR instrumentation (timestamp diff)
+**Analysis**: Mean, median, outliers per task
+
+**Why it matters**: Long times indicate usability problems or confusion
+
+---
+
+### 2. Task Success Rate (Effectiveness)
+**Definition**: Percentage of participants who complete task without help
+**How to collect**: Binary (1 = success, 0 = fail/abandon)
+**Analysis**: Success % per task, identify problematic tasks
+
+**Why it matters**: &lt;80% success = serious usability issue
+
+---
+
+### 3. Error Rate (Accuracy)
+**Definition**: Number of validation errors, wrong clicks, back-tracking per task
+**How to collect**: Manual tally during observation OR server logs (400 errors)
+**Analysis**: Mean errors per task, categorise by type
+
+**Why it matters**: Frequent errors = unclear interface or poor error prevention
+
+---
+
+### 4. Mode Comparison (HTMX vs No-JS)
+**Definition**: Time and success differences between JS-enabled and no-JS paths
+**How to collect**: Run each participant in one mode, compare groups
+**Analysis**: t-test or Mann-Whitney U test (if N &gt; 10 per group)
+
+**Why it matters**: Validates dual-path parity claim
+
+---
+
+## Qualitative Measures
+
+### 5. Post-Task Confidence (Subjective)
+**Definition**: 5-point Likert scale: "I am confident I completed the task correctly"
+**How to collect**: Verbal question after each task
+**Analysis**: Mean score per task, identify low-confidence tasks
+
+**Why it matters**: Low confidence despite success = poor feedback design
+
+---
+
+### 6. Think-Aloud Observations
+**Definition**: Verbal comments during task ("Where's the Save button?", "I'm confused")
+**How to collect**: Note-taking during pilot
+**Analysis**: Thematic coding (confusion points, positive remarks)
+
+**Why it matters**: Reveals WHY metrics are good/bad
+
+---
+
+### 7. Accessibility Barriers (Observational)
+**Definition**: Moments where keyboard/SR participant struggles
+**How to collect**: Note when Tab order confuses, focus lost, SR silent
+**Analysis**: List barriers, map to WCAG criteria
+
+**Why it matters**: Direct evidence of inclusion failures
+
+---
+
+## Data Collection Plan
+
+**Per participant**:
+- Task 1-4: Time, success, errors, confidence, mode
+- Think-aloud notes: Freeform observations
+- Accessibility notes: Specific barriers encountered
+
+**Sample size**: 3-5 participants (peer pilots)
+
+**Storage**: `data/metrics.csv` (local, .gitignored)
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+4+ quantitative metrics defined</li>
+<li><input disabled="" type="checkbox"/>
+2+ qualitative measures defined</li>
+<li><input disabled="" type="checkbox"/>
+Data collection plan specified</li>
+</ul>
+<hr />
+<h2 id="part-3-evaluation-protocol-30-minutes"><a class="header" href="#part-3-evaluation-protocol-30-minutes">Part 3: Evaluation Protocol (30 minutes)</a></h2>
+<p><strong>Copy into</strong> <code>wk09/research/protocol.md</code>:</p>
+<details>
+<summary>Click to expand: Protocol Template</summary>
+<pre><code class="language-markdown"># Evaluation Protocol — Week 9 Pilots
+
+**Module**: COMP2850 HCI
+**Activity**: Task-based usability pilots
+**Date**: [YYYY-MM-DD]
+**Researcher**: [Your Name]
+
+---
+
+## Purpose
+
+Evaluate task manager usability and accessibility through structured pilots. Data will inform Week 10 redesign and Gradescope Task 1 submission.
+
+## Consent (GDPR/Data Protection Act 2018)
+
+**Lawful basis**: Legitimate interest (educational research) + informed consent
+
+**Before starting**, confirm:
+- [ ] Purpose explained (evaluate task manager, not testing you)
+- [ ] Tasks described (4 scenarios, ~15 minutes)
+- [ ] Data collected listed (times, clicks, observations - no PII)
+- [ ] Right to withdraw explained (stop anytime, data deleted)
+- [ ] Participant verbally consents
+
+**Record**: Participant pseudonym (P1, P2...), date, consent confirmed (initials)
+
+---
+
+## Procedure
+
+### Setup (5 minutes)
+1. **Assign mode**: Participant 1 → HTMX, Participant 2 → No-JS (alternate)
+2. **Disable JS if needed**: Chrome DevTools → Settings → Disable JavaScript
+3. **Set session ID**: Manual cookie OR URL param (`?sid=P1`)
+4. **Open task manager**: http://localhost:8080/tasks
+
+### Orientation (2 minutes)
+"You'll complete 4 tasks with a task manager. I'll time you and take notes. **Think aloud** - say what you're thinking ('Where's the Edit button?', 'This is confusing'). There are no wrong answers - we're testing the interface, not you. You can stop anytime."
+
+### Task Execution (12 minutes)
+For each task (T1-T4):
+1. **Read scenario** aloud from `tasks.md`
+2. **Start timer** when participant begins
+3. **Observe** (note clicks, hesitations, comments)
+4. **Stop timer** when task complete OR participant gives up
+5. **Ask confidence**: "On a scale 1-5, how confident are you that you completed correctly?"
+6. **Record**: Time, success (1/0), errors, confidence, notes
+
+### Debrief (3 minutes)
+"Thanks! Any final thoughts? What was most confusing? What worked well?"
+
+**Total time**: ~20 minutes per participant
+
+---
+
+## Data Recording
+
+### Manual Notes Template
+</code></pre>
+<p>Participant: [P1, P2, P3…]
+Mode: [HTMX / No-JS]
+Date: [YYYY-MM-DD]
+Duration: [~20 min]</p>
+<p>Task 1: [Start time HH:MM:SS] → [End time HH:MM:SS] = [X seconds]
+Success: [1/0]
+Errors: [count]
+Confidence: [1-5]
+Notes: [Observations, quotes]</p>
+<p>[Repeat for T2-T4]</p>
+<p>Post-pilot notes:</p>
+<ul>
+<li>Accessibility barriers:</li>
+<li>Positive moments:</li>
+<li>Redesign ideas:</li>
+</ul>
+<pre><code>
+### Automated Instrumentation (Optional)
+If you added logging to routes:
+- `data/metrics.csv`: timestamp, task_id, action, duration, status
+- `data/errors.csv`: timestamp, task_id, error_type, message
+
+---
+
+## Risks &amp; Mitigations
+
+| Risk | Mitigation |
+|------|-----------|
+| Participant feels tested | Emphasise "testing interface, not you" |
+| Task too hard, participant frustrated | Allow skip after 2 min struggle |
+| Data breach (PII in notes) | Use pseudonyms only, `.gitignore` data files |
+| Observer bias | Neutral prompts ("What are you thinking?"), don't lead |
+
+---
+
+## Ethics Checklist
+
+- [ ] Consent obtained verbally before start
+- [ ] Pseudonyms used (P1, P2...), no real names
+- [ ] Data stored locally (not cloud), Git repo private
+- [ ] Right to withdraw explained
+- [ ] No coercion (peers can decline without penalty)
+- [ ] Data deletion plan stated (end of semester OR anonymised)
+
+---
+
+**Reference**: BPS Code of Human Research Ethics (2021), UK GDPR (2018)
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Protocol written with setup, procedure, debrief</li>
+<li><input disabled="" type="checkbox"/>
+Consent process documented</li>
+<li><input disabled="" type="checkbox"/>
+Data recording template provided</li>
+<li><input disabled="" type="checkbox"/>
+Ethics checklist complete</li>
+</ul>
+<hr />
+<h2 id="part-4-data-recording-guidance-15-minutes"><a class="header" href="#part-4-data-recording-guidance-15-minutes">Part 4: Data Recording Guidance (15 minutes)</a></h2>
+<p><strong>Copy into</strong> <code>wk09/research/data-notes.md</code>:</p>
+<details>
+<summary>Click to expand: Data Notes Template</summary>
+<pre><code class="language-markdown"># Data Recording Notes — Week 9
+
+## Manual Recording (Required)
+
+For each participant, record in notebook:
+- **Task times**: Use stopwatch, record to nearest second
+- **Success**: Binary 1/0 (did they complete correctly?)
+- **Errors**: Tally clicks on wrong elements, validation errors shown
+- **Confidence**: Ask "1-5, how confident?" after each task
+- **Think-aloud**: Note direct quotes in "quotation marks"
+
+## Automated Instrumentation (Optional)
+
+If you add logging to routes:
+
+### Example: Log Task Creation Time
+```kotlin
+post("/tasks") {
+    val startTime = System.currentTimeMillis()
+    // ... validation, create task ...
+    val endTime = System.currentTimeMillis()
+    val duration = endTime - startTime
+
+    // Log to CSV
+    logMetric("task_create", duration, success = true)
+}
+</code></pre>
+<h3 id="log-format-datametricscsv"><a class="header" href="#log-format-datametricscsv">Log Format (<code>data/metrics.csv</code>)</a></h3>
+<pre><code class="language-csv">timestamp,session_id,task_id,action,duration_ms,success,mode
+2025-01-15T10:30:15,P1,T2,task_create,1230,true,htmx
+2025-01-15T10:31:45,P1,T3,task_edit,2100,true,htmx
+</code></pre>
+<h2 id="observational-codes"><a class="header" href="#observational-codes">Observational Codes</a></h2>
+<p>Use these shorthand codes in notes:</p>
+<ul>
+<li><strong>KBD</strong>: Keyboard navigation issue</li>
+<li><strong>SR</strong>: Screen reader problem</li>
+<li><strong>FOC</strong>: Focus management issue</li>
+<li><strong>ERR</strong>: Validation error shown</li>
+<li><strong>CONF</strong>: Participant expressed confusion</li>
+<li><strong>POS</strong>: Positive comment</li>
+</ul>
+<p>Example: “P2 [KBD] couldn’t find Cancel button with Tab”</p>
+<h2 id="anomalies-to-note"><a class="header" href="#anomalies-to-note">Anomalies to Note</a></h2>
+<ul>
+<li>Browser crashed / page froze</li>
+<li>Participant asked clarifying question (we answered)</li>
+<li>Network delay (slow response)</li>
+<li>Observer error (forgot to start timer)</li>
+</ul>
+<p><strong>Record all anomalies</strong> so analysis accounts for them.</p>
+<hr />
+<p><strong>Storage</strong>: Keep notes in physical notebook during pilots, transcribe to digital after.
+<strong>Backup</strong>: Photos of notebook pages saved to <code>wk09/evidence/notes-backup/</code></p>
+<pre><code>
+&lt;/details&gt;
+
+**Checklist**:
+- [ ] Manual recording template provided
+- [ ] Optional instrumentation example given
+- [ ] Observational codes defined
+- [ ] Anomaly guidance clear
+
+---
+
+## Part 5: Optional Instrumentation (30 minutes)
+
+If you want automated metrics, add logging to routes. Example:
+
+&lt;details&gt;
+&lt;summary&gt;Click to expand: Simple Logging Code&lt;/summary&gt;
+
+**Create** `src/main/kotlin/utils/MetricsLogger.kt`:
+
+```kotlin
+package utils
+
+import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+object MetricsLogger {
+    private val logFile = File("data/metrics.csv")
+    private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
+    init {
+        if (!logFile.exists()) {
+            logFile.parentFile?.mkdirs()
+            logFile.writeText("timestamp,session_id,task_id,action,duration_ms,success,mode\n")
+        }
+    }
+
+    fun log(
+        sessionId: String,
+        taskId: String,
+        action: String,
+        durationMs: Long,
+        success: Boolean,
+        mode: String
+    ) {
+        val timestamp = LocalDateTime.now().format(formatter)
+        val line = "$timestamp,$sessionId,$taskId,$action,$durationMs,$success,$mode\n"
+        logFile.appendText(line)
+    }
+}
+</code></pre>
+<p><strong>Use in routes</strong>:</p>
+<pre><code class="language-kotlin">post("/tasks") {
+    val start = System.currentTimeMillis()
+    val sessionId = call.sessions.get&lt;String&gt;("sessionId") ?: "unknown"
+    val mode = if (call.isHtmx()) "htmx" else "nojs"
+
+    // ... create task logic ...
+
+    val duration = System.currentTimeMillis() - start
+    MetricsLogger.log(sessionId, "T2", "task_create", duration, success = true, mode)
+
+    // ... respond ...
+}
+</code></pre>
+</details>
+<p><strong>Note</strong>: Instrumentation is optional. Manual recording is sufficient for Week 9.</p>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash">git add wk09/
+git commit -m "feat(wk9-lab1): evaluation planning and instrumentation
+
+- Created 4 test tasks with scenarios and success criteria
+- Defined 7 metrics (time, success, errors, confidence, think-aloud)
+- Documented evaluation protocol with consent and procedure
+- Provided data recording templates and observational codes
+- Added optional instrumentation code example
+
+Ready for Week 9 Lab 2 pilots."
+</code></pre>
+<p><strong>Next</strong>: Week 9 Lab 2 - Run pilots, collect data, analyse, draft Task 1.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk09/wk9-lab1-eval-plan-instrumentation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk09/wk9-lab2-pilots-debrief-draft.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk09/wk9-lab1-eval-plan-instrumentation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk09/wk9-lab2-pilots-debrief-draft.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

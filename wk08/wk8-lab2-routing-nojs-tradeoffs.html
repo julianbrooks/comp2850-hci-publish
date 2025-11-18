@@ -191,7 +191,7 @@
 <li>Ensure Week 8 starter repo updates (pagination work) are committed/pushed</li>
 <li><a href="https://htmx.org/reference/#events">HTMX: Events Reference</a> (htmx:responseError, htmx:beforeSwap)</li>
 <li><a href="https://htmx.org/attributes/hx-confirm/">HTMX: hx-confirm</a></li>
-<li><a href="https://webaim.org/articles/formvalidation/">WebAIM: Forms - Accessible Error Identification</a></li>
+<li><a href="https://webaim.org/techniques/forms/">WebAIM: Creating Accessible Forms</a></li>
 </ul>
 <p>📖 <strong>Contextual</strong>:</p>
 <ul>
@@ -201,8 +201,8 @@
 </ul>
 <hr />
 <h2 id="introduction-from-prototype-to-production-ready"><a class="header" href="#introduction-from-prototype-to-production-ready">Introduction: From Prototype to Production-Ready</a></h2>
-<p>Yesterday (Week 8 Lab 1) you added pagination and filtering. The <strong>happy path</strong> works: people can browse, filter, and page through tasks.</p>
-<p><strong>Today's reality check</strong>: What happens when:</p>
+<p>In Week 8 Lab 1 you added pagination and filtering. The basic functionality works: people can browse, filter, and page through tasks.</p>
+<p><strong>Today’s reality check</strong>: What happens when:</p>
 <ul>
 <li>Someone submits an empty form?</li>
 <li>JavaScript is disabled or fails to load?</li>
@@ -216,7 +216,7 @@
 <li><strong>Testing</strong>: Repeatable verification scripts</li>
 <li><strong>Documentation</strong>: Trade-offs, risks, mitigations</li>
 </ol>
-<p><strong>HCI Connection</strong>: Robust error handling is an <strong>inclusion imperative</strong>—validation errors disproportionately affect people with cognitive disabilities, screen reader users, and those with unreliable connectivity. WCAG 3.3 (Input Assistance) requires clear, accessible error identification.</p>
+<p><strong>HCI Connection</strong>: Robust error handling is an <strong>inclusion imperative</strong>—validation errors disproportionately affect people with cognitive disabilities, people using screen readers, and those with unreliable connectivity. WCAG 3.3 (Input Assistance) requires clear, accessible error identification.</p>
 <hr />
 <h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
 <h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
@@ -323,7 +323,7 @@ if (title.isBlank()) {
 <ol>
 <li>Error message in text (not just colour/icon)</li>
 <li>Programmatic association (<code>aria-describedby</code> or <code>aria-errormessage</code>)</li>
-<li>Focus management (keyboard users land on/near error)</li>
+<li>Focus management (people navigating with keyboard land on/near error)</li>
 <li>Screen reader announcement (live region or summary)</li>
 </ol>
 <p><strong>Pattern (inline)</strong>:</p>
@@ -339,7 +339,7 @@ if (title.isBlank()) {
   &lt;/ul&gt;
 &lt;/div&gt;
 </code></pre>
-<p><strong>HCI Connection</strong>: Clear error identification reduces cognitive load and is critical for screen reader users who can't see visual error states.</p>
+<p><strong>HCI Connection</strong>: Clear error identification reduces cognitive load and is critical for people using screen readers who can’t see visual error states.</p>
 <p>🔗 <a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html">WCAG 3.3.1: Error Identification</a>
 🔗 <a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a></p>
 </blockquote>
@@ -368,12 +368,12 @@ if (title.isBlank()) {
 <li>Success feedback is visible</li>
 <li>Browser history behaves predictably</li>
 </ul>
-<p><strong>HCI Connection</strong>: No-JS parity is <strong>progressive enhancement</strong> verification—ensures you're truly building server-first, not HTMX-first.</p>
+<p><strong>HCI Connection</strong>: No-JS parity is <strong>progressive enhancement</strong> verification—ensures you’re truly building server-first, not HTMX-first.</p>
 <p>🔗 <a href="https://www.gov.uk/service-manual/technology/using-progressive-enhancement">GOV.UK: Building a resilient frontend</a></p>
 </blockquote>
 <hr />
 <h2 id="activity-a-harden-create-flow-35-min"><a class="header" href="#activity-a-harden-create-flow-35-min">Activity A: Harden Create Flow (35 min)</a></h2>
-<p>Yesterday you built <code>POST /tasks</code> for the happy path. Now add validation and dual-path error handling.</p>
+<p>In Week 8 Lab 1 you built <code>POST /tasks</code> for basic functionality. Now add validation and dual-path error handling.</p>
 <h3 id="step-1-add-server-side-validation-10-min"><a class="header" href="#step-1-add-server-side-validation-10-min">Step 1: Add server-side validation (10 min)</a></h3>
 <p><strong>Current code</strong> (Week 8 Lab 1):</p>
 <pre><code class="language-kotlin">post("/tasks") {
@@ -502,7 +502,7 @@ input[aria-invalid="true"] {
 <p><strong>HTMX path</strong>:</p>
 <ol>
 <li>With JS enabled, submit empty form</li>
-<li>Expect: Status message "Title is required." appears in <code>#status</code> live region</li>
+<li>Expect: Status message “Title is required.” appears in <code>#status</code> live region</li>
 <li>Form remains on page, input keeps focus</li>
 <li>Try typing and submitting—should succeed</li>
 </ol>
@@ -550,7 +550,7 @@ Success path still works for both</li>
 <p><strong>Why</strong>:</p>
 <ul>
 <li><code>hx-confirm</code> prompts before request (HTMX feature)</li>
-<li><code>aria-label</code> provides context for screen readers (otherwise just "Delete Delete Delete..." in a list)</li>
+<li><code>aria-label</code> provides context for screen readers (otherwise just “Delete Delete Delete…” in a list)</li>
 </ul>
 <h3 id="step-2-add-no-js-delete-support-15-min"><a class="header" href="#step-2-add-no-js-delete-support-15-min">Step 2: Add no-JS delete support (15 min)</a></h3>
 <p><strong>Problem</strong>: <code>hx-delete</code> requires JavaScript. No-JS needs a form.</p>
@@ -592,11 +592,11 @@ post("/tasks/{id}/delete") {
     call.respondRedirect("/tasks")
 }
 </code></pre>
-<p><strong>Trade-off to document</strong>: No-JS delete has no confirmation (browser POST doesn't prompt). Options:</p>
+<p><strong>Trade-off to document</strong>: No-JS delete has no confirmation (browser POST doesn’t prompt). Options:</p>
 <ol>
 <li>Accept the trade-off (document in constraints doc)</li>
 <li>Add intermediate confirmation page (<code>GET /tasks/{id}/delete/confirm</code>)</li>
-<li>Use client-side confirmation (but that requires JS...)</li>
+<li>Use client-side confirmation (but that requires JS…)</li>
 </ol>
 <p>For this lab, <strong>accept and document</strong> the trade-off.</p>
 <p>✋ <strong>Stop and check</strong>:</p>
@@ -608,7 +608,7 @@ After confirm, task disappears with status message</li>
 <li><input disabled="" type="checkbox"/>
 No-JS delete submits form and redirects</li>
 <li><input disabled="" type="checkbox"/>
-Screen reader announces "Deleted [title]" (HTMX) or reads updated page (no-JS)</li>
+Screen reader announces “Deleted [title]” (HTMX) or reads updated page (no-JS)</li>
 </ul>
 <hr />
 <h2 id="activity-c-script-no-js-verification-20-min"><a class="header" href="#activity-c-script-no-js-verification-20-min">Activity C: Script No-JS Verification (20 min)</a></h2>
@@ -626,7 +626,7 @@ Screen reader announces "Deleted [title]" (HTMX) or reads updated page (no-JS)</
 
 ---
 
-## Test 1: Add Task (Happy Path)
+## Test 1: Add Task (Success Case)
 
 **Steps**:
 1. Navigate to `/tasks`
@@ -773,7 +773,7 @@ Screen reader announces "Deleted [title]" (HTMX) or reads updated page (no-JS)</
 - Back #1 → `/tasks?q=test&amp;page=1` (filtered, page 1)
 - Back #2 → `/tasks?q=test` (filtered, page 1 implicit)
 - Back #3 → `/tasks` (no filter)
-- History stack matches user intent
+- History stack matches expected behaviour
 
 **Evidence**: Notes on history behaviour.
 
@@ -869,7 +869,7 @@ All validation on server. No client-side validation (no `&lt;input required&gt;`
 
 ### Risks
 - **Frustration**: People might repeatedly submit invalid forms before reading error
-- **Network dependency**: Offline users can't get any feedback
+- **Network dependency**: People offline can't get any feedback
 
 ### Mitigations
 - ✅ **Clear error messages**: Specific, actionable text ("Title is required" not "Invalid input")
@@ -885,7 +885,7 @@ All validation on server. No client-side validation (no `&lt;input required&gt;`
 HTMX path uses `hx-confirm` (browser confirmation dialog). No-JS path has no confirmation.
 
 ### Benefits
-- **HTMX**: Prevents accidental deletions for JS-enabled users
+- **HTMX**: Prevents accidental deletions for people with JavaScript enabled
 - **Implementation simplicity**: No intermediate confirmation page needed
 
 ### Costs
@@ -893,13 +893,13 @@ HTMX path uses `hx-confirm` (browser confirmation dialog). No-JS path has no con
 - **Accessibility**: Browser confirm dialogs are not customisable (can't improve copy)
 
 ### Risks
-- **Accidental deletion**: No-JS users might delete tasks by mistake
+- **Accidental deletion**: People without JavaScript might delete tasks by mistake
 - **Compliance**: Depending on context, irreversible actions might require confirmation (WCAG 2.2.1 Timing Adjustable, 3.3.4 Error Prevention)
 
 ### Mitigations
 - ✅ **Documentation**: Trade-off explicitly noted in constraints doc
 - ✅ **Backlog item**: Consider adding `/tasks/{id}/delete/confirm` page for no-JS (low priority)
-- ⚠️ **User research** (Week 9): Test whether delete accidents occur in pilots
+- ⚠️ **Research with participants** (Week 9): Test whether delete accidents occur in pilots
 - 🔮 **Future option**: Add "Undo" feature (restore from soft-delete within 30s)
 
 ---
@@ -1015,21 +1015,21 @@ Confirmation dialog keyboard-accessible</li>
 <ol>
 <li>Forms mode (<code>F</code> key in NVDA) → navigate to Add Task form</li>
 <li>Leave title empty, submit</li>
-<li>Listen for status region update: "Title is required."</li>
+<li>Listen for status region update: “Title is required.”</li>
 <li>Verify SR announces the error (live region should trigger)</li>
 </ol>
 <p><strong>Test error summary (no-JS)</strong>:</p>
 <ol>
 <li>Disable JS, submit empty form</li>
-<li>SR should read: "Alert. There is a problem. List with 1 item. Link. Title is required."</li>
-<li>Activate link → SR announces: "Edit. Title."</li>
+<li>SR should read: “Alert. There is a problem. List with 1 item. Link. Title is required.”</li>
+<li>Activate link → SR announces: “Edit. Title.”</li>
 </ol>
 <p><strong>Test delete status</strong>:</p>
 <ol>
 <li>Navigate to Delete button</li>
-<li>SR announces: "Delete task: [title]. Button."</li>
+<li>SR announces: “Delete task: [title]. Button.”</li>
 <li>Activate, confirm</li>
-<li>SR announces: "Deleted [title]." (from live region)</li>
+<li>SR announces: “Deleted [title].” (from live region)</li>
 </ol>
 <p>✋ Check:</p>
 <ul>
@@ -1094,7 +1094,7 @@ EOF
 <p><strong>Dual-path complexity</strong>: Was it harder to maintain HTMX and no-JS paths than you expected? What helped keep them in sync?</p>
 </li>
 <li>
-<p><strong>Error handling</strong>: How did accessible error identification change your approach? Did you discover any WCAG requirements you hadn't considered?</p>
+<p><strong>Error handling</strong>: How did accessible error identification change your approach? Did you discover any WCAG requirements you hadn’t considered?</p>
 </li>
 <li>
 <p><strong>Trade-offs</strong>: Which trade-off (e.g., no-JS delete confirmation) felt most significant? Would you design it differently with more time?</p>
@@ -1111,19 +1111,19 @@ EOF
 </ol>
 <hr />
 <h2 id="looking-ahead-week-9-evaluation"><a class="header" href="#looking-ahead-week-9-evaluation">Looking Ahead: Week 9 Evaluation</a></h2>
-<p>Next week you'll instrument your prototype to capture metrics during peer pilots:</p>
+<p>Next week you’ll instrument your prototype to capture metrics during peer pilots:</p>
 <ul>
 <li><strong>Task completion time</strong>: How long to add/edit/delete tasks</li>
 <li><strong>Error rates</strong>: How often do validation errors occur</li>
 <li><strong>No-JS performance</strong>: Compare HTMX vs no-JS completion times</li>
 <li><strong>Confidence ratings</strong>: Post-task subjective feedback</li>
 </ul>
-<p><strong>Why this week matters</strong>: You can't evaluate a prototype that doesn't handle errors gracefully. Week 8 Lab 2 ensures your baseline is solid before adding instrumentation.</p>
+<p><strong>Why this week matters</strong>: You can’t evaluate a prototype that doesn’t handle errors gracefully. Week 8 Lab 2 ensures your baseline is solid before adding instrumentation.</p>
 <p><strong>Preparation</strong>:</p>
 <ul>
 <li>Verify all flows work (HTMX + no-JS)</li>
 <li>Ensure backlog is up to date</li>
-<li>Review <a href="../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> to understand what data you'll collect</li>
+<li>Review <a href="../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> to understand what data you’ll collect</li>
 </ul>
 <hr />
 <h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
@@ -1131,7 +1131,7 @@ EOF
 <ul>
 <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/input-assistance">WCAG 3.3: Input Assistance</a> — Error identification and prevention</li>
 <li><a href="https://design-system.service.gov.uk/components/error-message/">GOV.UK: Error Message Pattern</a> — Accessible error design</li>
-<li><a href="https://webaim.org/articles/formvalidation/">WebAIM: Form Validation</a> — Screen reader considerations</li>
+<li><a href="https://webaim.org/techniques/forms/">WebAIM: Creating Accessible Forms</a> — Comprehensive guide including validation and screen reader considerations</li>
 </ul>
 <h3 id="htmx-patterns"><a class="header" href="#htmx-patterns">HTMX Patterns</a></h3>
 <ul>
@@ -1178,11 +1178,11 @@ EOF
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../wk08/wk8-lab1-prototyping-constraints.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk08/wk8-lab1-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk08/wk8-lab2-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1192,11 +1192,11 @@ EOF
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../wk08/wk8-lab1-prototyping-constraints.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk08/wk8-lab1-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk08/wk8-lab2-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

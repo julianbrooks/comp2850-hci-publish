@@ -185,7 +185,7 @@
 <tr><td>Keyboard-only</td><td>Tab through the entire flow: skip link → forms → buttons. Ensure visible focus.</td><td>Screenshot or short note confirming order + any issues.</td></tr>
 <tr><td>No-JS parity</td><td>Disable JS (DevTools) and repeat the task. Watch network panel to confirm only full-page requests.</td><td>Browser screenshot + note. If broken, log backlog item.</td></tr>
 <tr><td>Screen reader (SR)</td><td><strong>NVDA</strong> (Windows, free), <strong>VoiceOver</strong> (macOS, built-in), or <strong>Orca</strong> (Linux/RHEL, built-in but can be clunky—see <a href="#orca-linux">setup notes</a>). Navigate headings (<code>H</code>), forms (<code>F</code>), run the interaction, listen for live status.</td><td>Transcript snippet or notes of announcements.</td></tr>
-<tr><td>Zoom &amp; reflow</td><td>Zoom to 200%; ensure layout doesn't break and no horizontal scroll on desktop widths.</td><td>Screenshot at 200% zoom.</td></tr>
+<tr><td>Zoom &amp; reflow</td><td>Zoom to 200%; ensure layout doesn’t break and no horizontal scroll on desktop widths.</td><td>Screenshot at 200% zoom.</td></tr>
 <tr><td>Colour/contrast</td><td>Use built-in contrast checker or extension (e.g. Chrome DevTools → CSS overview).</td><td>Contrast report or note with values.</td></tr>
 <tr><td>Error messaging</td><td>Trigger validation errors; confirm focus stays in context and SR announces the message.</td><td>Screenshot of error + note on announcement.</td></tr>
 <tr><td>Metrics logging (when added)</td><td>Confirm <code>data/metrics.csv</code> records success + validation_error rows.</td><td>Copy of latest rows or summary in notes.</td></tr>
@@ -198,15 +198,15 @@
 <li>Create an <code>evidence/</code> directory in your repo and store artefacts per week (e.g., <code>evidence/wk6/</code>, <code>evidence/wk7/</code>) to keep things tidy.</li>
 </ul>
 <h2 id="orca-linux"><a class="header" href="#orca-linux">Orca (Linux)</a></h2>
-<p><strong>Orca</strong> is the built-in screen reader for GNOME (RHEL/Fedora/Ubuntu). It's functional but can be clunky compared to NVDA (Windows) or VoiceOver (macOS).</p>
+<p><strong>Orca</strong> is the built-in screen reader for GNOME (RHEL/Fedora/Ubuntu). It’s functional but can be clunky compared to NVDA (Windows) or VoiceOver (macOS).</p>
 <h3 id="starting-orca"><a class="header" href="#starting-orca">Starting Orca</a></h3>
 <ul>
-<li><strong>Terminal</strong>: <code>orca</code> (use this if keyboard shortcuts don't work)</li>
+<li><strong>Terminal</strong>: <code>orca</code> (use this if keyboard shortcuts don’t work)</li>
 <li><strong>Shortcut</strong>: <code>Super + Alt + S</code> (Super = Windows key on laptops)</li>
 <li><strong>Stop Orca</strong>: Press <code>Super + Alt + S</code> again, or <code>Insert + Q</code></li>
 </ul>
-<p><strong>Note</strong>: You may see warnings when starting from terminal. Orca should still work, but if speech doesn't activate,
-check your system's accessibility settings.</p>
+<p><strong>Note</strong>: You may see warnings when starting from terminal. Orca should still work, but if speech doesn’t activate,
+check your system’s accessibility settings.</p>
 <h3 id="resources"><a class="header" href="#resources">Resources</a></h3>
 <ul>
 <li><strong>Official guide</strong>: <a href="https://help.gnome.org/users/orca/stable/">GNOME Orca Help</a></li>

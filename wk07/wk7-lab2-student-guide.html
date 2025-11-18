@@ -1,0 +1,581 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 2: Accessibility Audit &amp; Inclusive Fix - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-7--lab-2--student-guide-accessibility-audit--inclusive-fix"><a class="header" href="#week-7--lab-2--student-guide-accessibility-audit--inclusive-fix">Week 7 • Lab 2 — Student Guide: Accessibility Audit &amp; Inclusive Fix</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-7-orange" alt="Week 7" />
+<img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 7 Lab 2 is about systematically auditing your application for accessibility issues, documenting them in your backlog, and implementing one high-priority fix.</p>
+</blockquote>
+<hr />
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<p>By the end of this lab:</p>
+<ul>
+<li>✅ <code>wk07/audit/axe-report.md</code> - Automated accessibility audit</li>
+<li>✅ <code>wk07/audit/manual-wcag-checklist.md</code> - Manual WCAG 2.2 AA verification</li>
+<li>✅ Updated <code>backlog/backlog.csv</code> - All findings logged with severity + inclusion risk</li>
+<li>✅ One accessibility fix implemented and verified</li>
+<li>✅ <code>wk07/evidence/</code> - Screenshots showing before/after fix</li>
+</ul>
+<hr />
+<h2 id="part-1-run-axe-devtools-audit-20-minutes"><a class="header" href="#part-1-run-axe-devtools-audit-20-minutes">Part 1: Run axe DevTools Audit (20 minutes)</a></h2>
+<h3 id="install-axe-devtools"><a class="header" href="#install-axe-devtools">Install axe DevTools</a></h3>
+<ol>
+<li>Open Chrome/Edge/Firefox</li>
+<li>Install <a href="https://www.deque.com/axe/devtools/">axe DevTools Extension</a></li>
+<li>Open DevTools (F12) → find “axe DevTools” tab</li>
+</ol>
+<h3 id="run-automated-scan"><a class="header" href="#run-automated-scan">Run Automated Scan</a></h3>
+<ol>
+<li>Start your server: <code>./gradlew run</code></li>
+<li>Navigate to http://localhost:8080/tasks</li>
+<li>Click “Scan ALL of my page” in axe DevTools tab</li>
+<li>Review results</li>
+</ol>
+<h3 id="document-findings"><a class="header" href="#document-findings">Document Findings</a></h3>
+<p><strong>Create</strong> <code>wk07/audit/axe-report.md</code>:</p>
+<details>
+<summary>Click to expand: axe Report Template</summary>
+<pre><code class="language-markdown"># axe DevTools Audit Report — Week 7
+
+**Date**: [YYYY-MM-DD]
+**Page scanned**: http://localhost:8080/tasks
+**axe version**: [e.g., 4.8.2]
+
+---
+
+## Summary
+
+- **Violations**: [e.g., 5]
+- **Needs review**: [e.g., 2]
+- **Passed**: [e.g., 43]
+
+---
+
+## Violations Found
+
+### 1. Color Contrast (Serious)
+**WCAG**: 1.4.3 Contrast (Minimum) - Level AA
+**Issue**: Button text (#6c757d) on white background = 4.2:1 (needs 4.5:1)
+**Element**: `&lt;button&gt;Delete&lt;/button&gt;` in task list
+**Impact**: Low vision, colour-blind people struggle to read
+**Fix**: Change button colour to #5a6268 (meets 4.53:1)
+
+---
+
+### 2. Missing Form Labels (Critical)
+**WCAG**: 3.3.2 Labels or Instructions - Level A
+**Issue**: Input field has no associated `&lt;label&gt;`
+**Element**: `&lt;input id="title" name="title"&gt;`
+**Impact**: People using screen readers don't know what the field is for
+**Fix**: Add `&lt;label for="title"&gt;Task title&lt;/label&gt;`
+
+---
+
+[Add all violations found - typically 5-8]
+
+---
+
+## Needs Review (Manual Check Required)
+
+### 1. Link Purpose (Best Practice)
+**WCAG**: 2.4.4 Link Purpose (In Context) - Level A
+**Issue**: Link text is "here" (not descriptive)
+**Element**: `&lt;a href="/docs"&gt;Click here&lt;/a&gt;`
+**Manual check**: Review if context makes purpose clear
+
+---
+
+## Passed Checks (Sample)
+
+- ✅ HTML lang attribute
+- ✅ Unique IDs
+- ✅ Valid ARIA attributes
+- ✅ Landmark roles
+- ✅ Skip link present
+
+---
+
+## Priority Fixes (Week 7)
+
+Based on severity + inclusion risk:
+1. **Missing form labels** (Critical, WCAG A) - FIX NOW
+2. **Color contrast** (Serious, WCAG AA) - FIX NOW
+3. **Link purpose** (Best practice) - Defer to Week 10
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+axe scan run on <code>/tasks</code> page</li>
+<li><input disabled="" type="checkbox"/>
+All violations documented with WCAG reference</li>
+<li><input disabled="" type="checkbox"/>
+Priority fixes identified</li>
+</ul>
+<hr />
+<h2 id="part-2-manual-wcag-checklist-25-minutes"><a class="header" href="#part-2-manual-wcag-checklist-25-minutes">Part 2: Manual WCAG Checklist (25 minutes)</a></h2>
+<p>axe catches ~30% of issues. Manual testing is essential.</p>
+<p><strong>Create</strong> <code>wk07/audit/manual-wcag-checklist.md</code>:</p>
+<details>
+<summary>Click to expand: Manual WCAG Checklist Template</summary>
+<pre><code class="language-markdown"># Manual WCAG 2.2 AA Checklist — Week 7
+
+**Date**: [YYYY-MM-DD]
+**Tester**: [Your name]
+**Assistive tech**: [e.g., NVDA 2024.1, Chrome 120]
+
+---
+
+## Principle 1: Perceivable
+
+### 1.4.3 Contrast (Minimum) - Level AA
+- [ ] **Text**: All text 4.5:1 contrast minimum
+- [ ] **Large text**: 18pt+ or 14pt bold - 3:1 minimum
+- [ ] **UI components**: Buttons, inputs, borders - 3:1 minimum
+
+**Test method**: Use Chrome DevTools Color Picker or [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+
+**Findings**: [List any contrast failures with ratios]
+
+---
+
+### 1.4.10 Reflow - Level AA
+- [ ] **Zoom to 400%**: Content reflows without horizontal scroll
+- [ ] **Viewport 320px wide**: No loss of content or functionality
+
+**Test method**: Chrome DevTools → Responsive mode → 320×568 → Zoom to 400%
+
+**Findings**: [Any overflow or broken layouts?]
+
+---
+
+## Principle 2: Operable
+
+### 2.1.1 Keyboard - Level A
+- [ ] **All interactive elements** reachable via Tab
+- [ ] **Focus order** matches visual order
+- [ ] **No keyboard traps** (can Tab out of all elements)
+
+**Test method**: Unplug mouse, use Tab/Shift+Tab/Enter/Space only
+
+**Findings**: [List any unreachable elements]
+
+---
+
+### 2.4.1 Bypass Blocks - Level A
+- [ ] **Skip link** present and functional
+- [ ] **Landmarks** (nav, main, aside) for screen reader navigation
+
+**Test method**: Press Tab once → "Skip to main content" appears → Enter → focus jumps
+
+**Findings**: [Skip link working? Landmarks present?]
+
+---
+
+### 2.4.3 Focus Order - Level A
+- [ ] **Logical sequence**: Tab follows reading order
+- [ ] **No unexpected jumps**: Focus doesn't skip sections
+
+**Test method**: Tab through entire page, note order
+
+**Findings**: [Any illogical jumps?]
+
+---
+
+### 2.4.7 Focus Visible - Level AA
+- [ ] **All focusable elements** show clear visual indicator
+- [ ] **Indicator visible** against all backgrounds
+
+**Test method**: Tab through page, confirm blue outline visible
+
+**Findings**: [Any invisible focus states?]
+
+---
+
+## Principle 3: Understandable
+
+### 3.3.1 Error Identification - Level A
+- [ ] **Error messages** identify what's wrong in text
+- [ ] **Errors associated** with fields (`aria-describedby`, `aria-invalid`)
+
+**Test method**: Submit empty form, check error display
+
+**Findings**: [Errors clearly identified?]
+
+---
+
+### 3.3.2 Labels or Instructions - Level A
+- [ ] **All inputs** have `&lt;label&gt;` or `aria-label`
+- [ ] **Labels descriptive** ("Task title" not "Title")
+
+**Test method**: Check all `&lt;input&gt;`, `&lt;select&gt;`, `&lt;textarea&gt;` have labels
+
+**Findings**: [Any missing labels?]
+
+---
+
+## Principle 4: Robust
+
+### 4.1.3 Status Messages - Level AA
+- [ ] **ARIA live regions** for dynamic updates
+- [ ] **Success/error messages** announced by screen reader
+
+**Test method**: NVDA on → add task → confirm "Task added" announced
+
+**Findings**: [Status messages announced?]
+
+---
+
+## Summary
+
+**Total checks**: 10
+**Passed**: [e.g., 7]
+**Failed**: [e.g., 3]
+
+**Critical failures** (Level A):
+- [List Level A failures - these MUST be fixed]
+
+**Important failures** (Level AA):
+- [List Level AA failures - should be fixed]
+</code></pre>
+</details>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Manual keyboard testing complete</li>
+<li><input disabled="" type="checkbox"/>
+Screen reader testing done (if available)</li>
+<li><input disabled="" type="checkbox"/>
+All WCAG A/AA criteria checked</li>
+<li><input disabled="" type="checkbox"/>
+Failures documented with test method</li>
+</ul>
+<hr />
+<h2 id="part-3-update-backlog-20-minutes"><a class="header" href="#part-3-update-backlog-20-minutes">Part 3: Update Backlog (20 minutes)</a></h2>
+<p>Add all audit findings to <code>backlog/backlog.csv</code>:</p>
+<pre><code class="language-csv">id,title,story_ref,story_type,need,type,severity,inclusion_risk,evidence,notes,candidate_fix
+9,Missing label on title input,audit#2,WCAG violation,Form accessibility,Accessibility,Critical,"SR,Keyboard","axe-report.md; WCAG 3.3.2 (A)",No &lt;label&gt; associated with input - SR announces "edit text" with no context,true
+10,Button contrast 4.2:1 (fails AA),audit#1,WCAG violation,Visibility,Accessibility,High,"Low vision,Colour-blind","axe-report.md; WCAG 1.4.3 (AA)",Pico.css default gray fails minimum contrast,true
+11,Focus indicator low contrast,manual#7,WCAG violation,Keyboard navigation,Accessibility,Medium,Keyboard,"manual-wcag-checklist.md; WCAG 2.4.7 (AA)",Blue outline barely visible on light backgrounds,false
+12,No error message in no-JS path,manual#3,WCAG violation,Error handling,Accessibility,High,"Cognitive,SR","manual-wcag-checklist.md; WCAG 3.3.1 (A)",PRG redirect loses validation context,true
+</code></pre>
+<p><strong>Prioritisation formula</strong>:</p>
+<ul>
+<li><strong>Critical/High severity</strong> + <strong>WCAG Level A</strong> = Fix immediately</li>
+<li><strong>Medium severity</strong> + <strong>WCAG Level AA</strong> = Fix if time permits</li>
+<li><strong>Low severity</strong> + <strong>no WCAG</strong> = Defer to Week 10</li>
+</ul>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+All axe violations logged</li>
+<li><input disabled="" type="checkbox"/>
+All manual test failures logged</li>
+<li><input disabled="" type="checkbox"/>
+Severity and inclusion risk assigned</li>
+<li><input disabled="" type="checkbox"/>
+1-2 marked <code>candidate_fix=true</code></li>
+</ul>
+<hr />
+<h2 id="part-4-implement-one-fix-40-minutes"><a class="header" href="#part-4-implement-one-fix-40-minutes">Part 4: Implement One Fix (40 minutes)</a></h2>
+<p>Choose one high-priority fix from your backlog. Example: <strong>Missing form label</strong>.</p>
+<h3 id="before-violation"><a class="header" href="#before-violation">Before (Violation)</a></h3>
+<pre><code class="language-html">&lt;input id="title" name="title" required&gt;
+</code></pre>
+<p><strong>Issue</strong>: Screen reader announces “edit text” with no context.</p>
+<h3 id="after-fixed"><a class="header" href="#after-fixed">After (Fixed)</a></h3>
+<pre><code class="language-html">&lt;label for="title"&gt;Task title&lt;/label&gt;
+&lt;input id="title" name="title" required aria-describedby="title-hint"&gt;
+&lt;small id="title-hint"&gt;Keep it short and specific.&lt;/small&gt;
+</code></pre>
+<p><strong>What changed</strong>:</p>
+<ul>
+<li>Added <code>&lt;label&gt;</code> linked via <code>for="title"</code></li>
+<li>Added hint text with <code>aria-describedby</code></li>
+<li>Screen reader now announces: “Task title, edit text, Keep it short and specific”</li>
+</ul>
+<h3 id="verification"><a class="header" href="#verification">Verification</a></h3>
+<ol>
+<li><strong>Re-run axe</strong>: Violation should disappear</li>
+<li><strong>Screen reader test</strong>: NVDA should announce label + hint</li>
+<li><strong>Take screenshot</strong>: Save to <code>wk07/evidence/fix-missing-label-after.png</code></li>
+</ol>
+<hr />
+<h2 id="part-5-evidence-capture-15-minutes"><a class="header" href="#part-5-evidence-capture-15-minutes">Part 5: Evidence Capture (15 minutes)</a></h2>
+<p>Create <code>wk07/evidence/</code> folder:</p>
+<pre><code class="language-bash">mkdir -p wk07/evidence
+</code></pre>
+<p><strong>Capture</strong>:</p>
+<ol>
+<li><strong>Before screenshot</strong>: axe DevTools showing violation</li>
+<li><strong>After screenshot</strong>: axe DevTools showing pass</li>
+<li><strong>Screen reader output</strong>: Text file with NVDA announcements</li>
+</ol>
+<p><strong>Example evidence</strong>:</p>
+<pre><code>wk07/evidence/
+├── axe-before-missing-label.png
+├── axe-after-missing-label.png
+├── nvda-announcement-after.txt
+└── contrast-checker-button-fix.png
+</code></pre>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Before/after screenshots captured</li>
+<li><input disabled="" type="checkbox"/>
+axe re-scan shows violation resolved</li>
+<li><input disabled="" type="checkbox"/>
+Evidence files saved in <code>wk07/evidence/</code></li>
+</ul>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash">git add wk07/ backlog/ templates/ src/
+git commit -m "fix(wk7-lab2): accessibility audit and priority fixes
+
+- Ran axe DevTools scan, found 5 WCAG violations
+- Completed manual WCAG 2.2 AA checklist (keyboard, SR, contrast)
+- Updated backlog with 8 new accessibility issues
+- Fixed missing form label (WCAG 3.3.2 Level A)
+- Fixed button contrast to 4.53:1 (WCAG 1.4.3 Level AA)
+- Verified fixes with axe re-scan and NVDA testing
+- Captured before/after evidence in wk07/evidence/
+
+Addresses Week 7 Lab 2 requirements. Ready for Week 8 prototyping."
+</code></pre>
+<p><strong>Next</strong>: Week 8 Lab 1 - Pagination, filtering, and template partials.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk07/wk7-lab2-audit-backlog-fix.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk08/wk8-lab1-prototyping-constraints.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk07/wk7-lab2-audit-backlog-fix.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk08/wk8-lab1-prototyping-constraints.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

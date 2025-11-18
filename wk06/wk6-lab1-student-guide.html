@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Understanding Server-First Architecture - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-6--lab-1--student-guide-understanding-server-first-architecture"><a class="header" href="#week-6--lab-1--student-guide-understanding-server-first-architecture">Week 6 • Lab 1 — Student Guide: Understanding Server-First Architecture</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-6-orange" alt="Week 6" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 6 Lab 1 is your first HCI lab. The starter repository already contains working code - your task is to <strong>understand how it works</strong>, verify the dual-mode architecture, and test accessibility features.</p>
+</blockquote>
+<hr />
+<h2 id="your-starter-code"><a class="header" href="#your-starter-code">Your Starter Code</a></h2>
+<p>The starter repository (<code>comp2850-hci-starter</code>) already includes:</p>
+<p>✅ <strong>Complete</strong>: <code>Main.kt</code>, base layout, HTMX library, CSS
+✅ <strong>Complete</strong>: <code>TaskRoutes.kt</code> with dual-mode CRUD (lines 67-142)
+✅ <strong>Complete</strong>: <code>TaskRepository.kt</code> with CSV persistence
+✅ <strong>Complete</strong>: <code>tasks/index.peb</code> template</p>
+<p><strong>You don’t need to write code from scratch</strong> - it’s already there!</p>
+<hr />
+<h2 id="how-to-use-this-guide"><a class="header" href="#how-to-use-this-guide">How to Use This Guide</a></h2>
+<p><strong>If you’ve read the lab instructions:</strong> Follow the numbered activities in the mdbook.</p>
+<p><strong>If you’re confused:</strong> Use this guide to understand the key patterns, then verify everything works.</p>
+<hr />
+<h2 id="understanding-the-code-15-minutes"><a class="header" href="#understanding-the-code-15-minutes">Understanding the Code (15 minutes)</a></h2>
+<h3 id="1-server-first-pattern"><a class="header" href="#1-server-first-pattern">1. Server-First Pattern</a></h3>
+<p><strong>Open</strong>: <code>src/main/kotlin/routes/TaskRoutes.kt</code></p>
+<p><strong>Key function</strong>: <code>get("/tasks")</code> (lines 67-77)</p>
+<p><strong>What it does</strong>:</p>
+<ol>
+<li>Gets all tasks from repository</li>
+<li>Creates a model (map of data)</li>
+<li>Renders <code>tasks/index.peb</code> template with data</li>
+<li>Sends complete HTML to browser</li>
+</ol>
+<p><strong>Why this matters</strong>: The server sends ready-to-display HTML. If JavaScript fails, the page still works.</p>
+<hr />
+<h3 id="2-dual-mode-architecture"><a class="header" href="#2-dual-mode-architecture">2. Dual-Mode Architecture</a></h3>
+<p><strong>Still in</strong>: <code>TaskRoutes.kt</code></p>
+<p><strong>Key function</strong>: <code>post("/tasks")</code> (lines 83-122)</p>
+<p><strong>The pattern</strong>:</p>
+<pre><code class="language-kotlin">if (call.isHtmx()) {
+    // HTMX path: return HTML fragment
+    return@post call.respondText(fragment + status, ...)
+}
+
+// No-JS path: redirect to GET /tasks
+call.respond(HttpStatusCode.SeeOther)
+</code></pre>
+<p><strong>What this means</strong>:</p>
+<ul>
+<li><strong>With JavaScript</strong>: HTMX intercepts form submit, server returns just the new task HTML, HTMX adds it to the list (smooth, no page reload)</li>
+<li><strong>Without JavaScript</strong>: Form submits normally, server redirects browser back to <code>/tasks</code>, full page reloads (works but slower)</li>
+</ul>
+<p><strong>Why both?</strong>: Progressive enhancement - baseline functionality for everyone, enhanced experience for capable browsers.</p>
+<hr />
+<h3 id="3-htmx-attributes"><a class="header" href="#3-htmx-attributes">3. HTMX Attributes</a></h3>
+<p><strong>Open</strong>: <code>src/main/resources/templates/tasks/index.peb</code></p>
+<p><strong>Find the form</strong> (around line 9-18):</p>
+<pre><code class="language-pebble">&lt;form action="/tasks" method="post"
+      hx-post="/tasks"
+      hx-target="#task-list"
+      hx-swap="beforeend"&gt;
+</code></pre>
+<p><strong>What each attribute does</strong>:</p>
+<ul>
+<li><code>action="/tasks" method="post"</code> - Baseline HTML (works without JS)</li>
+<li><code>hx-post="/tasks"</code> - HTMX intercepts, does AJAX instead</li>
+<li><code>hx-target="#task-list"</code> - Where to put the response</li>
+<li><code>hx-swap="beforeend"</code> - How to insert it (append to end of list)</li>
+</ul>
+<p><strong>The magic</strong>: If JavaScript is disabled, <code>hx-*</code> attributes are ignored and the form uses <code>action</code> instead. Both paths work!</p>
+<hr />
+<h3 id="4-out-of-band-status-updates"><a class="header" href="#4-out-of-band-status-updates">4. Out-of-Band Status Updates</a></h3>
+<p><strong>Back in</strong>: <code>TaskRoutes.kt</code> line 114</p>
+<pre><code class="language-kotlin">val status = """&lt;div id="status" hx-swap-oob="true"&gt;Task "${task.title}" added successfully.&lt;/div&gt;"""
+</code></pre>
+<p><strong>What <code>hx-swap-oob="true"</code> does</strong>:</p>
+<ul>
+<li>“OOB” = Out Of Band</li>
+<li>Response includes this <code>&lt;div&gt;</code> even though it’s not in the <code>hx-target</code></li>
+<li>HTMX finds the element with <code>id="status"</code> anywhere on the page and updates it</li>
+<li>Screen readers announce the change (because the div has <code>role="status"</code> in base layout)</li>
+</ul>
+<p><strong>Why this matters</strong>: Visual feedback + screen reader announcement with one server response.</p>
+<hr />
+<h2 id="verification-checklist"><a class="header" href="#verification-checklist">Verification Checklist</a></h2>
+<p>Test that everything works correctly:</p>
+<h3 id="dual-mode-testing"><a class="header" href="#dual-mode-testing">Dual-Mode Testing</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Run the server</strong>: <code>./gradlew run</code> → visit http://localhost:8080/tasks</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Add task (with JS)</strong>: Type “Buy milk” → click Add Task → task appears without page reload</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Delete task (with JS)</strong>: Click Delete → task disappears without page reload</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Disable JavaScript</strong>: DevTools → Settings → Disable JavaScript → refresh page</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Add task (no JS)</strong>: Type “Pay bills” → click Add Task → page reloads, task appears</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Delete task (no JS)</strong>: Click Delete → page reloads, task gone</li>
+</ul>
+<p><strong>Expected</strong>: All 6 tests pass. Features work identically with/without JavaScript.</p>
+<hr />
+<h3 id="accessibility-testing"><a class="header" href="#accessibility-testing">Accessibility Testing</a></h3>
+<ul>
+<li>
+<p><input disabled="" type="checkbox"/>
+<strong>Keyboard navigation</strong>:</p>
+<ul>
+<li>Press Tab repeatedly → focus moves through: skip link → title input → Add button → delete buttons → footer</li>
+<li>All focus indicators visible (blue outline)</li>
+<li>Press Enter on Add button → form submits</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"/>
+<strong>Skip link</strong>:</p>
+<ul>
+<li>Press Tab once → “Skip to main content” appears</li>
+<li>Press Enter → focus jumps to main content (skips header)</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"/>
+<strong>Screen reader</strong> (if available - NVDA/ORCA/VoiceOver):</p>
+<ul>
+<li>Navigate to form → hears “Title, edit text, Keep it short and specific”</li>
+<li>Add task → hears “Task ‘Buy milk’ added successfully”</li>
+<li>Navigate to delete button → hears “Delete task: Buy milk, button”</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"/>
+<strong>ARIA live region</strong>:</p>
+<ul>
+<li>Open DevTools → Elements tab → find <code>&lt;div id="status"&gt;</code></li>
+<li>Add a task → watch the status div text change</li>
+<li>Confirm it has <code>role="status"</code> and <code>aria-live="polite"</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="browser-history"><a class="header" href="#browser-history">Browser History</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Add task</strong> → URL stays <code>/tasks</code> (not <code>/tasks?</code> or changed)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Press back button</strong> → goes to previous page (not re-submits form)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Refresh page</strong> → shows current task list (not “confirm resubmission” dialog)</li>
+</ul>
+<p><strong>Why this works</strong>: Post-Redirect-Get (PRG) pattern. After POST, server sends <code>303 See Other</code> redirect to <code>GET /tasks</code>.</p>
+<hr />
+<h2 id="common-issues--fixes"><a class="header" href="#common-issues--fixes">Common Issues &amp; Fixes</a></h2>
+<h3 id="cannot-find-taskrepository"><a class="header" href="#cannot-find-taskrepository">“Cannot find TaskRepository”</a></h3>
+<p><strong>Problem</strong>: Missing import or file not created
+<strong>Fix</strong>: Check <code>src/main/kotlin/data/TaskRepository.kt</code> exists. If not, copy from lab instructions Activity 3 Step 1.</p>
+<h3 id="tasks-dont-appear-after-adding"><a class="header" href="#tasks-dont-appear-after-adding">“Tasks don’t appear after adding”</a></h3>
+<p><strong>Problem</strong>: HTMX target mismatch
+<strong>Fix</strong>: In <code>index.peb</code>, confirm <code>&lt;ul id="task-list"&gt;</code> exists. HTMX needs this ID to know where to insert.</p>
+<h3 id="page-reloads-even-with-javascript-enabled"><a class="header" href="#page-reloads-even-with-javascript-enabled">“Page reloads even with JavaScript enabled”</a></h3>
+<p><strong>Problem</strong>: HTMX library not loaded
+<strong>Fix</strong>: Check browser console for errors. Confirm <code>static/js/htmx-1.9.12.min.js</code> exists and is linked in <code>base.peb</code>.</p>
+<h3 id="status-message-not-announced-by-screen-reader"><a class="header" href="#status-message-not-announced-by-screen-reader">“Status message not announced by screen reader”</a></h3>
+<p><strong>Problem</strong>: Live region not configured correctly
+<strong>Fix</strong>: Check <code>_layout/base.peb</code> has <code>&lt;div id="status" role="status" aria-live="polite"&gt;</code> in header.</p>
+<hr />
+<h2 id="understanding-check"><a class="header" href="#understanding-check">Understanding Check</a></h2>
+<p>Before moving to Lab 2, make sure you can answer:</p>
+<ol>
+<li>
+<p><strong>What is server-first architecture?</strong>
+<em>Expected: Server renders complete HTML and sends it to browser, not JSON for client-side rendering</em></p>
+</li>
+<li>
+<p><strong>What is progressive enhancement?</strong>
+<em>Expected: Build baseline HTML that works for everyone, then add JavaScript enhancements</em></p>
+</li>
+<li>
+<p><strong>What does <code>hx-swap-oob</code> do?</strong>
+<em>Expected: Updates an element outside the hx-target, useful for status messages</em></p>
+</li>
+<li>
+<p><strong>Why do we need both <code>action</code> and <code>hx-post</code>?</strong>
+<em>Expected: action for no-JS fallback, hx-post for HTMX enhancement - dual-mode pattern</em></p>
+</li>
+<li>
+<p><strong>What is the PRG pattern?</strong>
+<em>Expected: Post-Redirect-Get prevents duplicate form submissions on browser refresh</em></p>
+</li>
+</ol>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash"># If you made any changes (comments, fixes):
+git add .
+git commit -m "feat(wk6-lab1): verify server-first scaffold with HTMX
+
+- Tested dual-mode CRUD (HTMX + no-JS)
+- Verified keyboard navigation and skip link
+- Confirmed ARIA live region announces status changes
+- Tested with JavaScript disabled - full parity achieved"
+
+# If code was already complete:
+git commit --allow-empty -m "docs(wk6-lab1): verified server-first architecture understanding"
+</code></pre>
+<p><strong>Next</strong>: Week 6 Lab 2 - Needs-finding, consent protocol, and backlog creation.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk06/wk6-lab1-html-css-htmx.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk06/wk6-lab1-html-css-htmx.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

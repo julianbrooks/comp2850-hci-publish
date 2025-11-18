@@ -186,7 +186,7 @@
 <img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
 <hr />
 <h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
-<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., “person using a screen reader”) rather than deficit-based terms (e.g., “blind user”). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
 <hr />
 <h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
 <p><strong>Essential</strong></p>
@@ -248,11 +248,11 @@
 <p>An <strong>evidence chain</strong> is a traceable path from raw data through analysis and decision-making to implementation and verification. In HCI, evidence chains demonstrate that design decisions are grounded in observation, not assumption.</p>
 <p><strong>Example (accessible error handling)</strong>:</p>
 <ol>
-<li><strong>Raw data</strong>: Pilot P3 (SR user) took 127 seconds on T3 (add task); pilot notes: "P3 didn't hear validation error"</li>
+<li><strong>Raw data</strong>: Pilot P3 (SR user) took 127 seconds on T3 (add task); pilot notes: “P3 didn’t hear validation error”</li>
 <li><strong>Analysis</strong>: Median for sighted pilots = 18 s; P3 MAD = 109 s outlier</li>
-<li><strong>Finding</strong>: "Validation errors not announced by screen readers" → backlog item</li>
+<li><strong>Finding</strong>: “Validation errors not announced by screen readers” → backlog item</li>
 <li><strong>Fix</strong>: Added <code>role="alert" aria-live="assertive"</code> to error div (commit abc123)</li>
-<li><strong>Verification</strong>: Re-ran P3 with NVDA; time reduced to 22 s; pilot confirmed "error announced immediately"</li>
+<li><strong>Verification</strong>: Re-ran P3 with NVDA; time reduced to 22 s; pilot confirmed “error announced immediately”</li>
 </ol>
 <p><strong>Traceability requirements</strong>:</p>
 <ul>
@@ -270,10 +270,10 @@
 </ul>
 <p><strong>Example (Week 7 inline edit)</strong>:</p>
 <blockquote>
-<p><strong>What</strong>: I implemented an accessible inline edit using HTMX's <code>hx-target</code> and <code>hx-swap="outerHTML"</code>.
+<p><strong>What</strong>: I implemented an accessible inline edit using HTMX’s <code>hx-target</code> and <code>hx-swap="outerHTML"</code>.
 <strong>Why</strong>: This approach supports progressive enhancement (WCAG 2.1.1 Keyboard Access) because the edit form is server-rendered, so keyboard and mouse interactions are identical.
-<strong>How</strong>: Manual keyboard testing confirmed that Tab navigated to the "Edit" button, Enter activated it, and focus moved to the title input without page refresh. NVDA announced "Edit task, button" and "Title, edit, [existing value]" correctly.
-<strong>What I learned</strong>: Server-first patterns simplify accessibility because you don't need custom ARIA or JavaScript focus management—the browser handles it. However, I initially forgot to add <code>aria-live="polite"</code> to the success message, which meant SR users didn't hear confirmation. After adding it (commit xyz789), NVDA announced "Task updated" automatically.</p>
+<strong>How</strong>: Manual keyboard testing confirmed that Tab navigated to the “Edit” button, Enter activated it, and focus moved to the title input without page refresh. NVDA announced “Edit task, button” and “Title, edit, [existing value]” correctly.
+<strong>What I learned</strong>: Server-first patterns simplify accessibility because you don’t need custom ARIA or JavaScript focus management—the browser handles it. However, I initially forgot to add <code>aria-live="polite"</code> to the success message, which meant SR users didn’t hear confirmation. After adding it (commit xyz789), NVDA announced “Task updated” automatically.</p>
 </blockquote>
 <p><strong>Good reflective writing</strong>:</p>
 <ul>
@@ -297,7 +297,7 @@
 <li>✅ Evidence is organised and easy to navigate</li>
 <li>✅ Code is clean (no commented-out blocks, no TODO markers)</li>
 <li>✅ Reflection demonstrates learning (mistakes acknowledged, theory applied)</li>
-<li>❌ Missing evidence (e.g., "P2 struggled" with no pilot notes)</li>
+<li>❌ Missing evidence (e.g., “P2 struggled” with no pilot notes)</li>
 <li>❌ Orphaned artefacts (e.g., screenshot with no context)</li>
 <li>❌ Copy-paste from labs without adaptation</li>
 </ul>
@@ -306,7 +306,7 @@
 <ul>
 <li><strong>File size limit</strong>: 100 MB per submission (compress screenshots if needed)</li>
 <li><strong>File naming</strong>: Use consistent, descriptive names (e.g., <code>P1_task3_console.png</code>, not <code>Screenshot 2025-01-15.png</code>)</li>
-<li><strong>Directory structure</strong>: Flat or shallow hierarchy (Gradescope doesn't preserve nested folders well)</li>
+<li><strong>Directory structure</strong>: Flat or shallow hierarchy (Gradescope doesn’t preserve nested folders well)</li>
 <li><strong>PDF compilation</strong>: Reflection and analysis docs should be PDF (not .docx or .md)</li>
 </ul>
 <p><strong>Pre-submission checklist</strong>:</p>
@@ -324,10 +324,10 @@
 <h3 id="step-1-review-critique-feedback"><a class="header" href="#step-1-review-critique-feedback">Step 1: Review Critique Feedback</a></h3>
 <p>Open your studio crit feedback notes. Look for <strong>suggestions</strong> that apply to <strong>Task 1</strong> (evaluation and instrumentation). Common themes:</p>
 <ul>
-<li><strong>Pilot protocol clarity</strong>: "I wasn't sure if consent was verbal or signed" → add screenshot of consent script</li>
-<li><strong>Metrics interpretation</strong>: "Median looks fine, but no discussion of MAD outliers" → add MAD analysis</li>
-<li><strong>Evidence completeness</strong>: "P3 notes mention 'struggled with SR' but no specifics" → add verbatim quotes, timestamps</li>
-<li><strong>Backlog traceability</strong>: "Backlog item #7 says 'fix validation' but doesn't cite pilot data" → add pilot ID and metric</li>
+<li><strong>Pilot protocol clarity</strong>: “I wasn’t sure if consent was verbal or signed” → add screenshot of consent script</li>
+<li><strong>Metrics interpretation</strong>: “Median looks fine, but no discussion of MAD outliers” → add MAD analysis</li>
+<li><strong>Evidence completeness</strong>: “P3 notes mention ‘struggled with SR’ but no specifics” → add verbatim quotes, timestamps</li>
+<li><strong>Backlog traceability</strong>: “Backlog item #7 says ‘fix validation’ but doesn’t cite pilot data” → add pilot ID and metric</li>
 </ul>
 <h3 id="step-2-update-task-1-files"><a class="header" href="#step-2-update-task-1-files">Step 2: Update Task 1 Files</a></h3>
 <p>Your Task 1 package should include:</p>
@@ -405,7 +405,7 @@ mogrify -resize 1920x1080 -quality 85 pilot-notes/*.png
 <ol>
 <li><strong>Prioritisation rationale</strong>: How you scored issues with (Impact + Inclusion) – Effort</li>
 <li><strong>Implementation evidence</strong>: Commit hashes, before/after code diffs, WCAG mapping</li>
-<li><strong>Regression testing</strong>: Proof that fixes didn't break existing features</li>
+<li><strong>Regression testing</strong>: Proof that fixes didn’t break existing features</li>
 <li><strong>Verification pilots</strong>: Re-ran same tasks with same assistive tech; metrics improved</li>
 <li><strong>Reflection</strong>: What you learned about inclusive redesign</li>
 </ol>
@@ -467,10 +467,10 @@ if (title.isBlank()) {
 </ul>
 <h2 id="verification"><a class="header" href="#verification">Verification</a></h2>
 <p><strong>Re-test</strong>: Pilot P3, NVDA 2024.1, keyboard-only, JS-on
-<strong>Result</strong>: Time reduced to 22 s (within 1 MAD of median). NVDA announced "Title is required" immediately after form submission. P3 confirmed: "Much better—I heard the error straight away."</p>
+<strong>Result</strong>: Time reduced to 22 s (within 1 MAD of median). NVDA announced “Title is required” immediately after form submission. P3 confirmed: “Much better—I heard the error straight away.”</p>
 <p><strong>Regression</strong>: Keyboard, mouse, no-JS paths all tested; no regressions (see <code>regression-checklist.pdf</code>).</p>
 <h2 id="reflection"><a class="header" href="#reflection">Reflection</a></h2>
-<p>This fix taught me that <strong>announcements require explicit ARIA roles</strong>. I initially assumed HTMX's OOB swap would be enough, but SR users rely on live regions to detect dynamic changes. The fix was simple (2 lines), but the impact was huge (10.9 MAD outlier → within normal range). This reinforces the principle that <strong>accessibility is often low-effort if designed in from the start</strong>, but expensive to retrofit.</p>
+<p>This fix taught me that <strong>announcements require explicit ARIA roles</strong>. I initially assumed HTMX’s OOB swap would be enough, but SR users rely on live regions to detect dynamic changes. The fix was simple (2 lines), but the impact was huge (10.9 MAD outlier → within normal range). This reinforces the principle that <strong>accessibility is often low-effort if designed in from the start</strong>, but expensive to retrofit.</p>
 <hr />
 <p><strong>Commit</strong>: c8d1e4f
 <strong>Files changed</strong>: <code>routes/Tasks.kt</code> (line 45–52), <code>views/error-summary.peb</code> (added)
@@ -584,7 +584,7 @@ By grounding decisions in pilot data (median, MAD, qualitative notes) and WCAG c
 <h3 id="step-1-review-commit-history"><a class="header" href="#step-1-review-commit-history">Step 1: Review Commit History</a></h3>
 <p>Run <code>git log --oneline --since="2025-01-01"</code> to see all commits from Weeks 6–11. Check for:</p>
 <ul>
-<li>✅ Descriptive commit messages (e.g., "Add role=alert to validation error (WCAG 4.1.3)" not "fix bug")</li>
+<li>✅ Descriptive commit messages (e.g., “Add role=alert to validation error (WCAG 4.1.3)” not “fix bug”)</li>
 <li>✅ Consistent branch strategy (e.g., all work on <code>main</code>, or feature branches merged cleanly)</li>
 <li>❌ Merge conflicts left unresolved</li>
 <li>❌ Sensitive data in history (e.g., API keys, database passwords)</li>
@@ -640,7 +640,7 @@ git rebase -i HEAD~5  # Interactive rebase for last 5 commits
 <ol>
 <li><strong>File naming</strong>: Descriptive, not generic (e.g., <code>P3_nvda_console.png</code> not <code>screenshot.png</code>)</li>
 <li><strong>Legibility</strong>: Open each image; confirm text is readable (min 1280×720)</li>
-<li><strong>Context</strong>: Create a <code>README.md</code> in each week's folder explaining what each file is</li>
+<li><strong>Context</strong>: Create a <code>README.md</code> in each week’s folder explaining what each file is</li>
 </ol>
 <p><strong>Example</strong> (<code>evidence/wk9/README.md</code>):</p>
 <pre><code class="language-markdown"># Week 9 Evidence: Evaluation &amp; Pilots
@@ -831,13 +831,13 @@ unzip -l task2-submission.zip
 <ul>
 <li>✅ All required files present (consent, pilots, analysis, reflection)</li>
 <li>✅ No extra files (e.g., <code>.DS_Store</code>, <code>Thumbs.db</code>, <code>__MACOSX/</code>)</li>
-<li>✅ File paths are flat or shallow (Gradescope doesn't always preserve deep nesting)</li>
+<li>✅ File paths are flat or shallow (Gradescope doesn’t always preserve deep nesting)</li>
 </ul>
 <h3 id="step-3-test-upload-dry-run"><a class="header" href="#step-3-test-upload-dry-run">Step 3: Test Upload (Dry Run)</a></h3>
 <p>If Gradescope has a <strong>draft/test assignment</strong>, upload your ZIPs there. Otherwise, do a local dry run:</p>
 <ol>
 <li>
-<p><strong>Simulate grader view</strong>: Extract your ZIP in a temp directory and navigate it as if you're a marker:</p>
+<p><strong>Simulate grader view</strong>: Extract your ZIP in a temp directory and navigate it as if you’re a marker:</p>
 <pre><code class="language-bash">mkdir /tmp/grader-test
 cd /tmp/grader-test
 unzip ~/comp2850/task1-submission.zip
@@ -851,7 +851,7 @@ unzip ~/comp2850/task1-submission.zip
 </code></pre>
 </li>
 <li>
-<p><strong>Check cross-references</strong>: Do all citations work? (e.g., "See P3_notes.md line 14" → open that file and verify line 14 exists)</p>
+<p><strong>Check cross-references</strong>: Do all citations work? (e.g., “See P3_notes.md line 14” → open that file and verify line 14 exists)</p>
 </li>
 <li>
 <p><strong>Verify PDFs</strong>: Open <code>reflection-task1.pdf</code> and <code>reflection-task2.pdf</code>:</p>
@@ -956,7 +956,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Time</strong>: 20 minutes
 <strong>Materials</strong>: Lab notes from Weeks 6–11, backlog, peer feedback</p>
 <h3 id="step-1-self-assessment--learning-outcomes"><a class="header" href="#step-1-self-assessment--learning-outcomes">Step 1: Self-Assessment — Learning Outcomes</a></h3>
-<p>Review your evidence against all <strong>13 HCI Learning Outcomes</strong> you've addressed across Weeks 6-11. Rate your confidence (1 = not confident, 5 = very confident) and note where the evidence lives.</p>
+<p>Review your evidence against all <strong>13 HCI Learning Outcomes</strong> you’ve addressed across Weeks 6-11. Rate your confidence (1 = not confident, 5 = very confident) and note where the evidence lives.</p>
 <p>See <a href="../references/learning-outcomes.html">Learning Outcomes Reference</a> for full LO definitions.</p>
 <div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>Confidence (1–5)</th><th>Evidence Location</th></tr></thead><tbody>
 <tr><td><strong>LO1</strong></td><td>Differentiate people-centred methods</td><td>☐☐☐☐☐</td><td>W6 L2 job stories, W9 L1 eval plan</td></tr>
@@ -986,10 +986,10 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Example</strong>:</p>
 <ul>
 <li><strong>Server-first simplifies accessibility</strong>: By rendering HTML server-side, I avoided complex ARIA management and focus trapping. This reinforced that progressive enhancement (start with HTML, add JS sparingly) is faster and more robust than JS-heavy SPAs.</li>
-<li><strong>Evidence changes everything</strong>: Before Week 9 pilots, I thought my task manager was "fine". Metrics revealed a 10.9 MAD outlier for SR users, forcing me to confront assumptions. Quantitative + qualitative data is essential for inclusive design.</li>
-<li><strong>Prioritisation is a skill</strong>: I wanted to fix all 8 issues, but (Impact + Inclusion) – Effort scoring helped me focus on the 3 that mattered most. This taught me that good design isn't about perfection—it's about impact per unit of effort.</li>
-<li><strong>Accessibility is iterative</strong>: My first fix (adding <code>role="alert"</code>) didn't work because I forgot <code>aria-live</code>. After reading WCAG 4.1.3 and testing with NVDA, I corrected it. This trial-and-error process is normal and valuable.</li>
-<li><strong>Reflection cements learning</strong>: Writing 1,500 words about my redesign forced me to connect theory (WCAG) to practice (code) in a way that coding alone didn't. Research shows that portfolios deepen understanding.</li>
+<li><strong>Evidence changes everything</strong>: Before Week 9 pilots, I thought my task manager was “fine”. Metrics revealed a 10.9 MAD outlier for SR users, forcing me to confront assumptions. Quantitative + qualitative data is essential for inclusive design.</li>
+<li><strong>Prioritisation is a skill</strong>: I wanted to fix all 8 issues, but (Impact + Inclusion) – Effort scoring helped me focus on the 3 that mattered most. This taught me that good design isn’t about perfection—it’s about impact per unit of effort.</li>
+<li><strong>Accessibility is iterative</strong>: My first fix (adding <code>role="alert"</code>) didn’t work because I forgot <code>aria-live</code>. After reading WCAG 4.1.3 and testing with NVDA, I corrected it. This trial-and-error process is normal and valuable.</li>
+<li><strong>Reflection cements learning</strong>: Writing 1,500 words about my redesign forced me to connect theory (WCAG) to practice (code) in a way that coding alone didn’t. Research shows that portfolios deepen understanding.</li>
 </ul>
 <h3 id="step-3-update-backlog-for-semester-2"><a class="header" href="#step-3-update-backlog-for-semester-2">Step 3: Update Backlog for Semester 2</a></h3>
 <p>Your product backlog should include:</p>
@@ -1000,7 +1000,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ol>
 <p><strong>Example</strong> (backlog extract):</p>
 <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Description</th><th>Priority</th><th>Effort</th><th>Notes</th></tr></thead><tbody>
-<tr><td>#8</td><td>Add keyboard shortcut hints (e.g., "Press / to focus search")</td><td>P2</td><td>3</td><td>Feedback from peer review; improves discoverability</td></tr>
+<tr><td>#8</td><td>Add keyboard shortcut hints (e.g., “Press / to focus search”)</td><td>P2</td><td>3</td><td>Feedback from peer review; improves discoverability</td></tr>
 <tr><td>#9</td><td>Implement undo for task deletion</td><td>P2</td><td>4</td><td>Not in scope for Task 2, but valuable for real users</td></tr>
 <tr><td>#10</td><td>Add dark mode toggle (WCAG 1.4.3 compliance)</td><td>P3</td><td>5</td><td>Low priority; contrast already meets AA</td></tr>
 <tr><td>#11</td><td>Explore HTMX websockets for real-time collaboration</td><td>P4</td><td>8</td><td>Stretch goal; requires learning new HTMX feature</td></tr>
@@ -1019,8 +1019,8 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ul>
 <p><strong>Example</strong> (first 150 words):</p>
 <blockquote>
-<p>The most challenging part of COMP2850 was shifting from "code-first" to "people-first" thinking. In previous modules (COMP1721, COMP2811), I optimised for elegance (clean OOP, efficient algorithms). In COMP2850, I learned that <strong>usability trumps elegance</strong>. My first instinct was to build a React SPA with complex state management, but the server-first + HTMX approach forced me to prioritise simplicity and robustness. This felt uncomfortable at first—I kept wanting to add JS—but Week 9 pilots proved that simpler is often better. Pilot P4 (no-JS) completed tasks just as fast as Pilot P1 (HTMX + mouse), which validated the "hypermedia as the engine of application state" philosophy from Carson Gross.</p>
-<p>The biggest surprise was how <strong>cheap</strong> accessibility fixes are if you design them in from the start. Adding <code>role="alert"</code> took 2 minutes; adding it <em>after</em> building 500 lines of validation logic took 2 hours (because I had to refactor the error-handling architecture). This taught me...</p>
+<p>The most challenging part of COMP2850 was shifting from “code-first” to “people-first” thinking. In previous modules (COMP1721, COMP2811), I optimised for elegance (clean OOP, efficient algorithms). In COMP2850, I learned that <strong>usability trumps elegance</strong>. My first instinct was to build a React SPA with complex state management, but the server-first + HTMX approach forced me to prioritise simplicity and robustness. This felt uncomfortable at first—I kept wanting to add JS—but Week 9 pilots proved that simpler is often better. Pilot P4 (no-JS) completed tasks just as fast as Pilot P1 (HTMX + mouse), which validated the “hypermedia as the engine of application state” philosophy from Carson Gross.</p>
+<p>The biggest surprise was how <strong>cheap</strong> accessibility fixes are if you design them in from the start. Adding <code>role="alert"</code> took 2 minutes; adding it <em>after</em> building 500 lines of validation logic took 2 hours (because I had to refactor the error-handling architecture). This taught me…</p>
 </blockquote>
 <h3 id="step-5-plan-semester-2-goals"><a class="header" href="#step-5-plan-semester-2-goals">Step 5: Plan Semester 2 Goals</a></h3>
 <p>COMP2850 continues in Semester 2 with advanced topics. Based on your Week 6–11 experience, set <strong>3 goals</strong>:</p>
@@ -1043,7 +1043,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <li>
 <p><strong>Goal 3 (Professional)</strong>: Contribute accessibility fixes to an open-source project.</p>
 <ul>
-<li><strong>How</strong>: Find a project with open a11y issues (e.g., on GitHub "good first issue" + "accessibility" labels); submit PR.</li>
+<li><strong>How</strong>: Find a project with open a11y issues (e.g., on GitHub “good first issue” + “accessibility” labels); submit PR.</li>
 <li><strong>Why</strong>: Build portfolio, gain experience with real-world codebases, give back to community.</li>
 </ul>
 </li>
@@ -1063,19 +1063,19 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <h3 id="features-roadmap"><a class="header" href="#features-roadmap">Features Roadmap</a></h3>
 <p>The following features represent typical Semester 2 enhancements. Your backlog (from Activity 5, Step 3) should prioritise 3–5 of these based on your learning goals.</p>
 <div class="table-wrapper"><table><thead><tr><th>Feature</th><th>Description</th><th>HCI Concepts</th><th>Technical Skills</th><th>WCAG Considerations</th></tr></thead><tbody>
-<tr><td><strong>1. Pagination</strong></td><td>Display 10 tasks per page with "Previous/Next" navigation</td><td>Information architecture, cognitive load</td><td>Query string parameters, server-side pagination logic</td><td>WCAG 2.4.1 (Bypass Blocks), 2.4.8 (Location)</td></tr>
+<tr><td><strong>1. Pagination</strong></td><td>Display 10 tasks per page with “Previous/Next” navigation</td><td>Information architecture, cognitive load</td><td>Query string parameters, server-side pagination logic</td><td>WCAG 2.4.1 (Bypass Blocks), 2.4.8 (Location)</td></tr>
 <tr><td><strong>2. Tag/Category System</strong></td><td>Add multiple tags per task; filter by tag</td><td>Metadata schema, faceted search</td><td>Many-to-many relationships (CSV join table or SQLite)</td><td>WCAG 4.1.2 (Name, Role, Value) for tag buttons</td></tr>
 <tr><td><strong>3. Search &amp; Autocomplete</strong></td><td>Full-text search across task titles; suggest as you type</td><td>Search UX patterns, latency perception</td><td>HTMX debouncing, server-side text search</td><td>WCAG 4.1.3 (Status Messages) for result count</td></tr>
 <tr><td><strong>4. Multi-User (Sessions)</strong></td><td>Multiple users with separate task lists (no login, session-based)</td><td>Privacy vs collaboration trade-offs</td><td>Session isolation, CSV partitioning by session ID</td><td>WCAG 3.3.8 (Accessible Authentication - Minimum)</td></tr>
-<tr><td><strong>5. Real-Time Updates</strong></td><td>When User A adds a task, User B's list auto-updates (via WebSockets)</td><td>Shared awareness, CSCW principles</td><td>HTMX WebSockets extension, Ktor WebSocket plugin</td><td>WCAG 4.1.3 (announce updates via live regions)</td></tr>
-<tr><td><strong>6. AI Task Suggestions</strong></td><td>LLM generates task breakdowns (e.g., "Write essay" → sub-tasks)</td><td>AI transparency, user agency</td><td>OpenAI API integration, prompt engineering</td><td>WCAG 3.3.2 (Labels or Instructions) for AI disclaimers</td></tr>
+<tr><td><strong>5. Real-Time Updates</strong></td><td>When User A adds a task, User B’s list auto-updates (via WebSockets)</td><td>Shared awareness, CSCW principles</td><td>HTMX WebSockets extension, Ktor WebSocket plugin</td><td>WCAG 4.1.3 (announce updates via live regions)</td></tr>
+<tr><td><strong>6. AI Task Suggestions</strong></td><td>LLM generates task breakdowns (e.g., “Write essay” → sub-tasks)</td><td>AI transparency, user agency</td><td>OpenAI API integration, prompt engineering</td><td>WCAG 3.3.2 (Labels or Instructions) for AI disclaimers</td></tr>
 <tr><td><strong>7. Offline Mode (PWA)</strong></td><td>Service worker caches app; tasks sync when online</td><td>Network resilience, progressive web apps</td><td>Service Worker API, IndexedDB, background sync</td><td>WCAG 3.2.4 (Consistent Identification) across online/offline</td></tr>
 <tr><td><strong>8. Accessibility Dashboard</strong></td><td>Real-time WCAG compliance score; lighthouse metrics</td><td>Automated testing limits, developer tools</td><td>axe-core integration, CI/CD pipeline</td><td>Meta-accessibility: ensuring dashboard itself is accessible</td></tr>
 <tr><td><strong>9. Dark Mode</strong></td><td>User-selectable theme (light/dark/high-contrast)</td><td>Personalisation, sensory preferences</td><td>CSS custom properties, <code>prefers-color-scheme</code> media query</td><td>WCAG 1.4.3 (Contrast - Minimum) across all themes</td></tr>
 <tr><td><strong>10. Export &amp; Import</strong></td><td>Download tasks as JSON/CSV/PDF; import from Todoist/Trello</td><td>Data portability, interoperability</td><td>CSV/JSON serialisation, PDF generation (iText/PDFKit)</td><td>WCAG 1.1.1 (ensure exported PDFs are tagged/accessible)</td></tr>
 </tbody></table>
 </div>
-<p><strong>Prioritisation guidance</strong>: If your Semester 1 evaluation identified <strong>performance issues</strong> (e.g., slow search), prioritise pagination + search (features 1, 3). If you're interested in <strong>AI/ethics</strong>, prioritise feature 6 + transparency documentation. If you want to explore <strong>real-time collaboration</strong>, prioritise features 4–5.</p>
+<p><strong>Prioritisation guidance</strong>: If your Semester 1 evaluation identified <strong>performance issues</strong> (e.g., slow search), prioritise pagination + search (features 1, 3). If you’re interested in <strong>AI/ethics</strong>, prioritise feature 6 + transparency documentation. If you want to explore <strong>real-time collaboration</strong>, prioritise features 4–5.</p>
 <hr />
 <h3 id="technical-topics-semester-2-lectureslabs"><a class="header" href="#technical-topics-semester-2-lectureslabs">Technical Topics (Semester 2 Lectures/Labs)</a></h3>
 <p>Semester 2 typically covers these advanced HCI topics. Your portfolio work will align with one or more:</p>
@@ -1085,15 +1085,15 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <ul>
 <li><strong>What</strong>: Design patterns for multi-user collaboration (conflict resolution, awareness, turn-taking)</li>
 <li><strong>Application</strong>: Features 4–5 (multi-user, real-time updates)</li>
-<li><strong>Reading</strong>: Grudin (1994) "CSCW: History and Focus"; Schmidt &amp; Bannon (1992) "Taking CSCW Seriously"</li>
+<li><strong>Reading</strong>: Grudin (1994) “CSCW: History and Focus”; Schmidt &amp; Bannon (1992) “Taking CSCW Seriously”</li>
 </ul>
 </li>
 <li>
 <p><strong>AI &amp; Automation Ethics</strong></p>
 <ul>
 <li><strong>What</strong>: Transparency, explainability, user agency when integrating AI features</li>
-<li><strong>Application</strong>: Feature 6 (AI task suggestions) with clear disclaimers ("AI-generated; verify before relying on")</li>
-<li><strong>Reading</strong>: Shneiderman (2022) "Human-Centered AI"; EU AI Act principles</li>
+<li><strong>Application</strong>: Feature 6 (AI task suggestions) with clear disclaimers (“AI-generated; verify before relying on”)</li>
+<li><strong>Reading</strong>: Shneiderman (2022) “Human-Centered AI”; EU AI Act principles</li>
 </ul>
 </li>
 <li>
@@ -1101,7 +1101,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <ul>
 <li><strong>What</strong>: Optimising server response time, perceptual speed tricks (skeleton screens, optimistic UI)</li>
 <li><strong>Application</strong>: Features 1, 3 (pagination, search) with &lt;100ms response targets</li>
-<li><strong>Reading</strong>: Nielsen (1993) "Response Times: The 3 Important Limits"</li>
+<li><strong>Reading</strong>: Nielsen (1993) “Response Times: The 3 Important Limits”</li>
 </ul>
 </li>
 <li>
@@ -1109,7 +1109,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <ul>
 <li><strong>What</strong>: Offline-first architecture, service workers, installable web apps</li>
 <li><strong>Application</strong>: Feature 7 (offline mode) with background sync when network returns</li>
-<li><strong>Reading</strong>: MDN Web Docs: Service Worker API; "Offline Cookbook" patterns</li>
+<li><strong>Reading</strong>: MDN Web Docs: Service Worker API; “Offline Cookbook” patterns</li>
 </ul>
 </li>
 <li>
@@ -1117,7 +1117,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <ul>
 <li><strong>What</strong>: Ensuring AI features work with screen readers, voice input, switch access</li>
 <li><strong>Application</strong>: Feature 6 (AI suggestions) with ARIA announcements, feature 8 (a11y dashboard) accessible to all</li>
-<li><strong>Reading</strong>: W3C (2024) "AI &amp; Accessibility Research Symposium"</li>
+<li><strong>Reading</strong>: W3C (2024) “AI &amp; Accessibility Research Symposium”</li>
 </ul>
 </li>
 <li>
@@ -1129,7 +1129,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ul>
 </li>
 </ol>
-<p><strong>Study path</strong>: If you're interested in <strong>research</strong>, focus on topics 1–2 (CSCW, AI ethics) and design a formal study. If you're interested in <strong>industry</strong>, focus on topics 3, 6 (performance, scaling) and build a production deployment. If you're interested in <strong>accessibility advocacy</strong>, focus on topics 5, 8 (inclusive AI, a11y tooling).</p>
+<p><strong>Study path</strong>: If you’re interested in <strong>research</strong>, focus on topics 1–2 (CSCW, AI ethics) and design a formal study. If you’re interested in <strong>industry</strong>, focus on topics 3, 6 (performance, scaling) and build a production deployment. If you’re interested in <strong>accessibility advocacy</strong>, focus on topics 5, 8 (inclusive AI, a11y tooling).</p>
 <hr />
 <h3 id="backlog-integration"><a class="header" href="#backlog-integration">Backlog Integration</a></h3>
 <p>Your <strong>product backlog</strong> (from Activity 5, Step 3) should now include:</p>
@@ -1156,7 +1156,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Action</strong>: Open your <code>backlog.md</code> (or create it in your repo root) and add Semester 2 features with priority scores.</p>
 <hr />
 <h3 id="skills-development-path"><a class="header" href="#skills-development-path">Skills Development Path</a></h3>
-<p>To successfully implement Semester 2 features, you'll need to develop these skills progressively:</p>
+<p>To successfully implement Semester 2 features, you’ll need to develop these skills progressively:</p>
 <h4 id="path-1-full-stack-developer-features-15-7"><a class="header" href="#path-1-full-stack-developer-features-15-7">Path 1: Full-Stack Developer (Features 1–5, 7)</a></h4>
 <p><strong>Goal</strong>: Build production-ready, scalable web app</p>
 <div class="table-wrapper"><table><thead><tr><th>Skill</th><th>When to Learn</th><th>Resources</th><th>Application</th></tr></thead><tbody>
@@ -1171,7 +1171,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Goal</strong>: Conduct formal usability studies; publish research</p>
 <div class="table-wrapper"><table><thead><tr><th>Skill</th><th>When to Learn</th><th>Resources</th><th>Application</th></tr></thead><tbody>
 <tr><td><strong>Formal study design</strong> (IRB, informed consent)</td><td>Week 1–2 (S2)</td><td>University ethics committee guidelines</td><td>Replicate Week 9 protocol with n=8+ participants</td></tr>
-<tr><td><strong>Statistical analysis</strong> (t-tests, ANOVA)</td><td>Week 3–4 (S2)</td><td>R/Python (scipy.stats); "Statistics for HCI" course</td><td>Compare median task times across conditions (HTMX vs React)</td></tr>
+<tr><td><strong>Statistical analysis</strong> (t-tests, ANOVA)</td><td>Week 3–4 (S2)</td><td>R/Python (scipy.stats); “Statistics for HCI” course</td><td>Compare median task times across conditions (HTMX vs React)</td></tr>
 <tr><td><strong>Qualitative coding</strong> (thematic analysis)</td><td>Week 5–6 (S2)</td><td>Braun &amp; Clarke (2006) thematic analysis guide</td><td>Analyse pilot quotes from Week 9</td></tr>
 <tr><td><strong>AI transparency frameworks</strong></td><td>Week 7–8 (S2)</td><td>EU AI Act, Shneiderman (2020) Human-Centered AI</td><td>Feature 6 (AI suggestions) with user control</td></tr>
 <tr><td><strong>Academic writing</strong> (CHI, ASSETS format)</td><td>Week 9–10 (S2)</td><td>CHI paper examples; ACM SIGCHI templates</td><td>Write 4-page paper on findings; submit to CHI LBW</td></tr>
@@ -1190,7 +1190,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Choose your path</strong> based on career goals, then add relevant skills to your Semester 2 learning plan.</p>
 <hr />
 <h3 id="motivation-why-continue"><a class="header" href="#motivation-why-continue">Motivation: Why Continue?</a></h3>
-<p>You've invested 6 weeks (Weeks 6–11) building a solid foundation. Here's why Semester 2 matters:</p>
+<p>You’ve invested 6 weeks (Weeks 6–11) building a solid foundation. Here’s why Semester 2 matters:</p>
 <h4 id="1-portfolio-differentiation"><a class="header" href="#1-portfolio-differentiation">1. <strong>Portfolio Differentiation</strong></a></h4>
 <p>Most CS students can build a CRUD app. Few can demonstrate:</p>
 <ul>
@@ -1209,7 +1209,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ul>
 <p><strong>Example research question</strong> (from your Semester 1 work):</p>
 <blockquote>
-<p>"Do server-first architectures (HTMX) improve screen reader usability compared to client-side SPAs (React)? A comparative task-based study (n=16, between-subjects)."</p>
+<p>“Do server-first architectures (HTMX) improve screen reader usability compared to client-side SPAs (React)? A comparative task-based study (n=16, between-subjects).”</p>
 </blockquote>
 <p>This extends your Week 9 methodology and could lead to co-authorship with module staff.</p>
 <h4 id="3-industry-readiness"><a class="header" href="#3-industry-readiness">3. <strong>Industry Readiness</strong></a></h4>
@@ -1217,17 +1217,17 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <ul>
 <li><strong>End-to-end ownership</strong>: Requirements → design → implementation → evaluation → iteration</li>
 <li><strong>Cross-functional skills</strong>: Code (Kotlin/Ktor), design (WCAG), research (pilots), writing (reflection)</li>
-<li><strong>Trade-off reasoning</strong>: "I prioritised X over Y because [evidence]"</li>
+<li><strong>Trade-off reasoning</strong>: “I prioritised X over Y because [evidence]”</li>
 </ul>
 <p>Semester 2 features demonstrate <strong>production thinking</strong>:</p>
 <ul>
-<li>Feature 1 (pagination): "I scaled to 10,000 tasks with acceptable latency"</li>
-<li>Feature 5 (real-time): "I implemented WebSockets while maintaining SR compatibility"</li>
-<li>Feature 6 (AI): "I integrated LLMs with transparent disclaimers and user override"</li>
+<li>Feature 1 (pagination): “I scaled to 10,000 tasks with acceptable latency”</li>
+<li>Feature 5 (real-time): “I implemented WebSockets while maintaining SR compatibility”</li>
+<li>Feature 6 (AI): “I integrated LLMs with transparent disclaimers and user override”</li>
 </ul>
 <p>These are <strong>STAR interview stories</strong> (Situation, Task, Action, Result) that differentiate you from peers.</p>
 <h4 id="4-personal-mastery"><a class="header" href="#4-personal-mastery">4. <strong>Personal Mastery</strong></a></h4>
-<p>COMP2850 is hard. You've learned:</p>
+<p>COMP2850 is hard. You’ve learned:</p>
 <ul>
 <li><strong>Server-first thinking</strong> (hypermedia as engine of state)</li>
 <li><strong>Inclusive design</strong> (start with HTML, add ARIA only when needed)</li>
@@ -1257,7 +1257,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Refine your portfolio</strong></p>
 <ul>
 <li>Convert <code>README.md</code> to a static site (GitHub Pages, GitLab Pages)</li>
-<li>Add "Semester 2 Roadmap" section citing your chosen features</li>
+<li>Add “Semester 2 Roadmap” section citing your chosen features</li>
 <li>Share with peers/mentors for feedback</li>
 </ul>
 </li>
@@ -1271,8 +1271,8 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <li>
 <p><strong>Set a measurable goal</strong></p>
 <ul>
-<li>Example: "By Week 8 (S2), I will deploy a production instance with 100 real users and collect SUS scores"</li>
-<li>Example: "By Week 10 (S2), I will submit a 4-page paper to CHI LBW"</li>
+<li>Example: “By Week 8 (S2), I will deploy a production instance with 100 real users and collect SUS scores”</li>
+<li>Example: “By Week 10 (S2), I will submit a 4-page paper to CHI LBW”</li>
 </ul>
 </li>
 </ol>
@@ -1315,13 +1315,13 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Term</th><th>Definition</th><th>Example/Context</th></tr></thead><tbody>
 <tr><td><strong>Evidence chain</strong></td><td>Traceable path from raw data → analysis → fix → verification</td><td>P3 pilot notes → WCAG violation → code commit → retest</td></tr>
-<tr><td><strong>Reflective writing</strong></td><td>Connecting theory to practice by answering What/Why/How/Learning</td><td>"I added role=alert (WCAG 4.1.3) because P3 didn't hear errors"</td></tr>
+<tr><td><strong>Reflective writing</strong></td><td>Connecting theory to practice by answering What/Why/How/Learning</td><td>“I added role=alert (WCAG 4.1.3) because P3 didn’t hear errors”</td></tr>
 <tr><td><strong>Portfolio</strong></td><td>Organised collection of artefacts with accompanying reflection</td><td>Code repo + evidence/ + Task 1/2 packages + README</td></tr>
-<tr><td><strong>Traceability</strong></td><td>Ability to link every claim to supporting evidence</td><td>"P3 took 127 s (see metrics.csv row 47)"</td></tr>
+<tr><td><strong>Traceability</strong></td><td>Ability to link every claim to supporting evidence</td><td>“P3 took 127 s (see metrics.csv row 47)”</td></tr>
 <tr><td><strong>Gradescope</strong></td><td>Submission platform with file size/format requirements</td><td>100 MB limit, PDF preferred, flat directory structure</td></tr>
 <tr><td><strong>Commit hash</strong></td><td>Unique identifier for a Git commit</td><td><code>c8d1e4f</code> (first 7 chars of SHA-1)</td></tr>
-<tr><td><strong>Regression testing</strong></td><td>Verifying fixes didn't break existing features</td><td>Keyboard, SR, no-JS paths all retested after validation fix</td></tr>
-<tr><td><strong>Backlog</strong></td><td>Prioritised list of unfinished or future work</td><td>"Add undo feature" (P2, Effort: 4)</td></tr>
+<tr><td><strong>Regression testing</strong></td><td>Verifying fixes didn’t break existing features</td><td>Keyboard, SR, no-JS paths all retested after validation fix</td></tr>
+<tr><td><strong>Backlog</strong></td><td>Prioritised list of unfinished or future work</td><td>“Add undo feature” (P2, Effort: 4)</td></tr>
 <tr><td><strong>WCAG compliance doc</strong></td><td>Mapping fixes to WCAG 2.2 success criteria</td><td>Fix 01 → 4.1.3 Status Messages (AA)</td></tr>
 <tr><td><strong>Compression</strong></td><td>Reducing file size (images, PDFs) to meet submission limits</td><td>PNG: 8 MB → 2 MB via TinyPNG; PDF: 15 MB → 5 MB via Ghostscript</td></tr>
 </tbody></table>
@@ -1341,7 +1341,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ul>
 </li>
 <li>
-<p><strong>Portfolio organisation</strong>: Imagine you are a marker with 50 portfolios to grade. Open your <code>README.md</code> and <code>evidence/</code> directory. Can you find any specific artefact (e.g., "P3 retest screenshot") in &lt; 30 seconds? If not, what would improve navigation?</p>
+<p><strong>Portfolio organisation</strong>: Imagine you are a marker with 50 portfolios to grade. Open your <code>README.md</code> and <code>evidence/</code> directory. Can you find any specific artefact (e.g., “P3 retest screenshot”) in &lt; 30 seconds? If not, what would improve navigation?</p>
 </li>
 <li>
 <p><strong>Submission readiness</strong>: If Gradescope rejects your ZIP due to file size, which files would you compress first? Why?</p>
@@ -1362,7 +1362,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 </ul>
 <p><strong>Portfolio assessment</strong></p>
 <ul>
-<li>Paulson, F. L., Paulson, P. R., &amp; Meyer, C. A. (1991). "What Makes a Portfolio a Portfolio?" <em>Educational Leadership</em>, 48(5), 60–63. <a href="https://www.ascd.org/el/articles/what-makes-a-portfolio-a-portfolio">https://www.ascd.org/el/articles/what-makes-a-portfolio-a-portfolio</a></li>
+<li>Paulson, F. L., Paulson, P. R., &amp; Meyer, C. A. (1991). “What Makes a Portfolio a Portfolio?” <em>Educational Leadership</em>, 48(5), 60–63. <a href="https://www.ascd.org/el/articles/what-makes-a-portfolio-a-portfolio">https://www.ascd.org/el/articles/what-makes-a-portfolio-a-portfolio</a></li>
 </ul>
 <p><strong>Accessibility compliance</strong></p>
 <ul>
@@ -1399,7 +1399,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <li><strong>Peer review</strong> (if required): Some modules assign post-submission peer review; check Minerva announcements.</li>
 <li><strong>Semester 2 prep</strong>: Review your backlog and Semester 2 goals; prioritise 1–2 items to start over break.</li>
 <li><strong>Portfolio showcase</strong>: Consider converting your <code>README.md</code> to a static site (e.g., GitHub Pages) to show potential employers.</li>
-<li><strong>Celebrate</strong>: You've completed a rigorous HCI project with evaluation, iteration, and evidence chains. Well done!</li>
+<li><strong>Celebrate</strong>: You’ve completed a rigorous HCI project with evaluation, iteration, and evidence chains. Well done!</li>
 </ol>
 <hr />
 <h2 id="acknowledgements-1"><a class="header" href="#acknowledgements-1">Acknowledgements</a></h2>
@@ -1419,11 +1419,11 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../wk11/wk11-lab1-studio-crit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk11/wk11-lab1-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk11/wk11-lab2-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1433,11 +1433,11 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../wk11/wk11-lab1-studio-crit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk11/wk11-lab1-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk11/wk11-lab2-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

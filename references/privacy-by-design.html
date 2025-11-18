@@ -187,12 +187,12 @@
 <h3 id="1-proactive-not-reactive-preventative-not-remedial"><a class="header" href="#1-proactive-not-reactive-preventative-not-remedial">1. Proactive not Reactive; Preventative not Remedial</a></h3>
 <ul>
 <li>Anticipate and prevent privacy risks before they occur</li>
-<li>Don't wait for privacy breaches to happen before taking action</li>
+<li>Don’t wait for privacy breaches to happen before taking action</li>
 <li>Design systems that cannot easily leak or misuse personal data</li>
 </ul>
 <h3 id="2-privacy-as-the-default-setting"><a class="header" href="#2-privacy-as-the-default-setting">2. Privacy as the Default Setting</a></h3>
 <ul>
-<li>Participants' privacy should be protected automatically</li>
+<li>Participants’ privacy should be protected automatically</li>
 <li>No action required from the participant to protect their privacy</li>
 <li>Systems should work with minimal data collection by default</li>
 </ul>
@@ -204,9 +204,9 @@
 </ul>
 <h3 id="4-full-functionality--positive-sum-not-zero-sum"><a class="header" href="#4-full-functionality--positive-sum-not-zero-sum">4. Full Functionality – Positive-Sum, not Zero-Sum</a></h3>
 <ul>
-<li>Privacy doesn't require trade-offs with functionality</li>
+<li>Privacy doesn’t require trade-offs with functionality</li>
 <li>Both privacy and functionality can be achieved</li>
-<li>False dichotomy between "usable" and "private"</li>
+<li>False dichotomy between “usable” and “private”</li>
 </ul>
 <h3 id="5-end-to-end-security--full-lifecycle-protection"><a class="header" href="#5-end-to-end-security--full-lifecycle-protection">5. End-to-End Security – Full Lifecycle Protection</a></h3>
 <ul>
@@ -236,7 +236,7 @@
 </ul>
 <h3 id="2-ethical-responsibility"><a class="header" href="#2-ethical-responsibility">2. <strong>Ethical Responsibility</strong></a></h3>
 <ul>
-<li>As software engineers, we have power over people's data</li>
+<li>As software engineers, we have power over people’s data</li>
 <li>With that power comes responsibility to protect it</li>
 <li>People have a right to privacy, autonomy, and dignity</li>
 <li>Our systems should respect those rights by default</li>
@@ -302,7 +302,7 @@ ts_iso,user_email,user_name,ip_address,task_code,outcome,ms
 <li>Reduces risk of data exposure through third parties</li>
 <li>No terms-of-service surprises from external vendors</li>
 <li>Clear data lifecycle (we control retention and deletion)</li>
-<li>Compliance is simpler when data doesn't leave our infrastructure</li>
+<li>Compliance is simpler when data doesn’t leave our infrastructure</li>
 <li>UoL OneDrive provides secure, GDPR-compliant storage with appropriate access controls</li>
 </ul>
 <h3 id="peer-only-testing-protocol"><a class="header" href="#peer-only-testing-protocol">Peer-Only Testing Protocol</a></h3>
@@ -327,7 +327,7 @@ ts_iso,user_email,user_name,ip_address,task_code,outcome,ms
 <li>Personal information scrubbed from any evidence</li>
 <li>No images of people</li>
 <li>Alt text required for accessibility, but no identifying details</li>
-<li>Use pseudoanonymisation (e.g., "Participant A", "Session 1") when reporting qualitative data from interviews, recordings, or transcription</li>
+<li>Use pseudoanonymisation (e.g., “Participant A”, “Session 1”) when reporting qualitative data from interviews, recordings, or transcription</li>
 </ul>
 <p><strong>Why:</strong></p>
 <ul>
@@ -355,8 +355,8 @@ ts_iso,user_email,user_name,ip_address,task_code,outcome,ms
 <h3 id="no-feature-creep"><a class="header" href="#no-feature-creep">No Feature Creep</a></h3>
 <p><strong>What we do:</strong></p>
 <ul>
-<li>Don't add "helpful" tracking features</li>
-<li>Resist temptation to add "just one more field"</li>
+<li>Don’t add “helpful” tracking features</li>
+<li>Resist temptation to add “just one more field”</li>
 <li>Question every data point: is this necessary?</li>
 <li>Start with minimal data, expand only if justified</li>
 </ul>
@@ -364,7 +364,7 @@ ts_iso,user_email,user_name,ip_address,task_code,outcome,ms
 <ul>
 <li>Scope creep applies to data collection too</li>
 <li>Each new field is a new privacy risk</li>
-<li>"We might need it someday" is not justification</li>
+<li>“We might need it someday” is not justification</li>
 <li>Constraints breed creativity (work within limits)</li>
 </ul>
 <h2 id="practical-examples-from-our-labs"><a class="header" href="#practical-examples-from-our-labs">Practical Examples from Our Labs</a></h2>
@@ -382,7 +382,7 @@ Logger.log(
     jsMode = "true"               // JS enabled/disabled
 )
 </code></pre>
-<p><strong>What we DON'T log:</strong></p>
+<p><strong>What we DON’T log:</strong></p>
 <ul>
 <li>Browser user agent strings (can fingerprint devices)</li>
 <li>Full URLs (might contain personal data in query params)</li>
@@ -400,8 +400,8 @@ data class TaskStats(
     val errorRate: Double
 )
 </code></pre>
-<p>We report: "Task T1 had a median completion time of 8.2 seconds with a 90% completion rate."</p>
-<p>We DON'T report: "Session abc123xy took 15 seconds and made 3 errors."</p>
+<p>We report: “Task T1 had a median completion time of 8.2 seconds with a 90% completion rate.”</p>
+<p>We DON’T report: “Session abc123xy took 15 seconds and made 3 errors.”</p>
 <p><strong>Why:</strong> The goal is to improve the interface, not judge individuals.</p>
 <h3 id="week-11-portfolio--submission"><a class="header" href="#week-11-portfolio--submission">Week 11: Portfolio &amp; Submission</a></h3>
 <p><strong>Privacy-Respecting Evidence:</strong></p>
@@ -409,26 +409,26 @@ data class TaskStats(
 <li>Screenshots cropped to show only UI elements</li>
 <li>No usernames visible in interface</li>
 <li>No timestamps that could identify sessions</li>
-<li>Generic task data ("rename task A to task B")</li>
+<li>Generic task data (“rename task A to task B”)</li>
 </ul>
-<p><strong>Privacy-Violating Evidence (Don't do this):</strong></p>
+<p><strong>Privacy-Violating Evidence (Don’t do this):</strong></p>
 <ul>
-<li>Full-screen screenshots showing participant's desktop</li>
+<li>Full-screen screenshots showing participant’s desktop</li>
 <li>Visible personal calendar events or email notifications</li>
 <li>Identifiable profiles in test data</li>
 <li>Timestamped evidence linking to specific people</li>
 </ul>
 <h2 id="common-myths-about-privacy"><a class="header" href="#common-myths-about-privacy">Common Myths About Privacy</a></h2>
-<h3 id="myth-1-were-not-collecting-sensitive-data-so-privacy-doesnt-matter"><a class="header" href="#myth-1-were-not-collecting-sensitive-data-so-privacy-doesnt-matter">Myth 1: "We're not collecting sensitive data, so privacy doesn't matter"</a></h3>
+<h3 id="myth-1-were-not-collecting-sensitive-data-so-privacy-doesnt-matter"><a class="header" href="#myth-1-were-not-collecting-sensitive-data-so-privacy-doesnt-matter">Myth 1: “We’re not collecting sensitive data, so privacy doesn’t matter”</a></h3>
 <p><strong>Reality:</strong> What seems innocuous can become sensitive in aggregate or context. Session patterns, timing data, and behavioural metrics can reveal sensitive information. Privacy by Design applies to all data.</p>
-<h3 id="myth-2-privacy-and-usability-are-in-conflict"><a class="header" href="#myth-2-privacy-and-usability-are-in-conflict">Myth 2: "Privacy and usability are in conflict"</a></h3>
-<p><strong>Reality:</strong> Privacy by Design is about smart design choices, not removing features. Anonymous session IDs work just as well as personal accounts for our use case. Good UX respects participants' privacy.</p>
-<h3 id="myth-3-we-can-just-anonymise-data-later"><a class="header" href="#myth-3-we-can-just-anonymise-data-later">Myth 3: "We can just anonymise data later"</a></h3>
+<h3 id="myth-2-privacy-and-usability-are-in-conflict"><a class="header" href="#myth-2-privacy-and-usability-are-in-conflict">Myth 2: “Privacy and usability are in conflict”</a></h3>
+<p><strong>Reality:</strong> Privacy by Design is about smart design choices, not removing features. Anonymous session IDs work just as well as personal accounts for our use case. Good UX respects participants’ privacy.</p>
+<h3 id="myth-3-we-can-just-anonymise-data-later"><a class="header" href="#myth-3-we-can-just-anonymise-data-later">Myth 3: “We can just anonymise data later”</a></h3>
 <p><strong>Reality:</strong> Anonymisation is hard and often fails. Re-identification attacks are common. Better to never collect identifying data in the first place. True anonymity requires design from the start.</p>
-<h3 id="myth-4-people-dont-care-about-privacy-anyway"><a class="header" href="#myth-4-people-dont-care-about-privacy-anyway">Myth 4: "People don't care about privacy anyway"</a></h3>
+<h3 id="myth-4-people-dont-care-about-privacy-anyway"><a class="header" href="#myth-4-people-dont-care-about-privacy-anyway">Myth 4: “People don’t care about privacy anyway”</a></h3>
 <p><strong>Reality:</strong> People care deeply when they understand the implications. Surveys show privacy is a top concern. More importantly, privacy is a right, not a popularity contest.</p>
-<h3 id="myth-5-we-need-data-to-improve-the-product"><a class="header" href="#myth-5-we-need-data-to-improve-the-product">Myth 5: "We need data to improve the product"</a></h3>
-<p><strong>Reality:</strong> We need <em>insights</em>, not personal data. Aggregate metrics, task success rates, and usability findings don't require knowing who anyone is. Data minimisation often leads to better focus.</p>
+<h3 id="myth-5-we-need-data-to-improve-the-product"><a class="header" href="#myth-5-we-need-data-to-improve-the-product">Myth 5: “We need data to improve the product”</a></h3>
+<p><strong>Reality:</strong> We need <em>insights</em>, not personal data. Aggregate metrics, task success rates, and usability findings don’t require knowing who anyone is. Data minimisation often leads to better focus.</p>
 <h2 id="questions-to-ask"><a class="header" href="#questions-to-ask">Questions to Ask</a></h2>
 <p>When designing any system that collects data, ask:</p>
 <ol>
@@ -436,7 +436,7 @@ data class TaskStats(
 <p><strong>Do we need this data at all?</strong></p>
 <ul>
 <li>What decision does it inform?</li>
-<li>What happens if we don't collect it?</li>
+<li>What happens if we don’t collect it?</li>
 <li>Is there a less invasive alternative?</li>
 </ul>
 </li>
@@ -468,7 +468,7 @@ data class TaskStats(
 <p><strong>What could go wrong?</strong></p>
 <ul>
 <li>Threat model: what attacks are possible?</li>
-<li>Data breach: what's the impact?</li>
+<li>Data breach: what’s the impact?</li>
 <li>Misuse: could this data harm people?</li>
 </ul>
 </li>
@@ -483,7 +483,7 @@ data class TaskStats(
 <li>
 <p><strong>Is collection transparent?</strong></p>
 <ul>
-<li>Do people know what's collected?</li>
+<li>Do people know what’s collected?</li>
 <li>Do they understand why?</li>
 <li>Can they make informed choices?</li>
 </ul>
@@ -507,20 +507,20 @@ data class TaskStats(
 <li></li>
 </ul>
 <h2 id="summary-why-this-matters-for-hci--ux"><a class="header" href="#summary-why-this-matters-for-hci--ux">Summary: Why This Matters for HCI &amp; UX</a></h2>
-<p>As HCI practitioners, we design the interfaces, systems and UX that mediate people's digital lives.<br />
+<p>As HCI practitioners, we design the interfaces, systems and UX that mediate people’s digital lives.<br />
 Every interaction we design, every feature we implement, has privacy implications.</p>
 <p><strong>Privacy by Design is good HCI &amp; UX because:</strong></p>
 <ol>
 <li><strong>Respects human dignity</strong> - People are not data points</li>
 <li><strong>Builds trust</strong> - Essential for meaningful human-computer interaction</li>
-<li><strong>Reduces cognitive burden</strong> - People shouldn't need law degrees to protect themselves</li>
+<li><strong>Reduces cognitive burden</strong> - People shouldn’t need law degrees to protect themselves</li>
 <li><strong>Enables inclusion</strong> - Privacy concerns disproportionately affect marginalised groups</li>
 <li><strong>Future-proofs systems</strong> - Privacy-respecting design ages better</li>
 <li><strong>Aligns with ethics</strong> - Core ACM Code of Ethics principle (1.6: Respect privacy)</li>
 </ol>
-<p>In COMP2850, we practise Privacy by Design not because it's required for coursework, but because it's required for <strong>responsible software engineering</strong>. The habits you form now shape the systems you'll build throughout your career.</p>
-<p><strong>The question is not "How much data can we collect?"</strong></p>
-<p><strong>The question is "How little data do we need to achieve our goals?"</strong></p>
+<p>In COMP2850, we practise Privacy by Design not because it’s required for coursework, but because it’s required for <strong>responsible software engineering</strong>. The habits you form now shape the systems you’ll build throughout your career.</p>
+<p><strong>The question is not “How much data can we collect?”</strong></p>
+<p><strong>The question is “How little data do we need to achieve our goals?”</strong></p>
 <p>Privacy by Design starts with that question.</p>
 <h3 id="academic-perspectives"><a class="header" href="#academic-perspectives">Academic Perspectives</a></h3>
 <ul>

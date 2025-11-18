@@ -200,7 +200,7 @@
 <hr />
 <h2 id="introduction-from-data-to-decisions"><a class="header" href="#introduction-from-data-to-decisions">Introduction: From Data to Decisions</a></h2>
 <p>Week 9 collected raw pilot data: logs, times, errors, quotes. <strong>Today you turn that data into actionable insights</strong>.</p>
-<p><strong>Data analysis is NOT just number-crunching</strong>. It's:</p>
+<p><strong>Data analysis is NOT just number-crunching</strong>. It’s:</p>
 <ul>
 <li><strong>Interpretation</strong>: What do the numbers <em>mean</em> for real people?</li>
 <li><strong>Prioritisation</strong>: Which issues matter most for inclusion + usability?</li>
@@ -209,10 +209,10 @@
 <p><strong>Why this matters</strong>:</p>
 <ul>
 <li><strong>Gradescope Task 2</strong>: Requires before/after metrics + evidence of data-driven redesign</li>
-<li><strong>Week 10 Lab 2</strong>: You'll implement Priority 1 fixes—planning today prevents thrashing tomorrow</li>
-<li><strong>Professional practice</strong>: Product decisions require justification (stakeholders ask "why this fix?")</li>
+<li><strong>Week 10 Lab 2</strong>: You’ll implement Priority 1 fixes—planning today prevents thrashing tomorrow</li>
+<li><strong>Professional practice</strong>: Product decisions require justification (stakeholders ask “why this fix?”)</li>
 </ul>
-<p><strong>Inclusion lens</strong>: Numbers alone don't show <strong>who</strong> is excluded. Must combine quantitative (completion rates, times) with qualitative (SR didn't announce, keyboard trap) to understand barriers.</p>
+<p><strong>Inclusion lens</strong>: Numbers alone don’t show <strong>who</strong> is excluded. Must combine quantitative (completion rates, times) with qualitative (SR didn’t announce, keyboard trap) to understand barriers.</p>
 <hr />
 <h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
 <h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
@@ -236,7 +236,7 @@
 <h3 id="descriptive-statistics"><a class="header" href="#descriptive-statistics">Descriptive Statistics</a></h3>
 <blockquote>
 <p><strong>Descriptive Statistics</strong> [GLOSSARY]</p>
-<p>Summarize and describe main features of a dataset. <strong>Not inferential</strong> (we don't generalize beyond our 5 pilots).</p>
+<p>Summarize and describe main features of a dataset. <strong>Not inferential</strong> (we don’t generalize beyond our 5 pilots).</p>
 <p><strong>Key measures for HCI</strong>:</p>
 <ul>
 <li><strong>Median</strong>: Middle value when sorted (50th percentile)</li>
@@ -244,14 +244,14 @@
 <li><strong>Range</strong>: Min–max (shows extremes)</li>
 <li><strong>Count</strong>: Number of observations (sample size)</li>
 </ul>
-<p><strong>Why median, not mean?</strong> Completion times are often skewed (outliers from distractions, confusion). Median represents "typical" experience.</p>
+<p><strong>Why median, not mean?</strong> Completion times are often skewed (outliers from distractions, confusion). Median represents “typical” experience.</p>
 <p><strong>Example</strong>:
 Task times: [12s, 15s, 18s, 20s, 120s]</p>
 <ul>
 <li>Mean = 37s ← skewed by 120s outlier</li>
 <li>Median = 18s ← typical experience</li>
 </ul>
-<p><strong>HCI Connection</strong>: Descriptive stats make evaluation findings <strong>communicable</strong>—stakeholders understand "typical task takes 18s" better than raw logs.</p>
+<p><strong>HCI Connection</strong>: Descriptive stats make evaluation findings <strong>communicable</strong>—stakeholders understand “typical task takes 18s” better than raw logs.</p>
 <p>🔗 <a href="https://measuringux.com/median/">Measuring UX: Median</a></p>
 </blockquote>
 <h3 id="median-absolute-deviation-mad"><a class="header" href="#median-absolute-deviation-mad">Median Absolute Deviation (MAD)</a></h3>
@@ -297,10 +297,10 @@ Times: [12s, 15s, 18s, 20s, 25s]</p>
 <ul>
 <li><strong>1.0</strong>: Task is achievable by all participants (baseline expectation)</li>
 <li><strong>0.8–0.99</strong>: Minor issues—some participants struggled but most succeeded</li>
-<li><strong>&lt;0.8</strong>: Serious usability/accessibility problem—1 in 5+ people can't complete</li>
+<li><strong>&lt;0.8</strong>: Serious usability/accessibility problem—1 in 5+ people can’t complete</li>
 </ul>
 <p><strong>Split by js_mode</strong>: If <code>js_mode=on</code> has 1.0 but <code>js_mode=off</code> has 0.5, you have <strong>parity failure</strong> (no-JS path broken).</p>
-<p><strong>HCI Connection</strong>: Completion rate is <strong>effectiveness</strong> measure (ISO 9241-11). If people can't complete tasks, system is not usable.</p>
+<p><strong>HCI Connection</strong>: Completion rate is <strong>effectiveness</strong> measure (ISO 9241-11). If people can’t complete tasks, system is not usable.</p>
 <p>🔗 <a href="https://www.iso.org/standard/63500.html">ISO 9241-11: Usability Definitions</a></p>
 </blockquote>
 <h3 id="error-rate"><a class="header" href="#error-rate">Error Rate</a></h3>
@@ -323,10 +323,10 @@ Times: [12s, 15s, 18s, 20s, 25s]</p>
 </ul>
 <p><strong>Root causes</strong>:</p>
 <ul>
-<li>Missing affordances ("I didn't know it was required")</li>
-<li>Unclear constraints ("How long can the title be?")</li>
-<li>Focus management ("I accidentally submitted blank")</li>
-<li>Cognitive load ("Too many fields, got confused")</li>
+<li>Missing affordances (“I didn’t know it was required”)</li>
+<li>Unclear constraints (“How long can the title be?”)</li>
+<li>Focus management (“I accidentally submitted blank”)</li>
+<li>Cognitive load (“Too many fields, got confused”)</li>
 </ul>
 <p><strong>HCI Connection</strong>: Error rate measures <strong>efficiency</strong> (ISO 9241-11). High error rates → wasted time, frustration, accessibility barriers.</p>
 <p>🔗 <a href="https://www.w3.org/WAI/WCAG22/Understanding/input-assistance">WCAG 3.3: Input Assistance</a></p>
@@ -335,7 +335,7 @@ Times: [12s, 15s, 18s, 20s, 25s]</p>
 <blockquote>
 <p><strong>Prioritisation Framework</strong> [GLOSSARY]</p>
 <p>Systematic method to rank backlog items by urgency/importance.</p>
-<p><strong>This module's framework</strong>:</p>
+<p><strong>This module’s framework</strong>:</p>
 <pre><code>Priority score = (Impact + Inclusion) - Effort
 </code></pre>
 <p><strong>Dimensions (1–5 scale)</strong>:</p>
@@ -349,7 +349,7 @@ Times: [12s, 15s, 18s, 20s, 25s]</p>
 </li>
 <li><strong>Inclusion</strong>: Does it disproportionately affect disabled people?
 <ul>
-<li>5 = SR/keyboard/cognitive disability users can't complete</li>
+<li>5 = SR/keyboard/cognitive disability users can’t complete</li>
 <li>3 = Affects some disabled participants (e.g., low vision)</li>
 <li>1 = Affects everyone equally</li>
 </ul>
@@ -369,14 +369,14 @@ Times: [12s, 15s, 18s, 20s, 25s]</p>
 <li><strong>&lt;5</strong>: Defer or document as known issue</li>
 </ul>
 <p><strong>Example</strong>:
-Issue: "Validation errors not announced by SR"</p>
+Issue: “Validation errors not announced by SR”</p>
 <ul>
 <li>Impact: 5 (blocks T2 completion for SR users)</li>
 <li>Inclusion: 5 (disproportionately affects SR users)</li>
 <li>Effort: 2 (add <code>role=alert</code>, update template)</li>
 <li><strong>Score</strong>: (5+5)-2 = <strong>8</strong> → <strong>Priority 1</strong></li>
 </ul>
-<p><strong>HCI Connection</strong>: Prioritisation makes <strong>inclusion explicit</strong>—not just "fix the bugs" but "fix barriers first."</p>
+<p><strong>HCI Connection</strong>: Prioritisation makes <strong>inclusion explicit</strong>—not just “fix the bugs” but “fix barriers first.”</p>
 <p>🔗 <a href="https://www.w3.org/WAI/test-evaluate/report/#prioritise">W3C: Prioritizing Accessibility Issues</a></p>
 </blockquote>
 <h3 id="evidence-chain-revisited"><a class="header" href="#evidence-chain-revisited">Evidence Chain (Revisited)</a></h3>
@@ -388,7 +388,7 @@ Issue: "Validation errors not announced by SR"</p>
 <li><strong>Raw data</strong>: <code>metrics.csv</code> shows <code>T2_edit, js_mode=off, completion_rate=0.5</code></li>
 <li><strong>Analysis</strong>: <code>analysis/analysis.csv</code> confirms: median 2300ms, MAD 450ms, error rate 0.5</li>
 <li><strong>Interpretation</strong>: No-JS path lacks accessible error feedback (pilot notes confirm)</li>
-<li><strong>Finding</strong>: "No-JS edit has 50% completion due to non-focusable error summary"</li>
+<li><strong>Finding</strong>: “No-JS edit has 50% completion due to non-focusable error summary”</li>
 <li><strong>Prioritisation</strong>: Impact=5, Inclusion=5, Effort=2 → Score=8 (Priority 1)</li>
 <li><strong>Fix plan</strong>: Add <code>tabindex="-1"</code> to error summary, auto-focus on page load</li>
 <li><strong>Verification</strong> (Week 10 Lab 2): Retest with no-JS, measure completion rate ≥0.9</li>
@@ -528,7 +528,7 @@ Error rates between 0 and 1</li>
 No NaN/blank for tasks with data</li>
 </ul>
 <p><strong>If anomalies</strong>: Cross-reference with <code>data/metrics.csv</code>. Document in <code>analysis/data-notes.md</code>.</p>
-<h3 id="step-3-add-all-js_mode-aggregate-5-min"><a class="header" href="#step-3-add-all-js_mode-aggregate-5-min">Step 3: Add "all" js_mode aggregate (5 min)</a></h3>
+<h3 id="step-3-add-all-js_mode-aggregate-5-min"><a class="header" href="#step-3-add-all-js_mode-aggregate-5-min">Step 3: Add “all” js_mode aggregate (5 min)</a></h3>
 <p>Calculate combined stats (all participants regardless of JS):</p>
 <pre><code class="language-python"># Add 'all' js_mode (combines on+off)
 all_stats = success.groupby(['task_code'])['ms'].agg([
@@ -661,15 +661,15 @@ Root causes hypothesized</li>
 <p><strong>🎯 Worked Examples: Scoring Prioritisation</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Issue</th><th>Impact</th><th>Inclusion</th><th>Effort</th><th>Score</th><th>Rationale</th></tr></thead><tbody>
 <tr><td><strong>Validation errors not announced (SR)</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td>2</td><td><strong>8</strong></td><td>Impact=5 (all SR users blocked on edit task), Inclusion=5 (SR-specific barrier), Effort=2 (add <code>role=alert</code>), Score=(5+5)-2=8</td></tr>
-<tr><td><strong>No-JS error summary not focusable</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td>2</td><td><strong>8</strong></td><td>Impact=5 (all no-JS users affected), Inclusion=5 (keyboard/no-mouse users can't navigate), Effort=2 (add <code>tabindex=-1</code>), Score=(5+5)-2=8</td></tr>
-<tr><td><strong>Filter result count not announced</strong></td><td><strong>3</strong></td><td><strong>4</strong></td><td>1</td><td><strong>6</strong></td><td>Impact=3 (minor: doesn't block task, but confusing), Inclusion=4 (SR users miss feedback), Effort=1 (move text to live region), Score=(3+4)-1=6</td></tr>
+<tr><td><strong>No-JS error summary not focusable</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td>2</td><td><strong>8</strong></td><td>Impact=5 (all no-JS users affected), Inclusion=5 (keyboard/no-mouse users can’t navigate), Effort=2 (add <code>tabindex=-1</code>), Score=(5+5)-2=8</td></tr>
+<tr><td><strong>Filter result count not announced</strong></td><td><strong>3</strong></td><td><strong>4</strong></td><td>1</td><td><strong>6</strong></td><td>Impact=3 (minor: doesn’t block task, but confusing), Inclusion=4 (SR users miss feedback), Effort=1 (move text to live region), Score=(3+4)-1=6</td></tr>
 <tr><td><strong>Auto-search confuses some</strong></td><td><strong>3</strong></td><td><strong>2</strong></td><td>2</td><td><strong>3</strong></td><td>Impact=3 (affects 2/5 pilots, minor confusion), Inclusion=2 (not equity-specific), Effort=2 (add button + help text), Score=(3+2)-2=3</td></tr>
 <tr><td><strong>No-JS delete lacks confirmation</strong></td><td><strong>2</strong></td><td><strong>2</strong></td><td>4</td><td><strong>0</strong></td><td>Impact=2 (rare: only no-JS + delete use case), Inclusion=2 (low risk, recoverable), Effort=4 (new route + page + tests), Score=(2+2)-4=0 → <strong>Deprioritise</strong></td></tr>
 </tbody></table>
 </div>
 <p><strong>Key distinctions</strong>:</p>
 <ul>
-<li><strong>Impact vs Inclusion</strong>: Impact = "how many people?" / Inclusion = "who is disproportionately affected?"
+<li><strong>Impact vs Inclusion</strong>: Impact = “how many people?” / Inclusion = “who is disproportionately affected?”
 <ul>
 <li>Example 1: High impact (5) + high inclusion (5) = SR validation errors block <strong>everyone</strong> using SR</li>
 <li>Example 4: Medium impact (3) + low inclusion (2) = auto-search confusion is <strong>general usability</strong> issue, not equity-specific</li>
@@ -917,7 +917,7 @@ Error summary has <code>tabindex="-1"</code> and receives focus on page load</li
 <li><input disabled="" type="checkbox"/>
 <strong>Keyboard-only</strong>: Tab to form, submit blank, Tab to error summary link, press Enter → focus lands on <code>#title</code> input</li>
 <li><input disabled="" type="checkbox"/>
-<strong>Screen reader (NVDA/Orca)</strong>: Submit blank → SR announces "Alert. Title is required. Please enter at least one character."</li>
+<strong>Screen reader (NVDA/Orca)</strong>: Submit blank → SR announces “Alert. Title is required. Please enter at least one character.”</li>
 <li><input disabled="" type="checkbox"/>
 <strong>No-JS</strong>: Disable JS, submit blank → page reloads with error summary focused, Tab order correct</li>
 <li><input disabled="" type="checkbox"/>
@@ -1055,7 +1055,7 @@ EOF
 <li>Review redesign brief (<code>wk10/lab-wk10/docs/redesign-brief.md</code>)</li>
 <li>Refresh ARIA syntax (<code>role="alert"</code>, <code>aria-describedby</code>, <code>aria-live</code>)</li>
 <li>Prepare verification pilot script (similar to Week 9 protocol)</li>
-<li>Check that Week 9 data is committed (don't lose baseline!)</li>
+<li>Check that Week 9 data is committed (don’t lose baseline!)</li>
 </ul>
 <hr />
 <h2 id="further-reading--resources"><a class="header" href="#further-reading--resources">Further Reading &amp; Resources</a></h2>
@@ -1107,11 +1107,11 @@ EOF
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk09/wk9-lab2-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../wk10/wk10-lab2-redesign-reverify-package.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk10/wk10-lab1-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1121,11 +1121,11 @@ EOF
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk09/wk9-lab2-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../wk10/wk10-lab2-redesign-reverify-package.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk10/wk10-lab1-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

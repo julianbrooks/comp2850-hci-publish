@@ -199,8 +199,8 @@
 </ul>
 <hr />
 <h2 id="introduction-from-evidence-to-narrative"><a class="header" href="#introduction-from-evidence-to-narrative">Introduction: From Evidence to Narrative</a></h2>
-<p>You've completed the HCI design cycle: audit → pilot → analyse → redesign → verify. <strong>Today you present that work to peers</strong>.</p>
-<p><strong>This is not "show and tell"</strong>. Studio critique is:</p>
+<p>You’ve completed the HCI design cycle: audit → pilot → analyse → redesign → verify. <strong>Today you present that work to peers</strong>.</p>
+<p><strong>This is not “show and tell”</strong>. Studio critique is:</p>
 <ul>
 <li><strong>Evidence-led</strong>: Every claim backed by data, screenshots, transcripts</li>
 <li><strong>Reflective</strong>: Acknowledge limitations, trade-offs, remaining issues</li>
@@ -251,7 +251,7 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <p>Structured peer review of design work. <strong>Not personal feedback</strong>—focuses on work, evidence, impact.</p>
 <p><strong>Characteristics</strong></p>
 <ul>
-<li><strong>Specific</strong>: "Error summary not keyboard-focusable" (good) vs "errors bad" (vague)</li>
+<li><strong>Specific</strong>: “Error summary not keyboard-focusable” (good) vs “errors bad” (vague)</li>
 <li><strong>Constructive</strong>: Suggest alternatives, not just problems</li>
 <li><strong>Evidence-based</strong>: Reference data, WCAG, observations (not opinions)</li>
 <li><strong>Respectful</strong>: Assume positive intent, acknowledge constraints</li>
@@ -260,19 +260,19 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <ul>
 <li>Presenter shows work + evidence</li>
 <li>Audience asks clarifying questions</li>
-<li>Audience offers critique: "I noticed X, have you considered Y?"</li>
-<li>Presenter notes feedback (doesn't defend in real-time)</li>
+<li>Audience offers critique: “I noticed X, have you considered Y?”</li>
+<li>Presenter notes feedback (doesn’t defend in real-time)</li>
 </ul>
-<p><strong>HCI Connection</strong>: Critique improves design through <strong>external perspective</strong>—you're too close to your work to see all issues.</p>
+<p><strong>HCI Connection</strong>: Critique improves design through <strong>external perspective</strong>—you’re too close to your work to see all issues.</p>
 <p><strong>Not a critique</strong></p>
 <ul>
-<li>"I don't like the colour" (subjective preference without rationale)</li>
-<li>"This sucks" (not constructive)</li>
-<li>"You should have..." (hindsight, not helpful)</li>
+<li>“I don’t like the colour” (subjective preference without rationale)</li>
+<li>“This sucks” (not constructive)</li>
+<li>“You should have…” (hindsight, not helpful)</li>
 </ul>
 <p><strong>Good critique</strong></p>
 <ul>
-<li>"The error message says 'Title required' but doesn't explain the max length constraint. Pilot P3 hit this—could you add that info?"</li>
+<li>“The error message says ‘Title required’ but doesn’t explain the max length constraint. Pilot P3 hit this—could you add that info?”</li>
 </ul>
 <p>🔗 <a href="https://dschool.stanford.edu/resources/the-art-of-critique">Design Thinking: Critique vs Criticism</a></p>
 </blockquote>
@@ -282,16 +282,16 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <p>Presentation style where every claim is backed by artifacts (data, screenshots, quotes).</p>
 <p><strong>Structure</strong></p>
 <ol>
-<li><strong>Problem</strong>: "T2 edit had 67% completion (0% no-JS)" ← metric</li>
-<li><strong>Root cause</strong>: "Validation errors not announced to SR" ← pilot quote + WCAG reference</li>
-<li><strong>Fix</strong>: "Added <code>role=alert</code>" ← code diff</li>
-<li><strong>Verification</strong>: "Post-change: 100% completion" ← after-metrics + screenshot</li>
+<li><strong>Problem</strong>: “T2 edit had 67% completion (0% no-JS)” ← metric</li>
+<li><strong>Root cause</strong>: “Validation errors not announced to SR” ← pilot quote + WCAG reference</li>
+<li><strong>Fix</strong>: “Added <code>role=alert</code>” ← code diff</li>
+<li><strong>Verification</strong>: “Post-change: 100% completion” ← after-metrics + screenshot</li>
 </ol>
 <p><strong>What NOT to do</strong></p>
 <ul>
-<li>"We made it better" (vague—better how?)</li>
-<li>"Users struggled" (who? how many? with what?)</li>
-<li>"Fixed accessibility" (which criteria? verified how?)</li>
+<li>“We made it better” (vague—better how?)</li>
+<li>“Users struggled” (who? how many? with what?)</li>
+<li>“Fixed accessibility” (which criteria? verified how?)</li>
 </ul>
 <p><strong>HCI Connection</strong>: Evidence separates <strong>opinion</strong> from <strong>fact</strong>. Stakeholders can question interpretation, but not the data.</p>
 <p><strong>Academic context</strong>: External examiners check evidence chains. Missing evidence → lower marks, even if work was good.</p>
@@ -300,11 +300,11 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <h3 id="accessibility-demonstration"><a class="header" href="#accessibility-demonstration">Accessibility Demonstration</a></h3>
 <blockquote>
 <p><strong>Accessibility Demonstration</strong> (<a href="../references/glossary.html">Glossary</a>)</p>
-<p>Live proof that inclusive design works. <strong>Show, don't tell</strong>.</p>
+<p>Live proof that inclusive design works. <strong>Show, don’t tell</strong>.</p>
 <p><strong>Examples</strong></p>
 <ul>
 <li><strong>Keyboard</strong>: Tab through form → submit error → Tab to error link → press Enter → focus lands on input</li>
-<li><strong>Screen reader</strong>: Turn on NVDA/Orca → navigate to form → submit error → SR announces "Alert. Title is required"</li>
+<li><strong>Screen reader</strong>: Turn on NVDA/Orca → navigate to form → submit error → SR announces “Alert. Title is required”</li>
 <li><strong>No-JS</strong>: Disable JavaScript → submit form → error summary appears and focused</li>
 </ul>
 <p><strong>Why live demo?</strong> Screenshots can be faked. Live demo proves system works right now.</p>
@@ -318,7 +318,7 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <p><strong>Common mistakes</strong></p>
 <ul>
 <li>Only showing HTMX path (ignoring no-JS)</li>
-<li>Not narrating what's happening ("I'm pressing Tab, now I'm on the error link...")</li>
+<li>Not narrating what’s happening (“I’m pressing Tab, now I’m on the error link…”)</li>
 <li>Assuming audience sees what you see (make focus indicators obvious, zoom in if needed)</li>
 </ul>
 <p>🔗 <a href="https://webaim.org/articles/demos/">WebAIM: Demonstrating Accessibility</a></p>
@@ -329,24 +329,24 @@ Maps to WCAG: 2.2 AA (demonstrating compliance)</li>
 <p>Feedback that helps recipient improve. Has three parts: observation + impact + suggestion.</p>
 <p><strong>Formula</strong></p>
 <ol>
-<li><strong>Observation</strong>: "I noticed X" (specific, factual)</li>
-<li><strong>Impact</strong>: "This might affect Y" (consequence, not judgment)</li>
-<li><strong>Suggestion</strong>: "Have you considered Z?" (alternative, not mandate)</li>
+<li><strong>Observation</strong>: “I noticed X” (specific, factual)</li>
+<li><strong>Impact</strong>: “This might affect Y” (consequence, not judgment)</li>
+<li><strong>Suggestion</strong>: “Have you considered Z?” (alternative, not mandate)</li>
 </ol>
 <p><strong>Example (good)</strong></p>
 <ul>
-<li>Observation: "Your error summary uses <code>aria-live=assertive</code>, which I saw announced in your SR demo"</li>
-<li>Impact: "In my testing, <code>assertive</code> interrupted mid-sentence when I was reading other content"</li>
-<li>Suggestion: "Have you tested with <code>aria-live=polite</code> to see if it's less disruptive? Might be a good trade-off if errors aren't time-critical."</li>
+<li>Observation: “Your error summary uses <code>aria-live=assertive</code>, which I saw announced in your SR demo”</li>
+<li>Impact: “In my testing, <code>assertive</code> interrupted mid-sentence when I was reading other content”</li>
+<li>Suggestion: “Have you tested with <code>aria-live=polite</code> to see if it’s less disruptive? Might be a good trade-off if errors aren’t time-critical.”</li>
 </ul>
 <p><strong>Example (bad)</strong></p>
 <ul>
-<li>"You should use <code>polite</code> not <code>assertive</code>" ← prescriptive, no context</li>
+<li>“You should use <code>polite</code> not <code>assertive</code>” ← prescriptive, no context</li>
 </ul>
 <p><strong>Receiving feedback</strong></p>
 <ul>
-<li><strong>Listen</strong>: Don't defend immediately (note it, reflect later)</li>
-<li><strong>Clarify</strong>: "Can you show me where you saw that?"</li>
+<li><strong>Listen</strong>: Don’t defend immediately (note it, reflect later)</li>
+<li><strong>Clarify</strong>: “Can you show me where you saw that?”</li>
 <li><strong>Thank</strong>: Even if you disagree, feedback is effort</li>
 </ul>
 <p>🔗 <a href="https://www.radicalcandor.com/">Kim Scott: Radical Candor</a> — Framework for constructive feedback</p>
@@ -483,7 +483,7 @@ Backup plan ready (video or annotated screenshots)</li>
 <hr />
 <h2 id="activity-b-studio-critique-session-60-min"><a class="header" href="#activity-b-studio-critique-session-60-min">Activity B: Studio Critique Session (60 min)</a></h2>
 <p><strong>Format</strong>: 5-6 teams × 15 min each</p>
-<h3 id="presenter-role-when-its-your-turn"><a class="header" href="#presenter-role-when-its-your-turn">Presenter Role (when it's your turn)</a></h3>
+<h3 id="presenter-role-when-its-your-turn"><a class="header" href="#presenter-role-when-its-your-turn">Presenter Role (when it’s your turn)</a></h3>
 <p><strong>Timing breakdown</strong>:</p>
 <ul>
 <li><strong>0:00-0:30</strong>: Introduce problem (1 slide)</li>
@@ -494,16 +494,16 @@ Backup plan ready (video or annotated screenshots)</li>
 </ul>
 <p><strong>Presenting tips</strong>:</p>
 <ul>
-<li><strong>Narrate everything</strong>: "I'm pressing Tab, now I'm on the error link..."</li>
-<li><strong>Point to evidence</strong>: "This is documented in line 23 of our regression checklist..."</li>
-<li><strong>Acknowledge limitations</strong>: "We didn't have time to fix wk9-02 (filter UX)—it's in our Semester 2 backlog"</li>
-<li><strong>Invite questions</strong>: "What would you like me to clarify?"</li>
+<li><strong>Narrate everything</strong>: “I’m pressing Tab, now I’m on the error link…”</li>
+<li><strong>Point to evidence</strong>: “This is documented in line 23 of our regression checklist…”</li>
+<li><strong>Acknowledge limitations</strong>: “We didn’t have time to fix wk9-02 (filter UX)—it’s in our Semester 2 backlog”</li>
+<li><strong>Invite questions</strong>: “What would you like me to clarify?”</li>
 </ul>
 <p><strong>During Q&amp;A</strong>:</p>
 <ul>
-<li><strong>Don't defend</strong>: Listen, note feedback, say "good point, I'll check that"</li>
-<li><strong>Clarify if needed</strong>: "Can you show me which screenshot you're referring to?"</li>
-<li><strong>Thank reviewers</strong>: Even if feedback stings, they're helping you improve</li>
+<li><strong>Don’t defend</strong>: Listen, note feedback, say “good point, I’ll check that”</li>
+<li><strong>Clarify if needed</strong>: “Can you show me which screenshot you’re referring to?”</li>
+<li><strong>Thank reviewers</strong>: Even if feedback stings, they’re helping you improve</li>
 </ul>
 <p><strong>Note feedback</strong> in <code>wk11/crit/feedback-received.md</code>:</p>
 <pre><code class="language-markdown">## Feedback from Studio Crit — 2025-10-25
@@ -641,7 +641,7 @@ Identified action items for Week 11 Lab 2</li>
 <p><strong>Open <code>wk11/crit/feedback-received.md</code></strong> and identify themes:</p>
 <p><strong>Categorize</strong>:</p>
 <ul>
-<li><strong>Critical</strong>: Issues that invalidate claims (e.g., "You said 100% completion but didn't test with SR")</li>
+<li><strong>Critical</strong>: Issues that invalidate claims (e.g., “You said 100% completion but didn’t test with SR”)</li>
 <li><strong>High priority</strong>: Valid suggestions that would significantly improve work</li>
 <li><strong>Medium</strong>: Nice-to-haves, future work</li>
 <li><strong>Low/Out-of-scope</strong>: Interesting but not actionable this semester</li>
@@ -814,27 +814,27 @@ EOF
 <div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
 <tr><td><strong>Design critique</strong></td><td>Structured peer review of design work; focuses on evidence, not person</td></tr>
 <tr><td><strong>Evidence-led presentation</strong></td><td>Every claim backed by artifacts (data, screenshots, quotes)</td></tr>
-<tr><td><strong>Accessibility demonstration</strong></td><td>Live proof that inclusive design works (show, don't tell)</td></tr>
+<tr><td><strong>Accessibility demonstration</strong></td><td>Live proof that inclusive design works (show, don’t tell)</td></tr>
 <tr><td><strong>Constructive feedback</strong></td><td>Observation + Impact + Suggestion (not just criticism)</td></tr>
 <tr><td><strong>Studio crit</strong></td><td>Group critique session common in design education and practice</td></tr>
 <tr><td><strong>Before/after comparison</strong></td><td>Showing improvement through quantitative metrics</td></tr>
-<tr><td><strong>Regression checklist</strong></td><td>Systematic verification that fixes didn't break other features</td></tr>
+<tr><td><strong>Regression checklist</strong></td><td>Systematic verification that fixes didn’t break other features</td></tr>
 <tr><td><strong>Evidence chain</strong></td><td>Traceability from data → analysis → fix → verification</td></tr>
 <tr><td><strong>Backlog refinement</strong></td><td>Updating backlog based on new feedback and discoveries</td></tr>
 </tbody></table>
 </div>
 <hr />
-<p><strong>Lab complete!</strong> You've presented your work with evidence, received constructive critique, and prepared for final submissions in Week 11 Lab 2.</p>
+<p><strong>Lab complete!</strong> You’ve presented your work with evidence, received constructive critique, and prepared for final submissions in Week 11 Lab 2.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk10/wk10-lab2-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../wk11/wk11-lab2-wrapup-portfolio.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk11/wk11-lab1-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -844,11 +844,11 @@ EOF
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk10/wk10-lab2-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../wk11/wk11-lab2-wrapup-portfolio.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk11/wk11-lab1-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

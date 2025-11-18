@@ -186,7 +186,7 @@
 <img src="https://img.shields.io/badge/Status-Draft-yellow" alt="Status" /></p>
 <hr />
 <h2 id="terminology-note"><a class="header" href="#terminology-note">Terminology Note</a></h2>
-<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., "person using a screen reader") rather than deficit-based terms (e.g., "blind user"). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
+<p>Throughout COMP2850 we use <strong>people-centred language</strong> (e.g., “person using a screen reader”) rather than deficit-based terms (e.g., “blind user”). This reflects contemporary inclusive-design practice and acknowledges that disability arises from environmental barriers, not individual impairment.</p>
 <hr />
 <h2 id="pre-reading"><a class="header" href="#pre-reading">Pre-reading</a></h2>
 <p><strong>Essential</strong></p>
@@ -206,7 +206,7 @@
 </blockquote>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <h3 id="context"><a class="header" href="#context">Context</a></h3>
-<p>This lab marks the beginning of the <strong>HCI component</strong> of COMP2850 (Weeks 6-11). For the first five weeks you built foundational Kotlin/OOP skills. Now you'll apply those skills to a real-world HCI challenge: building inclusive, accessible web applications using <strong>server-first architecture</strong> with <strong>progressive enhancement</strong>.</p>
+<p>This lab marks the beginning of the <strong>HCI component</strong> of COMP2850 (Weeks 6-11). For the first five weeks you built foundational Kotlin/OOP skills. Now you’ll apply those skills to a real-world HCI challenge: building inclusive, accessible web applications using <strong>server-first architecture</strong> with <strong>progressive enhancement</strong>.</p>
 <p>Modern web development often defaults to client-heavy JavaScript frameworks (React, Vue, Angular). While powerful, these approaches can create accessibility barriers:</p>
 <ul>
 <li>Screen readers struggle with dynamically-rendered content</li>
@@ -250,7 +250,7 @@
 <hr />
 <h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
 <h3 id="1-server-first-architecture"><a class="header" href="#1-server-first-architecture">1. Server-First Architecture</a></h3>
-<p><strong>Server-first</strong> (also called "server-side rendering" or SSR) means the server generates complete HTML pages and sends them to the browser. The browser displays them immediately without waiting for JavaScript to run.</p>
+<p><strong>Server-first</strong> (also called “server-side rendering” or SSR) means the server generates complete HTML pages and sends them to the browser. The browser displays them immediately without waiting for JavaScript to run.</p>
 <p><strong>Example</strong>:</p>
 <pre><code>Customer requests /tasks
 → Server queries database
@@ -356,7 +356,7 @@
 <li>HTMX request completes</li>
 <li>Server returns fragment + status div with <code>hx-swap-oob="true"</code></li>
 <li>HTMX swaps main content <em>and</em> status div (out-of-band)</li>
-<li>Screen reader detects status div change, announces "Task 'Buy milk' added"</li>
+<li>Screen reader detects status div change, announces “Task ‘Buy milk’ added”</li>
 </ol>
 <hr />
 <h2 id="activity-1-project-setup--scaffold-inspection"><a class="header" href="#activity-1-project-setup--scaffold-inspection">Activity 1: Project Setup &amp; Scaffold Inspection</a></h2>
@@ -398,7 +398,7 @@ gradlew.bat run
 Listening on http://0.0.0.0:8080
 </code></pre>
 <p><strong>Visit</strong>: http://localhost:8080/tasks</p>
-<p>You should see placeholder text: "Task manager coming soon..." This confirms the server works.</p>
+<p>You should see placeholder text: “Task manager coming soon…” This confirms the server works.</p>
 <h3 id="step-4-inspect-directory-structure"><a class="header" href="#step-4-inspect-directory-structure">Step 4: Inspect Directory Structure</a></h3>
 <pre><code>comp2850-hci-starter/
 ├── src/main/kotlin/
@@ -660,7 +660,7 @@ fun Application.configureRouting() {
 <p><strong>💡 Pebble Template Syntax Primer</strong></p>
 <p>Pebble uses three types of delimiters:</p>
 <div class="table-wrapper"><table><thead><tr><th>Syntax</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
-<tr><td><code>{{ variable }}</code></td><td><strong>Output</strong> - Print variable values</td><td><code>{{ task.title }}</code> outputs "Buy milk"</td></tr>
+<tr><td><code>{{ variable }}</code></td><td><strong>Output</strong> - Print variable values</td><td><code>{{ task.title }}</code> outputs “Buy milk”</td></tr>
 <tr><td><code>{% statement %}</code></td><td><strong>Logic</strong> - Control structures (if, for, extends)</td><td><code>{% for task in tasks %}...{% endfor %}</code></td></tr>
 <tr><td><code>{# comment #}</code></td><td><strong>Comments</strong> - Not rendered in HTML</td><td><code>{# TODO: Add pagination #}</code></td></tr>
 </tbody></table>
@@ -717,9 +717,9 @@ fun Application.configureRouting() {
 </code></pre>
 <p><strong>Accessibility features</strong>:</p>
 <ul>
-<li><code>aria-labelledby</code>: Links sections to headings (SR announces "Add a new task, region")</li>
-<li><code>aria-describedby</code>: Links input to hint (SR announces "Title, edit text, Keep it short and specific")</li>
-<li><code>aria-label</code> on Delete button: SR announces "Delete task: Buy milk" (context-specific)</li>
+<li><code>aria-labelledby</code>: Links sections to headings (SR announces “Add a new task, region”)</li>
+<li><code>aria-describedby</code>: Links input to hint (SR announces “Title, edit text, Keep it short and specific”)</li>
+<li><code>aria-label</code> on Delete button: SR announces “Delete task: Buy milk” (context-specific)</li>
 <li>Semantic <code>&lt;section&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;ul&gt;</code> structure</li>
 </ul>
 <h3 id="step-4-test-no-js-baseline"><a class="header" href="#step-4-test-no-js-baseline">Step 4: Test No-JS Baseline</a></h3>
@@ -727,7 +727,7 @@ fun Application.configureRouting() {
 <li>
 <p><strong>Disable JavaScript</strong> in browser:</p>
 <ul>
-<li>Chrome: DevTools (F12) → Settings (⚙️) → Debugger → "Disable JavaScript"</li>
+<li>Chrome: DevTools (F12) → Settings (⚙️) → Debugger → “Disable JavaScript”</li>
 <li>Firefox: about:config → javascript.enabled → false</li>
 </ul>
 </li>
@@ -737,15 +737,15 @@ fun Application.configureRouting() {
 <li>
 <p><strong>Add a task</strong>:</p>
 <ul>
-<li>Type "Buy milk" in Title field</li>
-<li>Click "Add Task"</li>
-<li><strong>Expected</strong>: Page reloads, "Buy milk" appears in list</li>
+<li>Type “Buy milk” in Title field</li>
+<li>Click “Add Task”</li>
+<li><strong>Expected</strong>: Page reloads, “Buy milk” appears in list</li>
 </ul>
 </li>
 <li>
 <p><strong>Delete a task</strong>:</p>
 <ul>
-<li>Click "Delete" next to "Buy milk"</li>
+<li>Click “Delete” next to “Buy milk”</li>
 <li><strong>Expected</strong>: Page reloads, task removed</li>
 </ul>
 </li>
@@ -900,8 +900,8 @@ fun Application.configureRouting() {
 <li>
 <p><strong>Add a task</strong>:</p>
 <ul>
-<li>Type "Buy oat milk"</li>
-<li>Click "Add Task"</li>
+<li>Type “Buy oat milk”</li>
+<li>Click “Add Task”</li>
 <li><strong>Expected</strong>: Task appears instantly, NO page reload</li>
 <li><strong>Check DevTools Network tab</strong>: See AJAX POST to <code>/tasks</code></li>
 </ul>
@@ -911,14 +911,14 @@ fun Application.configureRouting() {
 <ul>
 <li>Open browser console</li>
 <li>Type: <code>document.getElementById('status').textContent</code></li>
-<li><strong>Expected</strong>: "Task 'Buy oat milk' added successfully."</li>
+<li><strong>Expected</strong>: “Task ‘Buy oat milk’ added successfully.”</li>
 <li><strong>With screen reader</strong>: Should announce this message</li>
 </ul>
 </li>
 <li>
 <p><strong>Delete a task</strong>:</p>
 <ul>
-<li>Click "Delete" next to "Buy oat milk"</li>
+<li>Click “Delete” next to “Buy oat milk”</li>
 <li><strong>Expected</strong>: Task removed instantly, NO page reload</li>
 </ul>
 </li>
@@ -965,7 +965,7 @@ fun Application.configureRouting() {
 <li>
 <p><strong>Submit form with keyboard</strong>:</p>
 <ul>
-<li>Focus Title input, type "Test task"</li>
+<li>Focus Title input, type “Test task”</li>
 <li>Press Enter (submits form)</li>
 <li><strong>Expected</strong>: Task added via HTMX (no reload)</li>
 </ul>
@@ -985,27 +985,27 @@ fun Application.configureRouting() {
 <li>Navigate to http://localhost:8080/tasks</li>
 <li><strong>Listen for</strong>:
 <ul>
-<li>"Tasks, heading level 1"</li>
-<li>"Add a new task, heading level 2"</li>
-<li>"Title, edit, Keep it short and specific" (input + hint)</li>
+<li>“Tasks, heading level 1”</li>
+<li>“Add a new task, heading level 2”</li>
+<li>“Title, edit, Keep it short and specific” (input + hint)</li>
 </ul>
 </li>
-<li><strong>Type</strong> "NVDA test task" and press Enter</li>
-<li><strong>Listen for</strong>: "Task 'NVDA test task' added successfully" (from live region)</li>
+<li><strong>Type</strong> “NVDA test task” and press Enter</li>
+<li><strong>Listen for</strong>: “Task ‘NVDA test task’ added successfully” (from live region)</li>
 <li><strong>Tab to Delete button</strong>:
 <ul>
-<li><strong>Expected</strong>: "Delete task: NVDA test task, button"</li>
+<li><strong>Expected</strong>: “Delete task: NVDA test task, button”</li>
 </ul>
 </li>
 <li><strong>Press Space</strong> (activates Delete)</li>
-<li><strong>Listen for</strong>: "Task deleted" (from live region)</li>
+<li><strong>Listen for</strong>: “Task deleted” (from live region)</li>
 </ol>
 <p><strong>Result</strong>: ✅ Screen reader announces labels, hints, and status messages</p>
 <h3 id="test-3-no-js-parity"><a class="header" href="#test-3-no-js-parity">Test 3: No-JS Parity</a></h3>
 <ol>
 <li><strong>Disable JavaScript</strong> (DevTools → Settings → Disable JavaScript)</li>
 <li><strong>Reload page</strong></li>
-<li><strong>Add task</strong>: "No-JS test"
+<li><strong>Add task</strong>: “No-JS test”
 <ul>
 <li><strong>Expected</strong>: Page reloads, task appears</li>
 </ul>
@@ -1027,7 +1027,7 @@ fun Application.configureRouting() {
 <tr><td><strong>1.3.1 Info and Relationships (A)</strong></td><td>Inspect HTML: <code>&lt;label for="title"&gt;</code> links to <code>&lt;input id="title"&gt;</code></td><td>☐ Pass</td></tr>
 <tr><td><strong>2.1.1 Keyboard (A)</strong></td><td>All features accessible via Tab, Enter, Space</td><td>☐ Pass</td></tr>
 <tr><td><strong>2.4.1 Bypass Blocks (A)</strong></td><td>Skip link appears on focus, jumps to main</td><td>☐ Pass</td></tr>
-<tr><td><strong>3.2.2 On Input (A)</strong></td><td>Changing input doesn't auto-submit (only explicit button press)</td><td>☐ Pass</td></tr>
+<tr><td><strong>3.2.2 On Input (A)</strong></td><td>Changing input doesn’t auto-submit (only explicit button press)</td><td>☐ Pass</td></tr>
 <tr><td><strong>3.3.2 Labels or Instructions (A)</strong></td><td>All inputs have <code>&lt;label&gt;</code> and hint text</td><td>☐ Pass</td></tr>
 <tr><td><strong>4.1.3 Status Messages (AA)</strong></td><td>Live region announces add/delete confirmations</td><td>☐ Pass</td></tr>
 </tbody></table>
@@ -1063,8 +1063,8 @@ implementation handle this gracefully?</p>
 </ul>
 <p><strong>Progressive enhancement</strong></p>
 <ul>
-<li>GOV.UK Service Manual. "Using Progressive Enhancement." <a href="https://www.gov.uk/service-manual/technology/using-progressive-enhancement">https://www.gov.uk/service-manual/technology/using-progressive-enhancement</a></li>
-<li>Champeon, S. (2003). "Progressive Enhancement and the Future of Web Design." SXSW presentation.</li>
+<li>GOV.UK Service Manual. “Using Progressive Enhancement.” <a href="https://www.gov.uk/service-manual/technology/using-progressive-enhancement">https://www.gov.uk/service-manual/technology/using-progressive-enhancement</a></li>
+<li>Champeon, S. (2003). “Progressive Enhancement and the Future of Web Design.” SXSW presentation.</li>
 </ul>
 <p><strong>HTMX &amp; hypermedia</strong></p>
 <ul>
@@ -1136,7 +1136,7 @@ git commit -m "changes"
 <p><strong>For portfolio assessment</strong>:</p>
 <ul>
 <li>Demonstrates professional development practices</li>
-<li>Shows your understanding of changes (not just "what" but "why")</li>
+<li>Shows your understanding of changes (not just “what” but “why”)</li>
 <li>Makes it easy to find specific features when preparing evidence</li>
 </ul>
 <p><strong>For collaboration</strong>:</p>
@@ -1210,7 +1210,7 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk06/wk6-lab1-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1224,7 +1224,7 @@ WCAG: 2.4.1 (skip link), 4.1.3 (status messages)"
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../wk06/wk6-lab2-needs-consent-backlog.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk06/wk6-lab1-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

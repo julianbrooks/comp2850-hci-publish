@@ -241,7 +241,7 @@ Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
 <h3 id="regression-testing"><a class="header" href="#regression-testing">Regression Testing</a></h3>
 <blockquote>
 <p><strong>Regression Testing</strong> [GLOSSARY]</p>
-<p>Verifying that new changes don't break existing functionality. Critical when fixing accessibility issues.</p>
+<p>Verifying that new changes don’t break existing functionality. Critical when fixing accessibility issues.</p>
 <p><strong>HCI context</strong>: Fixing one accessibility issue can inadvertently break another. Example:</p>
 <ul>
 <li>Fix: Add <code>role="alert"</code> to error messages (helps SR users)</li>
@@ -270,7 +270,7 @@ Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
 <tr><td>T2 median time (all)</td><td>1400ms</td><td>1250ms</td><td>-150ms</td><td>Faster (less confusion)</td></tr>
 </tbody></table>
 </div>
-<p><strong>HCI connection</strong>: Before/after metrics demonstrate <strong>measurable impact</strong>—not just "we fixed it" but "completion improved by 50%."</p>
+<p><strong>HCI connection</strong>: Before/after metrics demonstrate <strong>measurable impact</strong>—not just “we fixed it” but “completion improved by 50%.”</p>
 <p><strong>Gradescope Task 2 requires</strong>: Table + narrative explaining significance (who benefits, why it matters).</p>
 <p>🔗 <a href="https://measuringux.com/before-after/">Measuring UX: Before/After Studies</a></p>
 </blockquote>
@@ -468,7 +468,7 @@ Verification plan defined</li>
 <li>Navigate to <code>/tasks</code></li>
 <li>Click Edit on a task</li>
 <li>Clear title field, click Save</li>
-<li><strong>Expected</strong>: Status message appears immediately ("Title is required...")</li>
+<li><strong>Expected</strong>: Status message appears immediately (“Title is required…”)</li>
 <li><strong>Verify with SR</strong> (if available): Message should be announced without focus change</li>
 </ol>
 <p><strong>Test no-JS path</strong>:</p>
@@ -498,7 +498,7 @@ No console errors</li>
 </ul>
 <hr />
 <h2 id="activity-b-run-regression-checklist-20-min"><a class="header" href="#activity-b-run-regression-checklist-20-min">Activity B: Run Regression Checklist (20 min)</a></h2>
-<p><strong>Goal</strong>: Verify fix didn't break existing functionality or introduce new accessibility issues.</p>
+<p><strong>Goal</strong>: Verify fix didn’t break existing functionality or introduce new accessibility issues.</p>
 <h3 id="step-1-download-regression-checklist-2-min"><a class="header" href="#step-1-download-regression-checklist-2-min">Step 1: Download regression checklist (2 min)</a></h3>
 <p><strong>Create <code>wk10/lab-wk10/a11y/regression-checklist.csv</code></strong>:</p>
 <pre><code class="language-csv">category,check,pass,notes
@@ -543,15 +543,15 @@ Focus visible on all stops (blue outline or similar)</li>
 <p><strong>Screen reader testing</strong> (NVDA Windows / Orca Linux):</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Navigate headings with H key → hears "Tasks", "Add Task", etc.</li>
+Navigate headings with H key → hears “Tasks”, “Add Task”, etc.</li>
 <li><input disabled="" type="checkbox"/>
 Forms mode (F key) → lands on first input</li>
 <li><input disabled="" type="checkbox"/>
-Error submission → hears "Alert. Title is required..."</li>
+Error submission → hears “Alert. Title is required…”</li>
 <li><input disabled="" type="checkbox"/>
-Success submission → hears "Updated [title]" (or similar)</li>
+Success submission → hears “Updated [title]” (or similar)</li>
 <li><input disabled="" type="checkbox"/>
-Filter results → hears "Showing 3 tasks" (if live region present)</li>
+Filter results → hears “Showing 3 tasks” (if live region present)</li>
 </ul>
 <p><strong>No-JS testing</strong>:</p>
 <ul>
@@ -622,9 +622,9 @@ Evidence captured (screenshots if needed for failures)</li>
 <h3 id="step-2-run-verification-pilots-15-min"><a class="header" href="#step-2-run-verification-pilots-15-min">Step 2: Run verification pilots (15 min)</a></h3>
 <p><strong>For each participant</strong>:</p>
 <ol>
-<li>Read consent (quick version: "Testing post-fix, ~5 min, can stop anytime")</li>
+<li>Read consent (quick version: “Testing post-fix, ~5 min, can stop anytime”)</li>
 <li>Navigate to <code>/tasks</code></li>
-<li>Run T2 (Edit task): "Change 'Submit invoices' to 'Submit invoices by Friday'"</li>
+<li>Run T2 (Edit task): “Change ‘Submit invoices’ to ‘Submit invoices by Friday’”</li>
 <li><strong>Intentionally trigger error</strong> once (submit blank) to test error handling</li>
 <li>Then complete successfully</li>
 <li>Note completion (yes/no), errors (count), time (from logs), confidence (1-5)</li>
@@ -701,7 +701,7 @@ Evidence captured (SR transcript, screenshots)</li>
 <p><strong>1. <code>01-redesign-brief.md</code></strong>:</p>
 <ul>
 <li>Copy from <code>wk10/lab-wk10/docs/redesign-brief.md</code></li>
-<li>Update "Success Criteria Summary" section with actual results</li>
+<li>Update “Success Criteria Summary” section with actual results</li>
 </ul>
 <p><strong>2. <code>02-regression-checklist.csv</code></strong>:</p>
 <ul>
@@ -806,8 +806,8 @@ val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;
 │   ├── after-nojs-error.png (error summary with focus outline)
 │   └── annotations.md
 ├── sr-transcripts/
-│   ├── before-nvda.txt ("Title is required" not announced)
-│   └── after-nvda.txt ("Alert. Title is required..." announced)
+│   ├── before-nvda.txt (“Title is required” not announced)
+│   └── after-nvda.txt (“Alert. Title is required…” announced)
 └── metrics/
 ├── before-analysis.csv (copy of Week 9 analysis.csv)
 └── after-analysis.csv (post-change metrics)</p>
@@ -933,7 +933,7 @@ EOF
 <p><strong>Before/after impact</strong>: Looking at the metrics table, which improvement matters most for inclusion? Why?</p>
 </li>
 <li>
-<p><strong>Evidence quality</strong>: Is your evidence chain complete (data → analysis → fix → verification)? What's missing or weak?</p>
+<p><strong>Evidence quality</strong>: Is your evidence chain complete (data → analysis → fix → verification)? What’s missing or weak?</p>
 </li>
 <li>
 <p><strong>Week 11 readiness</strong>: Can you present this fix in 5 minutes (problem → data → solution → proof)? Practice your narrative.</p>
@@ -945,7 +945,7 @@ EOF
 <ul>
 <li><strong>Lab 1</strong>: Present evidence chains to peers (5 min each)</li>
 <li>Receive critique: Is evidence convincing? Are claims justified?</li>
-<li>Give critique: Check peers' evidence chains, WCAG compliance</li>
+<li>Give critique: Check peers’ evidence chains, WCAG compliance</li>
 <li><strong>Lab 2</strong>: Final refinements, portfolio assembly, submission prep</li>
 </ul>
 <p><strong>Before Week 11</strong>:</p>
@@ -987,14 +987,14 @@ EOF
 <hr />
 <h2 id="glossary-summary"><a class="header" href="#glossary-summary">Glossary Summary</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Term</th><th>One-line definition</th></tr></thead><tbody>
-<tr><td><strong>Regression testing</strong></td><td>Verifying new changes don't break existing functionality</td></tr>
+<tr><td><strong>Regression testing</strong></td><td>Verifying new changes don’t break existing functionality</td></tr>
 <tr><td><strong>Before/after metrics</strong></td><td>Quantitative comparison showing improvement from intervention</td></tr>
 <tr><td><strong>Accessible error handling</strong></td><td>Errors perceivable, understandable, recoverable for all participants</td></tr>
 <tr><td><strong>Code diffs</strong></td><td>Side-by-side comparison showing what changed (for evidence)</td></tr>
-<tr><td><strong>role="alert"</strong></td><td>ARIA role announcing content immediately to screen readers</td></tr>
-<tr><td><strong>aria-live="assertive"</strong></td><td>Live region that interrupts SR to announce urgent changes</td></tr>
+<tr><td><strong>role=“alert”</strong></td><td>ARIA role announcing content immediately to screen readers</td></tr>
+<tr><td><strong>aria-live=“assertive”</strong></td><td>Live region that interrupts SR to announce urgent changes</td></tr>
 <tr><td><strong>aria-describedby</strong></td><td>Links element to descriptive text (hints, errors)</td></tr>
-<tr><td><strong>tabindex="-1"</strong></td><td>Makes non-interactive element focusable programmatically (not in tab order)</td></tr>
+<tr><td><strong>tabindex=“-1”</strong></td><td>Makes non-interactive element focusable programmatically (not in tab order)</td></tr>
 <tr><td><strong>Progressive enhancement</strong></td><td>Baseline works without JS; JS adds enhancements</td></tr>
 <tr><td><strong>Evidence chain</strong></td><td>Traceability from data → analysis → fix → verification</td></tr>
 </tbody></table>
@@ -1006,11 +1006,11 @@ EOF
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../wk10/wk10-lab1-analysis-prioritisation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk10/wk10-lab1-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../resources/code-resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk10/wk10-lab2-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1020,11 +1020,11 @@ EOF
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../wk10/wk10-lab1-analysis-prioritisation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk10/wk10-lab1-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../resources/code-resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk10/wk10-lab2-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

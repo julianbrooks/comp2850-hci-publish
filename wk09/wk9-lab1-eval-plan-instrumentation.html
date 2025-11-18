@@ -202,7 +202,7 @@
 <hr />
 <h2 id="introduction-from-prototype-to-evidence"><a class="header" href="#introduction-from-prototype-to-evidence">Introduction: From Prototype to Evidence</a></h2>
 <p>Weeks 6–8 built a functional, accessible task list prototype. <strong>Now the critical question</strong>: Does it actually work for real people?</p>
-<p><strong>HCI is empirical</strong>. We can't claim "this is usable" without evidence. This week you:</p>
+<p><strong>HCI is empirical</strong>. We can’t claim “this is usable” without evidence. This week you:</p>
 <ol>
 <li>Design an evaluation plan (what to measure, how)</li>
 <li>Instrument your prototype to capture objective data</li>
@@ -251,7 +251,7 @@ By the end of this session, you will have:</p>
 <li><strong>Participants</strong>: Peers, representative of target population</li>
 <li><strong>Protocol</strong>: Step-by-step procedure ensuring consistency</li>
 </ul>
-<p><strong>HCI Connection</strong>: ISO 9241-11 defines usability as "extent to which a product can be used by specified users to achieve specified goals with effectiveness, efficiency, and satisfaction."</p>
+<p><strong>HCI Connection</strong>: ISO 9241-11 defines usability as “extent to which a product can be used by specified users to achieve specified goals with effectiveness, efficiency, and satisfaction.”</p>
 <p><strong>Academic rigour</strong>: Evaluation design determines validity of findings. Poor tasks → biased data → wrong redesign decisions.</p>
 <p>🔗 <a href="https://www.iso.org/standard/63500.html">ISO 9241-11:2018 Usability</a>
 🔗 <a href="https://www.nngroup.com/articles/usability-101-introduction-to-usability/">Nielsen: Usability 101</a></p>
@@ -262,7 +262,7 @@ By the end of this session, you will have:</p>
 <p>Participants complete realistic tasks while researchers observe and measure. Contrasts with feature walkthroughs or preference surveys.</p>
 <p><strong>Task characteristics</strong>:</p>
 <ul>
-<li><strong>Realistic</strong>: Matches actual use context ("Find invoices" not "Use filter")</li>
+<li><strong>Realistic</strong>: Matches actual use context (“Find invoices” not “Use filter”)</li>
 <li><strong>Measurable</strong>: Clear success condition (found correct result, completed within time)</li>
 <li><strong>Scoped</strong>: Completable in 2-5 minutes per task</li>
 <li><strong>Representative</strong>: Covers critical flows identified in backlog</li>
@@ -273,7 +273,7 @@ Scenario: "You need to find all tasks containing the word 'invoice'.
            Use the filter to show only matching tasks and count how many remain."
 Success: Reports correct count within 2 minutes, no validation errors
 </code></pre>
-<p><strong>Why not feature-based?</strong> "Test the filter" is vague—participants don't know when they've succeeded. Task-based evaluation mirrors real-world goals.</p>
+<p><strong>Why not feature-based?</strong> “Test the filter” is vague—participants don’t know when they’ve succeeded. Task-based evaluation mirrors real-world goals.</p>
 <p><strong>HCI Connection</strong>: Tasks ground evaluation in <strong>ecological validity</strong>—findings generalize to real use.</p>
 <p>🔗 <a href="https://www.nngroup.com/articles/task-scenarios-usability-testing/">Nielsen: Task Scenarios for Usability Testing</a></p>
 </blockquote>
@@ -289,16 +289,16 @@ Success: Reports correct count within 2 minutes, no validation errors
 <li><strong>Click/keystroke count</strong>: Efficiency measure (lower is better for same outcome)</li>
 </ul>
 <p><strong>Benefits</strong>: Repeatable, comparable across participants, statistically analysable
-<strong>Limitations</strong>: Don't capture frustration, confusion, satisfaction</p>
+<strong>Limitations</strong>: Don’t capture frustration, confusion, satisfaction</p>
 <hr />
 <p><strong>Subjective Metrics</strong> [GLOSSARY]</p>
 <p>Self-reported feelings, perceptions, attitudes. Require interpretation.</p>
 <p><strong>Examples</strong>:</p>
 <ul>
-<li><strong>Confidence rating</strong>: "How confident are you that you completed the task correctly?" (1–5 scale)</li>
-<li><strong>Difficulty rating</strong>: "How difficult was this task?" (1–7 scale)</li>
+<li><strong>Confidence rating</strong>: “How confident are you that you completed the task correctly?” (1–5 scale)</li>
+<li><strong>Difficulty rating</strong>: “How difficult was this task?” (1–7 scale)</li>
 <li><strong>Satisfaction</strong>: Post-session questionnaire (SUS, UMUX-Lite)</li>
-<li><strong>Qualitative notes</strong>: Open-ended feedback ("I wasn't sure if it saved")</li>
+<li><strong>Qualitative notes</strong>: Open-ended feedback (“I wasn’t sure if it saved”)</li>
 </ul>
 <p><strong>Benefits</strong>: Capture affective response, uncover unexpected issues
 <strong>Limitations</strong>: Vary by person, memory biases, social desirability</p>
@@ -311,7 +311,7 @@ Success: Reports correct count within 2 minutes, no validation errors
 <p>Logging application events at the server (not client). Data captured regardless of JavaScript availability.</p>
 <p><strong>Why server-side?</strong></p>
 <ul>
-<li><strong>Reliability</strong>: Can't be blocked by ad blockers, disabled JS, browser crashes</li>
+<li><strong>Reliability</strong>: Can’t be blocked by ad blockers, disabled JS, browser crashes</li>
 <li><strong>Privacy</strong>: No third-party analytics (e.g., Google Analytics) that track across sites</li>
 <li><strong>Parity</strong>: Same data structure for HTMX and no-JS paths</li>
 <li><strong>Control</strong>: You own the data (no GDPR concerns with external processors)</li>
@@ -342,7 +342,7 @@ Success: Reports correct count within 2 minutes, no validation errors
 <li><strong>No PII in logs</strong>: No IP addresses, device fingerprints, real names</li>
 <li><strong>Opt-out mechanism</strong>: Participants can request data deletion (delete rows matching session_id)</li>
 <li><strong>Local storage</strong>: Logs stay in private repo, not synced to public forks</li>
-<li><strong>Consent clarity</strong>: Protocol explains what's logged and why</li>
+<li><strong>Consent clarity</strong>: Protocol explains what’s logged and why</li>
 </ul>
 <p><strong>Example — BAD</strong>:</p>
 <pre><code class="language-csv">timestamp,email,task,duration
@@ -354,7 +354,7 @@ Success: Reports correct count within 2 minutes, no validation errors
 2025-10-13T14:23:01Z,X7kL9p,T1,1800,on
 </code></pre>
 <p>✅ Anonymous, minimal, fit-for-purpose</p>
-<p><strong>UK context</strong>: Data Protection Act 2018 + UK GDPR require <strong>lawful basis</strong> for processing. Low-risk peer studies at universities typically use "legitimate interest" or "consent" basis. <strong>Must document</strong> in protocol.</p>
+<p><strong>UK context</strong>: Data Protection Act 2018 + UK GDPR require <strong>lawful basis</strong> for processing. Low-risk peer studies at universities typically use “legitimate interest” or “consent” basis. <strong>Must document</strong> in protocol.</p>
 <p>🔗 Review <a href="../references/consent-pii-faq.html">Consent and PII FAQ</a> for full guidance
 🔗 <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/data-protection-by-design-and-default/">ICO: Privacy by Design</a></p>
 </blockquote>
@@ -579,7 +579,7 @@ Task order and timing planned</li>
 </ul>
 <hr />
 <h2 id="activity-b-define-metrics-and-measures-20-min"><a class="header" href="#activity-b-define-metrics-and-measures-20-min">Activity B: Define Metrics and Measures (20 min)</a></h2>
-<p><strong>Goal</strong>: Specify exactly how you'll calculate each metric. Prevents ambiguity during analysis (Week 10).</p>
+<p><strong>Goal</strong>: Specify exactly how you’ll calculate each metric. Prevents ambiguity during analysis (Week 10).</p>
 <p><strong>Create <code>wk09/lab-wk9/research/measures.md</code></strong>:</p>
 <pre><code class="language-markdown"># Metrics Definitions — Week 9
 
@@ -798,7 +798,7 @@ Accessibility metrics included</li>
 </ul>
 <hr />
 <h2 id="activity-c-write-ethical-protocol-25-min"><a class="header" href="#activity-c-write-ethical-protocol-25-min">Activity C: Write Ethical Protocol (25 min)</a></h2>
-<p><strong>Goal</strong>: Document the procedure so it's repeatable and ethical.</p>
+<p><strong>Goal</strong>: Document the procedure so it’s repeatable and ethical.</p>
 <p><strong>Create <code>wk09/lab-wk9/research/protocol.md</code></strong>:</p>
 <pre><code class="language-markdown"># Peer Pilot Protocol — Week 9
 
@@ -906,14 +906,14 @@ Notes: Requested keyboard-only variant</p>
 <h3 id="0-introduction-2-min"><a class="header" href="#0-introduction-2-min">0. Introduction (2 min)</a></h3>
 <ul>
 <li>Consent process (see above)</li>
-<li>Explain think-aloud (optional): "Feel free to say what you're thinking as you go, but no pressure."</li>
-<li>Set expectations: "I won't help unless you're stuck for &gt;3 minutes."</li>
+<li>Explain think-aloud (optional): “Feel free to say what you’re thinking as you go, but no pressure.”</li>
+<li>Set expectations: “I won’t help unless you’re stuck for &gt;3 minutes.”</li>
 </ul>
 <h3 id="1-warm-up-2-min-not-timed"><a class="header" href="#1-warm-up-2-min-not-timed">1. Warm-up (2 min, not timed)</a></h3>
-<p>"Take a minute to browse the task list. Click around, get familiar. Let me know when you're ready to start the timed tasks."</p>
+<p>“Take a minute to browse the task list. Click around, get familiar. Let me know when you’re ready to start the timed tasks.”</p>
 <h3 id="2-task-t3-add-task-60s-limit"><a class="header" href="#2-task-t3-add-task-60s-limit">2. Task T3: Add Task (60s limit)</a></h3>
 <p><strong>Read scenario</strong>:
-"You need to remember to 'Call supplier about delivery'. Add this as a new task."</p>
+“You need to remember to ‘Call supplier about delivery’. Add this as a new task.”</p>
 <p><strong>Start timing</strong> when participant focuses in input field (or reads scenario, if using stopwatch).</p>
 <p><strong>Observe</strong>:</p>
 <ul>
@@ -922,12 +922,12 @@ Notes: Requested keyboard-only variant</p>
 <li>Do they notice the success confirmation?</li>
 </ul>
 <p><strong>Post-task question</strong>:
-"On a scale of 1 to 5, how confident are you that you completed that correctly?"</p>
+“On a scale of 1 to 5, how confident are you that you completed that correctly?”</p>
 <p><strong>Record</strong>: Completion (0/1), confidence, notes</p>
 <hr />
 <h3 id="3-task-t1-filter-tasks-120s-limit"><a class="header" href="#3-task-t1-filter-tasks-120s-limit">3. Task T1: Filter Tasks (120s limit)</a></h3>
 <p><strong>Read scenario</strong>:
-"You've been asked to find all tasks containing the word 'report'. Use the filter to show only matching tasks, then count how many remain."</p>
+“You’ve been asked to find all tasks containing the word ‘report’. Use the filter to show only matching tasks, then count how many remain.”</p>
 <p><strong>Observe</strong>:</p>
 <ul>
 <li>Do they find the filter box?</li>
@@ -938,7 +938,7 @@ Notes: Requested keyboard-only variant</p>
 <hr />
 <h3 id="4-task-t2-edit-task-90s-limit"><a class="header" href="#4-task-t2-edit-task-90s-limit">4. Task T2: Edit Task (90s limit)</a></h3>
 <p><strong>Read scenario</strong>:
-"The task 'Submit invoices' has a typo. Change it to 'Submit invoices by Friday' and save the change."</p>
+“The task ‘Submit invoices’ has a typo. Change it to ‘Submit invoices by Friday’ and save the change.”</p>
 <p><strong>Observe</strong>:</p>
 <ul>
 <li>Do they find Edit button?</li>
@@ -949,7 +949,7 @@ Notes: Requested keyboard-only variant</p>
 <hr />
 <h3 id="5-task-t4-delete-task-45s-limit"><a class="header" href="#5-task-t4-delete-task-45s-limit">5. Task T4: Delete Task (45s limit)</a></h3>
 <p><strong>Read scenario</strong>:
-"The task 'Test entry' is no longer needed. Delete it."</p>
+“The task ‘Test entry’ is no longer needed. Delete it.”</p>
 <p><strong>Observe</strong>:</p>
 <ul>
 <li>Confirmation dialog (HTMX) or direct submit (no-JS)?</li>
@@ -960,35 +960,35 @@ Notes: Requested keyboard-only variant</p>
 <h3 id="6-debrief-3-min"><a class="header" href="#6-debrief-3-min">6. Debrief (3 min)</a></h3>
 <p><strong>Ask</strong>:</p>
 <ol>
-<li>"Which task felt most difficult?"</li>
-<li>"Did anything surprise you or not work as you expected?"</li>
-<li>"Were there any points where you weren't sure if something had worked?"</li>
-<li>"(For SR/keyboard users) Did you encounter any accessibility barriers?"</li>
+<li>“Which task felt most difficult?”</li>
+<li>“Did anything surprise you or not work as you expected?”</li>
+<li>“Were there any points where you weren’t sure if something had worked?”</li>
+<li>“(For SR/keyboard users) Did you encounter any accessibility barriers?”</li>
 </ol>
 <p><strong>Record</strong> verbatim quotes in notes.</p>
 <p><strong>Thank participant</strong>:
-"That's really helpful, thank you. Your feedback will directly improve the prototype."</p>
+“That’s really helpful, thank you. Your feedback will directly improve the prototype.”</p>
 <hr />
 <h2 id="facilitator-guidelines"><a class="header" href="#facilitator-guidelines">Facilitator Guidelines</a></h2>
 <p><strong>Do</strong>:</p>
 <ul>
-<li>Remain neutral (don't lead: "Did you see the status message?")</li>
+<li>Remain neutral (don’t lead: “Did you see the status message?”)</li>
 <li>Take detailed notes (timestamps, direct quotes)</li>
-<li>Allow silence (don't fill pauses)</li>
-<li>Note when you intervene ("Prompted after 3min stuck")</li>
+<li>Allow silence (don’t fill pauses)</li>
+<li>Note when you intervene (“Prompted after 3min stuck”)</li>
 </ul>
-<p><strong>Don't</strong>:</p>
+<p><strong>Don’t</strong>:</p>
 <ul>
 <li>Explain the interface before tasks</li>
 <li>Show participant how to do something (defeats the test)</li>
-<li>Justify design choices ("It's supposed to work like this...")</li>
+<li>Justify design choices (“It’s supposed to work like this…”)</li>
 <li>Make participant feel judged</li>
 </ul>
 <p><strong>If participant is completely stuck</strong>:</p>
 <ul>
 <li>Wait 3 minutes</li>
-<li>Ask: "What are you looking for?" (diagnostic question)</li>
-<li>If still stuck: "Let's move to the next task"</li>
+<li>Ask: “What are you looking for?” (diagnostic question)</li>
+<li>If still stuck: “Let’s move to the next task”</li>
 <li><strong>Mark task as failed, note reason</strong></li>
 </ul>
 <hr />
@@ -1063,19 +1063,19 @@ Debrief notes:
 <h2 id="risk-mitigation"><a class="header" href="#risk-mitigation">Risk Mitigation</a></h2>
 <p><strong>Participant distress</strong>: If participant becomes frustrated:</p>
 <ul>
-<li>Reassure: "This is really helpful feedback—it's the interface, not you."</li>
+<li>Reassure: “This is really helpful feedback—it’s the interface, not you.”</li>
 <li>Offer to skip task or stop session</li>
 </ul>
 <p><strong>Technical failure</strong>: If server crashes mid-session:</p>
 <ul>
 <li>Restart server, reload page</li>
-<li>Resume from next task (don't re-run completed tasks)</li>
+<li>Resume from next task (don’t re-run completed tasks)</li>
 <li>Note incident in data-notes.md</li>
 </ul>
-<p><strong>Data loss</strong>: If logs don't record correctly:</p>
+<p><strong>Data loss</strong>: If logs don’t record correctly:</p>
 <ul>
 <li>Use facilitator stopwatch times as backup</li>
-<li>Note in data-notes.md: "Session P3: server logs incomplete, used manual timing"</li>
+<li>Note in data-notes.md: “Session P3: server logs incomplete, used manual timing”</li>
 </ul>
 <hr />
 <h2 id="summary-checklist"><a class="header" href="#summary-checklist">Summary Checklist</a></h2>
@@ -1165,7 +1165,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 </code></pre>
 <blockquote>
 <p><strong>📊 Walkthrough: Understanding a User Session</strong></p>
-<p>Let's trace <strong>one participant</strong> (session <code>X7kL9p</code>) through their tasks:</p>
+<p>Let’s trace <strong>one participant</strong> (session <code>X7kL9p</code>) through their tasks:</p>
 <div class="table-wrapper"><table><thead><tr><th>#</th><th>Time</th><th>Task</th><th>What Happened</th><th><code>step</code></th><th><code>outcome</code></th><th><code>ms</code></th><th><code>js_mode</code></th></tr></thead><tbody>
 <tr><td><strong>1</strong></td><td>14:23:01</td><td><strong>T1</strong> (Filter)</td><td>✅ Successfully filtered tasks</td><td><code>success</code></td><td><em>(empty)</em></td><td>1847ms</td><td><code>on</code> (HTMX)</td></tr>
 <tr><td><strong>2</strong></td><td>14:25:12</td><td><strong>T3</strong> (Add)</td><td>❌ Tried to add blank title</td><td><code>validation_error</code></td><td><code>blank_title</code></td><td>234ms</td><td><code>on</code> (HTMX)</td></tr>
@@ -1175,7 +1175,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 </div>
 <p><strong>Observations</strong>:</p>
 <ul>
-<li><strong>Same <code>session_id</code></strong> (<code>X7kL9p</code>) = all rows belong to one participant's session</li>
+<li><strong>Same <code>session_id</code></strong> (<code>X7kL9p</code>) = all rows belong to one participant’s session</li>
 <li><strong>Row 2 → Row 3</strong>: User made a validation error (<code>blank_title</code>), then retried successfully</li>
 <li><strong><code>ms</code> column</strong>: Row 2 is fast (234ms) because validation happens server-side instantly, Row 1 is slower (1847ms) because filtering queries the database</li>
 <li><strong><code>js_mode=on</code></strong>: This participant had JavaScript enabled (HTMX working)</li>
@@ -1186,7 +1186,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 <li><strong>Error rate</strong>: 1 error / 4 attempts = 25% error rate for this participant</li>
 <li><strong>Recovery</strong>: User recovered from error (Row 3 success after Row 2 error) = good resilience</li>
 <li><strong>Time-to-task</strong>: Row 1 took 1.8 seconds (reasonable for filter operation)</li>
-<li><strong>Comparison</strong>: We can compare this participant's times against median times for T1, T2, T3, T4</li>
+<li><strong>Comparison</strong>: We can compare this participant’s times against median times for T1, T2, T3, T4</li>
 </ul>
 </blockquote>
 <p><strong>Notes</strong>:</p>
@@ -1432,9 +1432,9 @@ Validation errors logged explicitly</li>
 <h3 id="step-2-execute-test-tasks-5-min"><a class="header" href="#step-2-execute-test-tasks-5-min">Step 2: Execute test tasks (5 min)</a></h3>
 <p><strong>With JS enabled</strong>:</p>
 <ol>
-<li>Add task "Test task 1" → expect success row in metrics.csv</li>
+<li>Add task “Test task 1” → expect success row in metrics.csv</li>
 <li>Submit empty form → expect validation_error row</li>
-<li>Add task "Test task 2" → expect success row</li>
+<li>Add task “Test task 2” → expect success row</li>
 <li>Edit a task → expect T2_edit success row</li>
 <li>Delete a task → expect T4_delete success row</li>
 </ol>
@@ -1515,7 +1515,7 @@ EOF
 <p><strong>Ethical considerations</strong>: What was most challenging about designing a privacy-respecting evaluation? How did you ensure no PII would be collected?</p>
 </li>
 <li>
-<p><strong>Instrumentation trade-offs</strong>: Server-side logging has limitations (doesn't capture client-side rendering time, scroll behaviour, etc.). What gaps might this create in your analysis?</p>
+<p><strong>Instrumentation trade-offs</strong>: Server-side logging has limitations (doesn’t capture client-side rendering time, scroll behaviour, etc.). What gaps might this create in your analysis?</p>
 </li>
 <li>
 <p><strong>Task design</strong>: How realistic are your task scenarios? Would they generalize to non-peer participants (e.g., non-CS students)?</p>
@@ -1585,7 +1585,7 @@ EOF
 <tr><td><strong>Privacy by Design</strong></td><td>Build data minimization and privacy into system architecture from the start</td></tr>
 <tr><td><strong>Median</strong></td><td>Middle value in sorted dataset; resistant to outliers</td></tr>
 <tr><td><strong>MAD</strong></td><td>Median Absolute Deviation; robust measure of spread</td></tr>
-<tr><td><strong>Informed consent</strong></td><td>Participants understand what data is collected, how it's used, and can opt out</td></tr>
+<tr><td><strong>Informed consent</strong></td><td>Participants understand what data is collected, how it’s used, and can opt out</td></tr>
 <tr><td><strong>Low-risk study</strong></td><td>Peer-to-peer evaluation with minimal data collection, no vulnerable groups</td></tr>
 </tbody></table>
 </div>
@@ -1596,11 +1596,11 @@ EOF
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk08/wk8-lab2-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../wk09/wk9-lab2-pilots-debrief-draft.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk09/wk9-lab1-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1610,11 +1610,11 @@ EOF
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk08/wk8-lab2-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../wk09/wk9-lab2-pilots-debrief-draft.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk09/wk9-lab1-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

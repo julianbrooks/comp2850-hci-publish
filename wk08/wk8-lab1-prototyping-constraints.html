@@ -300,7 +300,7 @@
 <li><strong>No underscore</strong> = Full page that can be rendered directly (e.g., <code>/tasks</code> → <code>tasks/index.peb</code>)</li>
 <li><strong>Underscore</strong> = Fragment included via <code>{% include %}</code> or HTMX <code>hx-get</code></li>
 </ul>
-<p><strong>This week's structure</strong>:</p>
+<p><strong>This week’s structure</strong>:</p>
 <pre><code>templates/
 ├── _layout/
 │   └── base.peb        ← Shared layout (underscore because it's a partial)
@@ -337,15 +337,15 @@
 <p>Modify <code>templates/tasks/index.peb</code> so it extends <code>_layout/base.peb</code>, renders the add form, and includes <code>_list.peb</code> and <code>_pager.peb</code> inside a <code>&lt;div id="task-area"&gt;</code> container (we will populate <code>_pager.peb</code> shortly).</p>
 <p>✋ <strong>Checkpoint</strong>: restart the server and confirm the tasks page renders exactly as before (no functionality has changed yet). If anything broke, inspect your partials and template paths.</p>
 <h3 id="15-add-production-ready-ui-with-headernavfooter-partials-15-min"><a class="header" href="#15-add-production-ready-ui-with-headernavfooter-partials-15-min">1.5 Add production-ready UI with header/nav/footer partials (15 min)</a></h3>
-<p>Now that you understand the partial pattern, let's apply it to create a more polished, production-ready UI. We'll factor the base layout into reusable header, navigation, and footer components.</p>
+<p>Now that you understand the partial pattern, let’s apply it to create a more polished, production-ready UI. We’ll factor the base layout into reusable header, navigation, and footer components.</p>
 <p><strong>Why add this now?</strong></p>
 <ul>
 <li><strong>Maintainability</strong>: Accessibility features (skip links, ARIA live regions) stay in one place</li>
 <li><strong>Reusability</strong>: Header and footer will be consistent across all pages</li>
-<li><strong>Professionalism</strong>: Navigation and session info help users understand context</li>
+<li><strong>Professionalism</strong>: Navigation and session info help people understand context</li>
 <li><strong>Best practice</strong>: Industry-standard template organization (header/nav/footer separation)</li>
 </ul>
-<p><strong>What you're building:</strong></p>
+<p><strong>What you’re building:</strong></p>
 <pre><code>templates/_layout/
 ├── base.peb         ← Updated to include partials
 ├── _header.peb      ← Skip link, ARIA live region, includes nav
@@ -368,7 +368,7 @@
 </code></pre>
 <p><strong>Key accessibility features:</strong></p>
 <ul>
-<li><strong>Skip link</strong>: Keyboard users can jump directly to main content (WCAG 2.4.1)</li>
+<li><strong>Skip link</strong>: People navigating with keyboard can jump directly to main content (WCAG 2.4.1)</li>
 <li><strong>Live region</strong>: Screen readers announce status updates without interrupting navigation (WCAG 4.1.3)</li>
 <li><strong>Semantic <code>&lt;header&gt;</code></strong>: Screen readers identify site header as a landmark</li>
 </ul>
@@ -386,8 +386,8 @@
   &lt;/ul&gt;
 &lt;/nav&gt;
 </code></pre>
-<p><strong>Pico CSS pattern</strong>: Pico's <code>&lt;nav&gt;</code> styling automatically creates a horizontal navigation bar with the first <code>&lt;ul&gt;</code> on the left (branding) and second <code>&lt;ul&gt;</code> on the right (links).</p>
-<p><strong>Why <code>aria-label</code>?</strong>: If you have multiple <code>&lt;nav&gt;</code> elements on a page, labels like <code>aria-label="Main navigation"</code> help screen reader users distinguish between them.</p>
+<p><strong>Pico CSS pattern</strong>: Pico’s <code>&lt;nav&gt;</code> styling automatically creates a horizontal navigation bar with the first <code>&lt;ul&gt;</code> on the left (branding) and second <code>&lt;ul&gt;</code> on the right (links).</p>
+<p><strong>Why <code>aria-label</code>?</strong>: If you have multiple <code>&lt;nav&gt;</code> elements on a page, labels like <code>aria-label="Main navigation"</code> help people using screen readers distinguish between them.</p>
 <h4 id="153-create-footer-partial"><a class="header" href="#153-create-footer-partial">1.5.3 Create footer partial</a></h4>
 <p>Create <code>templates/_layout/_footer.peb</code>:</p>
 <pre><code class="language-pebble">{# Footer partial with helpful links and session info #}
@@ -517,10 +517,10 @@
     call.respondHtml(PebbleRender.render("tasks/index.peb", model))
 }
 </code></pre>
-<p><strong>Note</strong>: If you don't have session support yet, you can pass a placeholder value like <code>"dev-session"</code> for now.</p>
+<p><strong>Note</strong>: If you don’t have session support yet, you can pass a placeholder value like <code>"dev-session"</code> for now.</p>
 <p>✋ <strong>Checkpoint</strong>: restart the server and verify:</p>
 <ul>
-<li><strong>Navigation bar</strong> appears at the top with "COMP2850 Task Manager" branding and Tasks/Health links</li>
+<li><strong>Navigation bar</strong> appears at the top with “COMP2850 Task Manager” branding and Tasks/Health links</li>
 <li><strong>Skip link</strong> becomes visible when you press Tab (test keyboard navigation)</li>
 <li><strong>Footer</strong> shows at the bottom with helpful links and session info</li>
 <li><strong>All existing functionality</strong> still works (add/edit/delete tasks)</li>
@@ -672,13 +672,13 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 <li>✅ Decouples templates from Kotlin internals (can rename properties safely)</li>
 <li>✅ Cleaner template syntax (shorter variable names)</li>
 <li>❌ Extra abstraction layer to understand</li>
-<li>❌ "Magic" variable names (harder to trace where they come from)</li>
+<li>❌ “Magic” variable names (harder to trace where they come from)</li>
 </ul>
 <p><strong>When to use</strong>: Production codebases where template stability matters. For learning, the direct approach (<code>page.items</code>, <code>page.page</code>) is clearer.</p>
 <hr />
-<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<h2 id="whats-next"><a class="header" href="#whats-next">What’s next?</a></h2>
 <p>Week 8 Lab 2 focuses on wiring additional routes, error handling, and no-JS verification scripts. Keep your server running and your documentation open—we will extend the same patterns immediately.</p>
-<p>Optional stretch this week: add a "mark complete" flow using the same partials and log any accessibility considerations.</p>
+<p>Optional stretch this week: add a “mark complete” flow using the same partials and log any accessibility considerations.</p>
 <hr />
 <h2 id="further-resources"><a class="header" href="#further-resources">Further resources</a></h2>
 <ul>
@@ -691,11 +691,11 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../resources/code-resources.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../wk07/wk7-lab2-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wk08/wk8-lab1-student-guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -705,11 +705,11 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../resources/code-resources.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../wk07/wk7-lab2-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../wk08/wk8-lab2-routing-nojs-tradeoffs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wk08/wk8-lab1-student-guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

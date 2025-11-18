@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lab 1: Ethics &amp; Inline Edit - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-7--lab-1--student-guide-ethics--inline-edit"><a class="header" href="#week-7--lab-1--student-guide-ethics--inline-edit">Week 7 • Lab 1 — Student Guide: Ethics &amp; Inline Edit</a></h1>
+<p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
+<img src="https://img.shields.io/badge/Week-7-orange" alt="Week 7" />
+<img src="https://img.shields.io/badge/Lab-1-green" alt="Lab 1" />
+<img src="https://img.shields.io/badge/Type-Student_Guide-purple" alt="Guide" /></p>
+<blockquote>
+<p><strong>Purpose</strong>: Week 7 Lab 1 adds inline editing with accessible focus management and ethics-by-design practices. If you’re struggling with the implementation, this guide provides working code and verification steps.</p>
+</blockquote>
+<hr />
+<h2 id="deliverables"><a class="header" href="#deliverables">Deliverables</a></h2>
+<p>By the end of this lab:</p>
+<ul>
+<li>✅ <code>wk07/ethics/data-boundaries.md</code> - Privacy-by-design documentation</li>
+<li>✅ Updated <code>.gitignore</code> for sensitive data</li>
+<li>✅ <code>templates/tasks/_edit.peb</code> - Edit mode template</li>
+<li>✅ Updated <code>templates/tasks/_item.peb</code> - Added Edit button</li>
+<li>✅ Routes: <code>GET /tasks/{id}/edit</code>, <code>POST /tasks/{id}/edit</code>, <code>GET /tasks/{id}/view</code></li>
+<li>✅ Keyboard + screen reader testing verification</li>
+</ul>
+<hr />
+<h2 id="part-1-ethics-setup-15-minutes"><a class="header" href="#part-1-ethics-setup-15-minutes">Part 1: Ethics Setup (15 minutes)</a></h2>
+<h3 id="create-data-boundaries-doc"><a class="header" href="#create-data-boundaries-doc">Create Data Boundaries Doc</a></h3>
+<p><strong>Create</strong> <code>wk07/ethics/data-boundaries.md</code>:</p>
+<details>
+<summary>Click to expand: Data Boundaries Template</summary>
+<pre><code class="language-markdown"># Data Boundaries — Week 7
+
+## What We Collect (Allowed)
+- **Pseudonymised session IDs**: Random 6-char hex (e.g., `P1_a3f7`)
+- **Task metadata**: Title, completion status, timestamps
+- **Interaction logs**: HTTP requests, response times, error codes
+- **Accessibility testing notes**: "NVDA announced X", "Focus moved to Y"
+
+## What We DO NOT Collect (Prohibited)
+- ❌ Real names (use pseudonyms: Participant A, P1, etc.)
+- ❌ Student ID numbers
+- ❌ Email addresses
+- ❌ IP addresses (Ktor logs disabled)
+- ❌ Personal task content beyond module examples
+
+## Storage &amp; Retention
+- **Location**: Local CSV files (`data/tasks.csv`, `data/metrics.csv`)
+- **Access**: Researcher, lab partner, module staff (on request)
+- **Encryption**: Standard filesystem permissions (chmod 600)
+- **Deletion**: End of Semester 1 (January 2025) OR anonymised for portfolio
+
+## Privacy by Design Principles Applied
+1. **Data minimisation**: Only collect session ID (not name)
+2. **Purpose limitation**: Metrics for HCI evaluation only (not sold/shared)
+3. **Storage limitation**: Delete after assessment complete
+4. **Integrity &amp; confidentiality**: Local storage (not cloud), Git repo private
+
+## Ethics Risks Identified
+| Risk | Mitigation |
+|------|-----------|
+| Task titles contain sensitive info | Provide example tasks; warn against personal content |
+| Session IDs linked to participants | Use randomised IDs; don't store mapping |
+| Git repo accidentally public | Verify remote is private; add `.gitignore` for `/data` |
+| Screenshots include PII | Crop to relevant UI; blur names |
+
+---
+
+**Reference**: ICO (2024). Guide to GDPR, &lt;https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/&gt;
+</code></pre>
+</details>
+<h3 id="update-gitignore"><a class="header" href="#update-gitignore">Update <code>.gitignore</code></a></h3>
+<p>Add these lines to exclude sensitive data:</p>
+<pre><code class="language-bash"># Sensitive data
+/data/tasks.csv
+/data/metrics.csv
+/wk*/research/*notes.md
+*.log
+</code></pre>
+<p><strong>Rationale</strong>: Even with pseudonyms, interview notes could be re-identified. Keep local, don’t push.</p>
+<p><strong>Checklist</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Data boundaries documented</li>
+<li><input disabled="" type="checkbox"/>
+<code>.gitignore</code> updated</li>
+<li><input disabled="" type="checkbox"/>
+Consent protocol from Week 6 still valid</li>
+</ul>
+<hr />
+<h2 id="part-2-inline-edit-templates-optional-code"><a class="header" href="#part-2-inline-edit-templates-optional-code">Part 2: Inline Edit Templates (Optional Code)</a></h2>
+<details>
+<summary>Click to expand: Update <code>templates/tasks/_item.peb</code> (Add Edit button)</summary>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
+  &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
+
+  {# NEW: Edit button (dual-mode) #}
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
+  {# Existing: Delete button #}
+  &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
+        hx-post="/tasks/{{ task.id }}/delete"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Delete task: {{ task.title }}"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Key points</strong>:</p>
+<ul>
+<li><code>hx-get="/tasks/{id}/edit"</code> - HTMX path (returns edit form HTML)</li>
+<li><code>action="/tasks/{id}/edit" method="get"</code> - No-JS path (full page with edit form)</li>
+<li><code>hx-swap="outerHTML"</code> - Replaces entire <code>&lt;li&gt;</code> with edit form</li>
+</ul>
+</details>
+<details>
+<summary>Click to expand: Create <code>templates/tasks/_edit.peb</code> (new file)</summary>
+<pre><code class="language-pebble">{# Edit mode partial - shown when person clicks "Edit" #}
+{# WCAG 3.3.2: Provide labels for all form inputs #}
+
+&lt;li id="task-{{ task.id }}" class="task-edit"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+
+    &lt;label for="title-{{ task.id }}" class="visually-hidden"&gt;Edit task title&lt;/label&gt;
+    &lt;input type="text"
+           id="title-{{ task.id }}"
+           name="title"
+           value="{{ task.title }}"
+           required
+           aria-describedby="hint-{{ task.id }}"
+           autofocus&gt;
+    &lt;small id="hint-{{ task.id }}"&gt;Press Enter to save, Esc to cancel.&lt;/small&gt;
+
+    {# Save button #}
+    &lt;button type="submit" aria-label="Save changes to: {{ task.title }}"&gt;Save&lt;/button&gt;
+
+    {# Cancel button (dual-mode) #}
+    &lt;a href="/tasks"
+       hx-get="/tasks/{{ task.id }}/view"
+       hx-target="#task-{{ task.id }}"
+       hx-swap="outerHTML"
+       role="button"
+       aria-label="Cancel editing: {{ task.title }}"&gt;
+      Cancel
+    &lt;/a&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Key accessibility features</strong>:</p>
+<ul>
+<li><code>autofocus</code> - Keyboard focus moves to input immediately</li>
+<li><code>aria-describedby</code> - Links hint text to input for screen readers</li>
+<li><code>visually-hidden</code> label - People using screen readers hear “Edit task title” without visual clutter</li>
+<li>Dual-mode Cancel (HTMX swaps to view, no-JS goes to <code>/tasks</code>)</li>
+</ul>
+</details>
+<hr />
+<h2 id="part-3-inline-edit-routes-optional-code"><a class="header" href="#part-3-inline-edit-routes-optional-code">Part 3: Inline Edit Routes (Optional Code)</a></h2>
+<details>
+<summary>Click to expand: Add to <code>src/main/kotlin/routes/TaskRoutes.kt</code></summary>
+<pre><code class="language-kotlin">/**
+ * GET /tasks/{id}/edit - Show edit form
+ * Dual-mode: HTMX returns _edit.peb fragment, no-JS returns full page
+ */
+get("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull()
+    val task = id?.let { TaskRepository.get(it) }
+
+    if (task == null) {
+        call.respond(HttpStatusCode.NotFound, "Task not found")
+        return@get
+    }
+
+    if (call.isHtmx()) {
+        // HTMX: Return just the edit form fragment
+        val html = call.renderTemplate("tasks/_edit.peb", mapOf("task" to task))
+        call.respondText(html, ContentType.Text.Html)
+    } else {
+        // No-JS: Return full page with task in edit mode
+        val html = call.renderTemplate("tasks/index.peb", mapOf(
+            "title" to "Edit Task",
+            "tasks" to TaskRepository.all(),
+            "editingTaskId" to id
+        ))
+        call.respondText(html, ContentType.Text.Html)
+    }
+}
+
+/**
+ * POST /tasks/{id}/edit - Save edits
+ * Dual-mode: HTMX returns _item.peb fragment, no-JS redirects to /tasks
+ */
+post("/tasks/{id}/edit") {
+    val id = call.parameters["id"]?.toIntOrNull()
+    val newTitle = call.receiveParameters()["title"]?.trim()
+
+    if (id == null || newTitle.isNullOrBlank()) {
+        call.respond(HttpStatusCode.BadRequest, "Invalid input")
+        return@post
+    }
+
+    val updated = TaskRepository.update(id, newTitle)
+
+    if (updated == null) {
+        call.respond(HttpStatusCode.NotFound, "Task not found")
+        return@post
+    }
+
+    if (call.isHtmx()) {
+        // HTMX: Return updated view mode + status
+        val item = call.renderTemplate("tasks/_item.peb", mapOf("task" to updated))
+        val status = """&lt;div id="status" hx-swap-oob="true"&gt;Task updated to "${updated.title}".&lt;/div&gt;"""
+        call.respondText(item + status, ContentType.Text.Html)
+    } else {
+        // No-JS: PRG redirect
+        call.respondRedirect("/tasks")
+    }
+}
+
+/**
+ * GET /tasks/{id}/view - Cancel edit (HTMX only)
+ * Returns task in view mode without saving changes
+ */
+get("/tasks/{id}/view") {
+    val id = call.parameters["id"]?.toIntOrNull()
+    val task = id?.let { TaskRepository.get(it) }
+
+    if (task == null) {
+        call.respond(HttpStatusCode.NotFound)
+        return@get
+    }
+
+    val html = call.renderTemplate("tasks/_item.peb", mapOf("task" to task))
+    call.respondText(html, ContentType.Text.Html)
+}
+</code></pre>
+<p><strong>Note</strong>: You’ll need to add <code>update()</code> method to <code>TaskRepository</code>:</p>
+<pre><code class="language-kotlin">fun update(id: Int, newTitle: String): Task? {
+    val task = tasks.find { it.id == id } ?: return null
+    task.title = newTitle
+    persist()
+    return task
+}
+</code></pre>
+</details>
+<hr />
+<h2 id="part-4-verification-checklist"><a class="header" href="#part-4-verification-checklist">Part 4: Verification Checklist</a></h2>
+<h3 id="dual-mode-testing"><a class="header" href="#dual-mode-testing">Dual-Mode Testing</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>HTMX mode</strong>: Click Edit → form appears in place → type new title → click Save → view mode returns</li>
+<li><input disabled="" type="checkbox"/>
+<strong>HTMX cancel</strong>: Click Edit → click Cancel → returns to view mode without saving</li>
+<li><input disabled="" type="checkbox"/>
+<strong>No-JS mode</strong>: Disable JavaScript → click Edit → full page loads with edit form → save → redirects to <code>/tasks</code></li>
+</ul>
+<h3 id="keyboard-navigation"><a class="header" href="#keyboard-navigation">Keyboard Navigation</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Click Edit → focus moves to input field automatically (<code>autofocus</code>)</li>
+<li><input disabled="" type="checkbox"/>
+Type new title → press Enter → saves (form submission)</li>
+<li><input disabled="" type="checkbox"/>
+Click Edit → press Tab → reaches Save button → press Enter → saves</li>
+<li><input disabled="" type="checkbox"/>
+Click Edit → press Tab → reaches Cancel → press Enter → cancels</li>
+</ul>
+<h3 id="screen-reader-testing-if-available"><a class="header" href="#screen-reader-testing-if-available">Screen Reader Testing (if available)</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Navigate to Edit button → hears “Edit task: [title]”</li>
+<li><input disabled="" type="checkbox"/>
+Activate Edit → hears “Edit task title, edit text”</li>
+<li><input disabled="" type="checkbox"/>
+Input has hint → hears “Press Enter to save, Esc to cancel”</li>
+<li><input disabled="" type="checkbox"/>
+Save → hears “Task updated to [new title]” (status message)</li>
+</ul>
+<h3 id="focus-management"><a class="header" href="#focus-management">Focus Management</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+After clicking Edit: focus is on input field</li>
+<li><input disabled="" type="checkbox"/>
+After saving: focus should be on the updated task (check with Tab)</li>
+<li><input disabled="" type="checkbox"/>
+After cancelling: focus should return to Edit button</li>
+</ul>
+<hr />
+<h2 id="common-issues"><a class="header" href="#common-issues">Common Issues</a></h2>
+<h3 id="focus-doesnt-move-to-input"><a class="header" href="#focus-doesnt-move-to-input">“Focus doesn’t move to input”</a></h3>
+<p><strong>Fix</strong>: Confirm <code>autofocus</code> attribute is on <code>&lt;input&gt;</code> in <code>_edit.peb</code></p>
+<h3 id="cancel-button-doesnt-work-in-no-js-mode"><a class="header" href="#cancel-button-doesnt-work-in-no-js-mode">“Cancel button doesn’t work in no-JS mode”</a></h3>
+<p><strong>Expected</strong>: No-JS cancel navigates to <code>/tasks</code>. HTMX cancel swaps to view mode. This is correct dual-mode behaviour.</p>
+<h3 id="save-doesnt-update-the-title"><a class="header" href="#save-doesnt-update-the-title">“Save doesn’t update the title”</a></h3>
+<p><strong>Check</strong>: <code>TaskRepository.update()</code> method exists and calls <code>persist()</code> to save CSV</p>
+<h3 id="screen-reader-doesnt-announce-hint"><a class="header" href="#screen-reader-doesnt-announce-hint">“Screen reader doesn’t announce hint”</a></h3>
+<p><strong>Fix</strong>: Verify <code>aria-describedby="hint-{{ task.id }}"</code> links to <code>&lt;small id="hint-{{ task.id }}"&gt;</code></p>
+<hr />
+<h2 id="commit--continue"><a class="header" href="#commit--continue">Commit &amp; Continue</a></h2>
+<pre><code class="language-bash">git add wk07/ templates/ src/
+git commit -m "feat(wk7-lab1): ethics documentation + inline edit with dual-path
+
+- Added data boundaries and privacy-by-design documentation
+- Implemented inline edit with view/edit mode partials
+- Added dual-path routes (HTMX fragment + no-JS full page)
+- Verified keyboard navigation and focus management
+- Tested with screen reader (NVDA/VoiceOver)
+- Updated .gitignore to exclude sensitive research data
+
+Addresses Week 7 Lab 1 requirements."
+</code></pre>
+<p><strong>Next</strong>: Week 7 Lab 2 - Accessibility audit and inclusive fixes from backlog.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../wk07/wk7-lab2-audit-backlog-fix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk07/wk7-lab1-ethics-inline-edit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../wk07/wk7-lab2-audit-backlog-fix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
