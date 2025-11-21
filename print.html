@@ -5517,9 +5517,13 @@ Templates render correctly with UUID IDs</li>
     &lt;p&gt;
       &lt;small&gt;
         Session: {{ sessionId | default('N/A') }} &amp;bull;
-        Mode: {% if isHtmx %}HTMX{% else %}No-JS{% endif %}
+        Mode: &lt;span id="mode-indicator"&gt;No-JS&lt;/span&gt;
       &lt;/small&gt;
     &lt;/p&gt;
+    &lt;script&gt;
+      // Update mode indicator when JS is available
+      document.getElementById('mode-indicator').textContent = 'HTMX';
+    &lt;/script&gt;
   &lt;/div&gt;
 &lt;/footer&gt;
 </code></pre>
@@ -5527,7 +5531,7 @@ Templates render correctly with UUID IDs</li>
 <ul>
 <li><strong>Context links</strong>: Quick access to HTMX and WCAG documentation</li>
 <li><strong>Session visibility</strong>: Helps with debugging (which session is active?)</li>
-<li><strong>Mode indicator</strong>: Shows whether HTMX is working (useful for verifying parity)</li>
+<li><strong>Mode indicator</strong>: Uses client-side detection to show whether JavaScript is enabled (No-JS baseline, HTMX enhanced)</li>
 </ul>
 <p><strong>Security note</strong>: <code>target="_blank"</code> requires <code>rel="noopener"</code> to prevent the new page from accessing <code>window.opener</code>.</p>
 <h4 id="154-update-base-layout-to-use-partials"><a class="header" href="#154-update-base-layout-to-use-partials">1.5.4 Update base layout to use partials</a></h4>
