@@ -229,6 +229,47 @@ sealed class ValidationResult {
 </code></pre>
 </details>
 <details>
+<summary>Click to reveal: TaskStore for Week 8 (<code>src/main/kotlin/storage/TaskStore.kt</code>)</summary>
+<pre><code class="language-kotlin">package storage
+
+import model.Task
+import java.io.File
+
+/**
+ * Task storage with String UUID IDs.
+ * Week 8 architecture - replaces Week 7's TaskRepository with Int IDs.
+ */
+class TaskStore(private val csvFile: File = File("data/tasks.csv")) {
+    private val tasks = mutableListOf&lt;Task&gt;()
+
+    fun getAll(): List&lt;Task&gt; = tasks.toList()
+    fun getById(id: String): Task? = tasks.find { it.id == id }
+    fun add(task: Task) { tasks.add(task) }
+    fun update(task: Task): Boolean {
+        val index = tasks.indexOfFirst { it.id == task.id }
+        return if (index != -1) { tasks[index] = task; true } else false
+    }
+    fun delete(id: String): Boolean = tasks.removeIf { it.id == id }
+
+    fun search(query: String, page: Int, pageSize: Int = 10): Page&lt;Task&gt; {
+        val filtered = if (query.isBlank()) getAll()
+                      else getAll().filter { it.title.contains(query, ignoreCase = true) }
+        val totalItems = filtered.size
+        val totalPages = if (totalItems == 0) 1 else (totalItems + pageSize - 1) / pageSize
+        val validPage = page.coerceIn(1, totalPages)
+        val startIndex = (validPage - 1) * pageSize
+        return Page(
+            items = filtered.drop(startIndex).take(pageSize),
+            page = validPage,
+            pages = totalPages,
+            total = totalItems
+        )
+    }
+}
+</code></pre>
+<p><strong>Note</strong>: Also need <code>data class Page&lt;T&gt;(val items: List&lt;T&gt;, val page: Int, val pages: Int, val total: Int)</code> in <code>data/Page.kt</code></p>
+</details>
+<details>
 <summary>Click to reveal: Create task with validation (<code>TaskRoutes.kt</code>)</summary>
 <pre><code class="language-kotlin">post("/tasks") {
     val params = receiveParameters()
@@ -316,13 +357,20 @@ sealed class ValidationResult {
 </code></pre>
 </details>
 <details>
-<summary>Click to reveal: Delete with dual-path support (<code>templates/tasks/_item.peb</code>)</summary>
+<summary>Click to reveal: Task item with Edit and Delete (<code>templates/tasks/_item.peb</code>)</summary>
 <pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
   &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
 
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
   {# Delete form with dual attributes #}
   &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
-        hx-post="/tasks/{{ task.id }}/delete"
+        hx-delete="/tasks/{{ task.id }}"
         hx-target="#task-{{ task.id }}"
         hx-swap="outerHTML"
         hx-confirm="Delete the task '{{ task.title }}'?"&gt;
@@ -330,19 +378,132 @@ sealed class ValidationResult {
   &lt;/form&gt;
 &lt;/li&gt;
 </code></pre>
-<p><strong>Route handler</strong>:</p>
-<pre><code class="language-kotlin">post("/tasks/{id}/delete") {
-    val id = parameters["id"] ?: return@post respond(HttpStatusCode.BadRequest)
+<p><strong>Route handlers (dual-path)</strong>:</p>
+<pre><code class="language-kotlin">// HTMX path (HTTP DELETE)
+delete("/tasks/{id}") {
+    val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+    store.delete(id)
+    val status = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Deleted "${task?.title ?: "task"}".&lt;/div&gt;"""
+    call.respondText(status, ContentType.Text.Html)
+}
+
+// No-JS fallback (POST)
+post("/tasks/{id}/delete") {
+    val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
     val task = store.getById(id)
     store.delete(id)
 
     if (isHtmxRequest()) {
         val statusHtml = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task "${task?.title ?: "Unknown"}" deleted.&lt;/div&gt;"""
-        respondText(statusHtml, ContentType.Text.Html)
+        call.respondText(statusHtml, ContentType.Text.Html)
     } else {
+        call.respondRedirect("/tasks")
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary>Click to reveal: Edit with validation and dual-path (<code>TaskRoutes.kt</code>)</summary>
+<p><strong>Update your Week 7 edit routes for Week 8 architecture:</strong></p>
+<pre><code class="language-kotlin">// GET /tasks/{id}/edit - Show edit form
+get("/tasks/{id}/edit") {
+    val id = parameters["id"] ?: return@get respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return@get
+    }
+
+    if (isHtmxRequest()) {
+        // HTMX: return inline edit fragment
+        val html = renderTemplate("tasks/_edit.peb", mapOf("task" to task.toPebbleContext()))
+        respondText(html, ContentType.Text.Html)
+    } else {
+        // No-JS: redirect to list (edit not supported without JS)
         respondRedirect("/tasks")
     }
 }
+
+// POST /tasks/{id}/edit - Save edits with validation
+post("/tasks/{id}/edit") {
+    val id = parameters["id"] ?: return@post respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return@post
+    }
+
+    val newTitle = receiveParameters()["title"]?.trim() ?: ""
+    val validation = Task.validate(newTitle)
+
+    if (validation is ValidationResult.Error) {
+        if (isHtmxRequest()) {
+            // HTMX: return edit form with error
+            val html = renderTemplate("tasks/_edit.peb", mapOf(
+                "task" to task.toPebbleContext(),
+                "error" to validation.message
+            ))
+            respondText(html, ContentType.Text.Html)
+        } else {
+            // No-JS: redirect back
+            respondRedirect("/tasks")
+        }
+        return@post
+    }
+
+    // Update task
+    val updated = task.copy(title = newTitle)
+    store.update(updated)
+
+    if (isHtmxRequest()) {
+        // HTMX: return view fragment
+        val html = renderTemplate("tasks/_item.peb", mapOf("task" to updated.toPebbleContext()))
+        val status = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task updated successfully.&lt;/div&gt;"""
+        respondText(html + status, ContentType.Text.Html)
+    } else {
+        // No-JS: redirect to list
+        respondRedirect("/tasks")
+    }
+}
+</code></pre>
+<p><strong>Key changes from Week 7:</strong></p>
+<ul>
+<li>String IDs (no <code>toIntOrNull()</code>)</li>
+<li><code>store.getById()</code> instead of <code>TaskRepository.get()</code></li>
+<li><code>Task.validate()</code> for validation (same as add task)</li>
+<li><code>task.copy()</code> for immutable updates</li>
+</ul>
+<p><strong>Edit template</strong> (<code>templates/tasks/_edit.peb</code>):</p>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-edit"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+
+    &lt;label for="title-{{ task.id }}"&gt;Title&lt;/label&gt;
+    &lt;input type="text"
+           id="title-{{ task.id }}"
+           name="title"
+           value="{{ task.title }}"
+           required
+           autofocus
+           {% if error %}aria-invalid="true" aria-describedby="error-{{ task.id }}"{% endif %}&gt;
+
+    {% if error %}
+    &lt;p id="error-{{ task.id }}" class="error-message" role="alert"&gt;{{ error }}&lt;/p&gt;
+    {% endif %}
+
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+    &lt;a href="/tasks"
+       hx-get="/tasks/{{ task.id }}/view"
+       hx-target="#task-{{ task.id }}"
+       hx-swap="outerHTML"
+       role="button"&gt;Cancel&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
 </code></pre>
 </details>
 <hr />

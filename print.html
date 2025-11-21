@@ -5174,6 +5174,124 @@ Addresses Week 7 Lab 2 requirements. Ready for Week 8 prototyping."
 </ul>
 <p>Keep the <a href="wk08/../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="wk08/../references/htmx-patterns.html">HTMX Patterns</a> open for reference.</p>
 <hr />
+<h2 id="before-you-start-week-8-architecture-migration"><a class="header" href="#before-you-start-week-8-architecture-migration">Before You Start: Week 8 Architecture Migration</a></h2>
+<h3 id="overview-week-7--week-8-transition"><a class="header" href="#overview-week-7--week-8-transition">Overview: Week 7 → Week 8 Transition</a></h3>
+<p>Week 8 introduces a <strong>production-ready architecture</strong> with String UUID IDs and improved data storage. You will migrate from Week 7’s simple <code>TaskRepository</code> object to Week 8’s <code>TaskStore</code> class.</p>
+<p><strong>Why this change?</strong></p>
+<ul>
+<li><strong>Scalability</strong>: String UUIDs avoid ID conflicts in distributed systems</li>
+<li><strong>Security</strong>: Sequential Int IDs leak information (total tasks, creation order)</li>
+<li><strong>Production patterns</strong>: UUIDs are standard in REST APIs, databases, and microservices</li>
+<li><strong>Data richness</strong>: Week 8 Task model adds <code>completed</code>, <code>createdAt</code> for evaluation metrics (Week 9)</li>
+</ul>
+<h3 id="architecture-comparison"><a class="header" href="#architecture-comparison">Architecture Comparison</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th><strong>Week 7</strong> (Simple)</th><th><strong>Week 8</strong> (Production-Ready)</th></tr></thead><tbody>
+<tr><td><strong>Task ID Type</strong></td><td><code>Int</code> (1, 2, 3…)</td><td><code>String</code> (UUID: <code>"a3f2c8..."</code>)</td></tr>
+<tr><td><strong>ID Parsing</strong></td><td><code>toIntOrNull()</code></td><td>Direct string (no parsing)</td></tr>
+<tr><td><strong>Data Model</strong></td><td><code>Task(id: Int, title: String)</code></td><td><code>Task(id: String, title: String, completed: Boolean, createdAt: LocalDateTime)</code></td></tr>
+<tr><td><strong>Storage</strong></td><td><code>TaskRepository</code> object (singleton)</td><td><code>TaskStore</code> class (instantiable, testable)</td></tr>
+<tr><td><strong>Location</strong></td><td><code>data/TaskRepository.kt</code></td><td><code>model/Task.kt</code> + <code>storage/TaskStore.kt</code></td></tr>
+<tr><td><strong>Add Method</strong></td><td><code>repo.add(title: String): Task</code></td><td><code>store.add(task: Task)</code></td></tr>
+<tr><td><strong>Get Method</strong></td><td><code>repo.find(id: Int): Task?</code></td><td><code>store.getById(id: String): Task?</code></td></tr>
+<tr><td><strong>Validation</strong></td><td>None (basic title check)</td><td><code>Task.validate(title)</code> with detailed errors</td></tr>
+</tbody></table>
+</div>
+<h3 id="migration-steps-complete-before-activity-1"><a class="header" href="#migration-steps-complete-before-activity-1">Migration Steps (Complete Before Activity 1)</a></h3>
+<p><strong>1. Create the Task model</strong> (<code>src/main/kotlin/model/Task.kt</code>):</p>
+<pre><code class="language-kotlin">package model
+
+import java.time.LocalDateTime
+import java.util.UUID
+
+data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val completed: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now()
+)
+</code></pre>
+<p><strong>2. Create the TaskStore</strong> (<code>src/main/kotlin/storage/TaskStore.kt</code>):</p>
+<pre><code class="language-kotlin">package storage
+
+import model.Task
+
+class TaskStore {
+    private val tasks = mutableListOf&lt;Task&gt;()
+
+    fun getAll(): List&lt;Task&gt; = tasks.toList()
+    fun getById(id: String): Task? = tasks.find { it.id == id }
+    fun add(task: Task) { tasks.add(task) }
+    fun update(task: Task): Boolean {
+        val index = tasks.indexOfFirst { it.id == task.id }
+        return if (index != -1) { tasks[index] = task; true } else false
+    }
+    fun delete(id: String): Boolean = tasks.removeIf { it.id == id }
+}
+</code></pre>
+<p><strong>3. Update your routes</strong> (<code>src/main/kotlin/routes/TaskRoutes.kt</code>):</p>
+<p><strong>Before (Week 7):</strong></p>
+<pre><code class="language-kotlin">fun Routing.configureTaskRoutes() {
+    post("/tasks") {
+        val title = call.receiveParameters()["title"] ?: ""
+        val task = TaskRepository.add(title)  // Int ID
+        // ...
+    }
+
+    delete("/tasks/{id}") {
+        val id = call.parameters["id"]?.toIntOrNull() ?: return@delete
+        TaskRepository.delete(id)
+    }
+}
+</code></pre>
+<p><strong>After (Week 8):</strong></p>
+<pre><code class="language-kotlin">fun Routing.configureTaskRoutes(store: TaskStore = TaskStore()) {
+    post("/tasks") {
+        val title = call.receiveParameters()["title"] ?: ""
+        val task = Task(title = title)  // UUID auto-generated
+        store.add(task)
+        // ...
+    }
+
+    delete("/tasks/{id}") {
+        val id = call.parameters["id"] ?: return@delete  // No toIntOrNull
+        store.delete(id)
+    }
+}
+</code></pre>
+<p><strong>4. Key changes in templates</strong>:</p>
+<ul>
+<li>Task IDs are now strings: <code>task-{{ task.id }}</code> (works the same in Pebble)</li>
+<li>No visual changes needed—UUIDs display in URLs, but users don’t see them</li>
+</ul>
+<p><strong>5. Test your migration</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Server starts without errors</li>
+<li><input disabled="" type="checkbox"/>
+Can add tasks (UUID IDs auto-generated)</li>
+<li><input disabled="" type="checkbox"/>
+Can edit tasks (String ID routing works)</li>
+<li><input disabled="" type="checkbox"/>
+Can delete tasks (no <code>toIntOrNull</code> errors)</li>
+<li><input disabled="" type="checkbox"/>
+Templates render correctly with UUID IDs</li>
+</ul>
+<h3 id="what-to-keep-from-week-7"><a class="header" href="#what-to-keep-from-week-7">What to Keep from Week 7</a></h3>
+<p><strong>✅ Keep your Week 7 templates</strong> (they work with String IDs):</p>
+<ul>
+<li>Form actions: <code>/tasks/{{ task.id }}/edit</code> works with both Int and String</li>
+<li>HTMX attributes: <code>hx-delete="/tasks/{{ task.id }}"</code> works the same</li>
+</ul>
+<p><strong>✅ Keep your accessibility features</strong>:</p>
+<ul>
+<li>ARIA labels, live regions, focus management all transfer directly</li>
+</ul>
+<p><strong>⚠️ Update route parameter handling</strong>:</p>
+<ul>
+<li>Remove all <code>toIntOrNull()</code> for task IDs (keep for page numbers!)</li>
+<li>Change <code>TaskRepository.*</code> → <code>store.*</code></li>
+</ul>
+<hr />
 <h2 id="learning-focus-4"><a class="header" href="#learning-focus-4">Learning Focus</a></h2>
 <h3 id="lab-objectives-4"><a class="header" href="#lab-objectives-4">Lab Objectives</a></h3>
 <p>By the end of this session, you will have:</p>
@@ -5289,6 +5407,32 @@ Addresses Week 7 Lab 2 requirements. Ready for Week 8 prototyping."
 <li>Stable id <code>task-{{ t.id }}</code>.</li>
 <li>The title and the Edit/Delete forms from Week 7 (keep ARIA labels and dual attributes).</li>
 <li>No inline business logic—just markup and data from the model.</li>
+</ul>
+<p><strong>Example</strong> (<code>templates/tasks/_item.peb</code>):</p>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
+  &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
+        hx-delete="/tasks/{{ task.id }}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Delete the task '{{ task.title }}'?"&gt;
+    &lt;button type="submit" aria-label="Delete task: {{ task.title }}"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Key patterns</strong>:</p>
+<ul>
+<li>Dual attributes: <code>action</code> (no-JS) + <code>hx-get</code>/<code>hx-delete</code> (HTMX)</li>
+<li>Accessible labels: <code>aria-label</code> provides context for screen readers</li>
+<li>Delete confirmation: <code>hx-confirm</code> prompts before deletion (HTMX only)</li>
 </ul>
 <h3 id="13-task-list-partial"><a class="header" href="#13-task-list-partial">1.3 Task list partial</a></h3>
 <p>Create <code>templates/tasks/_list.peb</code> containing:</p>
@@ -5672,6 +5816,49 @@ git commit -m "wk8s1: partials + pagination/filter with hx-push-url" --no-verify
 <blockquote>
 <p><strong>Important</strong>: This code is provided to help you focus on <strong>learning HCI concepts</strong>, not as a shortcut. You must understand the design decisions and document them in Part 3.</p>
 </blockquote>
+<blockquote>
+<p><strong>Week 8 Architecture</strong>: Week 8 uses <code>TaskStore</code> (class) with String UUID IDs instead of Week 7’s <code>TaskRepository</code> (object) with Int IDs. Create the TaskStore first, then add pagination.</p>
+</blockquote>
+<details>
+<summary>Click to reveal: <code>src/main/kotlin/storage/TaskStore.kt</code> (new file)</summary>
+<pre><code class="language-kotlin">package storage
+
+import model.Task
+import java.io.File
+
+/**
+ * Simple in-memory task storage with CSV persistence.
+ * Week 8 uses String UUID IDs.
+ */
+class TaskStore(private val csvFile: File = File("data/tasks.csv")) {
+    private val tasks = mutableListOf&lt;Task&gt;()
+
+    init {
+        if (csvFile.exists()) {
+            // Load tasks from CSV (implement if needed)
+        }
+    }
+
+    fun getAll(): List&lt;Task&gt; = tasks.toList()
+
+    fun getById(id: String): Task? = tasks.find { it.id == id }
+
+    fun add(task: Task) {
+        tasks.add(task)
+    }
+
+    fun update(task: Task): Boolean {
+        val index = tasks.indexOfFirst { it.id == task.id }
+        return if (index != -1) {
+            tasks[index] = task
+            true
+        } else false
+    }
+
+    fun delete(id: String): Boolean = tasks.removeIf { it.id == id }
+}
+</code></pre>
+</details>
 <details>
 <summary>Click to reveal: <code>src/main/kotlin/data/Page.kt</code> (new file)</summary>
 <pre><code class="language-kotlin">package data
@@ -5694,15 +5881,15 @@ data class Page&lt;T&gt;(
 </code></pre>
 </details>
 <details>
-<parameter name="summary">Click to reveal: Add to <code>TaskRepository</code> object</summary>
+<parameter name="summary">Click to reveal: Add to <code>TaskStore</code> class</summary>
 <pre><code class="language-kotlin">/**
  * Search tasks by title and return paginated results.
  */
 fun search(query: String, page: Int, pageSize: Int = 10): Page&lt;Task&gt; {
     val filtered = if (query.isBlank()) {
-        all()
+        getAll()
     } else {
-        all().filter { task -&gt;
+        getAll().filter { task -&gt;
             task.title.contains(query, ignoreCase = true)
         }
     }
@@ -5721,6 +5908,7 @@ fun search(query: String, page: Int, pageSize: Int = 10): Page&lt;Task&gt; {
     )
 }
 </code></pre>
+<p><strong>Note</strong>: Add this method to your <code>TaskStore</code> class (not <code>TaskRepository</code>). Week 8 uses TaskStore with String UUID IDs.</p>
 </details>
 <details>
 <summary>Click to reveal: Add to <code>TaskRoutes.kt</code></summary>
@@ -5728,7 +5916,7 @@ fun search(query: String, page: Int, pageSize: Int = 10): Page&lt;Task&gt; {
 get("/tasks/fragment") {
     val q = call.request.queryParameters["q"]?.trim().orEmpty()
     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-    val pageData = TaskRepository.search(q, page, 10)
+    val pageData = store.search(q, page, 10)
 
     val list = call.renderTemplate("tasks/_list.peb", mapOf("page" to pageData, "q" to q))
     val pager = call.renderTemplate("tasks/_pager.peb", mapOf("page" to pageData, "q" to q))
@@ -5741,7 +5929,7 @@ get("/tasks/fragment") {
 get("/tasks") {
     val q = call.request.queryParameters["q"]?.trim().orEmpty()
     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-    val pageData = TaskRepository.search(q, page, 10)
+    val pageData = store.search(q, page, 10)
 
     val html = call.renderTemplate("tasks/index.peb", mapOf(
         "page" to pageData,
@@ -5970,6 +6158,49 @@ git commit -m "wk8s1: pagination + filtering with dual-mode support"
 <li>Review Week 7 Lab 1 inline edit implementation</li>
 </ul>
 <hr />
+<h2 id="prerequisite-week-8-architecture-string-uuids--taskstore"><a class="header" href="#prerequisite-week-8-architecture-string-uuids--taskstore">Prerequisite: Week 8 Architecture (String UUIDs + TaskStore)</a></h2>
+<p>Week 8 Lab 2 builds on the <strong>Week 8 architecture</strong> introduced in Lab 1. If you completed Lab 1, you should already have:</p>
+<ul>
+<li>✅ <code>model/Task.kt</code> with String UUID IDs</li>
+<li>✅ <code>storage/TaskStore.kt</code> with <code>getById()</code>, <code>add()</code>, <code>update()</code>, <code>delete()</code> methods</li>
+<li>✅ Routes updated to use <code>store.*</code> instead of <code>TaskRepository.*</code></li>
+</ul>
+<p><strong>If you haven’t migrated yet</strong>, complete the architecture transition from Lab 1 first, or see the <a href="wk08/wk8-lab2-student-guide.html">Lab 2 Student Guide</a> for complete TaskStore implementation.</p>
+<h3 id="quick-architecture-reference"><a class="header" href="#quick-architecture-reference">Quick Architecture Reference</a></h3>
+<p><strong>Task Model</strong> (<code>model/Task.kt</code>):</p>
+<pre><code class="language-kotlin">data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val completed: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now()
+)
+</code></pre>
+<p><strong>Key Validation</strong> (Lab 2 adds this to Task companion object):</p>
+<pre><code class="language-kotlin">companion object {
+    const val MIN_TITLE_LENGTH = 3
+    const val MAX_TITLE_LENGTH = 100
+
+    fun validate(title: String): ValidationResult = when {
+        title.isBlank() -&gt; ValidationResult.Error("Title is required.")
+        title.length &lt; MIN_TITLE_LENGTH -&gt; ValidationResult.Error("Title must be at least $MIN_TITLE_LENGTH characters.")
+        title.length &gt; MAX_TITLE_LENGTH -&gt; ValidationResult.Error("Title must be less than $MAX_TITLE_LENGTH characters.")
+        else -&gt; ValidationResult.Success
+    }
+}
+
+sealed class ValidationResult {
+    data object Success : ValidationResult()
+    data class Error(val message: String) : ValidationResult()
+}
+</code></pre>
+<p><strong>Route Pattern Changes from Week 7</strong>:</p>
+<ul>
+<li>❌ <code>call.parameters["id"]?.toIntOrNull()</code> → ✅ <code>call.parameters["id"]</code></li>
+<li>❌ <code>TaskRepository.find(id)</code> → ✅ <code>store.getById(id)</code></li>
+<li>❌ <code>TaskRepository.add(title)</code> → ✅ <code>val task = Task(title = title); store.add(task)</code></li>
+<li>❌ <code>task.title = newTitle</code> (mutable) → ✅ <code>task.copy(title = newTitle)</code> (immutable)</li>
+</ul>
+<hr />
 <h2 id="introduction-from-prototype-to-production-ready"><a class="header" href="#introduction-from-prototype-to-production-ready">Introduction: From Prototype to Production-Ready</a></h2>
 <p>In Week 8 Lab 1 you added pagination and filtering. The basic functionality works: people can browse, filter, and page through tasks.</p>
 <p><strong>Today’s reality check</strong>: What happens when:</p>
@@ -6148,7 +6379,8 @@ if (title.isBlank()) {
 <p><strong>Current code</strong> (Week 8 Lab 1):</p>
 <pre><code class="language-kotlin">post("/tasks") {
     val title = call.receiveParameters()["title"].orEmpty().trim()
-    val task = repo.add(title)
+    val task = Task(title = title)
+    store.add(task)
     if (call.isHtmx()) {
         val item = PebbleRender.render("tasks/_item.peb", mapOf("t" to task))
         val status = """&lt;div id="status" hx-swap-oob="true"&gt;Added "${task.title}".&lt;/div&gt;"""
@@ -6183,7 +6415,8 @@ if (title.isBlank()) {
     }
 
     // Success path
-    val task = repo.add(title)
+    val task = Task(title = title)
+    store.add(task)
     if (call.isHtmx()) {
         val item = PebbleRender.render("tasks/_item.peb", mapOf("t" to task))
         val status = """&lt;div id="status" hx-swap-oob="true"&gt;Added "${task.title}".&lt;/div&gt;"""
@@ -6229,7 +6462,7 @@ if (title.isBlank()) {
     val msg = call.request.queryParameters["msg"]
     val q = call.request.queryParameters["q"].orEmpty()
     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-    val data = repo.search(q, page)
+    val data = store.search(q, page)
 
     val model = mapOf(
         "title" to "Tasks",
@@ -6346,9 +6579,9 @@ Success path still works for both</li>
 <p><strong>Update routes</strong> (<code>src/main/kotlin/routes/Tasks.kt</code>):</p>
 <pre><code class="language-kotlin">// HTMX path (HTTP DELETE)
 delete("/tasks/{id}") {
-    val id = call.parameters["id"]?.toIntOrNull() ?: return@delete call.respond(HttpStatusCode.BadRequest)
-    val task = repo.get(id)
-    repo.delete(id)
+    val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+    store.delete(id)
 
     val status = """&lt;div id="status" hx-swap-oob="true"&gt;Deleted "${task?.title ?: "task"}".&lt;/div&gt;"""
     // Return empty string (outerHTML swap removes the &lt;li&gt;)
@@ -6357,8 +6590,8 @@ delete("/tasks/{id}") {
 
 // No-JS path (POST fallback)
 post("/tasks/{id}/delete") {
-    val id = call.parameters["id"]?.toIntOrNull() ?: return@post call.respond(HttpStatusCode.BadRequest)
-    repo.delete(id)
+    val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+    store.delete(id)
     call.respondRedirect("/tasks")
 }
 </code></pre>
@@ -6993,6 +7226,47 @@ sealed class ValidationResult {
 </code></pre>
 </details>
 <details>
+<summary>Click to reveal: TaskStore for Week 8 (<code>src/main/kotlin/storage/TaskStore.kt</code>)</summary>
+<pre><code class="language-kotlin">package storage
+
+import model.Task
+import java.io.File
+
+/**
+ * Task storage with String UUID IDs.
+ * Week 8 architecture - replaces Week 7's TaskRepository with Int IDs.
+ */
+class TaskStore(private val csvFile: File = File("data/tasks.csv")) {
+    private val tasks = mutableListOf&lt;Task&gt;()
+
+    fun getAll(): List&lt;Task&gt; = tasks.toList()
+    fun getById(id: String): Task? = tasks.find { it.id == id }
+    fun add(task: Task) { tasks.add(task) }
+    fun update(task: Task): Boolean {
+        val index = tasks.indexOfFirst { it.id == task.id }
+        return if (index != -1) { tasks[index] = task; true } else false
+    }
+    fun delete(id: String): Boolean = tasks.removeIf { it.id == id }
+
+    fun search(query: String, page: Int, pageSize: Int = 10): Page&lt;Task&gt; {
+        val filtered = if (query.isBlank()) getAll()
+                      else getAll().filter { it.title.contains(query, ignoreCase = true) }
+        val totalItems = filtered.size
+        val totalPages = if (totalItems == 0) 1 else (totalItems + pageSize - 1) / pageSize
+        val validPage = page.coerceIn(1, totalPages)
+        val startIndex = (validPage - 1) * pageSize
+        return Page(
+            items = filtered.drop(startIndex).take(pageSize),
+            page = validPage,
+            pages = totalPages,
+            total = totalItems
+        )
+    }
+}
+</code></pre>
+<p><strong>Note</strong>: Also need <code>data class Page&lt;T&gt;(val items: List&lt;T&gt;, val page: Int, val pages: Int, val total: Int)</code> in <code>data/Page.kt</code></p>
+</details>
+<details>
 <summary>Click to reveal: Create task with validation (<code>TaskRoutes.kt</code>)</summary>
 <pre><code class="language-kotlin">post("/tasks") {
     val params = receiveParameters()
@@ -7080,13 +7354,20 @@ sealed class ValidationResult {
 </code></pre>
 </details>
 <details>
-<summary>Click to reveal: Delete with dual-path support (<code>templates/tasks/_item.peb</code>)</summary>
+<summary>Click to reveal: Task item with Edit and Delete (<code>templates/tasks/_item.peb</code>)</summary>
 <pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
   &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
 
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
   {# Delete form with dual attributes #}
   &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
-        hx-post="/tasks/{{ task.id }}/delete"
+        hx-delete="/tasks/{{ task.id }}"
         hx-target="#task-{{ task.id }}"
         hx-swap="outerHTML"
         hx-confirm="Delete the task '{{ task.title }}'?"&gt;
@@ -7094,19 +7375,132 @@ sealed class ValidationResult {
   &lt;/form&gt;
 &lt;/li&gt;
 </code></pre>
-<p><strong>Route handler</strong>:</p>
-<pre><code class="language-kotlin">post("/tasks/{id}/delete") {
-    val id = parameters["id"] ?: return@post respond(HttpStatusCode.BadRequest)
+<p><strong>Route handlers (dual-path)</strong>:</p>
+<pre><code class="language-kotlin">// HTMX path (HTTP DELETE)
+delete("/tasks/{id}") {
+    val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+    store.delete(id)
+    val status = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Deleted "${task?.title ?: "task"}".&lt;/div&gt;"""
+    call.respondText(status, ContentType.Text.Html)
+}
+
+// No-JS fallback (POST)
+post("/tasks/{id}/delete") {
+    val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
     val task = store.getById(id)
     store.delete(id)
 
     if (isHtmxRequest()) {
         val statusHtml = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task "${task?.title ?: "Unknown"}" deleted.&lt;/div&gt;"""
-        respondText(statusHtml, ContentType.Text.Html)
+        call.respondText(statusHtml, ContentType.Text.Html)
     } else {
+        call.respondRedirect("/tasks")
+    }
+}
+</code></pre>
+</details>
+<details>
+<summary>Click to reveal: Edit with validation and dual-path (<code>TaskRoutes.kt</code>)</summary>
+<p><strong>Update your Week 7 edit routes for Week 8 architecture:</strong></p>
+<pre><code class="language-kotlin">// GET /tasks/{id}/edit - Show edit form
+get("/tasks/{id}/edit") {
+    val id = parameters["id"] ?: return@get respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return@get
+    }
+
+    if (isHtmxRequest()) {
+        // HTMX: return inline edit fragment
+        val html = renderTemplate("tasks/_edit.peb", mapOf("task" to task.toPebbleContext()))
+        respondText(html, ContentType.Text.Html)
+    } else {
+        // No-JS: redirect to list (edit not supported without JS)
         respondRedirect("/tasks")
     }
 }
+
+// POST /tasks/{id}/edit - Save edits with validation
+post("/tasks/{id}/edit") {
+    val id = parameters["id"] ?: return@post respond(HttpStatusCode.BadRequest)
+    val task = store.getById(id)
+
+    if (task == null) {
+        respond(HttpStatusCode.NotFound)
+        return@post
+    }
+
+    val newTitle = receiveParameters()["title"]?.trim() ?: ""
+    val validation = Task.validate(newTitle)
+
+    if (validation is ValidationResult.Error) {
+        if (isHtmxRequest()) {
+            // HTMX: return edit form with error
+            val html = renderTemplate("tasks/_edit.peb", mapOf(
+                "task" to task.toPebbleContext(),
+                "error" to validation.message
+            ))
+            respondText(html, ContentType.Text.Html)
+        } else {
+            // No-JS: redirect back
+            respondRedirect("/tasks")
+        }
+        return@post
+    }
+
+    // Update task
+    val updated = task.copy(title = newTitle)
+    store.update(updated)
+
+    if (isHtmxRequest()) {
+        // HTMX: return view fragment
+        val html = renderTemplate("tasks/_item.peb", mapOf("task" to updated.toPebbleContext()))
+        val status = """&lt;div id="status" hx-swap-oob="true" role="status"&gt;Task updated successfully.&lt;/div&gt;"""
+        respondText(html + status, ContentType.Text.Html)
+    } else {
+        // No-JS: redirect to list
+        respondRedirect("/tasks")
+    }
+}
+</code></pre>
+<p><strong>Key changes from Week 7:</strong></p>
+<ul>
+<li>String IDs (no <code>toIntOrNull()</code>)</li>
+<li><code>store.getById()</code> instead of <code>TaskRepository.get()</code></li>
+<li><code>Task.validate()</code> for validation (same as add task)</li>
+<li><code>task.copy()</code> for immutable updates</li>
+</ul>
+<p><strong>Edit template</strong> (<code>templates/tasks/_edit.peb</code>):</p>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-edit"&gt;
+  &lt;form action="/tasks/{{ task.id }}/edit" method="post"
+        hx-post="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+
+    &lt;label for="title-{{ task.id }}"&gt;Title&lt;/label&gt;
+    &lt;input type="text"
+           id="title-{{ task.id }}"
+           name="title"
+           value="{{ task.title }}"
+           required
+           autofocus
+           {% if error %}aria-invalid="true" aria-describedby="error-{{ task.id }}"{% endif %}&gt;
+
+    {% if error %}
+    &lt;p id="error-{{ task.id }}" class="error-message" role="alert"&gt;{{ error }}&lt;/p&gt;
+    {% endif %}
+
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+    &lt;a href="/tasks"
+       hx-get="/tasks/{{ task.id }}/view"
+       hx-target="#task-{{ task.id }}"
+       hx-swap="outerHTML"
+       role="button"&gt;Cancel&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
 </code></pre>
 </details>
 <hr />

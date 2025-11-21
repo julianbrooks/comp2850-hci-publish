@@ -205,6 +205,124 @@
 </ul>
 <p>Keep the <a href="../references/pebble-cheatsheet.html">Pebble Cheatsheet</a> and <a href="../references/htmx-patterns.html">HTMX Patterns</a> open for reference.</p>
 <hr />
+<h2 id="before-you-start-week-8-architecture-migration"><a class="header" href="#before-you-start-week-8-architecture-migration">Before You Start: Week 8 Architecture Migration</a></h2>
+<h3 id="overview-week-7--week-8-transition"><a class="header" href="#overview-week-7--week-8-transition">Overview: Week 7 → Week 8 Transition</a></h3>
+<p>Week 8 introduces a <strong>production-ready architecture</strong> with String UUID IDs and improved data storage. You will migrate from Week 7’s simple <code>TaskRepository</code> object to Week 8’s <code>TaskStore</code> class.</p>
+<p><strong>Why this change?</strong></p>
+<ul>
+<li><strong>Scalability</strong>: String UUIDs avoid ID conflicts in distributed systems</li>
+<li><strong>Security</strong>: Sequential Int IDs leak information (total tasks, creation order)</li>
+<li><strong>Production patterns</strong>: UUIDs are standard in REST APIs, databases, and microservices</li>
+<li><strong>Data richness</strong>: Week 8 Task model adds <code>completed</code>, <code>createdAt</code> for evaluation metrics (Week 9)</li>
+</ul>
+<h3 id="architecture-comparison"><a class="header" href="#architecture-comparison">Architecture Comparison</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th><strong>Week 7</strong> (Simple)</th><th><strong>Week 8</strong> (Production-Ready)</th></tr></thead><tbody>
+<tr><td><strong>Task ID Type</strong></td><td><code>Int</code> (1, 2, 3…)</td><td><code>String</code> (UUID: <code>"a3f2c8..."</code>)</td></tr>
+<tr><td><strong>ID Parsing</strong></td><td><code>toIntOrNull()</code></td><td>Direct string (no parsing)</td></tr>
+<tr><td><strong>Data Model</strong></td><td><code>Task(id: Int, title: String)</code></td><td><code>Task(id: String, title: String, completed: Boolean, createdAt: LocalDateTime)</code></td></tr>
+<tr><td><strong>Storage</strong></td><td><code>TaskRepository</code> object (singleton)</td><td><code>TaskStore</code> class (instantiable, testable)</td></tr>
+<tr><td><strong>Location</strong></td><td><code>data/TaskRepository.kt</code></td><td><code>model/Task.kt</code> + <code>storage/TaskStore.kt</code></td></tr>
+<tr><td><strong>Add Method</strong></td><td><code>repo.add(title: String): Task</code></td><td><code>store.add(task: Task)</code></td></tr>
+<tr><td><strong>Get Method</strong></td><td><code>repo.find(id: Int): Task?</code></td><td><code>store.getById(id: String): Task?</code></td></tr>
+<tr><td><strong>Validation</strong></td><td>None (basic title check)</td><td><code>Task.validate(title)</code> with detailed errors</td></tr>
+</tbody></table>
+</div>
+<h3 id="migration-steps-complete-before-activity-1"><a class="header" href="#migration-steps-complete-before-activity-1">Migration Steps (Complete Before Activity 1)</a></h3>
+<p><strong>1. Create the Task model</strong> (<code>src/main/kotlin/model/Task.kt</code>):</p>
+<pre><code class="language-kotlin">package model
+
+import java.time.LocalDateTime
+import java.util.UUID
+
+data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val completed: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now()
+)
+</code></pre>
+<p><strong>2. Create the TaskStore</strong> (<code>src/main/kotlin/storage/TaskStore.kt</code>):</p>
+<pre><code class="language-kotlin">package storage
+
+import model.Task
+
+class TaskStore {
+    private val tasks = mutableListOf&lt;Task&gt;()
+
+    fun getAll(): List&lt;Task&gt; = tasks.toList()
+    fun getById(id: String): Task? = tasks.find { it.id == id }
+    fun add(task: Task) { tasks.add(task) }
+    fun update(task: Task): Boolean {
+        val index = tasks.indexOfFirst { it.id == task.id }
+        return if (index != -1) { tasks[index] = task; true } else false
+    }
+    fun delete(id: String): Boolean = tasks.removeIf { it.id == id }
+}
+</code></pre>
+<p><strong>3. Update your routes</strong> (<code>src/main/kotlin/routes/TaskRoutes.kt</code>):</p>
+<p><strong>Before (Week 7):</strong></p>
+<pre><code class="language-kotlin">fun Routing.configureTaskRoutes() {
+    post("/tasks") {
+        val title = call.receiveParameters()["title"] ?: ""
+        val task = TaskRepository.add(title)  // Int ID
+        // ...
+    }
+
+    delete("/tasks/{id}") {
+        val id = call.parameters["id"]?.toIntOrNull() ?: return@delete
+        TaskRepository.delete(id)
+    }
+}
+</code></pre>
+<p><strong>After (Week 8):</strong></p>
+<pre><code class="language-kotlin">fun Routing.configureTaskRoutes(store: TaskStore = TaskStore()) {
+    post("/tasks") {
+        val title = call.receiveParameters()["title"] ?: ""
+        val task = Task(title = title)  // UUID auto-generated
+        store.add(task)
+        // ...
+    }
+
+    delete("/tasks/{id}") {
+        val id = call.parameters["id"] ?: return@delete  // No toIntOrNull
+        store.delete(id)
+    }
+}
+</code></pre>
+<p><strong>4. Key changes in templates</strong>:</p>
+<ul>
+<li>Task IDs are now strings: <code>task-{{ task.id }}</code> (works the same in Pebble)</li>
+<li>No visual changes needed—UUIDs display in URLs, but users don’t see them</li>
+</ul>
+<p><strong>5. Test your migration</strong>:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Server starts without errors</li>
+<li><input disabled="" type="checkbox"/>
+Can add tasks (UUID IDs auto-generated)</li>
+<li><input disabled="" type="checkbox"/>
+Can edit tasks (String ID routing works)</li>
+<li><input disabled="" type="checkbox"/>
+Can delete tasks (no <code>toIntOrNull</code> errors)</li>
+<li><input disabled="" type="checkbox"/>
+Templates render correctly with UUID IDs</li>
+</ul>
+<h3 id="what-to-keep-from-week-7"><a class="header" href="#what-to-keep-from-week-7">What to Keep from Week 7</a></h3>
+<p><strong>✅ Keep your Week 7 templates</strong> (they work with String IDs):</p>
+<ul>
+<li>Form actions: <code>/tasks/{{ task.id }}/edit</code> works with both Int and String</li>
+<li>HTMX attributes: <code>hx-delete="/tasks/{{ task.id }}"</code> works the same</li>
+</ul>
+<p><strong>✅ Keep your accessibility features</strong>:</p>
+<ul>
+<li>ARIA labels, live regions, focus management all transfer directly</li>
+</ul>
+<p><strong>⚠️ Update route parameter handling</strong>:</p>
+<ul>
+<li>Remove all <code>toIntOrNull()</code> for task IDs (keep for page numbers!)</li>
+<li>Change <code>TaskRepository.*</code> → <code>store.*</code></li>
+</ul>
+<hr />
 <h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
 <h3 id="lab-objectives"><a class="header" href="#lab-objectives">Lab Objectives</a></h3>
 <p>By the end of this session, you will have:</p>
@@ -320,6 +438,32 @@
 <li>Stable id <code>task-{{ t.id }}</code>.</li>
 <li>The title and the Edit/Delete forms from Week 7 (keep ARIA labels and dual attributes).</li>
 <li>No inline business logic—just markup and data from the model.</li>
+</ul>
+<p><strong>Example</strong> (<code>templates/tasks/_item.peb</code>):</p>
+<pre><code class="language-pebble">&lt;li id="task-{{ task.id }}" class="task-view"&gt;
+  &lt;span class="task-title"&gt;{{ task.title }}&lt;/span&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/edit" method="get" style="display: inline;"
+        hx-get="/tasks/{{ task.id }}/edit"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"&gt;
+    &lt;button type="submit" aria-label="Edit task: {{ task.title }}"&gt;Edit&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;form action="/tasks/{{ task.id }}/delete" method="post" style="display: inline;"
+        hx-delete="/tasks/{{ task.id }}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML"
+        hx-confirm="Delete the task '{{ task.title }}'?"&gt;
+    &lt;button type="submit" aria-label="Delete task: {{ task.title }}"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/li&gt;
+</code></pre>
+<p><strong>Key patterns</strong>:</p>
+<ul>
+<li>Dual attributes: <code>action</code> (no-JS) + <code>hx-get</code>/<code>hx-delete</code> (HTMX)</li>
+<li>Accessible labels: <code>aria-label</code> provides context for screen readers</li>
+<li>Delete confirmation: <code>hx-confirm</code> prompts before deletion (HTMX only)</li>
 </ul>
 <h3 id="13-task-list-partial"><a class="header" href="#13-task-list-partial">1.3 Task list partial</a></h3>
 <p>Create <code>templates/tasks/_list.peb</code> containing:</p>
