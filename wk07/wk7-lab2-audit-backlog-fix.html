@@ -219,13 +219,13 @@
 <p><strong>Professionally</strong>, accessibility audits are standard practice:</p>
 <ul>
 <li><strong>GOV.UK</strong> mandates WCAG 2.2 AA compliance before launch</li>
-<li><strong>BBC</strong> runs quarterly audits with assistive tech users</li>
+<li><strong>BBC</strong> runs quarterly audits with people using assistive technologies</li>
 <li><strong>Microsoft</strong> uses automated (axe) + manual (SR) testing in CI/CD pipeline</li>
 </ul>
 <p><strong>Academically</strong>, this lab teaches:</p>
 <ul>
 <li><strong>Systematic evaluation</strong>: Structured checklists reduce bias (vs. ad-hoc testing)</li>
-<li><strong>Triangulation</strong>: Automated tools + manual testing + user feedback</li>
+<li><strong>Triangulation</strong>: Automated tools + manual testing + feedback from people</li>
 <li><strong>Evidence-based prioritisation</strong>: Data (backlog scores) beats intuition</li>
 </ul>
 <h2 id="learning-focus"><a class="header" href="#learning-focus">Learning Focus</a></h2>
@@ -261,13 +261,16 @@
 <li>Time-consuming, requires expertise</li>
 <li><strong>Essential for</strong>: Focus management, ARIA announcements, keyboard traps</li>
 </ul>
-<p><strong>Level 3: User testing</strong> (people with disabilities)</p>
+<p><strong>Level 3: Testing with people</strong> (including disabled people)</p>
 <ul>
 <li>Catches 90%+ of issues</li>
 <li>Gold standard, but expensive and slow</li>
-<li><strong>Week 9</strong>: You’ll run task-based pilots (mini user tests)</li>
+<li><strong>Week 9</strong>: You’ll run task-based pilots (mini evaluations with people)</li>
 </ul>
 <p><strong>COMP2850 approach</strong>: Levels 1 + 2 in Labs 7-8; Level 3 in Week 9.</p>
+<blockquote>
+<p><strong>⚠️ Critical</strong>: Automated tools alone miss 70-80% of accessibility issues. You MUST complete both automated (axe) AND manual (keyboard + screen reader) testing to discover all intentional errors in this lab. Students who skip manual testing will fail to identify critical ARIA issues that affect people using screen readers.</p>
+</blockquote>
 <h3 id="2-wcag-22-conformance-levels"><a class="header" href="#2-wcag-22-conformance-levels">2. WCAG 2.2 Conformance Levels</a></h3>
 <p><strong>Level A</strong> (minimum, legal requirement in many jurisdictions):</p>
 <ul>
@@ -305,10 +308,10 @@
 <p><strong>Tags</strong> identify who’s affected:</p>
 <ul>
 <li><strong>SR</strong> (Screen reader): NVDA, JAWS, VoiceOver, TalkBack</li>
-<li><strong>Keyboard</strong>: Keyboard-only users, motor impairments, RSI</li>
+<li><strong>Keyboard</strong>: People using keyboards only, motor impairments, RSI</li>
 <li><strong>Cognitive</strong>: ADHD, dyslexia, memory impairments</li>
-<li><strong>Low vision</strong>: Magnification users, high contrast needs</li>
-<li><strong>Motor</strong>: Tremor, limited dexterity, switch users</li>
+<li><strong>Low vision</strong>: People using magnification, high contrast needs</li>
+<li><strong>Motor</strong>: Tremor, limited dexterity, people using switches</li>
 <li><strong>Hearing</strong>: Caption/transcript needs (not applicable to this project yet)</li>
 <li><strong>Situational</strong>: Bright light, broken mouse, noisy environment</li>
 </ul>
@@ -321,8 +324,8 @@
 <li><strong>Consistency and standards</strong>: Follow ARIA patterns, GOV.UK conventions</li>
 <li><strong>Error prevention</strong>: Validation before submission</li>
 <li><strong>Recognition rather than recall</strong>: Labels visible (not just placeholders)</li>
-<li><strong>Flexibility and efficiency of use</strong>: Keyboard shortcuts for power users</li>
-<li><strong>Aesthetic and minimalist design</strong>: No clutter (easier for SR/cognitive users)</li>
+<li><strong>Flexibility and efficiency of use</strong>: Keyboard shortcuts for experienced people</li>
+<li><strong>Aesthetic and minimalist design</strong>: No clutter (easier for people using SR/people with cognitive disabilities)</li>
 <li><strong>Help people recognise, diagnose, and recover from errors</strong>: Specific error messages</li>
 <li><strong>Help and documentation</strong>: Context-sensitive help text</li>
 </ol>
@@ -673,7 +676,7 @@ None detected.
 - ✅ Keyboard shortcuts work (Enter submits, Escape cancels in some browsers)
 - ❌ No custom shortcuts (e.g., Ctrl+E to edit first task)
 
-**Accessibility implication**: Power keyboard users could benefit from shortcuts.
+**Accessibility implication**: Experienced people using keyboards could benefit from shortcuts.
 
 **Issue identified**: **Low severity** — Add keyboard shortcuts (defer to Semester 2).
 
@@ -711,7 +714,7 @@ None detected.
 - ❌ No help text beyond inline hints
 - ❌ No "What is this?" links for fields
 
-**Accessibility implication**: Cognitive users, first-time users may struggle without documentation.
+**Accessibility implication**: People with cognitive disabilities, people using the interface for the first time may struggle without documentation.
 
 **Issue identified**: **Low severity** — Add help tooltips or links to docs (defer to Semester 2).
 
@@ -723,7 +726,7 @@ None detected.
 |-----------|-------|----------|----------------|
 | 3 (Control &amp; Freedom) | No undo for delete | Medium | Motor, Cognitive |
 | 5 (Error Prevention) | Delete lacks confirmation | Medium | Motor, Cognitive |
-| 7 (Flexibility) | No keyboard shortcuts | Low | Keyboard (power users) |
+| 7 (Flexibility) | No keyboard shortcuts | Low | Keyboard (experienced people) |
 | 10 (Help) | No help documentation | Low | Cognitive, Low digital literacy |
 
 ---
@@ -1045,7 +1048,7 @@ which one you fixed first? Would your decision differ if time wasn’t limited?<
 <tr><td><strong>Automated testing</strong></td><td>Tools that scan code for issues (20-30% coverage)</td><td>axe DevTools, WAVE, Lighthouse</td></tr>
 <tr><td><strong>Manual testing</strong></td><td>Human evaluation (keyboard, SR, heuristics)</td><td>Tab through page, listen with NVDA</td></tr>
 <tr><td><strong>Severity</strong></td><td>Impact on task completion (High/Medium/Low)</td><td>High = blocks; Medium = hinders; Low = cosmetic</td></tr>
-<tr><td><strong>Inclusion risk</strong></td><td>Who’s affected (SR, Keyboard, Cognitive, etc.)</td><td>“Affects SR + Keyboard users”</td></tr>
+<tr><td><strong>Inclusion risk</strong></td><td>Who’s affected (SR, Keyboard, Cognitive, etc.)</td><td>“Affects people using SR + keyboards”</td></tr>
 <tr><td><strong>Heuristic evaluation</strong></td><td>Expert review using usability principles</td><td>Nielsen’s 10 Heuristics, Shneiderman’s Golden Rules</td></tr>
 <tr><td><strong>Contrast ratio</strong></td><td>Luminance difference (text vs. background)</td><td>4.5:1 (AA), 7:1 (AAA)</td></tr>
 <tr><td><strong>Regression testing</strong></td><td>Verifying fixes don’t break existing features</td><td>After contrast fix, confirm buttons still work</td></tr>

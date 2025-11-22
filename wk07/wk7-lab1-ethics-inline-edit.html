@@ -216,7 +216,7 @@
 <li><strong>Notion</strong> (knowledge base): click any block to edit</li>
 <li><strong>GitHub</strong> (issue tracking): click issue title to edit</li>
 </ul>
-<p>All these examples face the same accessibility challenge: how do you swap view mode ↔ edit mode without losing context for screen reader users?</p>
+<p>All these examples face the same accessibility challenge: how do you swap view mode ↔ edit mode without losing context for people using screen readers?</p>
 <p><strong>Academically</strong>, this lab demonstrates:</p>
 <ul>
 <li><strong>Dual-path architecture</strong>: Same feature, different implementation (HTMX vs. no-JS)</li>
@@ -329,7 +329,7 @@ Save: Swaps edit → view template (updated title)
 &lt;!-- Server response (HTMX OOB) --&gt;
 &lt;div id="status" hx-swap-oob="true"&gt;Task "Buy milk" updated successfully.&lt;/div&gt;
 </code></pre>
-<p><strong>Why this matters</strong>: Screen reader users need confirmation that save succeeded, but moving focus to a status message disrupts workflow. Live regions solve this by announcing without focus change.</p>
+<p><strong>Why this matters</strong>: People using screen readers need confirmation that save succeeded, but moving focus to a status message disrupts workflow. Live regions solve this by announcing without focus change.</p>
 <hr />
 <h2 id="activity-1-ethics-refresher--data-boundaries"><a class="header" href="#activity-1-ethics-refresher--data-boundaries">Activity 1: Ethics Refresher &amp; Data Boundaries</a></h2>
 <p><strong>Time</strong>: 20 minutes
@@ -517,7 +517,7 @@ This **separation of concerns** makes it easier to:
 </code></pre>
 <p><strong>Accessibility features</strong>:</p>
 <ul>
-<li><code>autofocus</code>: Input receives focus when form appears (keyboard users can start typing immediately)</li>
+<li><code>autofocus</code>: Input receives focus when form appears (people using keyboards can start typing immediately)</li>
 <li><code>aria-describedby</code>: Links input to hint and error (screen reader announces both)</li>
 <li><code>role="alert" aria-live="assertive"</code>: Error interrupts screen reader to announce immediately</li>
 <li>Error element always exists (even when hidden) so <code>aria-describedby</code> always points to valid ID</li>
@@ -991,7 +991,7 @@ None. All tests passed.
 <p><strong>Error persistence</strong>: In the no-JS path, errors survive redirects via query parameters. Could you use session storage instead? What are the trade-offs?</p>
 </li>
 <li>
-<p><strong>Screen reader experience</strong>: Compare the HTMX path (instant swap) vs. no-JS path (page reload). Which is better for screen reader users? Why?</p>
+<p><strong>Screen reader experience</strong>: Compare the HTMX path (instant swap) vs. no-JS path (page reload). Which is better for people using screen readers? Why?</p>
 </li>
 </ol>
 <hr />
@@ -1019,7 +1019,7 @@ None. All tests passed.
 <tr><td><strong>aria-describedby</strong></td><td>Links input to descriptive text (hint/error)</td><td><code>&lt;input aria-describedby="hint-1 error-1"&gt;</code></td></tr>
 <tr><td><strong>role=“alert”</strong></td><td>Announces content immediately to screen readers</td><td><code>&lt;p role="alert"&gt;Error message&lt;/p&gt;</code></td></tr>
 <tr><td><strong>OOB swap</strong></td><td>HTMX updating element outside main target</td><td><code>&lt;div id="status" hx-swap-oob="true"&gt;</code></td></tr>
-<tr><td><strong>Autofocus</strong></td><td>Input receives focus when rendered</td><td><code>&lt;input autofocus&gt;</code> (use sparingly, can disorient SR users)</td></tr>
+<tr><td><strong>Autofocus</strong></td><td>Input receives focus when rendered</td><td><code>&lt;input autofocus&gt;</code> (use sparingly, can disorient people using SR)</td></tr>
 <tr><td><strong>Focus order</strong></td><td>Sequence of Tab navigation (WCAG 2.4.3)</td><td>Edit button → Title input → Save → Cancel</td></tr>
 <tr><td><strong>WCAG 3.3.1</strong></td><td>Error Identification (Level A)</td><td>Error must be identified + described + programmatically associated</td></tr>
 <tr><td><strong>WCAG 4.1.3</strong></td><td>Status Messages (Level AA)</td><td>Status announced without focus change (live regions)</td></tr>
