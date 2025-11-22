@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lab 2: Pilots, debrief, Task 1 draft pack - COMP2850 • Human-Computer Interaction</title>
+        <title>Lab 2: Pilots, debrief, assessment draft - COMP2850 • Human-Computer Interaction</title>
 
 
         <!-- Custom HTML head -->
@@ -179,7 +179,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="week-9--lab-2--peer-pilots-debrief-and-task-1-draft-pack"><a class="header" href="#week-9--lab-2--peer-pilots-debrief-and-task-1-draft-pack">Week 9 • Lab 2 — Peer Pilots, Debrief, and Task 1 Draft Pack</a></h1>
+                        <h1 id="week-9--lab-2--peer-pilots-debrief-and-assessment-draft-pack"><a class="header" href="#week-9--lab-2--peer-pilots-debrief-and-assessment-draft-pack">Week 9 • Lab 2 — Peer Pilots, Debrief, and Assessment Draft Pack</a></h1>
 <p><img src="https://img.shields.io/badge/COMP2850-HCI-blue" alt="COMP2850" />
 <img src="https://img.shields.io/badge/Week-9-orange" alt="Week 9" />
 <img src="https://img.shields.io/badge/Lab-2-green" alt="Lab 2" />
@@ -206,12 +206,12 @@
 <ul>
 <li><strong>Data collection</strong>: Objective metrics (time, errors, completion) + subjective (confidence, satisfaction)</li>
 <li><strong>Qualitative insights</strong>: Observe real struggles, accessibility barriers, unexpected behaviours</li>
-<li><strong>Evidence generation</strong>: Logs, notes, screenshots for Gradescope Task 1 and Week 11 portfolio</li>
+<li><strong>Evidence generation</strong>: Logs, notes, screenshots for assessment portfolio (due end Week 10)</li>
 </ul>
 <p><strong>Why this matters</strong>:</p>
 <ul>
 <li>Week 10 redesign <strong>depends on</strong> identifying real problems (not assumed ones)</li>
-<li>Task 1 grade depends on evidence quality (traceability from raw data → findings → mitigations)</li>
+<li>Assessment grade depends on evidence quality (traceability from raw data → findings → mitigations)</li>
 <li>Professional practice: Decisions backed by data, not opinions</li>
 </ul>
 <p><strong>Ethical imperative</strong>: Participants are peers, not research subjects. Treat them respectfully, honour consent, protect privacy.</p>
@@ -228,7 +228,7 @@ By the end of this session, you will have:</p>
 <li>Taken observer notes (quotes, errors, time-on-task)</li>
 <li>Debriefed with participants and synthesised findings</li>
 <li>Documented findings with evidence chains (raw data → issue → backlog item)</li>
-<li>Assembled draft Task 1 evidence pack</li>
+<li>Assembled draft assessment evidence pack</li>
 </ul>
 <h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
 <p>This lab contributes to the following module Learning Outcomes (<a href="../references/learning-outcomes.html">full definitions</a>):</p>
@@ -315,7 +315,7 @@ By the end of this session, you will have:</p>
 </ol>
 <p><strong>Why this matters</strong>:</p>
 <ul>
-<li><strong>Gradescope Task 1</strong>: Markers check evidence chains (no evidence = no marks)</li>
+<li><strong>Assessment</strong>: Markers check evidence chains (no evidence = no marks)</li>
 <li><strong>Professional practice</strong>: Design decisions require justification</li>
 <li><strong>Accreditation</strong>: External panels expect rigorous HCI process</li>
 </ul>
@@ -826,9 +826,9 @@ Priority set based on inclusion impact + frequency</li>
 2-3 items marked as candidate fixes for Week 10</li>
 </ul>
 <hr />
-<h2 id="activity-e-assemble-task-1-draft-pack-20-min"><a class="header" href="#activity-e-assemble-task-1-draft-pack-20-min">Activity E: Assemble Task 1 Draft Pack (20 min)</a></h2>
-<p><strong>Goal</strong>: Create a complete evidence pack for Gradescope Task 1 submission (will be refined in Week 11).</p>
-<p><strong>Directory structure</strong>: <code>wk09/lab-wk9/submission/task1-draft/</code></p>
+<h2 id="activity-e-assemble-assessment-draft-pack-20-min"><a class="header" href="#activity-e-assemble-assessment-draft-pack-20-min">Activity E: Assemble Assessment Draft Pack (20 min)</a></h2>
+<p><strong>Goal</strong>: Create a complete evidence pack for assessment submission (to be refined and submitted by end Week 10).</p>
+<p><strong>Directory structure</strong>: <code>wk09/assessment/</code></p>
 <h3 id="step-1-copy-evaluation-plan-materials-5-min"><a class="header" href="#step-1-copy-evaluation-plan-materials-5-min">Step 1: Copy evaluation plan materials (5 min)</a></h3>
 <p><strong>Files to include</strong>:</p>
 <ol>
@@ -862,10 +862,10 @@ Priority set based on inclusion impact + frequency</li>
 <h3 id="step-2-include-quantitative-data-5-min"><a class="header" href="#step-2-include-quantitative-data-5-min">Step 2: Include quantitative data (5 min)</a></h3>
 <p><strong>Create <code>04-results.csv</code></strong>:</p>
 <p>Option A: Copy relevant rows from <code>data/metrics.csv</code>:</p>
-<pre><code class="language-bash">grep -E "P1_|P2_|P3_|P4_|P5_" data/metrics.csv &gt; wk09/lab-wk9/submission/task1-draft/04-results.csv
+<pre><code class="language-bash">grep -E "P1_|P2_|P3_|P4_|P5_" data/metrics.csv &gt; wk09/assessment/04-results.csv
 </code></pre>
 <p>Option B: Symbolic link (keeps data in one place):</p>
-<pre><code class="language-bash">ln -s ../../../data/metrics.csv wk09/lab-wk9/submission/task1-draft/04-results.csv
+<pre><code class="language-bash">ln -s ../../../data/metrics.csv wk09/assessment/04-results.csv
 </code></pre>
 <p><strong>Include README.md</strong> explaining columns:</p>
 <pre><code class="language-markdown"># Results Data
@@ -896,7 +896,7 @@ Priority set based on inclusion impact + frequency</li>
 <p><strong>Create <code>05-findings.md</code></strong> summarizing key issues with evidence chains and WCAG references (see Week 9 Lab 1 for detailed example format).</p>
 <h3 id="step-4-collect-evidence-artefacts-5-min"><a class="header" href="#step-4-collect-evidence-artefacts-5-min">Step 4: Collect evidence artefacts (5 min)</a></h3>
 <p><strong>Create <code>06-evidence/</code> directory</strong>:</p>
-<pre><code>wk09/lab-wk9/submission/task1-draft/06-evidence/
+<pre><code>wk09/assessment/06-evidence/
 ├── screenshots/
 │   ├── t2-validation-error-nojs.png
 │   ├── t1-filter-results.png
@@ -911,7 +911,7 @@ Priority set based on inclusion impact + frequency</li>
 <p>✋ <strong>Stop and check</strong>:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Evaluation plan + protocol copied to task1-draft/</li>
+Evaluation plan + protocol copied to assessment/</li>
 <li><input disabled="" type="checkbox"/>
 Quantitative data (metrics.csv) included or linked</li>
 <li><input disabled="" type="checkbox"/>
@@ -924,17 +924,17 @@ All files sanitized (no PII)</li>
 <hr />
 <h2 id="commit--reflect-10-min"><a class="header" href="#commit--reflect-10-min">Commit &amp; Reflect (10 min)</a></h2>
 <h3 id="commit-message"><a class="header" href="#commit-message">Commit message</a></h3>
-<pre><code class="language-bash">git add data/metrics.csv backlog/backlog.csv wk09/lab-wk9/research wk09/lab-wk9/submission
+<pre><code class="language-bash">git add data/metrics.csv backlog/backlog.csv wk09/research wk09/assessment
 
 git commit -m "$(cat &lt;&lt;'EOF'
-wk9s2: completed peer pilots (n=5), assembled Task 1 draft pack
+wk9s2: completed peer pilots (n=5), assembled assessment draft pack
 
 - Conducted 5 peer pilots: 3 standard (HTMX), 1 keyboard-only, 1 no-JS
 - Collected quantitative data: completion rates (80-100%), median times (2s–19s), error rates (20-33% for T2/T3)
 - Captured qualitative observations: validation error accessibility issues, status feedback insufficient, filter UX expectations
 - Verified no-JS parity: functional but 6× slower (expected)
 - Created evidence chains: raw data → findings → backlog items (wk9-01 to wk9-05)
-- Assembled Task 1 draft pack: plan, protocol, results.csv, findings.md, evidence artefacts
+- Assembled assessment draft pack: plan, protocol, results.csv, findings.md, evidence artefacts
 - Identified Priority 1 fixes for Week 10: validation error accessibility (role=alert, aria-describedby, focusable summary)
 
 Key findings:
@@ -965,7 +965,7 @@ EOF
 <p><strong>Qualitative insights</strong>: What did observation reveal that logs couldn’t capture? How valuable was think-aloud (if used)?</p>
 </li>
 <li>
-<p><strong>Accessibility impact</strong>: Which findings have highest inclusion impact? How would you prioritize fixes if you could only do one?</p>
+<p><strong>Accessibility impact</strong>: Which findings have highest inclusion impact? How would you prioritise fixes if you could only do one?</p>
 </li>
 <li>
 <p><strong>Week 10 readiness</strong>: What are your Priority 1 fixes? How will you verify they worked?</p>
@@ -975,8 +975,8 @@ EOF
 <h2 id="looking-ahead-week-10-analysis--redesign"><a class="header" href="#looking-ahead-week-10-analysis--redesign">Looking Ahead: Week 10 Analysis &amp; Redesign</a></h2>
 <p>Next week:</p>
 <ul>
-<li><strong>Lab 1</strong>: Analyse metrics in depth (median, MAD, error rates), prioritize backlog with inclusion × impact scores, plan redesign</li>
-<li><strong>Lab 2</strong>: Implement Priority 1-2 fixes, re-verify accessibility, update backlog, prepare Task 2 evidence pack</li>
+<li><strong>Lab 1</strong>: Analyse metrics in depth (median, MAD, error rates), prioritise backlog with inclusion × impact scores, plan redesign</li>
+<li><strong>Lab 2</strong>: Implement Priority 1-2 fixes, re-verify accessibility, update backlog, finalise assessment submission</li>
 </ul>
 <p><strong>Before Week 10</strong>:</p>
 <ul>
@@ -1024,7 +1024,7 @@ EOF
 </tbody></table>
 </div>
 <hr />
-<p><strong>Lab complete!</strong> You have real pilot data, evidence chains, and a draft Task 1 pack. Week 10 will analyse this data rigorously and implement prioritised fixes.</p>
+<p><strong>Lab complete!</strong> You have real pilot data, evidence chains, and a draft assessment pack. Week 10 will analyse this data rigorously, implement prioritised fixes, and finalise your assessment submission (due end Week 10).</p>
 
                     </main>
 

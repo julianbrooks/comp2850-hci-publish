@@ -210,9 +210,9 @@
 </ol>
 <p><strong>Why this matters</strong>:</p>
 <ul>
-<li><strong>Gradescope Task 2</strong> requires quantitative data (completion times, error rates) + qualitative insights</li>
+<li><strong>Assessment</strong> requires quantitative data (completion times, error rates) + qualitative insights</li>
 <li><strong>Week 10 redesign</strong> depends on identifying real bottlenecks (not guesses)</li>
-<li><strong>Week 11 portfolio</strong> needs evidence chains: problem → measurement → fix → verification</li>
+<li><strong>Assessment portfolio (due end Week 10)</strong> needs evidence chains: problem → measurement → fix → verification</li>
 <li><strong>Industry practice</strong>: Product decisions backed by data, not opinions</li>
 </ul>
 <p><strong>Ethical imperative</strong>: Evaluation must respect privacy. We follow <strong>low-risk peer study protocols</strong>—no recordings, no PII, informed consent, opt-out honoured.</p>
@@ -350,8 +350,8 @@ Success: Reports correct count within 2 minutes, no validation errors
 </code></pre>
 <p>❌ Email is PII, violates GDPR</p>
 <p><strong>Example — GOOD</strong>:</p>
-<pre><code class="language-csv">ts_iso,session_id,task_code,ms,js_mode
-2025-10-13T14:23:01Z,X7kL9p,T1,1800,on
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+2025-10-13T14:23:01Z,X7kL9p,r001,T1_filter,success,,1800,200,on
 </code></pre>
 <p>✅ Anonymous, minimal, fit-for-purpose</p>
 <p><strong>UK context</strong>: Data Protection Act 2018 + UK GDPR require <strong>lawful basis</strong> for processing. Low-risk peer studies at universities typically use “legitimate interest” or “consent” basis. <strong>Must document</strong> in protocol.</p>
@@ -1033,7 +1033,7 @@ Debrief notes:
 </ol>
 <p><strong>After all pilots</strong>:</p>
 <ol>
-<li>Copy <code>data/metrics.csv</code> to <code>wk09/lab-wk9/submission/task1-draft/results.csv</code></li>
+<li>Copy <code>data/metrics.csv</code> to <code>wk09/assessment/results.csv</code></li>
 <li>Aggregate notes into themes (Week 10 lab)</li>
 <li>Calculate medians, error rates (Week 10 lab)</li>
 </ol>
@@ -1203,6 +1203,7 @@ ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
 ```kotlin
 package utils
 
+import io.ktor.http.HttpStatusCode
 import java.io.File
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -1213,66 +1214,73 @@ import java.time.format.DateTimeFormatter
  *
  * Privacy: Ensure session_id is anonymous (no PII).
  */
+data class LogEntry(
+    val sessionId: String,
+    val requestId: String,
+    val taskCode: String,
+    val step: String,
+    val outcome: String,
+    val durationMs: Long,
+    val statusCode: Int,
+    val jsMode: String,
+)
+
 object Logger {
-    private val file = File("data/metrics.csv").apply {
-        parentFile?.mkdirs()
-        if (!exists()) {
-            writeText("ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode\n")
+    private val out =
+        File("data/metrics.csv").apply {
+            parentFile?.mkdirs()
+            if (!exists()) writeText("ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode\n")
         }
-    }
 
-    /**
-     * Write a single log entry.
-     *
-     * @param session Anonymous session ID (e.g., from cookie)
-     * @param req Request ID (unique per request, for tracing)
-     * @param task Task code (T1_filter, T2_edit, etc.)
-     * @param step Event type (start, success, validation_error, fail, server_error)
-     * @param outcome Specific outcome for errors (blank_title, max_length, etc.)
-     * @param ms Duration in milliseconds (0 if not applicable)
-     * @param status HTTP status code (200, 400, 500, etc.)
-     * @param js JavaScript mode ("on" or "off")
-     */
     @Synchronized
-    fun write(
-        session: String,
-        req: String,
-        task: String,
-        step: String,
-        outcome: String,
-        ms: Long,
-        status: Int,
-        js: String
-    ) {
+    fun write(entry: LogEntry) {
         val ts = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-        file.appendText("$ts,$session,$req,$task,$step,$outcome,$ms,$status,$js\n")
+        out.appendText(
+            "$ts,${entry.sessionId},${entry.requestId},${entry.taskCode},${entry.step}," +
+                "${entry.outcome},${entry.durationMs},${entry.statusCode},${entry.jsMode}\n",
+        )
     }
 
-    /**
-     * Convenience: log validation error with outcome.
-     */
     fun validationError(
-        session: String,
-        req: String,
-        task: String,
+        sessionId: String,
+        requestId: String,
+        taskCode: String,
         outcome: String,
-        ms: Long,
-        js: String
+        jsMode: String,
     ) {
-        write(session, req, task, "validation_error", outcome, ms, 400, js)
+        write(
+            LogEntry(
+                sessionId = sessionId,
+                requestId = requestId,
+                taskCode = taskCode,
+                step = "validation_error",
+                outcome = outcome,
+                durationMs = 0,
+                statusCode = HttpStatusCode.BadRequest.value,
+                jsMode = jsMode,
+            )
+        )
     }
 
-    /**
-     * Convenience: log success.
-     */
     fun success(
-        session: String,
-        req: String,
-        task: String,
-        ms: Long,
-        js: String
+        sessionId: String,
+        requestId: String,
+        taskCode: String,
+        durationMs: Long,
+        jsMode: String,
     ) {
-        write(session, req, task, "success", "", ms, 200, js)
+        write(
+            LogEntry(
+                sessionId = sessionId,
+                requestId = requestId,
+                taskCode = taskCode,
+                step = "success",
+                outcome = "",
+                durationMs = durationMs,
+                statusCode = HttpStatusCode.OK.value,
+                jsMode = jsMode,
+            )
+        )
     }
 }
 </code></pre>
@@ -1497,7 +1505,7 @@ wk9s1: evaluation plan + server-side instrumentation
 - Implemented Timing.kt (timed{} helper, jsMode detection)
 - Instrumented POST /tasks with T3_add logging + validation errors
 - Dry-run verified: metrics.csv captures correct data for JS-on/off paths
-- Scaffolded Task 1 draft evidence pack (eval-plan.md, protocol.md)
+- Scaffolded assessment draft evidence pack (eval-plan.md, protocol.md)
 
 Ready for peer pilots in Week 9 Lab 2.
 
@@ -1509,7 +1517,7 @@ EOF
 <p><strong>Answer in <code>wk09/reflection.md</code></strong>:</p>
 <ol>
 <li>
-<p><strong>Metrics selection</strong>: Which metrics will be most useful for identifying usability issues? Why did you prioritize objective vs subjective data?</p>
+<p><strong>Metrics selection</strong>: Which metrics will be most useful for identifying usability issues? Why did you prioritise objective vs subjective data?</p>
 </li>
 <li>
 <p><strong>Ethical considerations</strong>: What was most challenging about designing a privacy-respecting evaluation? How did you ensure no PII would be collected?</p>
@@ -1534,7 +1542,7 @@ EOF
 <li>Run 5–6 peer pilots using your protocol</li>
 <li>Collect metrics.csv data + qualitative notes</li>
 <li>Debrief participants</li>
-<li>Prepare draft evidence pack for Task 1</li>
+<li>Prepare draft evidence pack for assessment submission</li>
 </ul>
 <p><strong>Before Lab 2</strong>:</p>
 <ul>

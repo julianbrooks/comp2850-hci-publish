@@ -287,8 +287,8 @@
 <ol>
 <li><strong>Code repository</strong> (GitLab/GitHub): All commits from Week 6–11</li>
 <li><strong>Evidence directory</strong>: Organised by week (<code>evidence/wk6/</code>, <code>evidence/wk7/</code>, etc.)</li>
-<li><strong>Task 1 package</strong> (Gradescope): Consent, pilot data, findings, backlog</li>
-<li><strong>Task 2 package</strong> (Gradescope): Prioritisation, fix commits, verification, reflection</li>
+<li><strong>assessment package</strong> (Gradescope): Consent, pilot data, findings, backlog</li>
+<li><strong>assessment package</strong> (Gradescope): Prioritisation, fix commits, verification, reflection</li>
 <li><strong>README</strong> or <strong>reflection doc</strong>: Narrative tying everything together</li>
 </ol>
 <p><strong>Portfolio quality indicators</strong>:</p>
@@ -318,19 +318,19 @@
 <li>Spell-check and proofread all written work</li>
 </ol>
 <hr />
-<h2 id="activity-1-polish-task-1-based-on-critique-feedback"><a class="header" href="#activity-1-polish-task-1-based-on-critique-feedback">Activity 1: Polish Task 1 Based on Critique Feedback</a></h2>
+<h2 id="activity-1-polish-assessment-based-on-critique-feedback"><a class="header" href="#activity-1-polish-assessment-based-on-critique-feedback">Activity 1: Polish assessment Based on Critique Feedback</a></h2>
 <p><strong>Time</strong>: 30 minutes
-<strong>Materials</strong>: Studio crit feedback (Lab 1), Task 1 draft package (Week 9)</p>
+<strong>Materials</strong>: Studio crit feedback (Lab 1), assessment draft package (Week 9)</p>
 <h3 id="step-1-review-critique-feedback"><a class="header" href="#step-1-review-critique-feedback">Step 1: Review Critique Feedback</a></h3>
-<p>Open your studio crit feedback notes. Look for <strong>suggestions</strong> that apply to <strong>Task 1</strong> (evaluation and instrumentation). Common themes:</p>
+<p>Open your studio crit feedback notes. Look for <strong>suggestions</strong> that apply to <strong>assessment</strong> (evaluation and instrumentation). Common themes:</p>
 <ul>
 <li><strong>Pilot protocol clarity</strong>: “I wasn’t sure if consent was verbal or signed” → add screenshot of consent script</li>
 <li><strong>Metrics interpretation</strong>: “Median looks fine, but no discussion of MAD outliers” → add MAD analysis</li>
 <li><strong>Evidence completeness</strong>: “P3 notes mention ‘struggled with SR’ but no specifics” → add verbatim quotes, timestamps</li>
 <li><strong>Backlog traceability</strong>: “Backlog item #7 says ‘fix validation’ but doesn’t cite pilot data” → add pilot ID and metric</li>
 </ul>
-<h3 id="step-2-update-task-1-files"><a class="header" href="#step-2-update-task-1-files">Step 2: Update Task 1 Files</a></h3>
-<p>Your Task 1 package should include:</p>
+<h3 id="step-2-update-assessment-files"><a class="header" href="#step-2-update-assessment-files">Step 2: Update assessment Files</a></h3>
+<p>Your assessment package should include:</p>
 <pre><code>task1/
 ├── consent-script.md          # Informed consent protocol
 ├── pilot-protocol.md          # Step-by-step task execution guide
@@ -369,7 +369,7 @@ mogrify -resize 1920x1080 -quality 85 pilot-notes/*.png
 <li>
 <p><strong>Check total size</strong>:</p>
 <pre><code class="language-bash">du -sh task1/
-# Should be &lt; 50 MB for Task 1 alone
+# Should be &lt; 50 MB for assessment alone
 </code></pre>
 </li>
 <li>
@@ -397,11 +397,11 @@ mogrify -resize 1920x1080 -quality 85 pilot-notes/*.png
 <li>✅ Backlog item ID cross-referenced</li>
 </ul>
 <hr />
-<h2 id="activity-2-assemble-task-2-portfolio"><a class="header" href="#activity-2-assemble-task-2-portfolio">Activity 2: Assemble Task 2 Portfolio</a></h2>
+<h2 id="activity-2-assemble-assessment-portfolio"><a class="header" href="#activity-2-assemble-assessment-portfolio">Activity 2: Assemble assessment Portfolio</a></h2>
 <p><strong>Time</strong>: 40 minutes
-<strong>Materials</strong>: Task 2 draft (Week 10), regression checklist, verification pilot data, critique feedback</p>
-<h3 id="step-1-review-task-2-requirements"><a class="header" href="#step-1-review-task-2-requirements">Step 1: Review Task 2 Requirements</a></h3>
-<p>Task 2 focuses on <strong>redesign</strong> and <strong>verification</strong>. Your package must show:</p>
+<strong>Materials</strong>: assessment draft (Week 10), regression checklist, verification pilot data, critique feedback</p>
+<h3 id="step-1-review-assessment-requirements"><a class="header" href="#step-1-review-assessment-requirements">Step 1: Review assessment Requirements</a></h3>
+<p>assessment focuses on <strong>redesign</strong> and <strong>verification</strong>. Your package must show:</p>
 <ol>
 <li><strong>Prioritisation rationale</strong>: How you scored issues with (Impact + Inclusion) – Effort</li>
 <li><strong>Implementation evidence</strong>: Commit hashes, before/after code diffs, WCAG mapping</li>
@@ -409,7 +409,7 @@ mogrify -resize 1920x1080 -quality 85 pilot-notes/*.png
 <li><strong>Verification pilots</strong>: Re-ran same tasks with same assistive tech; metrics improved</li>
 <li><strong>Reflection</strong>: What you learned about inclusive redesign</li>
 </ol>
-<h3 id="step-2-organise-task-2-files"><a class="header" href="#step-2-organise-task-2-files">Step 2: Organise Task 2 Files</a></h3>
+<h3 id="step-2-organise-assessment-files"><a class="header" href="#step-2-organise-assessment-files">Step 2: Organise assessment Files</a></h3>
 <pre><code>task2/
 ├── prioritisation.md          # Scoring matrix with rationale
 ├── fixes/                     # One file per priority issue
@@ -522,7 +522,7 @@ Create `wcag-compliance.md` mapping all fixes to WCAG 2.2 AA criteria:
 ---
 **Reference**: [WCAG 2.2 Quick Reference](https://www.w3.org/WAI/WCAG22/quickref/)
 </code></pre>
-<h3 id="step-6-write-task-2-reflection"><a class="header" href="#step-6-write-task-2-reflection">Step 6: Write Task 2 Reflection</a></h3>
+<h3 id="step-6-write-assessment-reflection"><a class="header" href="#step-6-write-assessment-reflection">Step 6: Write assessment Reflection</a></h3>
 <p>Your <code>reflection-task2.md</code> should answer:</p>
 <ol>
 <li><strong>What redesign approach did you take?</strong> (Prioritisation framework, fix strategy)</li>
@@ -531,7 +531,7 @@ Create `wcag-compliance.md` mapping all fixes to WCAG 2.2 AA criteria:
 <li><strong>What did you learn?</strong> (Insights about accessibility, trade-offs, server-first architecture)</li>
 </ol>
 <p><strong>Example structure</strong> (aim for 800–1,000 words):</p>
-<pre><code class="language-markdown"># Task 2 Reflection: Inclusive Redesign
+<pre><code class="language-markdown"># assessment Reflection: Inclusive Redesign
 
 ## Overview
 After analysing pilot data from Week 9, I identified 8 accessibility and usability issues. Using the (Impact + Inclusion) – Effort prioritisation framework, I focused on the top 3 issues that disproportionately affected screen reader users and keyboard-only users...
@@ -596,8 +596,8 @@ git commit --amend -m "Add ARIA live region to error div (WCAG 4.1.3)"
 # Rebase to clean up history (use with caution)
 git rebase -i HEAD~5  # Interactive rebase for last 5 commits
 </code></pre>
-<p><strong>Create <code>commits.md</code></strong> for Task 2 package:</p>
-<pre><code class="language-markdown"># Commit Log: Task 2 Fixes
+<p><strong>Create <code>commits.md</code></strong> for assessment package:</p>
+<pre><code class="language-markdown"># Commit Log: assessment Fixes
 
 | Commit | Date | Description | Files |
 |--------|------|-------------|-------|
@@ -780,7 +780,7 @@ This repository contains a **task manager web application** built with **Kotlin/
 ## Activity 4: Practice Gradescope Submission
 
 **Time**: 20 minutes
-**Materials**: Task 1 and Task 2 packages, Gradescope test environment (if available)
+**Materials**: assessment and assessment packages, Gradescope test environment (if available)
 
 ### Step 1: Check File Size Limits
 
@@ -813,12 +813,12 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen \
 </code></pre>
 <h3 id="step-2-create-submission-zips"><a class="header" href="#step-2-create-submission-zips">Step 2: Create Submission ZIPs</a></h3>
 <p>Gradescope typically requires a <strong>single ZIP per task</strong>. Create them:</p>
-<pre><code class="language-bash"># Task 1
+<pre><code class="language-bash"># assessment
 cd task1/
 zip -r ../task1-submission.zip .
 cd ..
 
-# Task 2
+# assessment
 cd task2/
 zip -r ../task2-submission.zip .
 cd ..
@@ -865,7 +865,7 @@ unzip ~/comp2850/task1-submission.zip
 </ol>
 <h3 id="step-4-pre-submission-checklist"><a class="header" href="#step-4-pre-submission-checklist">Step 4: Pre-Submission Checklist</a></h3>
 <p>Print this checklist and tick off each item:</p>
-<p><strong>Task 1 (Evaluation)</strong></p>
+<p><strong>assessment (Evaluation)</strong></p>
 <ul>
 <li><input disabled="" type="checkbox"/>
 <code>consent-script.md</code> includes informed consent protocol</li>
@@ -888,7 +888,7 @@ Total size &lt; 50 MB</li>
 <li><input disabled="" type="checkbox"/>
 All commit hashes correct (<code>git log --oneline</code> to verify)</li>
 </ul>
-<p><strong>Task 2 (Redesign)</strong></p>
+<p><strong>assessment (Redesign)</strong></p>
 <ul>
 <li><input disabled="" type="checkbox"/>
 <code>prioritisation.md</code> includes scoring matrix with rationale</li>
@@ -921,12 +921,12 @@ Commit history clean (no sensitive data, descriptive messages)</li>
 Application runs locally (<code>./gradlew run</code> works)</li>
 </ul>
 <h3 id="step-5-backup-strategy"><a class="header" href="#step-5-backup-strategy">Step 5: Backup Strategy</a></h3>
-<p>Before final submission:</p>
+<p>Before assessment refinement:</p>
 <ol>
 <li>
 <p><strong>Tag your repository</strong>:</p>
-<pre><code class="language-bash">git tag -a v1.0-task1 -m "Task 1 submission (2025-01-15)"
-git tag -a v1.0-task2 -m "Task 2 submission (2025-01-17)"
+<pre><code class="language-bash">git tag -a v1.0-task1 -m "assessment submission (2025-01-15)"
+git tag -a v1.0-task2 -m "assessment submission (2025-01-17)"
 git push origin --tags
 </code></pre>
 </li>
@@ -1001,7 +1001,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Example</strong> (backlog extract):</p>
 <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Description</th><th>Priority</th><th>Effort</th><th>Notes</th></tr></thead><tbody>
 <tr><td>#8</td><td>Add keyboard shortcut hints (e.g., “Press / to focus search”)</td><td>P2</td><td>3</td><td>Feedback from peer review; improves discoverability</td></tr>
-<tr><td>#9</td><td>Implement undo for task deletion</td><td>P2</td><td>4</td><td>Not in scope for Task 2, but valuable for real users</td></tr>
+<tr><td>#9</td><td>Implement undo for task deletion</td><td>P2</td><td>4</td><td>Not in scope for assessment, but valuable for real users</td></tr>
 <tr><td>#10</td><td>Add dark mode toggle (WCAG 1.4.3 compliance)</td><td>P3</td><td>5</td><td>Low priority; contrast already meets AA</td></tr>
 <tr><td>#11</td><td>Explore HTMX websockets for real-time collaboration</td><td>P4</td><td>8</td><td>Stretch goal; requires learning new HTMX feature</td></tr>
 <tr><td>#12</td><td>Add automated a11y tests (axe-core in CI/CD pipeline)</td><td>P1</td><td>6</td><td>High priority; prevents regressions in future work</td></tr>
@@ -1071,7 +1071,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <tr><td><strong>6. AI Task Suggestions</strong></td><td>LLM generates task breakdowns (e.g., “Write essay” → sub-tasks)</td><td>AI transparency, user agency</td><td>OpenAI API integration, prompt engineering</td><td>WCAG 3.3.2 (Labels or Instructions) for AI disclaimers</td></tr>
 <tr><td><strong>7. Offline Mode (PWA)</strong></td><td>Service worker caches app; tasks sync when online</td><td>Network resilience, progressive web apps</td><td>Service Worker API, IndexedDB, background sync</td><td>WCAG 3.2.4 (Consistent Identification) across online/offline</td></tr>
 <tr><td><strong>8. Accessibility Dashboard</strong></td><td>Real-time WCAG compliance score; lighthouse metrics</td><td>Automated testing limits, developer tools</td><td>axe-core integration, CI/CD pipeline</td><td>Meta-accessibility: ensuring dashboard itself is accessible</td></tr>
-<tr><td><strong>9. Dark Mode</strong></td><td>User-selectable theme (light/dark/high-contrast)</td><td>Personalisation, sensory preferences</td><td>CSS custom properties, <code>prefers-color-scheme</code> media query</td><td>WCAG 1.4.3 (Contrast - Minimum) across all themes</td></tr>
+<tr><td><strong>9. Dark Mode</strong></td><td>User-selectable theme (light/dark/high-contrast)</td><td>Personalisation, sensory preferences</td><td>CSS custom properties, <code>prefers-colour-scheme</code> media query</td><td>WCAG 1.4.3 (Contrast - Minimum) across all themes</td></tr>
 <tr><td><strong>10. Export &amp; Import</strong></td><td>Download tasks as JSON/CSV/PDF; import from Todoist/Trello</td><td>Data portability, interoperability</td><td>CSV/JSON serialisation, PDF generation (iText/PDFKit)</td><td>WCAG 1.1.1 (ensure exported PDFs are tagged/accessible)</td></tr>
 </tbody></table>
 </div>
@@ -1316,7 +1316,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <div class="table-wrapper"><table><thead><tr><th>Term</th><th>Definition</th><th>Example/Context</th></tr></thead><tbody>
 <tr><td><strong>Evidence chain</strong></td><td>Traceable path from raw data → analysis → fix → verification</td><td>P3 pilot notes → WCAG violation → code commit → retest</td></tr>
 <tr><td><strong>Reflective writing</strong></td><td>Connecting theory to practice by answering What/Why/How/Learning</td><td>“I added role=alert (WCAG 4.1.3) because P3 didn’t hear errors”</td></tr>
-<tr><td><strong>Portfolio</strong></td><td>Organised collection of artefacts with accompanying reflection</td><td>Code repo + evidence/ + Task 1/2 packages + README</td></tr>
+<tr><td><strong>Portfolio</strong></td><td>Organised collection of artefacts with accompanying reflection</td><td>Code repo + evidence/ + assessment/2 packages + README</td></tr>
 <tr><td><strong>Traceability</strong></td><td>Ability to link every claim to supporting evidence</td><td>“P3 took 127 s (see metrics.csv row 47)”</td></tr>
 <tr><td><strong>Gradescope</strong></td><td>Submission platform with file size/format requirements</td><td>100 MB limit, PDF preferred, flat directory structure</td></tr>
 <tr><td><strong>Commit hash</strong></td><td>Unique identifier for a Git commit</td><td><code>c8d1e4f</code> (first 7 chars of SHA-1)</td></tr>
@@ -1333,7 +1333,7 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p><strong>Evidence chains</strong>: Choose one finding from your Week 9 analysis. Trace the complete evidence chain from raw data (pilot ID, task, metric) to fix (commit hash) to verification (retest result). Is any link in the chain missing or weak?</p>
 </li>
 <li>
-<p><strong>Reflective writing quality</strong>: Reread your Task 1 and Task 2 reflections. For each, identify:</p>
+<p><strong>Reflective writing quality</strong>: Reread your assessment and assessment reflections. For each, identify:</p>
 <ul>
 <li>One place where you cited theory (WCAG, privacy principle, academic source)</li>
 <li>One place where you described a mistake and correction</li>
@@ -1378,9 +1378,9 @@ cp task2-submission.zip task2-submission-2025-01-17.zip
 <p>Before leaving lab, confirm:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-<strong>Task 1 polished</strong>: Critique feedback incorporated; evidence complete; reflection compiled to PDF</li>
+<strong>assessment polished</strong>: Critique feedback incorporated; evidence complete; reflection compiled to PDF</li>
 <li><input disabled="" type="checkbox"/>
-<strong>Task 2 assembled</strong>: Fix docs written; regression checklist completed; verification data organised; reflection compiled to PDF</li>
+<strong>assessment assembled</strong>: Fix docs written; regression checklist completed; verification data organised; reflection compiled to PDF</li>
 <li><input disabled="" type="checkbox"/>
 <strong>Repository tidy</strong>: Commit history clean; <code>README.md</code> updated; <code>evidence/</code> organised by week</li>
 <li><input disabled="" type="checkbox"/>

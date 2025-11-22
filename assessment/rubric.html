@@ -1,0 +1,730 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Marking Rubric - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="comp2850-hci-combined-assessment-rubric"><a class="header" href="#comp2850-hci-combined-assessment-rubric">COMP2850 HCI: Combined Assessment Rubric</a></h1>
+<p><strong>Academic Year</strong>: 2025-26
+<strong>Assessment Type</strong>: Coursework (Pass/Fail with 0-100 grading)
+<strong>Pass Threshold</strong>: 40/100 marks
+<strong>Marking Time</strong>: 5 minutes per portfolio</p>
+<hr />
+<h2 id="quick-reference-5-minute-marking-decision-tree"><a class="header" href="#quick-reference-5-minute-marking-decision-tree">Quick Reference: 5-Minute Marking Decision Tree</a></h2>
+<p><strong>Step 1: Files Present? (30 seconds)</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+submission-template.md (completed)</li>
+<li><input disabled="" type="checkbox"/>
+metrics.csv (or pasted in template)</li>
+<li><input disabled="" type="checkbox"/>
+evidence/ folder (screenshots, pilot notes)</li>
+</ul>
+<p>If NO → <strong>FAIL (0-39)</strong> - Major gap</p>
+<p><strong>Step 2: Minimum Evidence? (1 minute)</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+metrics.csv has n=2+ participants (check session IDs)</li>
+<li><input disabled="" type="checkbox"/>
+findings-table.csv has 3+ findings with data sources</li>
+<li><input disabled="" type="checkbox"/>
+implementation-diffs.md shows 1-3 code changes</li>
+<li><input disabled="" type="checkbox"/>
+verification.csv has 20 regression checks</li>
+</ul>
+<p>If NO → <strong>FAIL (0-39)</strong> - Major gap</p>
+<p><strong>Step 3: Fail Triggers? (1 minute)</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Data too perfect? (all success, no errors, unrealistic times)</li>
+<li><input disabled="" type="checkbox"/>
+No pilot notes? (pilots didn’t happen)</li>
+<li><input disabled="" type="checkbox"/>
+PII violations? (names/emails in screenshots, identifiable session IDs)</li>
+<li><input disabled="" type="checkbox"/>
+Metrics contradict claims? (e.g., says n=4 but CSV shows n=2)</li>
+</ul>
+<p>If YES → <strong>FAIL (0-39)</strong> - Fabrication or severe violation</p>
+<p><strong>Step 4: Evidence Chains? (1.5 minutes)</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+findings-table.csv links to metrics.csv lines OR pilot notes timestamps</li>
+<li><input disabled="" type="checkbox"/>
+implementation-diffs.md references findings from table</li>
+<li><input disabled="" type="checkbox"/>
+verification.csv Part B shows before/after for fixes</li>
+</ul>
+<p><strong>Step 5: WCAG Compliance? (1 minute)</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+verification.csv shows no Level A violations remaining</li>
+<li><input disabled="" type="checkbox"/>
+At least 1 WCAG criterion improved (fail → pass)</li>
+</ul>
+<p><strong>Step 6: Assign Mark (30 seconds)</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Evidence Quality</th><th>Grade</th><th>Mark Range</th></tr></thead><tbody>
+<tr><td><strong>Excellent</strong>: Complete chains, rigorous verification, professional, honest</td><td><strong>First (1st)</strong></td><td>70-100</td></tr>
+<tr><td><strong>Very Good</strong>: Strong chains, minor gaps, professional</td><td><strong>2:1</strong></td><td>60-69</td></tr>
+<tr><td><strong>Good</strong>: Adequate chains, some issues</td><td><strong>2:2</strong></td><td>50-59</td></tr>
+<tr><td><strong>Adequate</strong>: Weak chains, meets minimum</td><td><strong>3rd</strong></td><td>40-49</td></tr>
+<tr><td><strong>Fail</strong>: No chains OR fabrication OR major gaps</td><td><strong>Fail</strong></td><td>0-39</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="detailed-criteria-100-marks"><a class="header" href="#detailed-criteria-100-marks">Detailed Criteria (100 Marks)</a></h2>
+<h3 id="1-evidence-complete-20-marks"><a class="header" href="#1-evidence-complete-20-marks">1. Evidence Complete (20 marks)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Excellent (17-20)</th><th>Good (13-16)</th><th>Adequate (10-12)</th><th>Weak (0-9)</th></tr></thead><tbody>
+<tr><td><strong>Files present</strong></td><td>All 6 files + evidence folder complete</td><td>5-6 files, minor gaps</td><td>4 files, significant gaps</td><td>&lt;4 files</td></tr>
+<tr><td><strong>Metrics data</strong></td><td>n=4 participants, all columns, anonymous IDs</td><td>n=3, all columns</td><td>n=2, all columns</td><td>n&lt;2 OR missing columns</td></tr>
+<tr><td><strong>Findings</strong></td><td>5+ findings, all with sources</td><td>4 findings, all sources</td><td>3 findings, some sources</td><td>&lt;3 findings</td></tr>
+<tr><td><strong>Implementation</strong></td><td>3 fixes, clear diffs</td><td>2 fixes, clear diffs</td><td>1 fix, clear diff</td><td>No diffs</td></tr>
+</tbody></table>
+</div>
+<p><strong>LOs assessed</strong>: LO8 (evaluation execution), LO13 (instrumentation)</p>
+<hr />
+<h3 id="2-evidence-chains-30-marks"><a class="header" href="#2-evidence-chains-30-marks">2. Evidence Chains (30 marks)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Excellent (25-30)</th><th>Good (19-24)</th><th>Adequate (13-18)</th><th>Weak (0-12)</th></tr></thead><tbody>
+<tr><td><strong>Data → Finding</strong></td><td>All findings link to metrics.csv lines OR pilot notes timestamps</td><td>Most findings linked</td><td>Some findings linked</td><td>No links</td></tr>
+<tr><td><strong>Finding → Fix</strong></td><td>All fixes reference specific findings from table</td><td>Most fixes reference findings</td><td>Some fixes reference findings</td><td>No references</td></tr>
+<tr><td><strong>Fix → Verification</strong></td><td>Before/after metrics for all fixes</td><td>Before/after for most fixes</td><td>Before/after for some fixes</td><td>No before/after</td></tr>
+<tr><td><strong>Traceable</strong></td><td>Can follow complete chain for 3+ findings</td><td>Can follow 2 chains</td><td>Can follow 1 chain</td><td>No complete chains</td></tr>
+</tbody></table>
+</div>
+<p><strong>LOs assessed</strong>: LO6 (iterative design), LO12 (professionalism)</p>
+<hr />
+<h3 id="3-wcag-compliance-20-marks"><a class="header" href="#3-wcag-compliance-20-marks">3. WCAG Compliance (20 marks)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Excellent (17-20)</th><th>Good (13-16)</th><th>Adequate (10-12)</th><th>Weak (0-9)</th></tr></thead><tbody>
+<tr><td><strong>Regression</strong></td><td>All 20 checks complete, pass/documented fail</td><td>18-19 checks complete</td><td>15-17 checks complete</td><td>&lt;15 checks</td></tr>
+<tr><td><strong>Level A pass</strong></td><td>No Level A violations</td><td>1 Level A violation</td><td>2 Level A violations</td><td>3+ violations</td></tr>
+<tr><td><strong>Improvement</strong></td><td>3+ WCAG criteria improved</td><td>2 criteria improved</td><td>1 criterion improved</td><td>No improvement</td></tr>
+<tr><td><strong>Verification</strong></td><td>axe DevTools + SR + manual</td><td>2 test methods</td><td>1 test method</td><td>No verification</td></tr>
+</tbody></table>
+</div>
+<p><strong>LOs assessed</strong>: LO4 (accessibility evaluation), LO9 (inclusive design)</p>
+<hr />
+<h3 id="4-professional-practice-15-marks"><a class="header" href="#4-professional-practice-15-marks">4. Professional Practice (15 marks)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Excellent (13-15)</th><th>Good (10-12)</th><th>Adequate (7-9)</th><th>Weak (0-6)</th></tr></thead><tbody>
+<tr><td><strong>Privacy</strong></td><td>No PII, anonymous IDs, consent documented</td><td>No PII, anonymous IDs</td><td>Minor PII slip, correctable</td><td>PII violations</td></tr>
+<tr><td><strong>Honesty</strong></td><td>Limitations acknowledged if metrics didn’t improve</td><td>Some limitations noted</td><td>No limitations noted</td><td>Fabricated data</td></tr>
+<tr><td><strong>No-JS parity</strong></td><td>Both paths fully functional, documented</td><td>Both paths functional</td><td>One path partial</td><td>No-JS broken</td></tr>
+<tr><td><strong>Documentation</strong></td><td>Clear, concise, well-structured</td><td>Mostly clear</td><td>Adequate structure</td><td>Unclear/messy</td></tr>
+</tbody></table>
+</div>
+<p><strong>LOs assessed</strong>: LO3 (ethical implications), LO7 (design constraints), LO11 (collaboration)</p>
+<hr />
+<h3 id="5-design-rationale-15-marks"><a class="header" href="#5-design-rationale-15-marks">5. Design Rationale (15 marks)</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Excellent (13-15)</th><th>Good (10-12)</th><th>Adequate (7-9)</th><th>Weak (0-6)</th></tr></thead><tbody>
+<tr><td><strong>Task design</strong></td><td>Tasks linked to Week 6 job stories, clear scenarios</td><td>Tasks linked, adequate scenarios</td><td>Tasks present, weak links</td><td>No task rationale</td></tr>
+<tr><td><strong>Prioritisation</strong></td><td>(Impact + Inclusion) - Effort formula applied, justified</td><td>Formula applied</td><td>Priority assigned</td><td>No prioritisation</td></tr>
+<tr><td><strong>Fix rationale</strong></td><td>Clear “what changed” + “why” + “impact” for each fix</td><td>Rationale for most fixes</td><td>Rationale for some fixes</td><td>No rationale</td></tr>
+<tr><td><strong>Code quality</strong></td><td>Fixes target root cause, minimal changes</td><td>Fixes work, reasonable approach</td><td>Fixes work, over-engineered</td><td>Fixes don’t work</td></tr>
+</tbody></table>
+</div>
+<p><strong>LOs assessed</strong>: LO1 (methodologies), LO2 (needs-finding), LO5 (prototyping), LO13 (HCI+SE integration)</p>
+<hr />
+<h2 id="grade-descriptors"><a class="header" href="#grade-descriptors">Grade Descriptors</a></h2>
+<h3 id="70-100-first-class-excellent"><a class="header" href="#70-100-first-class-excellent">70-100: First Class (Excellent)</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>All evidence chains rigorous and complete</li>
+<li>WCAG compliance thoroughly verified (20/20 checks, no Level A violations)</li>
+<li>Thoughtful prioritisation with clear rationale</li>
+<li>Professional documentation (no PII, honest reporting)</li>
+<li>Limitations acknowledged if metrics didn’t improve</li>
+<li>Code fixes target root causes, well-integrated</li>
+</ul>
+<p><strong>Typical portfolio</strong>:</p>
+<ul>
+<li>n=4 participants, 5+ findings, 3 fixes, complete regression</li>
+<li>Every finding traceable: data → observation → fix → verification</li>
+<li>Before/after metrics show measurable improvement</li>
+<li>Screenshots and SR transcripts support claims</li>
+<li>Honest analysis of what worked and what didn’t</li>
+</ul>
+<p><strong>LO coverage</strong>: All 13 LOs demonstrated to high standard</p>
+<p><strong>Outcome</strong>: <strong>PASS</strong></p>
+<hr />
+<h3 id="60-69-21-very-good"><a class="header" href="#60-69-21-very-good">60-69: 2:1 (Very Good)</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Strong evidence chains with minor gaps</li>
+<li>WCAG mostly verified (18-19/20 checks, no critical failures)</li>
+<li>Good prioritisation with some justification</li>
+<li>Professional documentation with minor issues</li>
+<li>Some limitations noted</li>
+<li>Code fixes work, reasonable approach</li>
+</ul>
+<p><strong>Typical portfolio</strong>:</p>
+<ul>
+<li>n=3-4 participants, 4 findings, 2 fixes, mostly complete regression</li>
+<li>Most findings traceable, 1-2 weak links</li>
+<li>Before/after metrics present, improvement shown</li>
+<li>Some supporting evidence (screenshots OR SR transcripts)</li>
+<li>Mostly honest, minor gaps in reflection</li>
+</ul>
+<p><strong>LO coverage</strong>: All 13 LOs demonstrated, minor gaps</p>
+<p><strong>Outcome</strong>: <strong>PASS</strong></p>
+<hr />
+<h3 id="50-59-22-good"><a class="header" href="#50-59-22-good">50-59: 2:2 (Good)</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Evidence chains present but incomplete</li>
+<li>Some WCAG compliance (15-17/20 checks, 1-2 Level A violations)</li>
+<li>Basic prioritisation, limited justification</li>
+<li>Adequate documentation, some issues</li>
+<li>Limitations not well-documented</li>
+<li>Code fixes work but may be over-engineered</li>
+</ul>
+<p><strong>Typical portfolio</strong>:</p>
+<ul>
+<li>n=2-3 participants, 3 findings, 1-2 fixes, partial regression</li>
+<li>Some findings traceable, weak chains</li>
+<li>Before/after metrics partial or limited improvement</li>
+<li>Limited supporting evidence</li>
+<li>Some honesty, but gaps in analysis</li>
+</ul>
+<p><strong>LO coverage</strong>: Most LOs demonstrated, some gaps</p>
+<p><strong>Outcome</strong>: <strong>PASS</strong></p>
+<hr />
+<h3 id="40-49-third-class-adequate"><a class="header" href="#40-49-third-class-adequate">40-49: Third Class (Adequate)</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Weak evidence chains, many gaps</li>
+<li>Minimal WCAG compliance (&lt;15/20 checks, 2-3 Level A violations)</li>
+<li>Ad-hoc prioritisation, no clear justification</li>
+<li>Documentation has issues but meets minimum</li>
+<li>No limitations acknowledged</li>
+<li>Code fixes minimal or unclear impact</li>
+</ul>
+<p><strong>Typical portfolio</strong>:</p>
+<ul>
+<li>n=2 participants, 3 findings, 1 fix, incomplete regression</li>
+<li>Few traceable chains, mostly assertions</li>
+<li>Before/after metrics minimal or absent</li>
+<li>Little supporting evidence</li>
+<li>Limited honesty or reflection</li>
+</ul>
+<p><strong>LO coverage</strong>: Some LOs demonstrated, significant gaps</p>
+<p><strong>Outcome</strong>: <strong>PASS</strong> (meets minimum standard)</p>
+<hr />
+<h3 id="0-39-fail"><a class="header" href="#0-39-fail">0-39: Fail</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>No evidence chains OR fabrication OR severe PII violations OR major gaps</li>
+<li>Does not meet minimum standard</li>
+</ul>
+<p><strong>Automatic fail triggers</strong>:</p>
+<ul>
+<li><strong>Fabrication</strong> (0 marks): Data too perfect, no pilot notes, contradictions</li>
+<li><strong>Severe PII violations</strong> (0 marks): Names/emails/student IDs visible</li>
+<li><strong>Major gaps</strong> (0 marks): n&lt;2 OR no metrics.csv OR no regression (&lt;10 checks) OR no redesign</li>
+</ul>
+<p><strong>Typical portfolio</strong>:</p>
+<ul>
+<li>Missing files, incomplete data</li>
+<li>No traceable evidence chains</li>
+<li>WCAG not addressed</li>
+<li>Unprofessional presentation</li>
+<li>Ethical violations</li>
+</ul>
+<p><strong>LO coverage</strong>: Insufficient demonstration</p>
+<p><strong>Outcome</strong>: <strong>FAIL</strong></p>
+<hr />
+<h2 id="learning-outcomes-mapping"><a class="header" href="#learning-outcomes-mapping">Learning Outcomes Mapping</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>Evidence Location</th><th>Criteria Section</th></tr></thead><tbody>
+<tr><td><strong>LO1</strong></td><td>Differentiate methodologies</td><td>protocol-tasks.md (task design rationale)</td><td>Design Rationale</td></tr>
+<tr><td><strong>LO2</strong></td><td>Needs-finding</td><td>protocol-tasks.md (links to Week 6 job stories)</td><td>Design Rationale</td></tr>
+<tr><td><strong>LO3</strong></td><td>Ethical implications</td><td>Privacy statement, consent, PII handling</td><td>Professional Practice</td></tr>
+<tr><td><strong>LO4</strong></td><td>Accessibility evaluation</td><td>verification.csv (regression checklist)</td><td>WCAG Compliance</td></tr>
+<tr><td><strong>LO5</strong></td><td>Prototyping</td><td>implementation-diffs.md (code)</td><td>Design Rationale</td></tr>
+<tr><td><strong>LO6</strong></td><td>Iterative design</td><td>Evaluation → redesign flow (entire portfolio)</td><td>Evidence Chains</td></tr>
+<tr><td><strong>LO7</strong></td><td>Design constraints</td><td>verification.csv (no-JS parity)</td><td>Professional Practice</td></tr>
+<tr><td><strong>LO8</strong></td><td>Evaluation execution</td><td>metrics.csv, pilot notes</td><td>Evidence Complete</td></tr>
+<tr><td><strong>LO9</strong></td><td>Inclusive design</td><td>verification.csv (WCAG), findings (inclusion column)</td><td>WCAG Compliance</td></tr>
+<tr><td><strong>LO10</strong></td><td>Societal critique</td><td>findings-table.csv (“inclusion” column)</td><td>Design Rationale</td></tr>
+<tr><td><strong>LO11</strong></td><td>Collaboration</td><td>Peer pilots, peer review documentation</td><td>Professional Practice</td></tr>
+<tr><td><strong>LO12</strong></td><td>Professionalism</td><td>Evidence chains, honest reporting</td><td>Evidence Chains</td></tr>
+<tr><td><strong>LO13</strong></td><td>HCI+SE integration</td><td>Server instrumentation (Logger.kt), routing</td><td>Evidence Complete</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="common-patterns-by-grade-band"><a class="header" href="#common-patterns-by-grade-band">Common Patterns by Grade Band</a></h2>
+<h3 id="first-70-what-sets-them-apart"><a class="header" href="#first-70-what-sets-them-apart">First (70+): What Sets Them Apart</a></h3>
+<p><strong>Evidence chains</strong>:</p>
+<ul>
+<li>Can trace complete path for 3+ findings: data → observation → interpretation → fix → verification</li>
+<li>Data sources specific (e.g., “metrics.csv L47-49 + P2 notes 14:23”)</li>
+<li>Before/after metrics show clear improvement (or honest analysis of why not)</li>
+</ul>
+<p><strong>WCAG compliance</strong>:</p>
+<ul>
+<li>20/20 regression checks complete</li>
+<li>Multiple test methods (axe + SR + manual keyboard)</li>
+<li>No Level A violations, most Level AA pass</li>
+</ul>
+<p><strong>Professional practice</strong>:</p>
+<ul>
+<li>Screenshots cropped/blurred (no PII)</li>
+<li>Session IDs anonymous (P1_xxxx format)</li>
+<li>Honest limitations (e.g., “small sample size, n=4 not statistically robust”)</li>
+<li>No-JS parity maintained</li>
+</ul>
+<p><strong>Code quality</strong>:</p>
+<ul>
+<li>Fixes target root causes (e.g., “added role=‘alert’ to error span”)</li>
+<li>Minimal changes, well-integrated</li>
+<li>Clear “what/why/impact” for each fix</li>
+</ul>
+<hr />
+<h3 id="21-60-69-strong-with-minor-gaps"><a class="header" href="#21-60-69-strong-with-minor-gaps">2:1 (60-69): Strong with Minor Gaps</a></h3>
+<p><strong>Evidence chains</strong>:</p>
+<ul>
+<li>Can trace 2 complete chains, 1-2 weak links</li>
+<li>Data sources mostly specific</li>
+<li>Before/after metrics present, improvement shown</li>
+</ul>
+<p><strong>WCAG compliance</strong>:</p>
+<ul>
+<li>18-19/20 checks complete</li>
+<li>2 test methods (axe + manual)</li>
+<li>No critical Level A violations</li>
+</ul>
+<p><strong>Professional practice</strong>:</p>
+<ul>
+<li>No PII violations</li>
+<li>Some limitations noted</li>
+<li>No-JS mostly functional</li>
+</ul>
+<p><strong>Code quality</strong>:</p>
+<ul>
+<li>Fixes work, reasonable approach</li>
+<li>Some rationale provided</li>
+</ul>
+<hr />
+<h3 id="22-50-59-adequate-with-issues"><a class="header" href="#22-50-59-adequate-with-issues">2:2 (50-59): Adequate with Issues</a></h3>
+<p><strong>Evidence chains</strong>:</p>
+<ul>
+<li>Can trace 1 complete chain</li>
+<li>Data sources vague (e.g., “pilot observations”)</li>
+<li>Before/after metrics partial</li>
+</ul>
+<p><strong>WCAG compliance</strong>:</p>
+<ul>
+<li>15-17/20 checks complete</li>
+<li>1 test method (axe only)</li>
+<li>1-2 Level A violations</li>
+</ul>
+<p><strong>Professional practice</strong>:</p>
+<ul>
+<li>Minor PII issues (correctable)</li>
+<li>Limitations not documented</li>
+<li>No-JS partial</li>
+</ul>
+<p><strong>Code quality</strong>:</p>
+<ul>
+<li>Fixes work but over-engineered</li>
+<li>Limited rationale</li>
+</ul>
+<hr />
+<h3 id="3rd-40-49-minimum-standard"><a class="header" href="#3rd-40-49-minimum-standard">3rd (40-49): Minimum Standard</a></h3>
+<p><strong>Evidence chains</strong>:</p>
+<ul>
+<li>Few complete chains, mostly assertions</li>
+<li>Data sources absent or weak</li>
+<li>Before/after metrics minimal</li>
+</ul>
+<p><strong>WCAG compliance</strong>:</p>
+<ul>
+<li>&lt;15/20 checks complete</li>
+<li>No systematic testing</li>
+<li>2-3 Level A violations</li>
+</ul>
+<p><strong>Professional practice</strong>:</p>
+<ul>
+<li>Documentation issues</li>
+<li>No reflection</li>
+<li>No-JS functional but undocumented</li>
+</ul>
+<p><strong>Code quality</strong>:</p>
+<ul>
+<li>Minimal fixes, unclear impact</li>
+</ul>
+<hr />
+<h3 id="fail-0-39-below-minimum"><a class="header" href="#fail-0-39-below-minimum">Fail (0-39): Below Minimum</a></h3>
+<p><strong>Automatic triggers</strong>:</p>
+<ul>
+<li>Fabrication (data too perfect, no notes, contradictions)</li>
+<li>Severe PII violations (names visible, identifiable IDs)</li>
+<li>Major gaps (n&lt;2, no metrics, no regression, no redesign)</li>
+</ul>
+<p><strong>Or insufficient evidence</strong>:</p>
+<ul>
+<li>No traceable chains</li>
+<li>No WCAG verification</li>
+<li>Unprofessional</li>
+</ul>
+<hr />
+<h2 id="marking-workflow-5-minutes"><a class="header" href="#marking-workflow-5-minutes">Marking Workflow (5 Minutes)</a></h2>
+<p><strong>Minute 1: Quick checks</strong></p>
+<ul>
+<li>Files present? CSV opens? Spot-check 2-3 screenshots for PII</li>
+</ul>
+<p><strong>Minute 2: Pass criteria</strong></p>
+<ul>
+<li>metrics.csv: n=2+? Columns correct?</li>
+<li>findings-table.csv: Links to data sources?</li>
+<li>verification.csv: 20 checks? WCAG Level A pass?</li>
+<li>implementation-diffs.md: Code changes shown?</li>
+</ul>
+<p><strong>Minute 3: Fail triggers</strong></p>
+<ul>
+<li>Fabrication? (too perfect, no notes, contradictions)</li>
+<li>PII violations? (checked in step 1)</li>
+<li>Major gaps? (n&lt;2, no regression, no redesign)</li>
+</ul>
+<p><strong>Minute 4: Quality assessment</strong></p>
+<ul>
+<li>Evidence chains: Complete (70+), Strong (60-69), Adequate (50-59), Weak (40-49)?</li>
+<li>WCAG: Thorough (70+), Mostly (60-69), Some (50-59), Minimal (40-49)?</li>
+<li>Professional: Excellent (70+), Good (60-69), Adequate (50-59), Issues (40-49)?</li>
+</ul>
+<p><strong>Minute 5: Assign mark</strong></p>
+<ul>
+<li>70-100: Excellent (complete, rigorous, professional)</li>
+<li>60-69: Very good (strong with minor gaps)</li>
+<li>50-59: Good (adequate with issues)</li>
+<li>40-49: Pass (meets minimum)</li>
+<li>0-39: Fail (below minimum OR trigger present)</li>
+</ul>
+<p><strong>Record</strong>:</p>
+<ul>
+<li>Mark: [0-100]</li>
+<li>Grade: [First/2:1/2:2/3rd/Fail]</li>
+<li>Outcome: [PASS/FAIL]</li>
+<li>Brief feedback: [2-3 sentences on strengths/gaps]</li>
+</ul>
+<hr />
+<h2 id="feedback-template"><a class="header" href="#feedback-template">Feedback Template</a></h2>
+<h3 id="for-first-70"><a class="header" href="#for-first-70">For First (70+)</a></h3>
+<blockquote>
+<p><strong>Mark</strong>: [70-100]/100
+<strong>Grade</strong>: First Class
+<strong>Outcome</strong>: PASS</p>
+<p><strong>Strengths</strong>: Excellent evidence chains with complete traceability. Thorough WCAG verification with no Level A violations. Professional documentation with honest reporting of limitations. Code fixes are well-integrated and target root causes.</p>
+<p><strong>To improve further</strong>: [Any minor suggestions]</p>
+</blockquote>
+<hr />
+<h3 id="for-21-60-69"><a class="header" href="#for-21-60-69">For 2:1 (60-69)</a></h3>
+<blockquote>
+<p><strong>Mark</strong>: [60-69]/100
+<strong>Grade</strong>: 2:1 (Very Good)
+<strong>Outcome</strong>: PASS</p>
+<p><strong>Strengths</strong>: Strong evidence chains with clear links from data to fixes. Good WCAG verification. Professional presentation.</p>
+<p><strong>To improve</strong>: [Specific gaps - e.g., “Complete all 20 regression checks” or “Add before/after metrics for all fixes”]</p>
+</blockquote>
+<hr />
+<h3 id="for-22-50-59"><a class="header" href="#for-22-50-59">For 2:2 (50-59)</a></h3>
+<blockquote>
+<p><strong>Mark</strong>: [50-59]/100
+<strong>Grade</strong>: 2:2 (Good)
+<strong>Outcome</strong>: PASS</p>
+<p><strong>Strengths</strong>: Evidence chains present. Basic WCAG compliance demonstrated.</p>
+<p><strong>To improve</strong>: Strengthen evidence chains with specific data source links (e.g., metrics.csv line numbers). Complete full regression checklist. Add before/after metrics to show measurable improvement.</p>
+</blockquote>
+<hr />
+<h3 id="for-3rd-40-49"><a class="header" href="#for-3rd-40-49">For 3rd (40-49)</a></h3>
+<blockquote>
+<p><strong>Mark</strong>: [40-49]/100
+<strong>Grade</strong>: Third Class
+<strong>Outcome</strong>: PASS (minimum standard)</p>
+<p><strong>Strengths</strong>: Meets minimum requirements with n=2+ participants and basic evidence.</p>
+<p><strong>To improve</strong>: Build complete evidence chains (data → finding → fix → verification). Complete all 20 WCAG regression checks. Provide clear rationale for prioritisation and fixes. Document limitations and reflect on what worked/didn’t work.</p>
+</blockquote>
+<hr />
+<h3 id="for-fail-0-39"><a class="header" href="#for-fail-0-39">For Fail (0-39)</a></h3>
+<blockquote>
+<p><strong>Mark</strong>: [0-39]/100
+<strong>Grade</strong>: Fail
+<strong>Outcome</strong>: FAIL</p>
+<p><strong>Issue</strong>: [Fabrication / Severe PII violation / Major gaps - specify]</p>
+<p><strong>Required for resubmission</strong>: [Specific requirements to meet minimum standard]</p>
+</blockquote>
+<hr />
+<h2 id="borderline-cases"><a class="header" href="#borderline-cases">Borderline Cases</a></h2>
+<h3 id="39-vs-40-fail-vs-pass"><a class="header" href="#39-vs-40-fail-vs-pass">39 vs 40 (Fail vs Pass)</a></h3>
+<p><strong>40 minimum requires</strong>:</p>
+<ul>
+<li>n=2 participants (verified in metrics.csv)</li>
+<li>3 findings with some data sources</li>
+<li>1 fix with code diff shown</li>
+<li>Partial regression (at least 10/20 checks)</li>
+<li>No fabrication, no severe PII violations</li>
+</ul>
+<p>If any missing → 39 or below (fail)</p>
+<hr />
+<h3 id="49-vs-50-3rd-vs-22"><a class="header" href="#49-vs-50-3rd-vs-22">49 vs 50 (3rd vs 2:2)</a></h3>
+<p><strong>50 minimum requires</strong>:</p>
+<ul>
+<li>Evidence chains present (can trace 1 complete chain)</li>
+<li>WCAG addressed (15-17/20 checks)</li>
+<li>Before/after metrics partial</li>
+<li>Professional presentation</li>
+</ul>
+<p>If evidence chains mostly absent → 49 or below</p>
+<hr />
+<h3 id="59-vs-60-22-vs-21"><a class="header" href="#59-vs-60-22-vs-21">59 vs 60 (2:2 vs 2:1)</a></h3>
+<p><strong>60 minimum requires</strong>:</p>
+<ul>
+<li>Strong evidence chains (can trace 2 complete chains)</li>
+<li>WCAG mostly verified (18-19/20 checks)</li>
+<li>Before/after metrics present</li>
+<li>Professional with minor issues only</li>
+</ul>
+<p>If chains weak or WCAG gaps significant → 59 or below</p>
+<hr />
+<h3 id="69-vs-70-21-vs-first"><a class="header" href="#69-vs-70-21-vs-first">69 vs 70 (2:1 vs First)</a></h3>
+<p><strong>70 minimum requires</strong>:</p>
+<ul>
+<li>All evidence chains rigorous and complete (3+ traceable)</li>
+<li>WCAG thorough (20/20 checks, no Level A violations)</li>
+<li>Honest reporting of limitations</li>
+<li>Professional throughout</li>
+</ul>
+<p>If not rigorous or gaps present → 69 or below</p>
+<hr />
+<h2 id="version-control"><a class="header" href="#version-control">Version Control</a></h2>
+<p><strong>Version</strong>: 1.0 Final
+<strong>Last updated</strong>: 22 November 2025
+<strong>For use</strong>: Academic Year 2025-26
+<strong>Aligned to</strong>: <code>combined-assessment-FINAL.md</code>
+<strong>Marking time</strong>: 5 minutes per portfolio</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assessment/student-faq.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/glossary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assessment/student-faq.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/glossary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Combined Assessment Specification - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="comp2850-hci-combined-evaluation--redesign-assessment"><a class="header" href="#comp2850-hci-combined-evaluation--redesign-assessment">COMP2850 HCI: Combined Evaluation &amp; Redesign Assessment</a></h1>
+<p><strong>Academic Year</strong>: 2025-26
+<strong>Assessment Type</strong>: Coursework (Pass/Fail with 0-100 grading)
+<strong>Timeline</strong>: Weeks 9-11 (Launch Week 9, Due end Week 10)
+<strong>Pass Threshold</strong>: 40/100 marks</p>
+<hr />
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p><strong>What</strong>: Evidence-based portfolio combining evaluation and redesign in a single submission</p>
+<p><strong>Why</strong>: Demonstrate HCI competence through rigorous evaluation → data-driven redesign → verified improvement</p>
+<p><strong>How</strong>: Run peer pilots (n=2 min), collect metrics, implement accessibility fixes, verify with regression testing</p>
+<p><strong>Format</strong>: Evidence artifacts (CSV, tables, code diffs, screenshots) + minimal prose (~100-200 words)</p>
+<hr />
+<h2 id="timeline"><a class="header" href="#timeline">Timeline</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Week</th><th>Phase</th><th>Activity</th><th>Deliverable</th></tr></thead><tbody>
+<tr><td><strong>Week 9 Lab 1</strong></td><td>Launch</td><td>Assessment introduced, instrumentation setup</td><td>Logger.kt working</td></tr>
+<tr><td><strong>Week 9 Lab 2</strong></td><td>Evaluation</td><td>Run n=2-4 peer pilots, collect metrics</td><td>metrics.csv complete</td></tr>
+<tr><td><strong>Week 10 Lab 1</strong></td><td>Analysis</td><td>Analyse data, prioritise fixes</td><td>findings-table.csv complete</td></tr>
+<tr><td><strong>Week 10 Lab 2</strong></td><td>Redesign</td><td>Implement 1-3 fixes, regression test, re-pilot n=1</td><td>Peer review draft</td></tr>
+<tr><td><strong>End Week 10</strong></td><td><strong>Submission</strong></td><td><strong>Submit complete portfolio to Gradescope</strong></td><td><strong>Final portfolio (pass/fail)</strong></td></tr>
+<tr><td><strong>Week 11</strong></td><td>Refinement (optional)</td><td>Final polish if needed, early marking available in labs</td><td>—</td></tr>
+</tbody></table>
+</div>
+<p><strong>Deadline</strong>: <strong>End of Week 10</strong> — We strongly encourage submission by this date.</p>
+<p><strong>Week 11</strong>: Labs available for final questions and early marking for those who submit. Use this time for refinement if needed, but aim to complete by end of Week 10.</p>
+<p><strong>Total student time</strong>: 12-15 hours across Weeks 9-10</p>
+<hr />
+<h2 id="learning-outcomes-assessed-all-13"><a class="header" href="#learning-outcomes-assessed-all-13">Learning Outcomes Assessed (All 13)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>LO</th><th>Outcome</th><th>Evidence Location</th></tr></thead><tbody>
+<tr><td><strong>LO1</strong></td><td>Differentiate methodologies</td><td>Task design rationale (protocol.md)</td></tr>
+<tr><td><strong>LO2</strong></td><td>Needs-finding</td><td>Tasks linked to Week 6 job stories (protocol.md)</td></tr>
+<tr><td><strong>LO3</strong></td><td>Ethical implications</td><td>Consent process, PII handling (evidence/README.md)</td></tr>
+<tr><td><strong>LO4</strong></td><td>Accessibility evaluation</td><td>Regression checklist (verification.csv)</td></tr>
+<tr><td><strong>LO5</strong></td><td>Prototyping</td><td>Code implementation (implementation-diffs.md)</td></tr>
+<tr><td><strong>LO6</strong></td><td>Iterative design</td><td>Evaluation → redesign flow (entire portfolio)</td></tr>
+<tr><td><strong>LO7</strong></td><td>Design constraints</td><td>No-JS parity analysis (verification.csv)</td></tr>
+<tr><td><strong>LO8</strong></td><td>Evaluation execution</td><td>Pilot data (metrics.csv, pilot-notes/)</td></tr>
+<tr><td><strong>LO9</strong></td><td>Inclusive design</td><td>WCAG compliance (verification.csv, findings-table.csv)</td></tr>
+<tr><td><strong>LO10</strong></td><td>Societal critique</td><td>Systemic barriers (findings-table.csv “inclusion” column)</td></tr>
+<tr><td><strong>LO11</strong></td><td>Collaboration</td><td>Peer pilots, peer review (pilot-notes/, peer-review.md)</td></tr>
+<tr><td><strong>LO12</strong></td><td>Professionalism</td><td>Evidence chains, honest reporting (findings-table.csv)</td></tr>
+<tr><td><strong>LO13</strong></td><td>HCI+SE integration</td><td>Server instrumentation, routing (metrics.csv, diffs)</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="deliverables-6-files--evidence-folder"><a class="header" href="#deliverables-6-files--evidence-folder">Deliverables (6 Files + Evidence Folder)</a></h2>
+<p>Students submit <strong>ONE</strong> complete portfolio containing:</p>
+<h3 id="1-protocol-tasksmd-bullet-format-minimal-prose"><a class="header" href="#1-protocol-tasksmd-bullet-format-minimal-prose">1. <code>protocol-tasks.md</code> (Bullet format, minimal prose)</a></h3>
+<p><strong>Content</strong>:</p>
+<ul>
+<li>4-5 evaluation tasks (scenario, action, success, target time)</li>
+<li>Consent script (verbatim, with rights/withdrawal)</li>
+<li>Link to Week 6 job stories (LO2 evidence)</li>
+</ul>
+<p><strong>Format</strong>: Bullet lists, no essay paragraphs</p>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown">## Task 3: Add Task
+- **Scenario**: Track new deadline "Buy milk"
+- **Action**: Add task with title "Buy milk"
+- **Success**: Task appears in list, no errors
+- **Target**: &lt;10 seconds
+- **Linked to**: Week 6 Job Story #2 ("quickly add tasks")
+</code></pre>
+<p><strong>Word count</strong>: ~50-100 words (just scenario context)</p>
+<hr />
+<h3 id="2-findings-tablecsv-evidence-chains-as-structured-data"><a class="header" href="#2-findings-tablecsv-evidence-chains-as-structured-data">2. <code>findings-table.csv</code> (Evidence chains as structured data)</a></h3>
+<p><strong>Content</strong>: Each finding as a row with evidence sources</p>
+<p><strong>Columns</strong>:</p>
+<pre><code class="language-csv">finding,data_source,observation,wcag,impact,inclusion,effort,priority
+SR errors not announced,metrics.csv L47-49 + P2 notes 14:23,"P2: 'didn't hear error'",3.3.1 Level A,5,5,3,7
+Keyboard trap on filter,P3 notes 09:12 + screenshot-02.png,"Tab stuck after filter button",2.1.1 Level A,4,5,2,7
+</code></pre>
+<p><strong>Formula</strong>: <code>Priority = (Impact + Inclusion) - Effort</code></p>
+<p><strong>Word count</strong>: 0 (pure data, quotes in observation column)</p>
+<hr />
+<h3 id="3-metricscsv-raw-pilot-data-from-loggerkt"><a class="header" href="#3-metricscsv-raw-pilot-data-from-loggerkt">3. <code>metrics.csv</code> (Raw pilot data from Logger.kt)</a></h3>
+<p><strong>Content</strong>: Server-side instrumentation output</p>
+<p><strong>Format</strong>: Standard Week 9 Lab 1 schema</p>
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+2025-11-22T14:18:23.456Z,P1_a7f3,req_001,T1_add,success,,890,200,on
+2025-11-22T14:19:02.123Z,P2_9d2e,req_003,T2_edit,validation_error,blank_title,0,400,on
+</code></pre>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>n=2 minimum participants (n=4 ideal)</li>
+<li>Anonymous session IDs (P1_xxxx, P2_xxxx format)</li>
+<li>All 9 columns present</li>
+<li>No PII (no names, emails, student IDs)</li>
+</ul>
+<p><strong>Word count</strong>: 0 (data only)</p>
+<hr />
+<h3 id="4-implementation-diffsmd-beforeafter-code-minimal-narrative"><a class="header" href="#4-implementation-diffsmd-beforeafter-code-minimal-narrative">4. <code>implementation-diffs.md</code> (Before/after code, minimal narrative)</a></h3>
+<p><strong>Content</strong>: 1-3 fixes with code changes</p>
+<p><strong>Format</strong>: Before snippet → After snippet → Impact statement</p>
+<p><strong>Example</strong>:</p>
+<pre><code class="language-markdown">## Fix 1: Accessible Error Announcement
+
+**Before** (routes/TaskRoutes.kt:45):
+```kotlin
+val error = "Title required"  // ❌ No ARIA
+call.respondText(error, ContentType.Text.Html)
+</code></pre>
+<p><strong>After</strong> (routes/TaskRoutes.kt:45):</p>
+<pre><code class="language-kotlin">val error = """&lt;span role="alert" aria-live="assertive"&gt;Title required&lt;/span&gt;"""  // ✅ ARIA
+call.respondText(error, ContentType.Text.Html)
+</code></pre>
+<p><strong>Impact</strong>: SR users now hear validation errors (WCAG 3.3.1 Level A pass)
+<strong>Verification</strong>: verification.csv row 12 shows pass</p>
+<p>[1-3 fixes total]</p>
+<pre><code>
+**Word count**: ~50-100 words (just "Impact" statements)
+
+---
+
+### 5. `verification.csv` (Regression + before/after as data)
+
+**Part A: Regression Checklist (20 checks)**
+```csv
+check,criterion,level,result,notes
+Keyboard nav,2.1.1 Keyboard,A,pass,All features work via Tab/Enter
+Error ID,3.3.1 Error identification,A,pass,Errors have role=alert (FIXED)
+Status msgs,4.1.3 Status messages,AA,pass,Status div has role=status
+No-JS parity,Full feature parity,—,pass,POST-Redirect-GET working
+Contrast,1.4.3 Contrast minimum,AA,pass,All text 7.1:1 (AAA)
+...
+[20 rows total across: Keyboard(5), Forms(3), Dynamic(3), No-JS(3), Visual(3), Semantic(3)]
+</code></pre>
+<p><strong>Part B: Before/After Comparison</strong></p>
+<pre><code class="language-csv">metric,before_wk9,after_wk10,change,target_met
+SR error detection,0/2 (0%),2/2 (100%),+100%,✅
+Validation error rate,33%,0%,-33%,✅
+Median time T2 edit,1400ms,1150ms,-250ms,✅
+WCAG 3.3.1 pass,fail,pass,—,✅
+</code></pre>
+<p><strong>Word count</strong>: 0 (data + checkmarks only)</p>
+<hr />
+<h3 id="6-evidence-screenshots-pilot-notes-minimal-annotations"><a class="header" href="#6-evidence-screenshots-pilot-notes-minimal-annotations">6. <code>evidence/</code> (Screenshots, pilot notes, minimal annotations)</a></h3>
+<p><strong>Structure</strong>:</p>
+<pre><code>evidence/
+├── screenshots/
+│   ├── before-sr-error.png
+│   ├── after-sr-error.png
+│   ├── regression-axe-report.png
+│   └── annotations.csv (filename, alt_text, context)
+├── pilot-notes/
+│   ├── P1-notes.md (timestamped observations, quotes)
+│   ├── P2-notes.md
+│   └── consent-log.md (optional: "P1 consented 14:05, P2 consented 14:22")
+└── README.md (privacy statement, evidence chain index)
+</code></pre>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>All screenshots cropped/blurred (no PII)</li>
+<li>Pilot notes timestamped (for evidence chain links)</li>
+<li>annotations.csv provides alt text + context</li>
+</ul>
+<p><strong>Word count</strong>: ~50 words (alt text in annotations.csv)</p>
+<hr />
+<h2 id="total-word-count-100-200-words"><a class="header" href="#total-word-count-100-200-words">Total Word Count: ~100-200 words</a></h2>
+<p><strong>Where minimal prose appears</strong>:</p>
+<ul>
+<li>Task scenarios (50-100 words)</li>
+<li>Impact statements (50-100 words)</li>
+<li>Alt text annotations (50 words)</li>
+</ul>
+<p><strong>Everything else</strong>: CSV data, tables, code, checklists (0 prose)</p>
+<hr />
+<h2 id="participant-requirements-flexible"><a class="header" href="#participant-requirements-flexible">Participant Requirements (Flexible)</a></h2>
+<p><strong>Evaluation Phase</strong> (Week 9):</p>
+<ul>
+<li><strong>Minimum</strong>: n=2 peer pilots</li>
+<li><strong>Ideal</strong>: n=4 peer pilots</li>
+<li><strong>Variant requirement</strong>: At least 1 non-standard variant (keyboard-only OR screen reader OR no-JS)</li>
+</ul>
+<p><strong>Verification Phase</strong> (Week 10):</p>
+<ul>
+<li><strong>Minimum</strong>: n=1 re-pilot (must use appropriate variant for fix — e.g., SR user if fixing SR issue)</li>
+<li><strong>Ideal</strong>: n=2 re-pilots (better comparison)</li>
+</ul>
+<p><strong>Rationale</strong>:</p>
+<ul>
+<li>n=2 shows pattern (not anecdotal)</li>
+<li>Flexible for scheduling/availability</li>
+<li>Quality over quantity (1 SR user &gt; 4 mouse users if fixing SR accessibility)</li>
+</ul>
+<hr />
+<h2 id="pass-criteria-must-meet-all"><a class="header" href="#pass-criteria-must-meet-all">Pass Criteria (Must Meet ALL)</a></h2>
+<p>✅ <strong>Evidence Complete</strong>:</p>
+<ul>
+<li>metrics.csv present with n=2+ participants</li>
+<li>findings-table.csv has 3+ findings with evidence sources</li>
+<li>verification.csv has all 20 regression checks completed</li>
+<li>implementation-diffs.md shows 1-3 code changes</li>
+</ul>
+<p>✅ <strong>Evidence Chains</strong>:</p>
+<ul>
+<li>findings-table.csv “data_source” column links to metrics.csv line numbers OR pilot notes timestamps</li>
+<li>implementation-diffs.md references findings from findings-table.csv</li>
+<li>verification.csv shows before/after metrics for implemented fixes</li>
+</ul>
+<p>✅ <strong>WCAG Compliance</strong>:</p>
+<ul>
+<li>verification.csv shows no Level A violations remaining</li>
+<li>At least 1 WCAG criterion improved (fail → pass)</li>
+</ul>
+<p>✅ <strong>Professional Practice</strong>:</p>
+<ul>
+<li>No PII violations (screenshots cropped, session IDs anonymous)</li>
+<li>Honest reporting (if fix didn’t improve metrics, limitation acknowledged in verification.csv notes)</li>
+<li>No-JS parity maintained (verification.csv shows both paths functional)</li>
+</ul>
+<hr />
+<h2 id="fail-triggers-any-one-causes-fail"><a class="header" href="#fail-triggers-any-one-causes-fail">Fail Triggers (Any ONE Causes Fail)</a></h2>
+<p>❌ <strong>Fabrication</strong> (automatic 0 marks):</p>
+<ul>
+<li>Data too perfect (all success, no errors, unrealistic times)</li>
+<li>No pilot notes (pilots didn’t happen)</li>
+<li>Metrics contradict claims (e.g., findings say n=4 but CSV shows n=2)</li>
+</ul>
+<p>❌ <strong>Severe PII Violations</strong> (-10 marks + ethics fail):</p>
+<ul>
+<li>Names, emails, student IDs visible in screenshots</li>
+<li>Identifiable session IDs (real names used)</li>
+<li>Participant consent not documented</li>
+</ul>
+<p>❌ <strong>Major Gaps</strong> (0 marks for missing section):</p>
+<ul>
+<li>n&lt;2 participants OR no metrics.csv</li>
+<li>No regression checklist OR &lt;10 checks completed</li>
+<li>No redesign implemented OR no code diffs shown</li>
+<li>No before/after comparison</li>
+</ul>
+<hr />
+<h2 id="grading-scale-passfail-outcome-0-100-marks"><a class="header" href="#grading-scale-passfail-outcome-0-100-marks">Grading Scale (Pass/Fail Outcome, 0-100 Marks)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Mark Range</th><th>Grade Descriptor</th><th>Outcome</th></tr></thead><tbody>
+<tr><td><strong>70-100</strong></td><td><strong>Excellent (First)</strong>: All evidence chains rigorous and complete. WCAG compliance thoroughly verified. Thoughtful prioritisation. Professional documentation. Honest limitations acknowledged.</td><td><strong>PASS</strong></td></tr>
+<tr><td><strong>60-69</strong></td><td><strong>Very Good (2:1)</strong>: Strong evidence chains with minor gaps. WCAG mostly verified. Good prioritisation. Professional documentation with minor issues.</td><td><strong>PASS</strong></td></tr>
+<tr><td><strong>50-59</strong></td><td><strong>Good (2:2)</strong>: Evidence chains present but incomplete. Some WCAG compliance. Basic prioritisation. Adequate documentation.</td><td><strong>PASS</strong></td></tr>
+<tr><td><strong>40-49</strong></td><td><strong>Adequate (3rd)</strong>: Weak evidence chains. Minimal WCAG compliance. Ad-hoc prioritisation. Documentation has issues but meets minimum.</td><td><strong>PASS</strong></td></tr>
+<tr><td><strong>0-39</strong></td><td><strong>Fail</strong>: No evidence chains OR fabrication OR severe PII violations OR major gaps. Does not meet minimum standard.</td><td><strong>FAIL</strong></td></tr>
+</tbody></table>
+</div>
+<p><strong>Students receive</strong>:</p>
+<ol>
+<li><strong>Mark</strong>: e.g., “67/100”</li>
+<li><strong>Grade descriptor</strong>: e.g., “2:1 standard - Very Good”</li>
+<li><strong>Outcome</strong>: “PASS” or “FAIL”</li>
+<li><strong>Feedback</strong>: Where criteria met/missed</li>
+</ol>
+<hr />
+<h2 id="peer-review-week-10-lab-2"><a class="header" href="#peer-review-week-10-lab-2">Peer Review (Week 10 Lab 2)</a></h2>
+<p><strong>Format</strong>: In-lab structured session, 2 mins per peer</p>
+<p><strong>Checklist</strong>:</p>
+<pre><code class="language-markdown">## Evidence Check (2 mins)
+- [ ] ✅ / ❌ — metrics.csv present and opens
+- [ ] ✅ / ❌ — findings-table.csv has data (3+ rows)
+- [ ] ✅ / ❌ — verification.csv complete (20 checks)
+- [ ] ✅ / ❌ — implementation-diffs.md shows code changes
+- [ ] ✅ / ❌ — No PII visible in screenshots
+
+**On track to pass?** Yes / No / Borderline
+**If No/Borderline, missing:** ___________
+</code></pre>
+<p><strong>Process</strong>:</p>
+<ol>
+<li>Form groups of 4 (20 groups per 80-student lab)</li>
+<li>Each student reviews 2 peers (4 mins total)</li>
+<li>Give structured feedback (1 min per peer)</li>
+<li>Staff circulate, answer questions, flag at-risk students</li>
+</ol>
+<hr />
+<h2 id="staff-marking-5-minutes-per-portfolio"><a class="header" href="#staff-marking-5-minutes-per-portfolio">Staff Marking (5 Minutes Per Portfolio)</a></h2>
+<p><strong>Decision tree</strong>:</p>
+<ol>
+<li>
+<p><strong>Quick checks</strong> (1 min):</p>
+<ul>
+<li>6 files present?</li>
+<li>CSV files open?</li>
+<li>Spot-check 2-3 screenshots for PII</li>
+</ul>
+</li>
+<li>
+<p><strong>Pass criteria</strong> (2 mins):</p>
+<ul>
+<li>metrics.csv: n=2+? Columns correct?</li>
+<li>findings-table.csv: Links to data sources?</li>
+<li>verification.csv: 20 checks complete? WCAG Level A pass?</li>
+<li>implementation-diffs.md: Code changes shown?</li>
+</ul>
+</li>
+<li>
+<p><strong>Fail triggers</strong> (1 min):</p>
+<ul>
+<li>Fabrication indicators? (too perfect, no notes, contradictions)</li>
+<li>PII violations? (checked in step 1)</li>
+<li>Major gaps? (n&lt;2, no regression, no redesign)</li>
+</ul>
+</li>
+<li>
+<p><strong>Assign mark</strong> (1 min):</p>
+<ul>
+<li>70-100: Excellent (complete, rigorous, professional)</li>
+<li>60-69: Very good (strong with minor gaps)</li>
+<li>50-59: Good (adequate with issues)</li>
+<li>40-49: Pass (meets minimum)</li>
+<li>0-39: Fail (below minimum OR trigger present)</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="alignment-to-mdbook-content"><a class="header" href="#alignment-to-mdbook-content">Alignment to Mdbook Content</a></h2>
+<p><strong>Week 9 Lab 1</strong>: Server-side instrumentation (Logger.kt) → produces metrics.csv
+<strong>Week 9 Lab 2</strong>: Pilot execution, data collection → produces pilot-notes/, metrics.csv
+<strong>Week 10 Lab 1</strong>: Data analysis (Analyse.kt script provided) → produces findings-table.csv
+<strong>Week 10 Lab 2</strong>: Implementation + regression testing → produces diffs + verification.csv</p>
+<p><strong>Perfect alignment</strong> ✅ — students use exact labs content to complete assessment</p>
+<hr />
+<h2 id="common-questions"><a class="header" href="#common-questions">Common Questions</a></h2>
+<p><strong>Q: Can I use n=2 participants instead of n=4?</strong>
+A: Yes. n=2 is minimum acceptable. n=4 is ideal (shows stronger patterns) but not required.</p>
+<p><strong>Q: Do I need to write essays?</strong>
+A: No. This is evidence-based. Total prose: ~100-200 words (task scenarios, impact statements, alt text). Rest is CSV/tables/code.</p>
+<p><strong>Q: What if my fix doesn’t improve metrics?</strong>
+A: Document honestly in verification.csv notes column. Analyse why (sample size? wrong fix? needs iteration?). Honesty valued over perfect results.</p>
+<p><strong>Q: Can I pilot with friends?</strong>
+A: Yes, if they consent. Peer pilots are ideal. Just document consent process.</p>
+<p><strong>Q: What if I can’t find participants?</strong>
+A: Post in module discussion forum. Coordinate with lab peers. TAs can help connect students needing participants.</p>
+<p><strong>Q: Can I use AI tools (e.g., ChatGPT, Claude, Copilot)?</strong>
+A: Yes for code generation (must cite: “Generated with X”). No for analysis/findings (must be your own thinking).</p>
+<hr />
+<p><strong>Version</strong>: 1.0 Final
+<strong>Last updated</strong>: 22 November 2025
+<strong>For use</strong>: Academic Year 2025-26</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../wk11/wk11-lab2-student-guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../assessment/submission-template.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../wk11/wk11-lab2-student-guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../assessment/submission-template.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

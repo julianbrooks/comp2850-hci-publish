@@ -1,0 +1,520 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Student FAQ - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="comp2850-hci-assessment-faq"><a class="header" href="#comp2850-hci-assessment-faq">COMP2850 HCI: Assessment FAQ</a></h1>
+<p><strong>Academic Year</strong>: 2025-26
+<strong>Assessment</strong>: Combined Evaluation &amp; Redesign Portfolio
+<strong>Timeline</strong>: Weeks 9-11</p>
+<hr />
+<h2 id="general-questions"><a class="header" href="#general-questions">General Questions</a></h2>
+<h3 id="q-what-am-i-submitting"><a class="header" href="#q-what-am-i-submitting">Q: What am I submitting?</a></h3>
+<p><strong>A</strong>: One complete portfolio with these files:</p>
+<ol>
+<li><strong>submission-template.md</strong> — Single markdown file (all sections filled in)</li>
+<li><strong>evidence/</strong> folder — Screenshots (no PII), pilot notes</li>
+</ol>
+<p>Total word count: ~100-200 words (evidence-based, not essay!)</p>
+<h3 id="q-when-is-the-deadline"><a class="header" href="#q-when-is-the-deadline">Q: When is the deadline?</a></h3>
+<p><strong>A</strong>: End of Week 10 (submit via Gradescope)</p>
+<p>Timeline:</p>
+<ul>
+<li><strong>Week 9</strong>: Run peer pilots, collect metrics.csv</li>
+<li><strong>Week 10</strong>: Implement fixes, regression test, peer review</li>
+<li><strong>Week 11</strong>: Incorporate feedback, final polish, submit</li>
+</ul>
+<h3 id="q-is-this-passfail"><a class="header" href="#q-is-this-passfail">Q: Is this pass/fail?</a></h3>
+<p><strong>A</strong>: Yes, pass/fail <strong>outcome</strong> (40% threshold), but you also receive a <strong>0-100 mark</strong> for formative feedback showing quality level:</p>
+<ul>
+<li>70-100: First (excellent)</li>
+<li>60-69: 2:1 (very good)</li>
+<li>50-59: 2:2 (good)</li>
+<li>40-49: 3rd (minimum pass)</li>
+<li>0-39: Fail</li>
+</ul>
+<hr />
+<h2 id="participants--pilots"><a class="header" href="#participants--pilots">Participants &amp; Pilots</a></h2>
+<h3 id="q-how-many-participants-do-i-need"><a class="header" href="#q-how-many-participants-do-i-need">Q: How many participants do I need?</a></h3>
+<p><strong>A</strong>: Minimum n=2, ideal n=4</p>
+<p><strong>Why n=2 minimum?</strong> Shows pattern (not anecdotal evidence)
+<strong>Why not require n=4?</strong> Flexible for scheduling/availability</p>
+<p><strong>Variant requirement</strong>: At least 1 non-standard variant (keyboard-only OR screen reader OR no-JS)</p>
+<h3 id="q-can-i-pilot-with-friends"><a class="header" href="#q-can-i-pilot-with-friends">Q: Can I pilot with friends?</a></h3>
+<p><strong>A</strong>: Yes, if they consent! Peer pilots are ideal. Just document consent process (read script verbatim, record timestamp).</p>
+<h3 id="q-what-if-i-cant-find-participants"><a class="header" href="#q-what-if-i-cant-find-participants">Q: What if I can’t find participants?</a></h3>
+<p><strong>A</strong>:</p>
+<ul>
+<li>Post in module discussion forum (“seeking pilot participants”)</li>
+<li>Coordinate with lab peers</li>
+<li>Ask TAs to help connect students</li>
+<li>Pilots can happen outside lab time (just by Week 9 deadline)</li>
+</ul>
+<h3 id="q-can-i-test-on-the-same-participants-for-re-pilots-verification"><a class="header" href="#q-can-i-test-on-the-same-participants-for-re-pilots-verification">Q: Can I test on the same participants for re-pilots (verification)?</a></h3>
+<p><strong>A</strong>: Yes, if they consent. They’re now “expert users” — document this limitation in verification.csv notes.</p>
+<h3 id="q-what-if-i-only-get-n1-participant"><a class="header" href="#q-what-if-i-only-get-n1-participant">Q: What if I only get n=1 participant?</a></h3>
+<p><strong>A</strong>: That’s below minimum. Run at least 1 more pilot. n=2 is required to show pattern. If genuinely stuck despite effort, talk to TA about extension.</p>
+<hr />
+<h2 id="what-to-submit"><a class="header" href="#what-to-submit">What to Submit</a></h2>
+<h3 id="q-do-i-need-to-write-essays"><a class="header" href="#q-do-i-need-to-write-essays">Q: Do I need to write essays?</a></h3>
+<p><strong>A</strong>: No! This is evidence-based. Total prose: ~100-200 words (task scenarios, impact statements, alt text). Everything else is CSV, tables, code diffs, checklists.</p>
+<p>Example:</p>
+<ul>
+<li>❌ Essay: “I improved accessibility by conducting rigorous WCAG evaluations and implementing comprehensive ARIA enhancements across multiple interface components…”</li>
+<li>✅ Evidence: findings-table.csv → implementation-diffs.md → verification.csv (data → fix → verification)</li>
+</ul>
+<h3 id="q-what-files-do-i-submit"><a class="header" href="#q-what-files-do-i-submit">Q: What files do I submit?</a></h3>
+<p><strong>A</strong>:</p>
+<ol>
+<li><strong>submission-template.md</strong> (completed) — One file with all sections</li>
+<li><strong>evidence/</strong> folder containing:
+<ul>
+<li>Screenshots (before/after, no PII)</li>
+<li>Pilot notes (P1-notes.md, P2-notes.md, etc.)</li>
+</ul>
+</li>
+</ol>
+<p>metrics.csv can be pasted into submission-template.md Section 3 OR attached separately.</p>
+<h3 id="q-how-do-i-scrub-pii"><a class="header" href="#q-how-do-i-scrub-pii">Q: How do I scrub PII?</a></h3>
+<p><strong>A</strong>: Before submission:</p>
+<ul>
+<li>Crop screenshots to show only relevant UI (no browser bookmarks, tabs, usernames)</li>
+<li>Use anonymous session IDs (P1_xxxx format, not real names)</li>
+<li>Blur any visible names, emails, student IDs</li>
+<li>Check pilot notes use participant codes (P1, P2) not names</li>
+</ul>
+<p><strong>Critical</strong>: Severe PII violations (names/emails visible) = automatic fail.</p>
+<hr />
+<h2 id="evidence--data"><a class="header" href="#evidence--data">Evidence &amp; Data</a></h2>
+<h3 id="q-what-if-my-data-is-too-messy-lots-of-errors"><a class="header" href="#q-what-if-my-data-is-too-messy-lots-of-errors">Q: What if my data is “too messy” (lots of errors)?</a></h3>
+<p><strong>A</strong>: That’s <strong>good</strong> data! Real evaluation shows errors, confusion, failures. Report honestly.</p>
+<p>Fabricated data (100% success, no errors, unrealistic times) is a fail trigger. Authentic data (even messy) is valued.</p>
+<h3 id="q-what-if-my-fix-didnt-improve-metrics"><a class="header" href="#q-what-if-my-fix-didnt-improve-metrics">Q: What if my fix didn’t improve metrics?</a></h3>
+<p><strong>A</strong>: Document honestly! Analyse why:</p>
+<ul>
+<li>Small sample size (n=2 may not show clear improvement)</li>
+<li>Wrong fix (addressed symptom not root cause)</li>
+<li>Need more iteration</li>
+</ul>
+<p>In verification.csv notes, write: “Fix did not improve metrics, likely because [small n / wrong diagnosis / needs different approach].”</p>
+<p><strong>Honest reporting is professional practice</strong> (LO12). Fabricating improvement is fail.</p>
+<h3 id="q-my-metricscsv-is-huge-200-rows-do-i-submit-it-all"><a class="header" href="#q-my-metricscsv-is-huge-200-rows-do-i-submit-it-all">Q: My metrics.csv is huge (200+ rows). Do I submit it all?</a></h3>
+<p><strong>A</strong>: Yes! Paste all rows in submission-template.md Section 3 OR attach as separate file. Staff use this to verify patterns.</p>
+<p>If truly massive (500+ rows), attach as separate file and note in template: “See attached metrics.csv”.</p>
+<hr />
+<h2 id="technical-questions"><a class="header" href="#technical-questions">Technical Questions</a></h2>
+<h3 id="q-loggerkt-isnt-working-help"><a class="header" href="#q-loggerkt-isnt-working-help">Q: Logger.kt isn’t working. Help!</a></h3>
+<p><strong>Common issues</strong>:</p>
+<ol>
+<li><strong>File not created</strong>: Check project root for metrics.csv. If missing, check Logger.kt init block.</li>
+<li><strong>No rows appearing</strong>: Check you’re calling Logger.log() in route handlers.</li>
+<li><strong>JS mode always “on”</strong>: Check HX-Request header detection (<code>call.request.headers["HX-Request"] == "true"</code>).</li>
+<li><strong>Doesn’t work in no-JS mode</strong>: Logger.kt is server-side (should work). Check routing — are no-JS requests reaching your POST handler?</li>
+</ol>
+<p><strong>Still stuck?</strong> Ask in lab or module forum with specific error message.</p>
+<h3 id="q-can-i-use-ai-tools-chatgpt-claude-copilot"><a class="header" href="#q-can-i-use-ai-tools-chatgpt-claude-copilot">Q: Can I use AI tools (ChatGPT, Claude, Copilot)?</a></h3>
+<p><strong>A</strong>: Yes for code generation (must cite in submission).
+<strong>No</strong> for analysis/findings (must be your own thinking).</p>
+<p>Example citation in submission-template.md Privacy Statement:</p>
+<blockquote>
+<p>“AI tools used: GitHub Copilot for route handler boilerplate (implementation-diffs.md Fix #1, lines 45-67)”</p>
+</blockquote>
+<h3 id="q-what-if-i-break-my-prototype-while-implementing-fixes"><a class="header" href="#q-what-if-i-break-my-prototype-while-implementing-fixes">Q: What if I break my prototype while implementing fixes?</a></h3>
+<p><strong>A</strong>: Use git! Commit working baseline before making changes:</p>
+<pre><code class="language-bash">git add .
+git commit -m "Baseline before fixes (Week 10)"
+</code></pre>
+<p>If fix breaks things:</p>
+<pre><code class="language-bash">git checkout [filename]  # Revert specific file
+</code></pre>
+<p>Or start fix on a branch:</p>
+<pre><code class="language-bash">git checkout -b fix-sr-errors
+</code></pre>
+<hr />
+<h2 id="grading--quality"><a class="header" href="#grading--quality">Grading &amp; Quality</a></h2>
+<h3 id="q-what-makes-a-first-70"><a class="header" href="#q-what-makes-a-first-70">Q: What makes a First (70+)?</a></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>All evidence chains rigorous and complete (can trace 3+ findings from data → fix → verification)</li>
+<li>WCAG compliance thorough (20/20 regression checks, no Level A violations)</li>
+<li>Professional documentation (no PII, honest reporting of limitations)</li>
+<li>Code fixes target root causes, well-integrated</li>
+<li>Before/after metrics show measurable improvement (or honest analysis)</li>
+</ul>
+<p><strong>Example</strong>: Finding #1 traceable: metrics.csv L47-49 → pilot notes P2 14:23 → findings table → Fix #1 diffs → verification.csv 3.3.1 pass → before/after 0% → 100%.</p>
+<h3 id="q-whats-the-minimum-to-pass-40"><a class="header" href="#q-whats-the-minimum-to-pass-40">Q: What’s the minimum to pass (40)?</a></h3>
+<p><strong>Minimum requires</strong>:</p>
+<ul>
+<li>n=2 participants (verified in metrics.csv)</li>
+<li>3 findings with some data sources (even if vague)</li>
+<li>1 fix with code diff shown</li>
+<li>Partial regression (at least 10/20 checks, ideally 20)</li>
+<li>No fabrication, no severe PII violations</li>
+</ul>
+<h3 id="q-do-i-need-to-fix-all-my-findings"><a class="header" href="#q-do-i-need-to-fix-all-my-findings">Q: Do I need to fix ALL my findings?</a></h3>
+<p><strong>A</strong>: No! Focus on 1-3 high-priority issues. Quality over quantity.</p>
+<p><strong>Good approach</strong>:</p>
+<ul>
+<li>Prioritise using (Impact + Inclusion) - Effort</li>
+<li>Select top 2-3 fixes</li>
+<li>Verify thoroughly</li>
+</ul>
+<p><strong>Bad approach</strong>:</p>
+<ul>
+<li>Try to fix 8 issues</li>
+<li>Half-finish all of them</li>
+<li>Poor verification</li>
+</ul>
+<h3 id="q-can-i-introduce-new-features"><a class="header" href="#q-can-i-introduce-new-features">Q: Can I introduce new features?</a></h3>
+<p><strong>A</strong>: No. This is <strong>redesign</strong>, not new feature development. Fix existing usability issues only.</p>
+<hr />
+<h2 id="peer-review-week-10-lab-2"><a class="header" href="#peer-review-week-10-lab-2">Peer Review (Week 10 Lab 2)</a></h2>
+<h3 id="q-what-is-peer-review"><a class="header" href="#q-what-is-peer-review">Q: What is peer review?</a></h3>
+<p><strong>A</strong>: Structured in-lab session (15 mins) where groups of 4 review each other’s portfolios using a checklist. Focus: Are files present? n=2+? 3+ findings? PII scrubbed?</p>
+<p><strong>Not graded</strong>. Helps you catch gaps before final submission.</p>
+<h3 id="q-what-if-my-peer-gives-me-conflicting-feedback"><a class="header" href="#q-what-if-my-peer-gives-me-conflicting-feedback">Q: What if my peer gives me conflicting feedback?</a></h3>
+<p><strong>A</strong>: Peer review is formative (not binding). Consider their perspective — if they couldn’t find your evidence in 2 minutes, staff might struggle too. Make links clearer.</p>
+<h3 id="q-what-if-i-disagree-with-my-peers-assessment"><a class="header" href="#q-what-if-i-disagree-with-my-peers-assessment">Q: What if I disagree with my peer’s assessment?</a></h3>
+<p><strong>A</strong>: That’s fine. Use feedback to improve, but trust your own judgment. If peer says “missing files” but you have them, double-check file names match submission-template.md references.</p>
+<hr />
+<h2 id="common-pitfalls"><a class="header" href="#common-pitfalls">Common Pitfalls</a></h2>
+<h3 id="pitfall-1-trying-to-fix-everything"><a class="header" href="#pitfall-1-trying-to-fix-everything">Pitfall 1: Trying to fix everything</a></h3>
+<p><strong>Problem</strong>: 8 issues identified, try to fix all, run out of time
+<strong>Solution</strong>: Prioritise 2-3 high-priority fixes using (Impact + Inclusion) - Effort</p>
+<h3 id="pitfall-2-vague-data-sources"><a class="header" href="#pitfall-2-vague-data-sources">Pitfall 2: Vague data sources</a></h3>
+<p><strong>Problem</strong>: findings-table.csv says “pilot observations” instead of specific sources
+<strong>Solution</strong>: Use metrics.csv line numbers (e.g., “L47-49”) or pilot notes timestamps (e.g., “P2 notes 14:23”)</p>
+<h3 id="pitfall-3-no-beforeafter-comparison"><a class="header" href="#pitfall-3-no-beforeafter-comparison">Pitfall 3: No before/after comparison</a></h3>
+<p><strong>Problem</strong>: “I fixed it” (no metrics showing improvement)
+<strong>Solution</strong>: Run 1-2 re-pilots after fixes, compare to baseline (verification.csv Part B)</p>
+<h3 id="pitfall-4-pii-in-screenshots"><a class="header" href="#pitfall-4-pii-in-screenshots">Pitfall 4: PII in screenshots</a></h3>
+<p><strong>Problem</strong>: Participant names, emails visible in evidence
+<strong>Solution</strong>: Crop/blur before submission. Check twice! Automatic fail if not corrected.</p>
+<h3 id="pitfall-5-incomplete-regression"><a class="header" href="#pitfall-5-incomplete-regression">Pitfall 5: Incomplete regression</a></h3>
+<p><strong>Problem</strong>: Only 5/20 WCAG checks completed
+<strong>Solution</strong>: Complete all 20 checks using Assistive Testing Checklist. If time-limited, minimum ~10 checks for pass.</p>
+<hr />
+<h2 id="specific-scenarios"><a class="header" href="#specific-scenarios">Specific Scenarios</a></h2>
+<h3 id="q-my-participant-completed-all-tasks-perfectly-no-errors-is-that-ok"><a class="header" href="#q-my-participant-completed-all-tasks-perfectly-no-errors-is-that-ok">Q: My participant completed all tasks perfectly (no errors). Is that OK?</a></h3>
+<p><strong>A</strong>: Unusual but possible (expert user, very simple tasks). Make sure:</p>
+<ul>
+<li>You have pilot notes (quotes, observations, timestamps)</li>
+<li>You can explain their session if asked</li>
+<li>You’re testing appropriate participants (not HCI experts who know the answers)</li>
+</ul>
+<p>If data seems “too perfect” (100% success, all times &lt;5s), that’s a red flag for fabrication.</p>
+<h3 id="q-i-have-3-findings-but-theyre-all-minor-eg-button-label-typos-will-i-fail"><a class="header" href="#q-i-have-3-findings-but-theyre-all-minor-eg-button-label-typos-will-i-fail">Q: I have 3 findings but they’re all minor (e.g., button label typos). Will I fail?</a></h3>
+<p><strong>A</strong>: Depends. If all findings are trivial and don’t address accessibility/usability, marks will be lower (50-60 range). Better approach:</p>
+<ul>
+<li>Use WCAG regression checklist to find violations</li>
+<li>Review pilot notes for participant confusion/errors</li>
+<li>Look for patterns in metrics.csv (validation errors, high times)</li>
+</ul>
+<h3 id="q-my-re-pilot-metrics-are-worse-than-baseline-failed-fix"><a class="header" href="#q-my-re-pilot-metrics-are-worse-than-baseline-failed-fix">Q: My re-pilot metrics are worse than baseline. Failed fix?</a></h3>
+<p><strong>A</strong>: Potentially, but document honestly! In verification.csv notes:</p>
+<ul>
+<li>“Metrics worse — possible regression introduced by fix”</li>
+<li>“Need to investigate unintended side effects”</li>
+<li>“May require different approach”</li>
+</ul>
+<p>Honest analysis valued. Fabricating improvement is fail.</p>
+<h3 id="q-i-only-implemented-1-fix-is-that-enough"><a class="header" href="#q-i-only-implemented-1-fix-is-that-enough">Q: I only implemented 1 fix. Is that enough?</a></h3>
+<p><strong>A</strong>: Yes, if:</p>
+<ul>
+<li>Fix is substantial (addresses major usability/accessibility issue)</li>
+<li>Thoroughly verified (regression + before/after)</li>
+<li>Well-documented (code diff + rationale)</li>
+</ul>
+<p>1 fix done well &gt; 3 fixes half-finished.</p>
+<hr />
+<h2 id="extensions--special-circumstances"><a class="header" href="#extensions--special-circumstances">Extensions &amp; Special Circumstances</a></h2>
+<h3 id="q-what-if-im-sick-during-week-9-pilots"><a class="header" href="#q-what-if-im-sick-during-week-9-pilots">Q: What if I’m sick during Week 9 pilots?</a></h3>
+<p><strong>A</strong>: Request extension via standard university process. Provide evidence (e.g., medical note). Module leader will assess.</p>
+<p>Pilots can happen outside lab time, so reschedule if possible.</p>
+<h3 id="q-can-i-get-extra-time-for-disability"><a class="header" href="#q-can-i-get-extra-time-for-disability">Q: Can I get extra time for disability?</a></h3>
+<p><strong>A</strong>: Yes, if registered with Disability Services. Contact module leader with your Support Plan.</p>
+<p>Example accommodations:</p>
+<ul>
+<li>Extended deadline</li>
+<li>Alternative pilot formats (remote, asynchronous)</li>
+<li>Reduced participant requirement (check with module leader)</li>
+</ul>
+<h3 id="q-what-happens-if-i-submit-late"><a class="header" href="#q-what-happens-if-i-submit-late">Q: What happens if I submit late?</a></h3>
+<p><strong>A</strong>: Standard university late penalties apply (check Student Handbook). Exceptions for documented extensions only.</p>
+<hr />
+<h2 id="after-submission"><a class="header" href="#after-submission">After Submission</a></h2>
+<h3 id="q-when-do-i-get-my-mark"><a class="header" href="#q-when-do-i-get-my-mark">Q: When do I get my mark?</a></h3>
+<p><strong>A</strong>: Marks released according to university assessment timeline (typically 3-4 weeks after deadline). Check VLE announcements.</p>
+<h3 id="q-can-i-see-my-marked-portfolio"><a class="header" href="#q-can-i-see-my-marked-portfolio">Q: Can I see my marked portfolio?</a></h3>
+<p><strong>A</strong>: Yes, feedback available via Gradescope. Staff provide:</p>
+<ul>
+<li>Mark (0-100)</li>
+<li>Grade (First/2:1/2:2/3rd/Fail)</li>
+<li>Outcome (PASS/FAIL)</li>
+<li>Feedback (2-3 sentences on strengths/gaps)</li>
+</ul>
+<h3 id="q-what-if-i-fail"><a class="header" href="#q-what-if-i-fail">Q: What if I fail?</a></h3>
+<p><strong>A</strong>: Options depend on circumstances:</p>
+<ul>
+<li><strong>Borderline fail</strong> (35-39): May be offered resubmission with specific requirements</li>
+<li><strong>Clear fail</strong> (&lt;35): Likely need to retake assessment</li>
+<li><strong>Fabrication/ethics violation</strong>: Serious academic misconduct (refer to university process)</li>
+</ul>
+<p>Contact module leader to discuss next steps.</p>
+<h3 id="q-can-i-appeal-my-mark"><a class="header" href="#q-can-i-appeal-my-mark">Q: Can I appeal my mark?</a></h3>
+<p><strong>A</strong>: Yes, via standard university appeals process. Grounds for appeal:</p>
+<ul>
+<li>Procedural irregularity</li>
+<li>Extenuating circumstances not previously disclosed</li>
+<li>Evidence of bias</li>
+</ul>
+<p><strong>Not grounds for appeal</strong>: “I think I deserved higher” or “I worked really hard”. Marks based on evidence-based rubric.</p>
+<hr />
+<h2 id="quick-reference-timeline"><a class="header" href="#quick-reference-timeline">Quick Reference: Timeline</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Week</th><th>What to Do</th><th>Deadline</th></tr></thead><tbody>
+<tr><td><strong>Week 9 Lab 1</strong></td><td>Assessment launches, Logger.kt setup</td><td>—</td></tr>
+<tr><td><strong>Week 9 Lab 2</strong></td><td>Run n=2-4 peer pilots, collect metrics.csv</td><td>End Week 9</td></tr>
+<tr><td><strong>Week 10 Lab 1</strong></td><td>Analyse data, prioritise fixes</td><td>—</td></tr>
+<tr><td><strong>Week 10 Lab 2</strong></td><td>Implement fixes, regression test, peer review</td><td>End Week 10</td></tr>
+<tr><td><strong>Week 11</strong></td><td>Incorporate feedback, final polish</td><td>—</td></tr>
+<tr><td><strong>End Week 10</strong></td><td><strong>Submit to Gradescope</strong></td><td><strong>FINAL DEADLINE</strong></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="still-have-questions"><a class="header" href="#still-have-questions">Still Have Questions?</a></h2>
+<p><strong>In labs</strong>: Ask lecturer or TA
+<strong>Module forum</strong>: Post questions (check existing threads first)
+<strong>Office hours</strong>: See VLE for times
+<strong>Email</strong>: Module leader (allow 2-3 days for response)</p>
+<p><strong>Good luck with your assessment!</strong> 📊</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assessment/submission-template.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../assessment/rubric.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assessment/submission-template.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../assessment/rubric.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

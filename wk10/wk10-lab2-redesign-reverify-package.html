@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lab 2: Inclusive redesign, re-verify, Task 2 package - COMP2850 • Human-Computer Interaction</title>
+        <title>Lab 2: Inclusive redesign, re-verify, assessment package - COMP2850 • Human-Computer Interaction</title>
 
 
         <!-- Custom HTML head -->
@@ -206,12 +206,12 @@
 <li><strong>Implementation</strong>: Server-first code + HTMX enhancements</li>
 <li><strong>Verification</strong>: Rigorous accessibility testing (keyboard, SR, no-JS)</li>
 <li><strong>Measurement</strong>: Before/after metrics proving improvement</li>
-<li><strong>Documentation</strong>: Evidence chains for Gradescope Task 2</li>
+<li><strong>Documentation</strong>: Evidence chains for assessment</li>
 </ul>
 <p><strong>Why this matters</strong>:</p>
 <ul>
-<li><strong>Gradescope Task 2</strong>: Requires before/after metrics + code changes + verification evidence</li>
-<li><strong>Week 11 portfolio</strong>: This fix becomes a case study (problem → data → fix → verification)</li>
+<li><strong>assessment</strong>: Requires before/after metrics + code changes + verification evidence</li>
+<li><strong>assessment portfolio (due end Week 10)</strong>: This fix becomes a case study (problem → data → fix → verification)</li>
 <li><strong>Professional practice</strong>: Inclusive design is iterative—implement, test, measure, refine</li>
 </ul>
 <p><strong>Quality bar</strong>: Changes must improve accessibility <strong>without breaking existing functionality</strong>. Regression testing is critical.</p>
@@ -225,7 +225,7 @@
 <li>Re-piloted with n=2 to verify improvements</li>
 <li>Measured post-change metrics and compared to baseline</li>
 <li>Documented evidence chains (code diffs, screenshots, metrics)</li>
-<li>Packaged Task 2 submission with before/after data</li>
+<li>Packaged assessment submission with before/after data</li>
 </ul>
 <h3 id="learning-outcomes-addressed"><a class="header" href="#learning-outcomes-addressed">Learning Outcomes Addressed</a></h3>
 <p>This lab contributes to the following module Learning Outcomes (<a href="../references/learning-outcomes.html">full definitions</a>):</p>
@@ -271,7 +271,7 @@ Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
 </tbody></table>
 </div>
 <p><strong>HCI connection</strong>: Before/after metrics demonstrate <strong>measurable impact</strong>—not just “we fixed it” but “completion improved by 50%.”</p>
-<p><strong>Gradescope Task 2 requires</strong>: Table + narrative explaining significance (who benefits, why it matters).</p>
+<p><strong>assessment requires</strong>: Table + narrative explaining significance (who benefits, why it matters).</p>
 <p>🔗 <a href="https://measuringux.com/before-after/">Measuring UX: Before/After Studies</a></p>
 </blockquote>
 <h3 id="accessible-error-handling"><a class="header" href="#accessible-error-handling">Accessible Error Handling</a></h3>
@@ -314,7 +314,7 @@ Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
 <h3 id="code-diffs-for-evidence"><a class="header" href="#code-diffs-for-evidence">Code Diffs for Evidence</a></h3>
 <blockquote>
 <p><strong>Code Diffs</strong> [GLOSSARY]</p>
-<p>Side-by-side comparison showing what changed. Essential for Task 2 evidence.</p>
+<p>Side-by-side comparison showing what changed. Essential for assessment evidence.</p>
 <p><strong>Format</strong>:</p>
 <pre><code class="language-diff">- &lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;/div&gt;
 + &lt;div id="status" role="alert" aria-live="assertive" hx-swap-oob="true"&gt;
@@ -328,7 +328,7 @@ Maps to WCAG: 2.2 AA (demonstrable compliance)</li>
 <li>Brief explanation of change and WCAG impact</li>
 </ul>
 <p><strong>Generate automatically</strong>:</p>
-<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/ &gt; wk10/gradescope/task2/04-key-diffs.md
+<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/ &gt; wk10/assessment/04-key-diffs.md
 </code></pre>
 <p><strong>HCI connection</strong>: Diffs make fixes <strong>transparent and reproducible</strong>—assessors and peers can see exactly what changed.</p>
 <p>🔗 <a href="https://git-scm.com/docs/git-diff">Git: Generating Diffs</a></p>
@@ -522,7 +522,7 @@ No-JS,PRG pattern working (refresh doesn't duplicate),,
 No-JS,Full page renders vs fragments (correct responses),,
 Visual,Contrast meets WCAG AA (4.5:1 text),,
 Visual,200% zoom: no horizontal scroll,,
-Visual,Error messages visible (not color-only),,
+Visual,Error messages visible (not colour-only),,
 Visual,Focus indicators meet contrast requirements,,
 </code></pre>
 <h3 id="step-2-execute-checklist-15-min"><a class="header" href="#step-2-execute-checklist-15-min">Step 2: Execute checklist (15 min)</a></h3>
@@ -575,7 +575,7 @@ Use contrast checker (DevTools → CSS Overview or extension)</li>
 <li><input disabled="" type="checkbox"/>
 Zoom to 200% (Ctrl/Cmd + plus) → no horizontal scroll</li>
 <li><input disabled="" type="checkbox"/>
-Error states visible without color (text, icons, position)</li>
+Error states visible without colour (text, icons, position)</li>
 </ul>
 <h3 id="step-3-document-results-3-min"><a class="header" href="#step-3-document-results-3-min">Step 3: Document results (3 min)</a></h3>
 <p><strong>Fill in <code>pass</code> column</strong>: <code>yes</code>, <code>no</code>, <code>n/a</code></p>
@@ -639,7 +639,7 @@ Evidence captured (screenshots if needed for failures)</li>
 - Confidence: 5
 - Notes: "Error was clear this time, heard it immediately"
 </code></pre>
-<h3 id="step-3-analyze-post-change-data-5-min"><a class="header" href="#step-3-analyze-post-change-data-5-min">Step 3: Analyze post-change data (5 min)</a></h3>
+<h3 id="step-3-analyse-post-change-data-5-min"><a class="header" href="#step-3-analyse-post-change-data-5-min">Step 3: Analyse post-change data (5 min)</a></h3>
 <p><strong>Open <code>data/metrics.csv</code></strong>, filter for session IDs <code>P6_post</code>, <code>P7_post</code>, <code>P8_post</code>.</p>
 <p><strong>Calculate same metrics as Week 9</strong>:</p>
 <ul>
@@ -694,9 +694,9 @@ Narrative interpretation written</li>
 Evidence captured (SR transcript, screenshots)</li>
 </ul>
 <hr />
-<h2 id="activity-d-package-task-2-evidence-bundle-20-min"><a class="header" href="#activity-d-package-task-2-evidence-bundle-20-min">Activity D: Package Task 2 Evidence Bundle (20 min)</a></h2>
+<h2 id="activity-d-package-assessment-evidence-bundle-20-min"><a class="header" href="#activity-d-package-assessment-evidence-bundle-20-min">Activity D: Package assessment Evidence Bundle (20 min)</a></h2>
 <p><strong>Goal</strong>: Assemble all artefacts for Gradescope submission.</p>
-<p><strong>Directory structure</strong>: <code>wk10/gradescope/task2/</code></p>
+<p><strong>Directory structure</strong>: <code>wk10/assessment/</code></p>
 <h3 id="step-1-copycreate-core-documents-10-min"><a class="header" href="#step-1-copycreate-core-documents-10-min">Step 1: Copy/create core documents (10 min)</a></h3>
 <p><strong>1. <code>01-redesign-brief.md</code></strong>:</p>
 <ul>
@@ -743,7 +743,7 @@ Fix restored functional parity for no-JS users (0% → 100% completion) and impr
 </code></pre>
 <p><strong>4. <code>04-key-diffs.md</code></strong>:</p>
 <p>Generate code diffs:</p>
-<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/tasks/index.peb src/main/kotlin/routes/Tasks.kt &gt; wk10/gradescope/task2/04-key-diffs.md
+<pre><code class="language-bash">git diff wk9-baseline..HEAD -- templates/tasks/index.peb src/main/kotlin/routes/Tasks.kt &gt; wk10/assessment/04-key-diffs.md
 </code></pre>
 <p>Annotate with explanations:</p>
 <pre><code class="language-markdown"># Key Code Changes — Task 2
@@ -798,7 +798,7 @@ val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;
 **Create `05-evidence/` directory**:
 
 </code></pre>
-<p>wk10/gradescope/task2/05-evidence/
+<p>wk10/assessment/05-evidence/
 ├── screenshots/
 │   ├── before-htmx-error.png (no role=alert visible in devtools)
 │   ├── after-htmx-error.png (role=alert visible)
@@ -832,8 +832,8 @@ val status = """&lt;div id="status" hx-swap-oob="true"&gt;Title is required.&lt;
 **Context**: Week 10 fix, no-JS path. Error summary receives focus on page load, keyboard-navigable.
 </code></pre>
 <h3 id="step-3-create-readme-5-min"><a class="header" href="#step-3-create-readme-5-min">Step 3: Create README (5 min)</a></h3>
-<p><strong>Create <code>wk10/gradescope/task2/README.md</code></strong>:</p>
-<pre><code class="language-markdown"># COMP2850 HCI — Gradescope Task 2 Submission
+<p><strong>Create <code>wk10/assessment/README.md</code></strong>:</p>
+<pre><code class="language-markdown"># COMP2850 HCI — assessment Submission
 
 **Student**: [Your name]
 **Date**: 2025-10-22
@@ -879,7 +879,7 @@ All files reference each other for full traceability.
 <li><input disabled="" type="checkbox"/>
 All 5 core documents present in <code>task2/</code></li>
 <li><input disabled="" type="checkbox"/>
-Evidence artefacts organized in <code>05-evidence/</code></li>
+Evidence artefacts organised in <code>05-evidence/</code></li>
 <li><input disabled="" type="checkbox"/>
 README.md complete with summary</li>
 <li><input disabled="" type="checkbox"/>
@@ -890,7 +890,7 @@ File names match spec exactly</li>
 <hr />
 <h2 id="commit--reflect-10-min"><a class="header" href="#commit--reflect-10-min">Commit &amp; Reflect (10 min)</a></h2>
 <h3 id="commit-message"><a class="header" href="#commit-message">Commit message</a></h3>
-<pre><code class="language-bash">git add templates/ src/main/kotlin/ data/metrics.csv analysis/ wk10/gradescope/task2/ wk10/lab-wk10/a11y/ backlog/backlog.csv
+<pre><code class="language-bash">git add templates/ src/main/kotlin/ data/metrics.csv analysis/ wk10/assessment/ wk10/lab-wk10/a11y/ backlog/backlog.csv
 
 git commit -m "$(cat &lt;&lt;'EOF'
 wk10s2: implemented inclusive redesign, verified, packaged Task 2
@@ -902,7 +902,7 @@ wk10s2: implemented inclusive redesign, verified, packaged Task 2
 - Completed accessibility regression checklist (21/22 pass, 1 contrast issue logged)
 - Ran verification pilots (n=3): T2 completion 67% → 100%, parity restored for no-JS
 - Collected before/after metrics: completion +33%, error rate -8%, median time -78ms (JS-on)
-- Packaged Gradescope Task 2 bundle: brief, checklist, metrics, code diffs, evidence
+- Packaged assessment bundle: brief, checklist, metrics, code diffs, evidence
 - Updated backlog: wk9-01, wk9-03 marked fixed with verification evidence
 
 Key results:
@@ -936,11 +936,11 @@ EOF
 <p><strong>Evidence quality</strong>: Is your evidence chain complete (data → analysis → fix → verification)? What’s missing or weak?</p>
 </li>
 <li>
-<p><strong>Week 11 readiness</strong>: Can you present this fix in 5 minutes (problem → data → solution → proof)? Practice your narrative.</p>
+<p><strong>Assessment readiness</strong>: Can you present this fix in 5 minutes (problem → data → solution → proof)? Practice your narrative.</p>
 </li>
 </ol>
 <hr />
-<h2 id="looking-ahead-week-11-studio-crit"><a class="header" href="#looking-ahead-week-11-studio-crit">Looking Ahead: Week 11 Studio Crit</a></h2>
+<h2 id="looking-ahead-week-11-optional-refinement-week-11-studio-crit-early-marking"><a class="header" href="#looking-ahead-week-11-optional-refinement-week-11-studio-crit-early-marking">Looking Ahead: Week 11 (Optional Refinement Week 11 Studio Crit Early Marking)</a></h2>
 <p>Next week:</p>
 <ul>
 <li><strong>Lab 1</strong>: Present evidence chains to peers (5 min each)</li>
@@ -950,7 +950,7 @@ EOF
 </ul>
 <p><strong>Before Week 11</strong>:</p>
 <ul>
-<li>Review Task 2 bundle—can you explain every file?</li>
+<li>Review assessment bundle—can you explain every file?</li>
 <li>Practice 5-min presentation (problem → data → fix → verification)</li>
 <li>Identify 1-2 backup issues (if your main fix gets critiqued)</li>
 </ul>
@@ -1000,7 +1000,7 @@ EOF
 </tbody></table>
 </div>
 <hr />
-<p><strong>Lab complete!</strong> You have an implemented, verified, documented inclusive redesign ready for Week 11 critique and final submission.</p>
+<p><strong>Lab complete!</strong> You have an implemented, verified, documented inclusive redesign ready for final assessment submission (due end Week 10).</p>
 
                     </main>
 
