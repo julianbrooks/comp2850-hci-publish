@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Participant Information Sheet Template - COMP2850 • Human-Computer Interaction</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="HCI module covering server-first architecture, accessibility, privacy by design, and evaluation (Weeks 6-11)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/admonish.css">
+        <link rel="stylesheet" href="../css/custom.css">
+        <link rel="stylesheet" href="../css/retro-theme.css">
+        <link rel="stylesheet" href=".././mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">COMP2850 • Human-Computer Interaction</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="participant-information-sheet-pis--hci-evaluation-study"><a class="header" href="#participant-information-sheet-pis--hci-evaluation-study">Participant Information Sheet (PIS) — HCI Evaluation Study</a></h1>
+<p><strong>Study Title</strong>: [e.g., Accessibility Evaluation of Task Management Interface]
+<strong>Researcher(s)</strong>: [Your Name], [Student ID]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction
+<strong>Institution</strong>: School of Computing, University of Leeds
+<strong>Ethics Approval</strong>: [If applicable: Ethics Reference Number]
+<strong>Version</strong>: 1.0
+<strong>Date</strong>: [YYYY-MM-DD]</p>
+<hr />
+<h2 id="invitation"><a class="header" href="#invitation">Invitation</a></h2>
+<p>You are being invited to participate in a research study as part of the COMP2850 Human-Computer Interaction module at the University of Leeds. Before you decide whether to participate, it is important that you understand why the research is being conducted and what it will involve. Please take time to read the following information carefully and discuss it with others if you wish. Please ask if there is anything that is not clear or if you would like more information.</p>
+<p><strong>Thank you for considering participation in this study.</strong></p>
+<hr />
+<h2 id="1-what-is-the-purpose-of-the-study"><a class="header" href="#1-what-is-the-purpose-of-the-study">1. What is the Purpose of the Study?</a></h2>
+<p>This study aims to evaluate the <strong>accessibility and usability</strong> of a task management web application. Specifically, we are investigating:</p>
+<ul>
+<li>How people with diverse needs (keyboard-only navigation, screen reader use, cognitive differences) interact with the interface</li>
+<li>Barriers to task completion (adding, editing, deleting tasks)</li>
+<li>Effectiveness of accessibility features (ARIA labels, error messages, focus management)</li>
+</ul>
+<p><strong>Context</strong>: This research forms part of a taught module assessment. Findings will inform interface redesign and contribute to understanding of accessible web application design patterns.</p>
+<p><strong>Duration</strong>: The study will run from [Start Date] to [End Date] (approximately [X] weeks).</p>
+<hr />
+<h2 id="2-why-have-i-been-invited"><a class="header" href="#2-why-have-i-been-invited">2. Why Have I Been Invited?</a></h2>
+<p>You have been invited because:</p>
+<ul>
+<li>You are a student or staff member at the University of Leeds</li>
+<li>You are aged 18 or over</li>
+<li>You have experience using web applications or assistive technologies (or are willing to test with provided tools)</li>
+</ul>
+<p><strong>Recruitment</strong>: We aim to recruit <strong>8-12 participants</strong> representing diverse interaction needs (keyboard users, screen reader users, people with cognitive differences, neurotypical participants).</p>
+<hr />
+<h2 id="3-do-i-have-to-take-part"><a class="header" href="#3-do-i-have-to-take-part">3. Do I Have to Take Part?</a></h2>
+<p><strong>No.</strong> Participation is entirely <strong>voluntary</strong>. You are free to:</p>
+<ul>
+<li>Decline to participate without giving a reason</li>
+<li>Withdraw from the study at any time up to <strong>[withdrawal deadline, e.g., 14 days after participation]</strong> without penalty</li>
+<li>Refuse to answer specific questions</li>
+</ul>
+<p><strong>Impact of non-participation</strong>: Your decision will <strong>not affect</strong> your academic standing, relationship with staff, or access to services.</p>
+<hr />
+<h2 id="4-what-will-happen-if-i-take-part"><a class="header" href="#4-what-will-happen-if-i-take-part">4. What Will Happen if I Take Part?</a></h2>
+<h3 id="session-structure-approximately-30-45-minutes"><a class="header" href="#session-structure-approximately-30-45-minutes">Session Structure (Approximately 30-45 minutes)</a></h3>
+<p><strong>Before the session</strong> (5 minutes):</p>
+<ul>
+<li>You will be asked to read this information sheet and sign the consent form</li>
+<li>The researcher will answer any questions you have</li>
+</ul>
+<p><strong>During the session</strong> (25-35 minutes):</p>
+<ul>
+<li><strong>Task-based evaluation</strong>: You will be asked to complete 3-5 realistic tasks using a web-based task manager (e.g., “Add a new task called ‘Buy milk’”)</li>
+<li><strong>Think-aloud protocol</strong>: You will be encouraged to verbalise your thoughts as you work (“I’m looking for the Add button…”)</li>
+<li><strong>Observation</strong>: The researcher will take notes on task completion times, errors, and navigation patterns</li>
+<li><strong>Optional brief interview</strong> (5 minutes): The researcher may ask follow-up questions about your experience</li>
+</ul>
+<p><strong>After the session</strong> (5 minutes):</p>
+<ul>
+<li>Debrief and opportunity to ask questions</li>
+<li>Confirmation of data handling</li>
+</ul>
+<h3 id="what-will-be-recorded"><a class="header" href="#what-will-be-recorded">What Will Be Recorded?</a></h3>
+<p><strong>With your consent</strong>, we will collect:</p>
+<ul>
+<li><strong>Task performance data</strong>: Completion times, error counts, success/failure</li>
+<li><strong>Interaction logs</strong>: Anonymised server logs (button clicks, page navigation, timestamps)</li>
+<li><strong>Observation notes</strong>: Researcher notes on difficulties encountered, navigation strategies</li>
+<li><strong>Optional</strong>: Audio recording of think-aloud protocol (only if you consent separately)</li>
+</ul>
+<p><strong>We will NOT collect</strong>:</p>
+<ul>
+<li>Your name (you will be assigned a pseudonym: P1, P2, etc.)</li>
+<li>Student ID number</li>
+<li>Email address</li>
+<li>Video recordings of your face</li>
+<li>Screenshots showing personal information</li>
+</ul>
+<hr />
+<h2 id="5-what-are-the-possible-risks-and-benefits"><a class="header" href="#5-what-are-the-possible-risks-and-benefits">5. What Are the Possible Risks and Benefits?</a></h2>
+<h3 id="potential-risks"><a class="header" href="#potential-risks">Potential Risks</a></h3>
+<p><strong>Minimal risk</strong> is anticipated. Possible minor discomforts:</p>
+<ul>
+<li><strong>Time commitment</strong>: 45 minutes (compensated with [if applicable: course credit, £10 voucher, or acknowledgement in report])</li>
+<li><strong>Frustration</strong>: Some tasks may be deliberately difficult to expose usability issues (you may stop at any time)</li>
+<li><strong>Data security</strong>: Although we use secure storage, no data transmission is 100% risk-free (see Data Protection section)</li>
+</ul>
+<p><strong>Mitigation</strong>:</p>
+<ul>
+<li>You may take breaks or withdraw at any time</li>
+<li>All data will be pseudonymised immediately</li>
+<li>Data stored on encrypted university systems</li>
+</ul>
+<h3 id="potential-benefits"><a class="header" href="#potential-benefits">Potential Benefits</a></h3>
+<p><strong>To you</strong>:</p>
+<ul>
+<li>Contribution to accessible technology research</li>
+<li>Insight into your own interaction patterns and accessibility needs</li>
+<li>[If applicable: £10 Amazon voucher / course credit]</li>
+</ul>
+<p><strong>To others</strong>:</p>
+<ul>
+<li>Improved understanding of accessibility barriers in web applications</li>
+<li>Evidence-based recommendations for inclusive interface design</li>
+<li>Contribution to HCI education and research</li>
+</ul>
+<hr />
+<h2 id="6-will-my-taking-part-be-kept-confidential"><a class="header" href="#6-will-my-taking-part-be-kept-confidential">6. Will My Taking Part Be Kept Confidential?</a></h2>
+<p><strong>Yes.</strong> All information collected will be kept <strong>strictly confidential</strong> and managed in accordance with UK GDPR (General Data Protection Regulation) and the Data Protection Act 2018.</p>
+<h3 id="data-protection"><a class="header" href="#data-protection">Data Protection</a></h3>
+<p><strong>Legal basis for processing</strong>: Your <strong>consent</strong> (GDPR Article 6(1)(a)) and <strong>legitimate interests</strong> (GDPR Article 6(1)(f) — university research).</p>
+<p><strong>Data controller</strong>: University of Leeds
+<strong>Data Protection Officer</strong>: dpo@leeds.ac.uk</p>
+<h3 id="pseudonymisation"><a class="header" href="#pseudonymisation">Pseudonymisation</a></h3>
+<ul>
+<li>You will be assigned a unique identifier (e.g., <strong>P1</strong>, <strong>P2</strong>) at the start</li>
+<li>Your name will <strong>not</strong> appear in any research notes, reports, or publications</li>
+<li>A <strong>key file</strong> linking identifiers to names will be stored separately in a password-protected file accessible only to the researcher</li>
+</ul>
+<h3 id="data-storage"><a class="header" href="#data-storage">Data Storage</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Data Type</th><th>Storage Location</th><th>Access</th><th>Retention Period</th></tr></thead><tbody>
+<tr><td>Consent forms (with signatures)</td><td>Secure university file storage (encrypted)</td><td>Researcher, module lead, ethics committee (if audited)</td><td><strong>6 years</strong> (university policy)</td></tr>
+<tr><td>Pseudonymised task data</td><td>Private Git repository (university GitLab)</td><td>Researcher, academic supervisor</td><td>Until <strong>end of academic year</strong> (June 2026), then <strong>anonymised</strong></td></tr>
+<tr><td>Audio recordings (if consented)</td><td>Encrypted university OneDrive</td><td>Researcher only</td><td><strong>Deleted after transcription</strong> (within 30 days)</td></tr>
+<tr><td>Anonymised findings</td><td>Public research outputs (report, portfolio)</td><td>Published openly</td><td><strong>Indefinite</strong> (no identifiable information)</td></tr>
+</tbody></table>
+</div>
+<h3 id="data-sharing"><a class="header" href="#data-sharing">Data Sharing</a></h3>
+<p><strong>Who will see my data?</strong></p>
+<ul>
+<li><strong>Primary researcher</strong> (yourself)</li>
+<li><strong>Academic supervisor</strong> (module teaching staff, for assessment purposes)</li>
+<li><strong>University ethics committee</strong> (if audited, for compliance checks only)</li>
+</ul>
+<p><strong>Will data be shared outside the university?</strong></p>
+<ul>
+<li>
+<p><strong>Anonymised findings</strong> may be published in:</p>
+<ul>
+<li>Academic portfolio (publicly accessible)</li>
+<li>Module coursework submissions (seen by markers, external examiners)</li>
+<li>Research publications (if study is extended beyond module — separate consent required)</li>
+</ul>
+</li>
+<li>
+<p><strong>Identifiable data</strong> (consent forms, key files) will <strong>never</strong> be shared outside the university</p>
+</li>
+</ul>
+<hr />
+<h2 id="7-what-will-happen-to-the-results-of-the-study"><a class="header" href="#7-what-will-happen-to-the-results-of-the-study">7. What Will Happen to the Results of the Study?</a></h2>
+<p>Results will be used for:</p>
+<ol>
+<li><strong>Module assessment</strong>: Findings will contribute to COMP2850 coursework (Gradescope submissions, portfolio)</li>
+<li><strong>Educational purposes</strong>: Anonymised excerpts may be used in teaching examples (with additional consent)</li>
+<li><strong>Potential publication</strong>: If results are significant, the researcher may seek to publish in academic conferences (you will be contacted for separate consent)</li>
+</ol>
+<h3 id="access-to-results"><a class="header" href="#access-to-results">Access to Results</a></h3>
+<ul>
+<li>You may request a <strong>summary of findings</strong> by emailing the researcher after [end date]</li>
+<li>Results will be available in the researcher’s public portfolio (anonymised) from [portfolio publication date]</li>
+</ul>
+<hr />
+<h2 id="8-who-has-reviewed-this-study"><a class="header" href="#8-who-has-reviewed-this-study">8. Who Has Reviewed This Study?</a></h2>
+<p>This study has been reviewed and approved by:</p>
+<ul>
+<li><strong>Module Lead</strong>: [Dr. Name], COMP2850 HCI</li>
+<li><strong>School of Computing Ethics Representative</strong>: [If applicable: ethics@engineering.leeds.ac.uk]</li>
+<li><strong>[If applicable] University Research Ethics Committee</strong>: Ref [XXXX-XXX]</li>
+</ul>
+<p>If you have concerns about the study, contact the <strong>School of Computing Research Ethics Committee</strong>: ethics@engineering.leeds.ac.uk</p>
+<hr />
+<h2 id="9-your-rights-under-gdpr"><a class="header" href="#9-your-rights-under-gdpr">9. Your Rights Under GDPR</a></h2>
+<p>You have the right to:</p>
+<div class="table-wrapper"><table><thead><tr><th>Right</th><th>What This Means</th></tr></thead><tbody>
+<tr><td><strong>Access</strong></td><td>Request a copy of all data we hold about you</td></tr>
+<tr><td><strong>Rectification</strong></td><td>Correct any inaccurate personal data</td></tr>
+<tr><td><strong>Erasure</strong> (“right to be forgotten”)</td><td>Request deletion of your data (up to [withdrawal deadline])</td></tr>
+<tr><td><strong>Restrict processing</strong></td><td>Ask us to stop using your data temporarily</td></tr>
+<tr><td><strong>Data portability</strong></td><td>Receive your data in a machine-readable format (e.g., CSV)</td></tr>
+<tr><td><strong>Object</strong></td><td>Object to processing based on legitimate interests</td></tr>
+<tr><td><strong>Withdraw consent</strong></td><td>Withdraw consent at any time (does not affect lawfulness of processing before withdrawal)</td></tr>
+</tbody></table>
+</div>
+<p><strong>To exercise these rights</strong>, contact the researcher at [researcher-email@leeds.ac.uk] or the University Data Protection Officer at dpo@leeds.ac.uk.</p>
+<p><strong>Complaint</strong>: If you are unhappy with how your data has been handled, you may complain to the <strong>Information Commissioner’s Office (ICO)</strong>: https://ico.org.uk/make-a-complaint/</p>
+<hr />
+<h2 id="10-what-happens-if-i-want-to-withdraw"><a class="header" href="#10-what-happens-if-i-want-to-withdraw">10. What Happens if I Want to Withdraw?</a></h2>
+<p>You may withdraw from the study <strong>at any time</strong> without giving a reason, up to <strong>[X days, e.g., 14 days] after your participation session</strong>.</p>
+<p><strong>To withdraw</strong>:</p>
+<ol>
+<li>Email the researcher at [researcher-email@leeds.ac.uk]</li>
+<li>Include your <strong>participant ID</strong> (e.g., P1) or the <strong>date of your session</strong></li>
+<li>We will <strong>delete all data</strong> associated with your participation within <strong>48 hours</strong></li>
+<li>We will confirm deletion via email</li>
+</ol>
+<p><strong>After the withdrawal deadline</strong>, data may have been anonymised and integrated into analysis. At this point, it will not be possible to identify and remove your specific contribution (though it will remain anonymous).</p>
+<hr />
+<h2 id="11-contact-for-further-information"><a class="header" href="#11-contact-for-further-information">11. Contact for Further Information</a></h2>
+<h3 id="if-you-have-questions-about-the-study"><a class="header" href="#if-you-have-questions-about-the-study">If you have questions about the study:</a></h3>
+<p><strong>Researcher</strong>: [Your Name]
+<strong>Email</strong>: [researcher-email@leeds.ac.uk]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction</p>
+<h3 id="if-you-have-concerns-about-the-research-ethics"><a class="header" href="#if-you-have-concerns-about-the-research-ethics">If you have concerns about the research ethics:</a></h3>
+<p><strong>School of Computing Ethics Representative</strong>
+<strong>Email</strong>: ethics@engineering.leeds.ac.uk</p>
+<h3 id="if-you-have-concerns-about-data-protection"><a class="header" href="#if-you-have-concerns-about-data-protection">If you have concerns about data protection:</a></h3>
+<p><strong>University Data Protection Officer</strong>
+<strong>Email</strong>: dpo@leeds.ac.uk
+<strong>Website</strong>: https://dataprotection.leeds.ac.uk/</p>
+<hr />
+<h2 id="12-what-do-i-do-next"><a class="header" href="#12-what-do-i-do-next">12. What Do I Do Next?</a></h2>
+<p>If you are happy to participate:</p>
+<ol>
+<li><strong>Read this information sheet carefully</strong></li>
+<li><strong>Ask any questions</strong> you have (researcher will answer before you decide)</li>
+<li><strong>Sign the consent form</strong> (separate document)</li>
+<li><strong>Keep a copy</strong> of this information sheet for your records</li>
+</ol>
+<p><strong>You will be given a copy of both this information sheet and your signed consent form.</strong></p>
+<hr />
+<p><strong>Thank you for taking the time to read this information sheet and for considering participation in this study.</strong></p>
+<hr />
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li>Information Commissioner’s Office (ICO). (2024). <em>Guide to the UK General Data Protection Regulation (UK GDPR)</em>. https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/</li>
+<li>University of Leeds. (2024). <em>Research Ethics Policy</em>. https://dataprotection.leeds.ac.uk/</li>
+<li>UK Research and Innovation (UKRI). (2024). <em>UKRI Policy and Guidelines on Governance of Good Research Conduct</em>. https://www.ukri.org/</li>
+</ul>
+<hr />
+<p><strong>Document Control</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr></thead><tbody>
+<tr><td>1.0</td><td>[YYYY-MM-DD]</td><td>[Your Name]</td><td>Initial version</td></tr>
+</tbody></table>
+</div>
+<p><strong>Template Source</strong>: COMP2850 HCI, University of Leeds
+<strong>Adapted from</strong>: UKRI/University Ethics Templates (GDPR-compliant)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../references/consent-pii-faq.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../references/consent-form-template.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../references/consent-pii-faq.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../references/consent-form-template.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

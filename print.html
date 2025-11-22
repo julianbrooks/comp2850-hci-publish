@@ -16737,6 +16737,828 @@ At least 1 WCAG criterion improved (fail → pass)</li>
 <strong>For use</strong>: Academic Year 2025-26
 <strong>Aligned to</strong>: <code>combined-assessment-FINAL.md</code>
 <strong>Marking time</strong>: 5 minutes per portfolio</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comp2850-human-computer-interaction"><a class="header" href="#comp2850-human-computer-interaction">COMP2850 Human-Computer Interaction</a></h1>
+<p><strong>School of Computer Science, University of Leeds</strong></p>
+<p><strong>Assessment: Combined Evaluation &amp; Redesign Portfolio</strong></p>
+<p><strong>Academic Year 2025-26</strong></p>
+<hr />
+<p>This worksheet contains a combination of formative activities and activities that contribute towards your assessment portfolio.</p>
+<ul>
+<li>Portfolio activities are indicated with <strong>red boxes</strong> (🔴) surrounding the question.</li>
+<li>This is an evidence-based assessment: you’re graded on complete evidence chains (data → finding → fix → verification), not essay quality.</li>
+</ul>
+<p><strong>Portfolio submission</strong>: All evidence must be submitted via Gradescope by <strong>end of Week 10</strong>.</p>
+<hr />
+<h2 id="expectations"><a class="header" href="#expectations">Expectations</a></h2>
+<p><strong>Timeliness</strong>: You should complete all phases in order and submit your portfolio by <strong>end of Week 10</strong>.</p>
+<p><strong>Presentation</strong>: You should present all work clearly following the submission template (CSV data, tables, code diffs, screenshots - not essays).</p>
+<p><strong>Integrity</strong>: You are responsible that evidence is your own work. All submissions are subject to academic integrity policy. Requirements: no fabricated data (verified by pilot notes), no PII violations (cropped screenshots, anonymous IDs), honest reporting (if fixes don’t work, analyse why), AI tool citation (e.g., “GitHub Copilot for route handlers”).</p>
+<p><strong>Feedback</strong>: Formative feedback provided in Week 10 (peer review, 2 mins per portfolio) and Week 11 (class-wide staff feedback).</p>
+<p><strong>Support opportunities</strong>: Support available via lab classes (Weeks 9-11), module forum, and office hours.</p>
+<p><strong>Expected time for completion</strong>: 12-15 hours across Weeks 9-10.</p>
+<p><strong>Expected completion date</strong>: <strong>End of Week 10</strong> (Gradescope deadline).</p>
+<hr />
+<h2 id="assessment-summary"><a class="header" href="#assessment-summary">Assessment Summary</a></h2>
+<p>This coursework combines evaluation and redesign in a single portfolio. You will evaluate through peer pilots (Week 9), analyse data to identify issues (Week 10), redesign by implementing 1-3 fixes (Week 10), and verify improvements through regression testing (Week 10-11).</p>
+<p><strong>Assessment format</strong>: Pass/Fail (40% threshold) with 0-100 grading for formative feedback.</p>
+<p>Code resources (Logger.kt, submission template, examples) available on VLE/Gradescope.</p>
+<hr />
+<h2 id="learning-outcomes"><a class="header" href="#learning-outcomes">Learning Outcomes</a></h2>
+<p>On completion of this assessment you should be able to:</p>
+<ol>
+<li>Differentiate people-centred design methodologies and justify method selection</li>
+<li>Apply needs-finding techniques (linking tasks to Week 6 job stories)</li>
+<li>Analyse ethical implications (consent, PII protection, participant rights)</li>
+<li>Evaluate digital systems for accessibility (WCAG 2.2 AA regression testing)</li>
+<li>Prototype interactive systems (Ktor, Pebble, HTMX)</li>
+<li>Apply iterative design (evaluation → redesign → verification)</li>
+<li>Analyse design constraints (no-JS parity)</li>
+<li>Design and execute usability evaluations (task-based pilots, metrics)</li>
+<li>Apply inclusive design principles (WCAG compliance)</li>
+<li>Critique societal impact of technology (systemic barriers)</li>
+<li>Collaborate effectively (peer pilots, peer review)</li>
+<li>Communicate HCI work professionally (evidence chains, honest reporting)</li>
+<li>Integrate HCI with software engineering (server-side instrumentation)</li>
+</ol>
+<hr />
+<h2 id="portfolio-activities"><a class="header" href="#portfolio-activities">Portfolio Activities</a></h2>
+<p><strong>Red boxes</strong> (🔴) indicate activities for your <strong>submitted portfolio</strong>. Complete all phases in order.</p>
+<hr />
+<h3 id="phase-1-instrumentation--planning-week-9-lab-1"><a class="header" href="#phase-1-instrumentation--planning-week-9-lab-1">Phase 1: Instrumentation &amp; Planning (Week 9 Lab 1)</a></h3>
+<p><strong>Learning outcomes</strong>: LO1, LO2, LO3, LO8, LO13</p>
+<h4 id="-activity-1-set-up-loggerkt-instrumentation-20-mins"><a class="header" href="#-activity-1-set-up-loggerkt-instrumentation-20-mins">🔴 Activity 1: Set up Logger.kt instrumentation (20 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Logger.kt generating metrics.csv during pilots</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Create <code>Logger.kt</code> utility (code in lab slides)</li>
+<li>Instrument POST routes (add, edit, delete) to log: session ID, task code, step, duration, HTTP status, JS mode</li>
+<li>Test both success and validation_error paths</li>
+<li>Verify metrics.csv with correct schema</li>
+</ul>
+<p><strong>Success</strong>: metrics.csv created with rows for both JS-on and JS-off modes</p>
+<hr />
+<h4 id="-activity-2-design-evaluation-tasks-30-mins"><a class="header" href="#-activity-2-design-evaluation-tasks-30-mins">🔴 Activity 2: Design evaluation tasks (30 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: submission-template.md Section 1 (Protocol &amp; Tasks)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Review Week 6 job stories</li>
+<li>Design 4-5 tasks with: scenario, action, success condition, target time, linked job story</li>
+<li>Ensure tasks are realistic, measurable, scoped, representative (cover add/edit/delete/filter)</li>
+</ul>
+<p><strong>Success</strong>: 4-5 tasks designed, all linked to Week 6 job stories, success conditions observable</p>
+<hr />
+<h4 id="-activity-3-prepare-consent-script-10-mins"><a class="header" href="#-activity-3-prepare-consent-script-10-mins">🔴 Activity 3: Prepare consent script (10 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Consent process in pilot notes</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Review consent script in submission-template.md Section 1</li>
+<li>Read verbatim at start of each pilot</li>
+<li>Record consent timestamp in notes</li>
+</ul>
+<p><strong>Success</strong>: Consent script ready, understand PII protection (anonymous IDs, cropped screenshots)</p>
+<hr />
+<h3 id="phase-2-peer-pilots--data-collection-week-9-lab-2"><a class="header" href="#phase-2-peer-pilots--data-collection-week-9-lab-2">Phase 2: Peer Pilots &amp; Data Collection (Week 9 Lab 2)</a></h3>
+<p><strong>Learning outcomes</strong>: LO3, LO8, LO11, LO12, LO13</p>
+<h4 id="-activity-4-run-peer-pilots-45-mins"><a class="header" href="#-activity-4-run-peer-pilots-45-mins">🔴 Activity 4: Run peer pilots (45 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: metrics.csv (n=2+ participants) + pilot notes</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Recruit n=2-4 peers</li>
+<li>For each: read consent script, observe tasks, take timestamped notes, Logger.kt captures metrics</li>
+<li>Ensure 1+ non-standard variant (keyboard-only OR screen reader OR no-JS)</li>
+</ul>
+<p><strong>Success</strong>: n=2+ piloted, metrics.csv has rows, pilot notes have timestamps/quotes, consent documented</p>
+<hr />
+<h4 id="-activity-5-initial-data-review-15-mins"><a class="header" href="#-activity-5-initial-data-review-15-mins">🔴 Activity 5: Initial data review (15 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Initial findings identified</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Open metrics.csv</li>
+<li>Spot-check patterns: validation errors? high times? JS-on vs no-JS differences?</li>
+<li>Note 2-3 initial observations</li>
+</ul>
+<p><strong>Success</strong>: metrics.csv reviewed, initial patterns identified</p>
+<hr />
+<h3 id="phase-3-analysis--prioritisation-week-10-lab-1"><a class="header" href="#phase-3-analysis--prioritisation-week-10-lab-1">Phase 3: Analysis &amp; Prioritisation (Week 10 Lab 1)</a></h3>
+<p><strong>Learning outcomes</strong>: LO1, LO4, LO6, LO9, LO10, LO12</p>
+<h4 id="-activity-6-analyse-metrics-data-30-mins"><a class="header" href="#-activity-6-analyse-metrics-data-30-mins">🔴 Activity 6: Analyse metrics data (30 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: submission-template.md Section 2 (Findings Table)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Calculate metrics: error rates, median times, success rates</li>
+<li>Review pilot notes for qualitative insights</li>
+<li>Identify 3+ usability/accessibility issues</li>
+<li>Fill findings-table.csv: finding, data source, observation, WCAG criterion</li>
+</ul>
+<p><strong>Success</strong>: 3+ findings, all with specific data sources, WCAG cited where applicable</p>
+<hr />
+<h4 id="-activity-7-prioritise-fixes-20-mins"><a class="header" href="#-activity-7-prioritise-fixes-20-mins">🔴 Activity 7: Prioritise fixes (20 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Priority scores + top 3 selected</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Score each finding: Impact (1-5), Inclusion (1-5), Effort (1-5)</li>
+<li>Calculate: Priority = (Impact + Inclusion) - Effort</li>
+<li>Select top 2-3 to implement</li>
+</ul>
+<p><strong>Success</strong>: All findings scored, priority formula applied, top 2-3 selected</p>
+<hr />
+<h3 id="phase-4-redesign--verification-week-10-lab-2"><a class="header" href="#phase-4-redesign--verification-week-10-lab-2">Phase 4: Redesign &amp; Verification (Week 10 Lab 2)</a></h3>
+<p><strong>Learning outcomes</strong>: LO4, LO5, LO6, LO7, LO9, LO12, LO13</p>
+<h4 id="-activity-8-implement-fixes-60-mins"><a class="header" href="#-activity-8-implement-fixes-60-mins">🔴 Activity 8: Implement fixes (60 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: submission-template.md Section 4 (Implementation Diffs)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Implement 1-3 priority fixes</li>
+<li>Document each: before/after code, what changed, why (WCAG criterion), impact (who benefits)</li>
+<li>Test manually (keyboard, screen reader if SR fix, no-JS)</li>
+<li>Commit with clear messages</li>
+</ul>
+<p><strong>Success</strong>: 1-3 fixes implemented, all with before/after diffs, each references findings table, tested and working</p>
+<hr />
+<h4 id="-activity-9-regression-testing-30-mins"><a class="header" href="#-activity-9-regression-testing-30-mins">🔴 Activity 9: Regression testing (30 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: submission-template.md Section 5 Part A (Verification - Regression Checklist)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Complete WCAG 2.2 AA regression checklist (20 checks)</li>
+<li>Test categories: Keyboard (5), Forms (3), Dynamic (3), No-JS (3), Visual (3), Semantic (3)</li>
+<li>Mark: pass, fail, or n/a</li>
+<li>Document failures in notes</li>
+</ul>
+<p><strong>Success</strong>: All 20 checks completed, no Level A violations, no-JS parity maintained</p>
+<hr />
+<h4 id="-activity-10-re-pilots-30-mins"><a class="header" href="#-activity-10-re-pilots-30-mins">🔴 Activity 10: Re-pilots (30 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: submission-template.md Section 5 Part B (Before/After Comparison)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Run n=1-2 re-pilots with same tasks</li>
+<li>Ensure appropriate variant (SR user if fixing SR issue)</li>
+<li>Logger.kt captures post-fix metrics</li>
+<li>Compare to Week 9: error detection, times, WCAG pass rates</li>
+</ul>
+<p><strong>If metrics didn’t improve</strong>: Document honestly (“small n=2, not statistically significant” or “fix addressed symptom not root cause”)</p>
+<p><strong>Success</strong>: n=1+ re-piloted, before/after compared, improvement shown (or honest analysis)</p>
+<hr />
+<h4 id="-activity-11-peer-review-20-mins"><a class="header" href="#-activity-11-peer-review-20-mins">🔴 Activity 11: Peer review (20 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Peer feedback received (use to improve, not submitted)</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Join peer review group of 4</li>
+<li>Review 2 peers (2 mins each) using checklist: files present? n=2+? 3+ findings? 1-3 diffs? 20 checks? PII scrubbed?</li>
+<li>Mark: Yes (on track), Borderline (gaps), No (major gaps)</li>
+<li>Give feedback (1-2 strengths/quick wins)</li>
+<li>Receive feedback from 2 peers</li>
+</ul>
+<p><strong>Success</strong>: Peer review completed, feedback from 2 peers, action items identified</p>
+<hr />
+<h3 id="phase-5-final-refinement--submission-week-11"><a class="header" href="#phase-5-final-refinement--submission-week-11">Phase 5: Final Refinement &amp; Submission (Week 11)</a></h3>
+<p><strong>Learning outcomes</strong>: LO12</p>
+<h4 id="-activity-12-incorporate-peer-feedback-60-mins"><a class="header" href="#-activity-12-incorporate-peer-feedback-60-mins">🔴 Activity 12: Incorporate peer feedback (60 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: All gaps addressed</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Review peer feedback</li>
+<li>Address issues: additional pilots if n&lt;2, complete missing checks, strengthen data sources, scrub PII</li>
+<li>Final verification: all sections filled, evidence complete, privacy statement signed</li>
+</ul>
+<p><strong>Success</strong>: Peer feedback actioned, portfolio complete</p>
+<hr />
+<h4 id="-activity-13-submit-portfolio-10-mins"><a class="header" href="#-activity-13-submit-portfolio-10-mins">🔴 Activity 13: Submit portfolio (10 mins)</a></h4>
+<p><strong>Portfolio evidence</strong>: Complete submission via Gradescope</p>
+<p><strong>Task</strong>:</p>
+<ul>
+<li>Final PII check (no names/emails/IDs in screenshots, anonymous session IDs, participant codes)</li>
+<li>Upload to Gradescope: submission-template.md, evidence/ folder, metrics.csv</li>
+<li>Verify upload successful</li>
+</ul>
+<p><strong>Deadline</strong>: <strong>End of Week 10</strong></p>
+<p><strong>Success</strong>: Submitted before deadline, all files uploaded, no PII violations</p>
+<hr />
+<h2 id="support-resources"><a class="header" href="#support-resources">Support Resources</a></h2>
+<p><strong>Assessment documents</strong>:</p>
+<ul>
+<li><a href="assessment/combined-assessment-FINAL.html">Combined Assessment Specification</a></li>
+<li><a href="assessment/submission-template.html">Submission Template</a></li>
+<li><a href="assessment/rubric.html">Rubric</a></li>
+<li><a href="assessment/student-faq.html">Student FAQ</a></li>
+<li><a href="assessment/peer-review-template.html">Peer Review Template</a></li>
+</ul>
+<p><strong>Technical references</strong>:</p>
+<ul>
+<li><a href="assessment/../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a></li>
+<li><a href="assessment/../references/consent-pii-faq.html">Consent and PII FAQ</a></li>
+<li><a href="assessment/../references/assistive-testing-checklist.html">Assistive Testing Checklist</a></li>
+</ul>
+<p><strong>Lab slides</strong>: Available on VLE (Weeks 9-11)</p>
+<p><strong>External resources</strong>:</p>
+<ul>
+<li><a href="https://www.nngroup.com/articles/usability-testing-101/">Nielsen Norman: Usability Testing 101</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/">W3C: WCAG 2.2</a></li>
+<li><a href="https://webaim.org/projects/screenreadersurvey9/">WebAIM: Screen Reader User Survey</a></li>
+</ul>
+<hr />
+<h2 id="academic-integrity-reminders"><a class="header" href="#academic-integrity-reminders">Academic Integrity Reminders</a></h2>
+<p><strong>Allowed</strong>: AI tools for code generation (cite in submission), piloting with friends (if they consent), testing same participants for re-pilots (note as limitation), discussing approaches in forum</p>
+<p><strong>Not allowed</strong>: Fabricating pilot data (automatic fail), sharing complete portfolios, using AI for analysis/findings (must be your thinking), copying code without citation</p>
+<p><strong>PII violations</strong>: Severe (names/emails/IDs visible) = automatic fail + ethics referral; Minor (browser tabs visible) = warning, require correction</p>
+<p><strong>Honest reporting</strong>: If fix didn’t work → document honestly, analyse why (valued); messy data → report faithfully; n=2 only → acceptable minimum, state limitation</p>
+<hr />
+<h2 id="marking--feedback"><a class="header" href="#marking--feedback">Marking &amp; Feedback</a></h2>
+<p><strong>Turnaround</strong>: Marks released per university timeline (typically 3-4 weeks after deadline)</p>
+<p><strong>Feedback format</strong>: Mark (0-100), Grade (First/2:1/2:2/3rd/Fail), Outcome (PASS/FAIL, 40% threshold), Feedback (2-3 sentences)</p>
+<p><strong>Appeals</strong>: Via standard university appeals process (see Student Handbook)</p>
+<hr />
+<p><strong>Version</strong>: 1.0 Concise
+<strong>Last updated</strong>: 22 November 2025
+<strong>For use</strong>: Academic Year 2025-26</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comp2850-human-computer-interaction-1"><a class="header" href="#comp2850-human-computer-interaction-1">COMP2850 Human-Computer Interaction</a></h1>
+<p><strong>School of Computer Science, University of Leeds</strong></p>
+<p><strong>Assessment: Combined Evaluation &amp; Redesign Portfolio</strong></p>
+<p><strong>Academic Year 2025-26</strong></p>
+<hr />
+<p>This worksheet outlines the combined evaluation and redesign portfolio that forms your coursework assessment for COMP2850 HCI.</p>
+<p><strong>Portfolio submission</strong>: All evidence must be submitted via Gradescope by <strong>end of Week 10</strong>.</p>
+<hr />
+<h2 id="expectations-1"><a class="header" href="#expectations-1">Expectations</a></h2>
+<p><strong>Timeliness</strong>: You should complete all phases of the assessment in the order provided and submit your complete portfolio before the deadline (<strong>end of Week 10</strong>).</p>
+<p><strong>Presentation</strong>: You should present all your work clearly and concisely, following the submission template provided (<code>submission-template.md</code>). Evidence should be structured as CSV data, tables, code diffs, and screenshots (not essays).</p>
+<p><strong>Integrity</strong>: You are responsible for ensuring the evidence you submit is entirely your own work. You can find out more about academic integrity on the Skills@Library website. All work you submit for assessment is subject to the academic integrity policy. Specific requirements for this assessment:</p>
+<ul>
+<li><strong>No fabricated data</strong>: Pilot sessions must be genuine (verified by pilot notes)</li>
+<li><strong>No PII violations</strong>: Screenshots must be cropped/blurred, session IDs anonymous</li>
+<li><strong>Honest reporting</strong>: If fixes don’t improve metrics, analyse why (dishonest claims = fail)</li>
+<li><strong>AI tool citation</strong>: If using tools for code generation, cite in submission (e.g., “GitHub Copilot for route handlers”)</li>
+</ul>
+<p><strong>Feedback</strong>: Formative feedback will be provided during:</p>
+<ul>
+<li><strong>Week 10</strong>: Structured peer review (2 mins per portfolio, checklist-based)</li>
+<li><strong>Week 11</strong>: Class-wide feedback from staff in labs (identify gaps)</li>
+</ul>
+<p><strong>Support opportunities</strong>: Support is available via:</p>
+<ul>
+<li>Lab classes (Weeks 9-11)</li>
+<li>Module discussion forum</li>
+<li>Office hours</li>
+</ul>
+<p><strong>Expected time for completion</strong>: 12-15 hours across Weeks 9-10.</p>
+<p><strong>Expected completion date</strong>: <strong>End of Week 10</strong> (final deadline via Gradescope).</p>
+<hr />
+<h2 id="assessment-summary-1"><a class="header" href="#assessment-summary-1">Assessment Summary</a></h2>
+<p>This coursework combines <strong>evaluation</strong> and <strong>redesign</strong> in a single evidence-based portfolio. You will:</p>
+<ol>
+<li><strong>Evaluate</strong> your task management prototype through peer pilots (Week 9)</li>
+<li><strong>Analyse</strong> data to identify usability and accessibility issues (Week 10)</li>
+<li><strong>Redesign</strong> by implementing 1-3 fixes (Week 10)</li>
+<li><strong>Verify</strong> improvements through regression testing and re-pilots (Week 10-11)</li>
+</ol>
+<p>The assessment builds on:</p>
+<ul>
+<li><strong>Week 6</strong>: Needs-finding (job stories)</li>
+<li><strong>Weeks 7-8</strong>: Prototyping (task management interface, no-JS parity)</li>
+<li><strong>Week 9</strong>: Instrumentation (Logger.kt) and evaluation planning</li>
+<li><strong>Week 10</strong>: Data analysis, prioritisation, implementation, peer review</li>
+<li><strong>Week 11</strong>: Final refinement and submission</li>
+</ul>
+<p>This is an <strong>evidence-based</strong> assessment: you’re graded on complete evidence chains (data → finding → fix → verification), not essay quality. Total prose: ~100-200 words.</p>
+<p><strong>Assessment format</strong>: Pass/Fail outcome (40% threshold) with 0-100 grading for formative feedback:</p>
+<ul>
+<li><strong>70-100</strong>: First (excellent) — Complete evidence chains, rigorous WCAG verification</li>
+<li><strong>60-69</strong>: 2:1 (very good) — Strong evidence with minor gaps</li>
+<li><strong>50-59</strong>: 2:2 (good) — Adequate evidence with some issues</li>
+<li><strong>40-49</strong>: 3rd (pass) — Meets minimum standard</li>
+<li><strong>0-39</strong>: Fail — Below minimum OR fabrication OR PII violations</li>
+</ul>
+<p><strong>Code resources</strong>: Logger.kt starter code, submission template, and example portfolios are available on VLE/Gradescope.</p>
+<hr />
+<h2 id="learning-outcomes-1"><a class="header" href="#learning-outcomes-1">Learning Outcomes</a></h2>
+<p>On completion of this assessment you should be able to:</p>
+<ol>
+<li><strong>LO1</strong>: Differentiate people-centred design methodologies and justify method selection based on project constraints</li>
+<li><strong>LO2</strong>: Apply needs-finding techniques to identify user requirements (linking evaluation tasks to Week 6 job stories)</li>
+<li><strong>LO3</strong>: Analyse ethical implications of HCI research and practice (consent, PII protection, participant rights)</li>
+<li><strong>LO4</strong>: Evaluate digital systems for accessibility compliance (WCAG 2.2 AA regression testing)</li>
+<li><strong>LO5</strong>: Prototype interactive systems using appropriate tools and frameworks (Ktor, Pebble, HTMX)</li>
+<li><strong>LO6</strong>: Apply iterative design processes (evaluation → data-driven redesign → verification)</li>
+<li><strong>LO7</strong>: Analyse design constraints and trade-offs in interface development (no-JS parity)</li>
+<li><strong>LO8</strong>: Design and execute rigorous usability evaluations (task-based pilots, metrics collection)</li>
+<li><strong>LO9</strong>: Apply inclusive design principles to create accessible interfaces (WCAG compliance)</li>
+<li><strong>LO10</strong>: Critique societal impact of technology design (systemic barriers, beyond accommodation)</li>
+<li><strong>LO11</strong>: Collaborate effectively in HCI research and practice (peer pilots, peer review)</li>
+<li><strong>LO12</strong>: Communicate HCI work professionally (evidence chains, honest reporting)</li>
+<li><strong>LO13</strong>: Integrate HCI principles with software engineering practices (server-side instrumentation)</li>
+</ol>
+<hr />
+<h2 id="portfolio-activities-1"><a class="header" href="#portfolio-activities-1">Portfolio Activities</a></h2>
+<p><strong>Red boxes</strong> (🔴) indicate activities that form part of your <strong>submitted portfolio</strong>. Complete all phases in order.</p>
+<hr />
+<h3 id="phase-1-instrumentation--planning-week-9-lab-1-1"><a class="header" href="#phase-1-instrumentation--planning-week-9-lab-1-1">Phase 1: Instrumentation &amp; Planning (Week 9 Lab 1)</a></h3>
+<p><strong>Learning outcomes</strong>: LO1, LO2, LO3, LO8, LO13</p>
+<h4 id="activity-1-set-up-loggerkt-instrumentation-20-mins"><a class="header" href="#activity-1-set-up-loggerkt-instrumentation-20-mins">Activity 1: Set up Logger.kt instrumentation (20 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Demonstrated Logger.kt generating metrics.csv during pilots</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Create <code>src/main/kotlin/utils/Logger.kt</code> utility (code provided in lab slides)</li>
+<li>Instrument your POST routes (add, edit, delete) to log:
+<ul>
+<li>Session ID (anonymous, e.g., P1_a7f3)</li>
+<li>Task code (e.g., T1_add, T2_edit)</li>
+<li>Step (success, validation_error)</li>
+<li>Duration (milliseconds)</li>
+<li>HTTP status (200, 400)</li>
+<li>JS mode (on, off)</li>
+</ul>
+</li>
+<li>Test both success and validation_error paths</li>
+<li>Verify metrics.csv appears in project root with correct schema:
+<pre><code class="language-csv">ts_iso,session_id,request_id,task_code,step,outcome,ms,http_status,js_mode
+</code></pre>
+</li>
+</ol>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>metrics.csv created automatically</li>
+<li>Rows appear when testing add/edit/delete operations</li>
+<li>Both JS-on and JS-off modes captured correctly</li>
+</ul>
+<hr />
+<h4 id="activity-2-design-evaluation-tasks-30-mins"><a class="header" href="#activity-2-design-evaluation-tasks-30-mins">Activity 2: Design evaluation tasks (30 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: submission-template.md Section 1 (Protocol &amp; Tasks)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Review the Week 6 job stories</li>
+<li>Design 4-5 realistic evaluation tasks using the template:
+<ul>
+<li><strong>Scenario</strong>: Brief context (what customer needs to do)</li>
+<li><strong>Action</strong>: Specific instruction (what to tell participant)</li>
+<li><strong>Success</strong>: Observable outcome (how you know it worked)</li>
+<li><strong>Target time</strong>: e.g., &lt;10 seconds</li>
+<li><strong>Linked to</strong>: Week 6 Job Story #X</li>
+</ul>
+</li>
+<li>Ensure tasks are:
+<ul>
+<li>Realistic (match actual use context)</li>
+<li>Measurable (clear success condition)</li>
+<li>Scoped (completable in 2-5 minutes)</li>
+<li>Representative (cover key flows: add, edit, delete, filter)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example task</strong>:</p>
+<pre><code class="language-markdown">#### Task 1 (T1): Add Task
+
+- **Scenario**: You received an email reminder: "Buy milk before 6pm."
+- **Action**: Add a new task with title "Buy milk before 6pm" to your list.
+- **Success**: Task appears in list, no validation errors.
+- **Target time**: &lt;10 seconds
+- **Linked to**: Week 6 Job Story #2 ("quickly add tasks without switching context")
+</code></pre>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>4-5 tasks designed</li>
+<li>All tasks linked to Week 6 job stories</li>
+<li>Success conditions are observable and measurable</li>
+</ul>
+<hr />
+<h4 id="activity-3-prepare-consent-script-10-mins"><a class="header" href="#activity-3-prepare-consent-script-10-mins">Activity 3: Prepare consent script (10 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Documented consent process in pilot notes</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Review the consent script provided in submission-template.md Section 1</li>
+<li>Read verbatim at start of each pilot session:
+<ul>
+<li>Introduction (“I’m testing the interface, not you”)</li>
+<li>Rights (voluntary, anonymous, can withdraw, screenshots)</li>
+<li>Consent question (“Do you consent to participate?”)</li>
+</ul>
+</li>
+<li>Record consent timestamp in pilot notes (e.g., “P1 consented 22/11/2025 14:05”)</li>
+</ol>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>Consent script ready</li>
+<li>Understand PII protection requirements (anonymous session IDs, cropped screenshots)</li>
+</ul>
+<hr />
+<h3 id="phase-2-peer-pilots--data-collection-week-9-lab-2-1"><a class="header" href="#phase-2-peer-pilots--data-collection-week-9-lab-2-1">Phase 2: Peer Pilots &amp; Data Collection (Week 9 Lab 2)</a></h3>
+<p><strong>Learning outcomes</strong>: LO3, LO8, LO11, LO12, LO13</p>
+<h4 id="activity-4-run-peer-pilots-45-mins"><a class="header" href="#activity-4-run-peer-pilots-45-mins">Activity 4: Run peer pilots (45 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: metrics.csv (n=2+ participants) + pilot notes (P1-notes.md, P2-notes.md)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Recruit n=2-4 peers (post in module forum if needed)</li>
+<li>For each participant:
+<ul>
+<li>Read consent script verbatim, record consent timestamp</li>
+<li>Observe participant completing 4-5 tasks</li>
+<li>Take timestamped notes (quotes, observations, errors)</li>
+<li>Logger.kt captures metrics.csv automatically</li>
+<li>Thank participant</li>
+</ul>
+</li>
+<li>Ensure at least 1 non-standard variant (keyboard-only OR screen reader OR no-JS)</li>
+</ol>
+<p><strong>Pilot notes structure</strong>:</p>
+<pre><code class="language-markdown"># Pilot Notes: P1
+
+**Session ID**: P1_a7f3
+**Date**: 22/11/2025 14:00-14:15
+**Variant**: Standard mouse + HTMX
+**Consent**: Obtained 14:00
+
+## Task 1: Add Task
+- **14:02**: Started task
+- **14:03**: Submitted blank form, no error visible. Quote: "Did it work?"
+- **14:03**: Retried with title, succeeded (1400ms)
+
+## Task 2: Edit Task
+- **14:05**: Clicked edit, form loaded
+- **14:06**: Changed title, submitted successfully (890ms)
+</code></pre>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>n=2+ participants piloted (n=4 ideal)</li>
+<li>metrics.csv contains rows for all participants</li>
+<li>Pilot notes have timestamps, quotes, observations for each task</li>
+<li>Consent documented for all participants</li>
+</ul>
+<hr />
+<h4 id="activity-5-initial-data-review-15-mins"><a class="header" href="#activity-5-initial-data-review-15-mins">Activity 5: Initial data review (15 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Initial findings identified (used in Week 10 analysis)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Open metrics.csv (Excel or text editor)</li>
+<li>Spot-check for patterns:
+<ul>
+<li>Which tasks had validation errors?</li>
+<li>Which participants struggled (high times, multiple errors)?</li>
+<li>Any differences between JS-on vs no-JS?</li>
+</ul>
+</li>
+<li>Note 2-3 initial observations (these will inform Week 10 analysis)</li>
+</ol>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>metrics.csv reviewed</li>
+<li>Initial patterns identified</li>
+<li>Ready for Week 10 analysis</li>
+</ul>
+<hr />
+<h3 id="phase-3-analysis--prioritisation-week-10-lab-1-1"><a class="header" href="#phase-3-analysis--prioritisation-week-10-lab-1-1">Phase 3: Analysis &amp; Prioritisation (Week 10 Lab 1)</a></h3>
+<p><strong>Learning outcomes</strong>: LO1, LO4, LO6, LO9, LO10, LO12</p>
+<h4 id="activity-6-analyse-metrics-data-30-mins"><a class="header" href="#activity-6-analyse-metrics-data-30-mins">Activity 6: Analyse metrics data (30 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: submission-template.md Section 2 (Findings Table)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Calculate metrics from metrics.csv:
+<ul>
+<li>Error rates (validation_error / total attempts)</li>
+<li>Median completion times per task</li>
+<li>Success rates per participant</li>
+</ul>
+</li>
+<li>Review pilot notes for qualitative insights (quotes, observations)</li>
+<li>Identify 3+ usability/accessibility issues</li>
+<li>Fill findings-table.csv with:
+<ul>
+<li>Finding description</li>
+<li>Data source (metrics.csv line numbers OR pilot notes timestamps)</li>
+<li>Observation (participant quote + timestamp)</li>
+<li>WCAG criterion (if applicable, e.g., “3.3.1 Error Identification Level A”)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example finding</strong>:</p>
+<pre><code class="language-csv">finding,data_source,observation,wcag,impact,inclusion,effort,priority
+Validation errors not announced (SR),metrics.csv L47-49 + P2 notes 14:23,"P2: 'I didn't hear any error'",3.3.1 Level A,5,5,3,7
+</code></pre>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>3+ findings identified</li>
+<li>All findings have specific data sources (not vague “pilot observations”)</li>
+<li>WCAG criteria cited where applicable</li>
+</ul>
+<hr />
+<h4 id="activity-7-prioritise-fixes-20-mins"><a class="header" href="#activity-7-prioritise-fixes-20-mins">Activity 7: Prioritise fixes (20 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Priority scores in findings table + top 3 selected</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>For each finding, score:
+<ul>
+<li><strong>Impact</strong> (1-5): How severely affects task completion? (5 = blocker)</li>
+<li><strong>Inclusion</strong> (1-5): Who’s excluded? Systemic barrier? (5 = high)</li>
+<li><strong>Effort</strong> (1-5): How hard to fix? (5 = major refactor)</li>
+</ul>
+</li>
+<li>Calculate: <strong>Priority = (Impact + Inclusion) - Effort</strong></li>
+<li>Select top 2-3 priorities to implement</li>
+</ol>
+<p><strong>Prioritisation example</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>Finding</th><th>Impact</th><th>Inclusion</th><th>Effort</th><th>Priority</th><th>Selected?</th></tr></thead><tbody>
+<tr><td>SR errors not announced</td><td>5</td><td>5</td><td>3</td><td><strong>7</strong></td><td>✅ (P1)</td></tr>
+<tr><td>Filter button too small</td><td>3</td><td>3</td><td>1</td><td><strong>5</strong></td><td>✅ (P2)</td></tr>
+<tr><td>Task list not keyboard-navigable</td><td>5</td><td>5</td><td>5</td><td><strong>5</strong></td><td>❌ (too high effort)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>All findings scored</li>
+<li>Priority formula applied</li>
+<li>Top 2-3 fixes selected (focus on quality over quantity)</li>
+</ul>
+<hr />
+<h3 id="phase-4-redesign--verification-week-10-lab-2-1"><a class="header" href="#phase-4-redesign--verification-week-10-lab-2-1">Phase 4: Redesign &amp; Verification (Week 10 Lab 2)</a></h3>
+<p><strong>Learning outcomes</strong>: LO4, LO5, LO6, LO7, LO9, LO12, LO13</p>
+<h4 id="activity-8-implement-fixes-60-mins"><a class="header" href="#activity-8-implement-fixes-60-mins">Activity 8: Implement fixes (60 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: submission-template.md Section 4 (Implementation Diffs)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Implement 2-3 priority fixes</li>
+<li>For each fix, document:
+<ul>
+<li><strong>Before</strong> code snippet (with file path + line numbers)</li>
+<li><strong>After</strong> code snippet (with changes)</li>
+<li><strong>What changed</strong> (1 sentence)</li>
+<li><strong>Why</strong> (which WCAG criterion or usability issue this fixes)</li>
+<li><strong>Impact</strong> (who benefits, how UX improves)</li>
+</ul>
+</li>
+<li>Test each fix manually (keyboard, screen reader if SR fix, no-JS)</li>
+<li>Commit fixes with clear messages (e.g., “fix: add role=alert to error messages for SR users”)</li>
+</ol>
+<p><strong>Example diff</strong>:</p>
+<pre><code class="language-markdown">## Fix 1: Accessible Error Announcement
+
+**Addresses finding**: Finding #1 (SR errors not announced)
+
+**Before** (routes/TaskRoutes.kt:45):
+```kotlin
+val error = "Title required"  // ❌ No ARIA
+call.respondText(error, ContentType.Text.Html)
+</code></pre>
+<p><strong>After</strong> (routes/TaskRoutes.kt:45):</p>
+<pre><code class="language-kotlin">val error = """&lt;span role="alert" aria-live="assertive"&gt;Title required&lt;/span&gt;"""  // ✅ ARIA
+call.respondText(error, ContentType.Text.Html)
+</code></pre>
+<p><strong>What changed</strong>: Added <code>role="alert"</code> and <code>aria-live="assertive"</code> to error span.</p>
+<p><strong>Why</strong>: Fixes WCAG 3.3.1 Error Identification (Level A). Errors now programmatically announced.</p>
+<p><strong>Impact</strong>: Screen reader users hear validation errors immediately. Reduces confusion, prevents multiple failed submissions. Benefits 2-5% of web users (WebAIM survey).</p>
+<pre><code>
+**Success criteria**:
+- 1-3 fixes implemented
+- All fixes documented with before/after diffs
+- Each fix references specific finding from findings table
+- Code changes tested and working
+
+---
+
+#### Activity 9: Regression testing (30 mins)
+
+🔴 **Portfolio evidence required**: submission-template.md Section 5 Part A (Verification Results - Regression Checklist)
+
+**Task**:
+1. Complete WCAG 2.2 AA regression checklist (20 checks) using Assistive Testing Checklist reference
+2. Test categories:
+   - **Keyboard** (5 checks): All features keyboard-accessible? Focus visible? No traps?
+   - **Forms** (3 checks): Labels present? Errors identified? Name/role/value?
+   - **Dynamic** (3 checks): Status messages? Live regions work? Focus management?
+   - **No-JS** (3 checks): Feature parity? POST-Redirect-GET? Errors visible?
+   - **Visual** (3 checks): Contrast minimum? Resize text? Non-text contrast?
+   - **Semantic** (3 checks): Heading hierarchy? Bypass blocks? Alt text?
+3. Mark each: `pass`, `fail`, or `n/a`
+4. Document failures in notes column
+5. Verify no Level A violations remaining
+
+**Regression checklist format**:
+```markdown
+| Check | Criterion | Level | Result | Notes |
+|-------|-----------|-------|--------|-------|
+| K1 | 2.1.1 All actions keyboard accessible | A | pass | Tested Tab/Enter on all buttons |
+| K2 | 2.4.7 Focus visible | AA | pass | 2px blue outline on all elements |
+| F2 | 3.3.1 Errors identified | A | pass | Errors have role=alert (FIXED!) |
+</code></pre>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>All 20 checks completed</li>
+<li>No Level A violations remaining (if any, must document why acceptable)</li>
+<li>No-JS parity maintained</li>
+</ul>
+<hr />
+<h4 id="activity-10-re-pilots-30-mins"><a class="header" href="#activity-10-re-pilots-30-mins">Activity 10: Re-pilots (30 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: submission-template.md Section 5 Part B (Before/After Comparison) + re-pilot metrics</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Run n=1-2 re-pilots with same tasks as Week 9</li>
+<li>Ensure appropriate variant (e.g., SR user if fixing SR issue)</li>
+<li>Logger.kt captures new metrics (post-fix data)</li>
+<li>Compare to Week 9 baseline:
+<ul>
+<li>Error detection rates</li>
+<li>Completion times</li>
+<li>WCAG pass rates</li>
+</ul>
+</li>
+</ol>
+<p><strong>Before/after comparison format</strong>:</p>
+<pre><code class="language-markdown">| Metric | Before (Week 9, n=2) | After (Week 10, n=2) | Change | Target Met? |
+|--------|----------------------|----------------------|--------|-------------|
+| SR error detection | 0/2 (0%) | 2/2 (100%) | +100% | ✅ |
+| Validation error rate | 33% | 0% | -33% | ✅ |
+| Median time T1 (add) | 1400ms | 1150ms | -250ms | ✅ |
+| WCAG 3.3.1 pass | fail | pass | — | ✅ |
+</code></pre>
+<p><strong>If metrics didn’t improve</strong>: Document honestly in notes:</p>
+<ul>
+<li>“Small sample size (n=2), improvement not statistically significant”</li>
+<li>“Fix addressed symptom not root cause, needs different approach”</li>
+</ul>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>n=1+ re-pilots completed (n=2 ideal)</li>
+<li>Before/after metrics compared</li>
+<li>Improvement shown (or honest analysis of why not)</li>
+</ul>
+<hr />
+<h4 id="activity-11-peer-review-20-mins"><a class="header" href="#activity-11-peer-review-20-mins">Activity 11: Peer review (20 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Peer review feedback received (not submitted, but use to improve)</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Join peer review group of 4 (structured in-lab session)</li>
+<li>Review 2 peers’ portfolios (2 mins each) using checklist:
+<ul>
+<li>Files present? (submission-template.md, metrics.csv, evidence/)</li>
+<li>n=2+ participants?</li>
+<li>3+ findings with data sources?</li>
+<li>1-3 code diffs shown?</li>
+<li>20 regression checks completed?</li>
+<li>PII scrubbed?</li>
+</ul>
+</li>
+<li>Mark: <strong>Yes</strong> (on track), <strong>Borderline</strong> (some gaps), <strong>No</strong> (major gaps)</li>
+<li>Give constructive feedback (1-2 specific strengths/quick wins)</li>
+<li>Receive feedback from 2 peers on your portfolio</li>
+</ol>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>Peer review completed</li>
+<li>Feedback received from 2 peers</li>
+<li>Action items identified for Week 11</li>
+</ul>
+<hr />
+<h3 id="phase-5-final-refinement--submission-week-11-1"><a class="header" href="#phase-5-final-refinement--submission-week-11-1">Phase 5: Final Refinement &amp; Submission (Week 11)</a></h3>
+<p><strong>Learning outcomes</strong>: LO12</p>
+<h4 id="activity-12-incorporate-peer-feedback-60-mins"><a class="header" href="#activity-12-incorporate-peer-feedback-60-mins">Activity 12: Incorporate peer feedback (60 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: All gaps from peer review addressed</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Review peer feedback from Week 10 Lab 2</li>
+<li>Address flagged issues:
+<ul>
+<li>Run additional pilots if n&lt;2</li>
+<li>Complete missing regression checks</li>
+<li>Strengthen vague data sources with specific links</li>
+<li>Scrub any remaining PII</li>
+</ul>
+</li>
+<li>Final verification:
+<ul>
+<li>All sections of submission-template.md filled in</li>
+<li>Evidence folder complete (screenshots, pilot notes, no PII)</li>
+<li>Privacy statement at top signed (checkboxes ticked)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Submission checklist</strong> (from submission-template.md):</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+submission-template.md complete (all sections filled)</li>
+<li><input disabled="" type="checkbox"/>
+metrics.csv has n=2+ participants</li>
+<li><input disabled="" type="checkbox"/>
+findings-table.csv has 3+ findings with data sources</li>
+<li><input disabled="" type="checkbox"/>
+implementation-diffs.md shows 1-3 code changes</li>
+<li><input disabled="" type="checkbox"/>
+verification.csv has 20 regression checks</li>
+<li><input disabled="" type="checkbox"/>
+verification.csv Part B shows before/after metrics</li>
+<li><input disabled="" type="checkbox"/>
+evidence/ folder has screenshots (PII scrubbed) + pilot notes</li>
+<li><input disabled="" type="checkbox"/>
+Privacy statement signed</li>
+</ul>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>All peer feedback actioned</li>
+<li>Portfolio complete and ready to submit</li>
+</ul>
+<hr />
+<h4 id="activity-13-submit-portfolio-10-mins"><a class="header" href="#activity-13-submit-portfolio-10-mins">Activity 13: Submit portfolio (10 mins)</a></h4>
+<p>🔴 <strong>Portfolio evidence required</strong>: Complete submission via Gradescope by deadline</p>
+<p><strong>Task</strong>:</p>
+<ol>
+<li>Final PII check (look twice!):
+<ul>
+<li>No names, emails, student IDs in screenshots</li>
+<li>Session IDs anonymous (P1_xxxx format)</li>
+<li>Pilot notes use participant codes</li>
+</ul>
+</li>
+<li>Upload to Gradescope:
+<ul>
+<li>submission-template.md</li>
+<li>evidence/ folder (screenshots, pilot notes)</li>
+<li>metrics.csv (if not pasted in template)</li>
+</ul>
+</li>
+<li>Verify upload successful</li>
+<li>Check submission confirmation email</li>
+</ol>
+<p><strong>Deadline</strong>: <strong>End of Week 10</strong></p>
+<p><strong>Success criteria</strong>:</p>
+<ul>
+<li>Portfolio submitted before deadline</li>
+<li>All files uploaded successfully</li>
+<li>No PII violations</li>
+</ul>
+<hr />
+<h2 id="support-resources-1"><a class="header" href="#support-resources-1">Support Resources</a></h2>
+<p><strong>Assessment documents</strong>:</p>
+<ul>
+<li><a href="assessment/combined-assessment-FINAL.html">Combined Assessment Specification</a> — Full requirements</li>
+<li><a href="assessment/submission-template.html">Submission Template</a> — Single-file template to complete</li>
+<li><a href="assessment/rubric.html">Rubric</a> — Grading criteria (what makes a First vs Pass)</li>
+<li><a href="assessment/student-faq.html">Student FAQ</a> — Common questions answered</li>
+<li><a href="assessment/peer-review-template.html">Peer Review Template</a> — Checklist for Week 10 Lab 2</li>
+</ul>
+<p><strong>Technical references</strong>:</p>
+<ul>
+<li><a href="assessment/../references/evaluation-metrics-quickref.html">Evaluation Metrics Quick Reference</a> — Logger.kt schema</li>
+<li><a href="assessment/../references/consent-pii-faq.html">Consent and PII FAQ</a> — Ethics guidance</li>
+<li><a href="assessment/../references/assistive-testing-checklist.html">Assistive Testing Checklist</a> — WCAG regression reference</li>
+</ul>
+<p><strong>Lab slides</strong>:</p>
+<ul>
+<li><a href="assessment/../wk09/wk9-lab1-assessment-launch-instrumentation.html">Week 9 Lab 1: Assessment Launch &amp; Instrumentation</a></li>
+<li><a href="assessment/../wk09/wk9-lab2-pilots-execution.html">Week 9 Lab 2: Peer Pilots</a></li>
+<li><a href="assessment/../wk10/wk10-lab1-analysis-prioritisation.html">Week 10 Lab 1: Analysis &amp; Prioritisation</a></li>
+<li><a href="assessment/../wk10/wk10-lab2-redesign-reverify-package.html">Week 10 Lab 2: Redesign &amp; Peer Review</a></li>
+</ul>
+<p><strong>External resources</strong>:</p>
+<ul>
+<li><a href="https://www.nngroup.com/articles/usability-testing-101/">Nielsen Norman: Usability Testing 101</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/">W3C: WCAG 2.2</a></li>
+<li><a href="https://webaim.org/projects/screenreadersurvey9/">WebAIM: Screen Reader User Survey</a></li>
+</ul>
+<hr />
+<h2 id="academic-integrity-reminders-1"><a class="header" href="#academic-integrity-reminders-1">Academic Integrity Reminders</a></h2>
+<p><strong>Allowed</strong>:</p>
+<ul>
+<li>Using AI tools (ChatGPT, Claude, Copilot) for <strong>code generation</strong> (must cite in submission)</li>
+<li>Piloting with friends/peers (if they consent)</li>
+<li>Testing on same participants for re-pilots (if they consent, note as limitation)</li>
+<li>Discussing general approaches in module forum</li>
+</ul>
+<p><strong>Not allowed</strong>:</p>
+<ul>
+<li>Fabricating pilot data (automatic fail + academic misconduct)</li>
+<li>Sharing complete portfolios with peers (your work must be your own)</li>
+<li>Using AI for analysis/findings (must be your own thinking)</li>
+<li>Copying code from others without citation</li>
+</ul>
+<p><strong>PII violations</strong>:</p>
+<ul>
+<li>Severe (names/emails/IDs visible) → automatic fail + ethics referral</li>
+<li>Minor (browser tabs visible) → warning, require correction</li>
+</ul>
+<p><strong>Honest reporting</strong>:</p>
+<ul>
+<li>If fix didn’t work → document honestly, analyse why (valued)</li>
+<li>If data is messy → that’s good data! Report faithfully</li>
+<li>If n=2 only → acceptable minimum, state limitation</li>
+</ul>
+<hr />
+<h2 id="marking--feedback-1"><a class="header" href="#marking--feedback-1">Marking &amp; Feedback</a></h2>
+<p><strong>Turnaround</strong>: Marks released according to university assessment timeline (typically 3-4 weeks after deadline)</p>
+<p><strong>Feedback format</strong>: You will receive:</p>
+<ol>
+<li><strong>Mark</strong>: 0-100</li>
+<li><strong>Grade</strong>: First/2:1/2:2/3rd/Fail</li>
+<li><strong>Outcome</strong>: PASS or FAIL (40% threshold)</li>
+<li><strong>Feedback</strong>: 2-3 sentences (strengths + gaps)</li>
+</ol>
+<p><strong>Example feedback (First, 75/100)</strong>:</p>
+<blockquote>
+<p>Excellent evidence chains with complete traceability from data to fixes to verification. Thorough WCAG verification with no Level A violations. Professional documentation with honest reporting of small sample size limitation. Code fixes are well-integrated and target root causes.</p>
+</blockquote>
+<p><strong>Example feedback (Fail, 35/100)</strong>:</p>
+<blockquote>
+<p>Only n=1 participant (minimum n=2 required). No pilot notes to verify sessions occurred. Remaining evidence shows good structure but fails minimum participant requirement.</p>
+</blockquote>
+<p><strong>Appeals</strong>: Via standard university appeals process (see Student Handbook)</p>
+<hr />
+<p><strong>Version</strong>: 1.0 Final
+<strong>Last updated</strong>: 22 November 2025
+<strong>For use</strong>: Academic Year 2025-26</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="glossary"><a class="header" href="#glossary">Glossary</a></h1>
 <p>Quick reference for technical terms, acronyms, and HCI concepts used throughout COMP2850.</p>
 <p><strong>Categories</strong>: <img src="https://img.shields.io/badge/Accessibility-a11y-purple" alt="Accessibility" /> <img src="https://img.shields.io/badge/Architecture-Design-blue" alt="Architecture" /> <img src="https://img.shields.io/badge/HCI-UX-orange" alt="HCI" /> <img src="https://img.shields.io/badge/HTTP-Protocol-red" alt="HTTP" /> <img src="https://img.shields.io/badge/HTMX-Hypermedia-green" alt="HTMX" /> <img src="https://img.shields.io/badge/Module-COMP2850-darkblue" alt="Module" /> <img src="https://img.shields.io/badge/Tools-Tech-grey" alt="Tools" /> <img src="https://img.shields.io/badge/Web_Tech-HTML%2FCSS%2FJS-yellow" alt="Web Tech" /></p>
@@ -19106,6 +19928,395 @@ Every interaction we design, every feature we implement, has privacy implication
 <li>Lecturers for edge cases (e.g., wanting to test with someone outside the cohort).</li>
 </ul>
 <p>Document any unusual situations in your self-reflection so we can show due diligence.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="participant-information-sheet-pis--hci-evaluation-study"><a class="header" href="#participant-information-sheet-pis--hci-evaluation-study">Participant Information Sheet (PIS) — HCI Evaluation Study</a></h1>
+<p><strong>Study Title</strong>: [e.g., Accessibility Evaluation of Task Management Interface]
+<strong>Researcher(s)</strong>: [Your Name], [Student ID]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction
+<strong>Institution</strong>: School of Computing, University of Leeds
+<strong>Ethics Approval</strong>: [If applicable: Ethics Reference Number]
+<strong>Version</strong>: 1.0
+<strong>Date</strong>: [YYYY-MM-DD]</p>
+<hr />
+<h2 id="invitation"><a class="header" href="#invitation">Invitation</a></h2>
+<p>You are being invited to participate in a research study as part of the COMP2850 Human-Computer Interaction module at the University of Leeds. Before you decide whether to participate, it is important that you understand why the research is being conducted and what it will involve. Please take time to read the following information carefully and discuss it with others if you wish. Please ask if there is anything that is not clear or if you would like more information.</p>
+<p><strong>Thank you for considering participation in this study.</strong></p>
+<hr />
+<h2 id="1-what-is-the-purpose-of-the-study"><a class="header" href="#1-what-is-the-purpose-of-the-study">1. What is the Purpose of the Study?</a></h2>
+<p>This study aims to evaluate the <strong>accessibility and usability</strong> of a task management web application. Specifically, we are investigating:</p>
+<ul>
+<li>How people with diverse needs (keyboard-only navigation, screen reader use, cognitive differences) interact with the interface</li>
+<li>Barriers to task completion (adding, editing, deleting tasks)</li>
+<li>Effectiveness of accessibility features (ARIA labels, error messages, focus management)</li>
+</ul>
+<p><strong>Context</strong>: This research forms part of a taught module assessment. Findings will inform interface redesign and contribute to understanding of accessible web application design patterns.</p>
+<p><strong>Duration</strong>: The study will run from [Start Date] to [End Date] (approximately [X] weeks).</p>
+<hr />
+<h2 id="2-why-have-i-been-invited"><a class="header" href="#2-why-have-i-been-invited">2. Why Have I Been Invited?</a></h2>
+<p>You have been invited because:</p>
+<ul>
+<li>You are a student or staff member at the University of Leeds</li>
+<li>You are aged 18 or over</li>
+<li>You have experience using web applications or assistive technologies (or are willing to test with provided tools)</li>
+</ul>
+<p><strong>Recruitment</strong>: We aim to recruit <strong>8-12 participants</strong> representing diverse interaction needs (keyboard users, screen reader users, people with cognitive differences, neurotypical participants).</p>
+<hr />
+<h2 id="3-do-i-have-to-take-part"><a class="header" href="#3-do-i-have-to-take-part">3. Do I Have to Take Part?</a></h2>
+<p><strong>No.</strong> Participation is entirely <strong>voluntary</strong>. You are free to:</p>
+<ul>
+<li>Decline to participate without giving a reason</li>
+<li>Withdraw from the study at any time up to <strong>[withdrawal deadline, e.g., 14 days after participation]</strong> without penalty</li>
+<li>Refuse to answer specific questions</li>
+</ul>
+<p><strong>Impact of non-participation</strong>: Your decision will <strong>not affect</strong> your academic standing, relationship with staff, or access to services.</p>
+<hr />
+<h2 id="4-what-will-happen-if-i-take-part"><a class="header" href="#4-what-will-happen-if-i-take-part">4. What Will Happen if I Take Part?</a></h2>
+<h3 id="session-structure-approximately-30-45-minutes"><a class="header" href="#session-structure-approximately-30-45-minutes">Session Structure (Approximately 30-45 minutes)</a></h3>
+<p><strong>Before the session</strong> (5 minutes):</p>
+<ul>
+<li>You will be asked to read this information sheet and sign the consent form</li>
+<li>The researcher will answer any questions you have</li>
+</ul>
+<p><strong>During the session</strong> (25-35 minutes):</p>
+<ul>
+<li><strong>Task-based evaluation</strong>: You will be asked to complete 3-5 realistic tasks using a web-based task manager (e.g., “Add a new task called ‘Buy milk’”)</li>
+<li><strong>Think-aloud protocol</strong>: You will be encouraged to verbalise your thoughts as you work (“I’m looking for the Add button…”)</li>
+<li><strong>Observation</strong>: The researcher will take notes on task completion times, errors, and navigation patterns</li>
+<li><strong>Optional brief interview</strong> (5 minutes): The researcher may ask follow-up questions about your experience</li>
+</ul>
+<p><strong>After the session</strong> (5 minutes):</p>
+<ul>
+<li>Debrief and opportunity to ask questions</li>
+<li>Confirmation of data handling</li>
+</ul>
+<h3 id="what-will-be-recorded"><a class="header" href="#what-will-be-recorded">What Will Be Recorded?</a></h3>
+<p><strong>With your consent</strong>, we will collect:</p>
+<ul>
+<li><strong>Task performance data</strong>: Completion times, error counts, success/failure</li>
+<li><strong>Interaction logs</strong>: Anonymised server logs (button clicks, page navigation, timestamps)</li>
+<li><strong>Observation notes</strong>: Researcher notes on difficulties encountered, navigation strategies</li>
+<li><strong>Optional</strong>: Audio recording of think-aloud protocol (only if you consent separately)</li>
+</ul>
+<p><strong>We will NOT collect</strong>:</p>
+<ul>
+<li>Your name (you will be assigned a pseudonym: P1, P2, etc.)</li>
+<li>Student ID number</li>
+<li>Email address</li>
+<li>Video recordings of your face</li>
+<li>Screenshots showing personal information</li>
+</ul>
+<hr />
+<h2 id="5-what-are-the-possible-risks-and-benefits"><a class="header" href="#5-what-are-the-possible-risks-and-benefits">5. What Are the Possible Risks and Benefits?</a></h2>
+<h3 id="potential-risks"><a class="header" href="#potential-risks">Potential Risks</a></h3>
+<p><strong>Minimal risk</strong> is anticipated. Possible minor discomforts:</p>
+<ul>
+<li><strong>Time commitment</strong>: 45 minutes (compensated with [if applicable: course credit, £10 voucher, or acknowledgement in report])</li>
+<li><strong>Frustration</strong>: Some tasks may be deliberately difficult to expose usability issues (you may stop at any time)</li>
+<li><strong>Data security</strong>: Although we use secure storage, no data transmission is 100% risk-free (see Data Protection section)</li>
+</ul>
+<p><strong>Mitigation</strong>:</p>
+<ul>
+<li>You may take breaks or withdraw at any time</li>
+<li>All data will be pseudonymised immediately</li>
+<li>Data stored on encrypted university systems</li>
+</ul>
+<h3 id="potential-benefits"><a class="header" href="#potential-benefits">Potential Benefits</a></h3>
+<p><strong>To you</strong>:</p>
+<ul>
+<li>Contribution to accessible technology research</li>
+<li>Insight into your own interaction patterns and accessibility needs</li>
+<li>[If applicable: £10 Amazon voucher / course credit]</li>
+</ul>
+<p><strong>To others</strong>:</p>
+<ul>
+<li>Improved understanding of accessibility barriers in web applications</li>
+<li>Evidence-based recommendations for inclusive interface design</li>
+<li>Contribution to HCI education and research</li>
+</ul>
+<hr />
+<h2 id="6-will-my-taking-part-be-kept-confidential"><a class="header" href="#6-will-my-taking-part-be-kept-confidential">6. Will My Taking Part Be Kept Confidential?</a></h2>
+<p><strong>Yes.</strong> All information collected will be kept <strong>strictly confidential</strong> and managed in accordance with UK GDPR (General Data Protection Regulation) and the Data Protection Act 2018.</p>
+<h3 id="data-protection"><a class="header" href="#data-protection">Data Protection</a></h3>
+<p><strong>Legal basis for processing</strong>: Your <strong>consent</strong> (GDPR Article 6(1)(a)) and <strong>legitimate interests</strong> (GDPR Article 6(1)(f) — university research).</p>
+<p><strong>Data controller</strong>: University of Leeds
+<strong>Data Protection Officer</strong>: dpo@leeds.ac.uk</p>
+<h3 id="pseudonymisation"><a class="header" href="#pseudonymisation">Pseudonymisation</a></h3>
+<ul>
+<li>You will be assigned a unique identifier (e.g., <strong>P1</strong>, <strong>P2</strong>) at the start</li>
+<li>Your name will <strong>not</strong> appear in any research notes, reports, or publications</li>
+<li>A <strong>key file</strong> linking identifiers to names will be stored separately in a password-protected file accessible only to the researcher</li>
+</ul>
+<h3 id="data-storage"><a class="header" href="#data-storage">Data Storage</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Data Type</th><th>Storage Location</th><th>Access</th><th>Retention Period</th></tr></thead><tbody>
+<tr><td>Consent forms (with signatures)</td><td>Secure university file storage (encrypted)</td><td>Researcher, module lead, ethics committee (if audited)</td><td><strong>6 years</strong> (university policy)</td></tr>
+<tr><td>Pseudonymised task data</td><td>Private Git repository (university GitLab)</td><td>Researcher, academic supervisor</td><td>Until <strong>end of academic year</strong> (June 2026), then <strong>anonymised</strong></td></tr>
+<tr><td>Audio recordings (if consented)</td><td>Encrypted university OneDrive</td><td>Researcher only</td><td><strong>Deleted after transcription</strong> (within 30 days)</td></tr>
+<tr><td>Anonymised findings</td><td>Public research outputs (report, portfolio)</td><td>Published openly</td><td><strong>Indefinite</strong> (no identifiable information)</td></tr>
+</tbody></table>
+</div>
+<h3 id="data-sharing"><a class="header" href="#data-sharing">Data Sharing</a></h3>
+<p><strong>Who will see my data?</strong></p>
+<ul>
+<li><strong>Primary researcher</strong> (yourself)</li>
+<li><strong>Academic supervisor</strong> (module teaching staff, for assessment purposes)</li>
+<li><strong>University ethics committee</strong> (if audited, for compliance checks only)</li>
+</ul>
+<p><strong>Will data be shared outside the university?</strong></p>
+<ul>
+<li>
+<p><strong>Anonymised findings</strong> may be published in:</p>
+<ul>
+<li>Academic portfolio (publicly accessible)</li>
+<li>Module coursework submissions (seen by markers, external examiners)</li>
+<li>Research publications (if study is extended beyond module — separate consent required)</li>
+</ul>
+</li>
+<li>
+<p><strong>Identifiable data</strong> (consent forms, key files) will <strong>never</strong> be shared outside the university</p>
+</li>
+</ul>
+<hr />
+<h2 id="7-what-will-happen-to-the-results-of-the-study"><a class="header" href="#7-what-will-happen-to-the-results-of-the-study">7. What Will Happen to the Results of the Study?</a></h2>
+<p>Results will be used for:</p>
+<ol>
+<li><strong>Module assessment</strong>: Findings will contribute to COMP2850 coursework (Gradescope submissions, portfolio)</li>
+<li><strong>Educational purposes</strong>: Anonymised excerpts may be used in teaching examples (with additional consent)</li>
+<li><strong>Potential publication</strong>: If results are significant, the researcher may seek to publish in academic conferences (you will be contacted for separate consent)</li>
+</ol>
+<h3 id="access-to-results"><a class="header" href="#access-to-results">Access to Results</a></h3>
+<ul>
+<li>You may request a <strong>summary of findings</strong> by emailing the researcher after [end date]</li>
+<li>Results will be available in the researcher’s public portfolio (anonymised) from [portfolio publication date]</li>
+</ul>
+<hr />
+<h2 id="8-who-has-reviewed-this-study"><a class="header" href="#8-who-has-reviewed-this-study">8. Who Has Reviewed This Study?</a></h2>
+<p>This study has been reviewed and approved by:</p>
+<ul>
+<li><strong>Module Lead</strong>: [Dr. Name], COMP2850 HCI</li>
+<li><strong>School of Computing Ethics Representative</strong>: [If applicable: ethics@engineering.leeds.ac.uk]</li>
+<li><strong>[If applicable] University Research Ethics Committee</strong>: Ref [XXXX-XXX]</li>
+</ul>
+<p>If you have concerns about the study, contact the <strong>School of Computing Research Ethics Committee</strong>: ethics@engineering.leeds.ac.uk</p>
+<hr />
+<h2 id="9-your-rights-under-gdpr"><a class="header" href="#9-your-rights-under-gdpr">9. Your Rights Under GDPR</a></h2>
+<p>You have the right to:</p>
+<div class="table-wrapper"><table><thead><tr><th>Right</th><th>What This Means</th></tr></thead><tbody>
+<tr><td><strong>Access</strong></td><td>Request a copy of all data we hold about you</td></tr>
+<tr><td><strong>Rectification</strong></td><td>Correct any inaccurate personal data</td></tr>
+<tr><td><strong>Erasure</strong> (“right to be forgotten”)</td><td>Request deletion of your data (up to [withdrawal deadline])</td></tr>
+<tr><td><strong>Restrict processing</strong></td><td>Ask us to stop using your data temporarily</td></tr>
+<tr><td><strong>Data portability</strong></td><td>Receive your data in a machine-readable format (e.g., CSV)</td></tr>
+<tr><td><strong>Object</strong></td><td>Object to processing based on legitimate interests</td></tr>
+<tr><td><strong>Withdraw consent</strong></td><td>Withdraw consent at any time (does not affect lawfulness of processing before withdrawal)</td></tr>
+</tbody></table>
+</div>
+<p><strong>To exercise these rights</strong>, contact the researcher at [researcher-email@leeds.ac.uk] or the University Data Protection Officer at dpo@leeds.ac.uk.</p>
+<p><strong>Complaint</strong>: If you are unhappy with how your data has been handled, you may complain to the <strong>Information Commissioner’s Office (ICO)</strong>: https://ico.org.uk/make-a-complaint/</p>
+<hr />
+<h2 id="10-what-happens-if-i-want-to-withdraw"><a class="header" href="#10-what-happens-if-i-want-to-withdraw">10. What Happens if I Want to Withdraw?</a></h2>
+<p>You may withdraw from the study <strong>at any time</strong> without giving a reason, up to <strong>[X days, e.g., 14 days] after your participation session</strong>.</p>
+<p><strong>To withdraw</strong>:</p>
+<ol>
+<li>Email the researcher at [researcher-email@leeds.ac.uk]</li>
+<li>Include your <strong>participant ID</strong> (e.g., P1) or the <strong>date of your session</strong></li>
+<li>We will <strong>delete all data</strong> associated with your participation within <strong>48 hours</strong></li>
+<li>We will confirm deletion via email</li>
+</ol>
+<p><strong>After the withdrawal deadline</strong>, data may have been anonymised and integrated into analysis. At this point, it will not be possible to identify and remove your specific contribution (though it will remain anonymous).</p>
+<hr />
+<h2 id="11-contact-for-further-information"><a class="header" href="#11-contact-for-further-information">11. Contact for Further Information</a></h2>
+<h3 id="if-you-have-questions-about-the-study"><a class="header" href="#if-you-have-questions-about-the-study">If you have questions about the study:</a></h3>
+<p><strong>Researcher</strong>: [Your Name]
+<strong>Email</strong>: [researcher-email@leeds.ac.uk]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction</p>
+<h3 id="if-you-have-concerns-about-the-research-ethics"><a class="header" href="#if-you-have-concerns-about-the-research-ethics">If you have concerns about the research ethics:</a></h3>
+<p><strong>School of Computing Ethics Representative</strong>
+<strong>Email</strong>: ethics@engineering.leeds.ac.uk</p>
+<h3 id="if-you-have-concerns-about-data-protection"><a class="header" href="#if-you-have-concerns-about-data-protection">If you have concerns about data protection:</a></h3>
+<p><strong>University Data Protection Officer</strong>
+<strong>Email</strong>: dpo@leeds.ac.uk
+<strong>Website</strong>: https://dataprotection.leeds.ac.uk/</p>
+<hr />
+<h2 id="12-what-do-i-do-next"><a class="header" href="#12-what-do-i-do-next">12. What Do I Do Next?</a></h2>
+<p>If you are happy to participate:</p>
+<ol>
+<li><strong>Read this information sheet carefully</strong></li>
+<li><strong>Ask any questions</strong> you have (researcher will answer before you decide)</li>
+<li><strong>Sign the consent form</strong> (separate document)</li>
+<li><strong>Keep a copy</strong> of this information sheet for your records</li>
+</ol>
+<p><strong>You will be given a copy of both this information sheet and your signed consent form.</strong></p>
+<hr />
+<p><strong>Thank you for taking the time to read this information sheet and for considering participation in this study.</strong></p>
+<hr />
+<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
+<ul>
+<li>Information Commissioner’s Office (ICO). (2024). <em>Guide to the UK General Data Protection Regulation (UK GDPR)</em>. https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/</li>
+<li>University of Leeds. (2024). <em>Research Ethics Policy</em>. https://dataprotection.leeds.ac.uk/</li>
+<li>UK Research and Innovation (UKRI). (2024). <em>UKRI Policy and Guidelines on Governance of Good Research Conduct</em>. https://www.ukri.org/</li>
+</ul>
+<hr />
+<p><strong>Document Control</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr></thead><tbody>
+<tr><td>1.0</td><td>[YYYY-MM-DD]</td><td>[Your Name]</td><td>Initial version</td></tr>
+</tbody></table>
+</div>
+<p><strong>Template Source</strong>: COMP2850 HCI, University of Leeds
+<strong>Adapted from</strong>: UKRI/University Ethics Templates (GDPR-compliant)</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="consent-form--hci-evaluation-study"><a class="header" href="#consent-form--hci-evaluation-study">Consent Form — HCI Evaluation Study</a></h1>
+<p><strong>Study Title</strong>: [e.g., Accessibility Evaluation of Task Management Interface]
+<strong>Researcher(s)</strong>: [Your Name], [Student ID]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction
+<strong>Institution</strong>: School of Computing, University of Leeds
+<strong>Ethics Approval</strong>: [If applicable: Ethics Reference Number]
+<strong>Version</strong>: 1.0
+<strong>Date</strong>: [YYYY-MM-DD]</p>
+<hr />
+<h2 id="declaration-of-informed-consent"><a class="header" href="#declaration-of-informed-consent">Declaration of Informed Consent</a></h2>
+<p>Please <strong>initial each box</strong> to confirm your understanding and agreement:</p>
+<h3 id="1-information-sheet"><a class="header" href="#1-information-sheet">1. Information Sheet</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I confirm that I have <strong>read and understood</strong> the Participant Information Sheet (Version 1.0, dated [YYYY-MM-DD]) for the above study.</td></tr>
+</tbody></table>
+</div>
+<h3 id="2-opportunity-to-ask-questions"><a class="header" href="#2-opportunity-to-ask-questions">2. Opportunity to Ask Questions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I have had the <strong>opportunity to ask questions</strong> about the study and have received satisfactory answers.</td></tr>
+</tbody></table>
+</div>
+<h3 id="3-voluntary-participation"><a class="header" href="#3-voluntary-participation">3. Voluntary Participation</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I understand that my participation is <strong>voluntary</strong> and that I am free to <strong>withdraw at any time</strong> up to <strong>[withdrawal deadline]</strong> without giving a reason and without any negative consequences.</td></tr>
+</tbody></table>
+</div>
+<h3 id="4-data-collection-and-use"><a class="header" href="#4-data-collection-and-use">4. Data Collection and Use</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I understand that the following <strong>data will be collected</strong> during my participation:<br>• Task performance data (completion times, errors, success rates)<br>• Anonymised server logs (timestamps, button clicks, navigation)<br>• Researcher observation notes<br>• [Optional: Audio recording of think-aloud protocol — see Section 7 below]</td></tr>
+<tr><td><strong>[   ]</strong></td><td>I understand that my data will be <strong>pseudonymised</strong> (assigned a participant ID: P1, P2, etc.) and stored securely.</td></tr>
+</tbody></table>
+</div>
+<h3 id="5-data-protection-and-confidentiality"><a class="header" href="#5-data-protection-and-confidentiality">5. Data Protection and Confidentiality</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I understand that my personal information will be kept <strong>confidential</strong> and processed in accordance with <strong>UK GDPR</strong> and the <strong>Data Protection Act 2018</strong>.</td></tr>
+<tr><td><strong>[   ]</strong></td><td>I understand that <strong>anonymised findings</strong> from this study may be:<br>• Used in academic coursework and assessments<br>• Published in the researcher’s public portfolio<br>• Potentially published in academic venues (with separate consent)</td></tr>
+<tr><td><strong>[   ]</strong></td><td>I understand that my <strong>identifiable data</strong> (consent form, linking key) will be stored securely for <strong>6 years</strong> (university policy) and accessed only by the researcher, academic supervisor, and ethics committee (if audited).</td></tr>
+</tbody></table>
+</div>
+<h3 id="6-rights-under-gdpr"><a class="header" href="#6-rights-under-gdpr">6. Rights Under GDPR</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I understand that I have the right to:<br>• <strong>Access</strong> my data<br>• Request <strong>correction</strong> of inaccurate data<br>• Request <strong>deletion</strong> (erasure) of my data up to [withdrawal deadline]<br>• <strong>Withdraw consent</strong> at any time<br>• <strong>Complain</strong> to the University Data Protection Officer (dpo@leeds.ac.uk) or the ICO (https://ico.org.uk/)</td></tr>
+</tbody></table>
+</div>
+<h3 id="7-audio-recording-optional--separate-consent"><a class="header" href="#7-audio-recording-optional--separate-consent">7. Audio Recording (Optional — Separate Consent)</a></h3>
+<p><strong>Note</strong>: Audio recording is <strong>optional</strong> and only for the think-aloud protocol. You can participate in the study without audio recording.</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td><strong>I consent</strong> to audio recording of my think-aloud comments during the study.<br><br>I understand that:<br>• Audio will be transcribed and <strong>deleted within 30 days</strong><br>• Only anonymised transcripts will be retained<br>• I may request recording to stop at any time</td></tr>
+<tr><td><strong>[   ]</strong></td><td><strong>I do NOT consent</strong> to audio recording.<br><br>I understand the researcher will take written notes instead.</td></tr>
+</tbody></table>
+</div>
+<h3 id="8-agreement-to-participate"><a class="header" href="#8-agreement-to-participate">8. Agreement to Participate</a></h3>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Statement</th></tr></thead><tbody>
+<tr><td><strong>[   ]</strong></td><td>I <strong>agree to take part</strong> in the above research study.</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="participant-details"><a class="header" href="#participant-details">Participant Details</a></h2>
+<p><strong>Participant ID</strong> (assigned by researcher): <strong>P____</strong></p>
+<p><strong>Participant Name</strong> (please print): ______________________________________</p>
+<p><strong>Participant Signature</strong>: ______________________________________</p>
+<p><strong>Date</strong>: ____________________</p>
+<hr />
+<h2 id="researcher-declaration"><a class="header" href="#researcher-declaration">Researcher Declaration</a></h2>
+<p>I confirm that:</p>
+<ul>
+<li>The participant has been given a copy of the <strong>Participant Information Sheet</strong> (Version 1.0, dated [YYYY-MM-DD])</li>
+<li>I have <strong>explained the study</strong> to the participant and answered all questions</li>
+<li>The participant has given <strong>informed consent freely</strong></li>
+<li>The participant has been given a <strong>copy of this signed consent form</strong></li>
+</ul>
+<p><strong>Researcher Name</strong> (please print): ______________________________________</p>
+<p><strong>Researcher Signature</strong>: ______________________________________</p>
+<p><strong>Date</strong>: ____________________</p>
+<hr />
+<h2 id="contact-information"><a class="header" href="#contact-information">Contact Information</a></h2>
+<h3 id="if-you-have-questions-about-the-study-1"><a class="header" href="#if-you-have-questions-about-the-study-1">If you have questions about the study:</a></h3>
+<p><strong>Researcher</strong>: [Your Name]
+<strong>Email</strong>: [researcher-email@leeds.ac.uk]
+<strong>Module</strong>: COMP2850 Human-Computer Interaction</p>
+<h3 id="if-you-have-concerns-about-research-ethics"><a class="header" href="#if-you-have-concerns-about-research-ethics">If you have concerns about research ethics:</a></h3>
+<p><strong>School of Computing Ethics Representative</strong>
+<strong>Email</strong>: ethics@engineering.leeds.ac.uk</p>
+<h3 id="if-you-have-concerns-about-data-protection-1"><a class="header" href="#if-you-have-concerns-about-data-protection-1">If you have concerns about data protection:</a></h3>
+<p><strong>University Data Protection Officer</strong>
+<strong>Email</strong>: dpo@leeds.ac.uk
+<strong>Website</strong>: https://dataprotection.leeds.ac.uk/</p>
+<h3 id="to-complain-about-data-handling"><a class="header" href="#to-complain-about-data-handling">To complain about data handling:</a></h3>
+<p><strong>Information Commissioner’s Office (ICO)</strong>
+<strong>Website</strong>: https://ico.org.uk/make-a-complaint/
+<strong>Helpline</strong>: 0303 123 1113</p>
+<hr />
+<h2 id="data-subject-rights--quick-reference"><a class="header" href="#data-subject-rights--quick-reference">Data Subject Rights — Quick Reference</a></h2>
+<p>Under <strong>UK GDPR</strong>, you have the following rights regarding your personal data:</p>
+<div class="table-wrapper"><table><thead><tr><th>Right</th><th>What You Can Do</th><th>How to Exercise</th></tr></thead><tbody>
+<tr><td><strong>Access</strong></td><td>Request a copy of your data</td><td>Email researcher</td></tr>
+<tr><td><strong>Rectification</strong></td><td>Correct inaccurate data</td><td>Email researcher</td></tr>
+<tr><td><strong>Erasure</strong></td><td>Request deletion (up to withdrawal deadline)</td><td>Email researcher with participant ID</td></tr>
+<tr><td><strong>Restrict processing</strong></td><td>Pause data processing temporarily</td><td>Email researcher</td></tr>
+<tr><td><strong>Data portability</strong></td><td>Receive data in machine-readable format</td><td>Email researcher</td></tr>
+<tr><td><strong>Object</strong></td><td>Object to processing</td><td>Email researcher or DPO</td></tr>
+<tr><td><strong>Withdraw consent</strong></td><td>Withdraw at any time (up to deadline)</td><td>Email researcher with participant ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>Withdrawal deadline</strong>: [X days, e.g., 14 days] after your participation session</p>
+<p><strong>After this deadline</strong>, data may be anonymised and impossible to identify/remove (though it remains anonymous and non-identifiable).</p>
+<hr />
+<h2 id="for-researcher-use-only"><a class="header" href="#for-researcher-use-only">For Researcher Use Only</a></h2>
+<p><strong>Consent form received</strong>: [   ] Yes  [   ] No
+<strong>Copy provided to participant</strong>: [   ] Yes  [   ] No
+<strong>PIS provided to participant</strong>: [   ] Yes  [   ] No</p>
+<p><strong>Participant ID assigned</strong>: P________</p>
+<p><strong>Date of participation session</strong>: ____________________</p>
+<p><strong>Study location</strong>: ____________________</p>
+<p><strong>Researcher signature</strong> (confirming documentation complete): ______________________________________</p>
+<hr />
+<h2 id="document-control"><a class="header" href="#document-control">Document Control</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr></thead><tbody>
+<tr><td>1.0</td><td>[YYYY-MM-DD]</td><td>[Your Name]</td><td>Initial version</td></tr>
+</tbody></table>
+</div>
+<p><strong>Template Source</strong>: COMP2850 HCI, University of Leeds
+<strong>Adapted from</strong>: UKRI/University Ethics Templates (GDPR-compliant)</p>
+<hr />
+<h2 id="storage-instructions-for-researcher"><a class="header" href="#storage-instructions-for-researcher">Storage Instructions (For Researcher)</a></h2>
+<p><strong>After obtaining consent</strong>:</p>
+<ol>
+<li><strong>Scan or photocopy</strong> this form</li>
+<li><strong>Give original or copy</strong> to participant for their records</li>
+<li><strong>Store researcher copy</strong> in:
+<ul>
+<li>Physical: Locked filing cabinet in [location]</li>
+<li>Digital scan: Encrypted university file storage (password-protected folder)</li>
+</ul>
+</li>
+<li><strong>Create key file</strong> linking Participant ID (P1, P2…) to name:
+<ul>
+<li>Store separately from research data</li>
+<li>Password-protect</li>
+<li>Access: Researcher only</li>
+</ul>
+</li>
+<li><strong>Retain for 6 years</strong> from study completion (university policy)</li>
+<li><strong>After 6 years</strong>: Securely destroy (shred physical, permanently delete digital)</li>
+</ol>
+<hr />
+<p><strong>IMPORTANT</strong>: This consent form must be stored <strong>separately</strong> from research data to maintain pseudonymisation. Only the researcher should have access to the key file linking participant IDs to identifiable information.</p>
+<hr />
+<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<ul>
+<li>Information Commissioner’s Office (ICO). (2024). <em>Guide to the UK General Data Protection Regulation (UK GDPR)</em>. https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/</li>
+<li>University of Leeds. (2024). <em>Research Ethics Policy</em>. https://dataprotection.leeds.ac.uk/</li>
+<li>UK Research and Innovation (UKRI). (2024). <em>UKRI Policy and Guidelines on Governance of Good Research Conduct</em>. https://www.ukri.org/</li>
+<li>Health Research Authority (HRA). (2024). <em>Consent and Participant Information Sheet Preparation Guidance</em>. https://www.hra.nhs.uk/</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="evaluation-metrics-quick-reference-week-910"><a class="header" href="#evaluation-metrics-quick-reference-week-910">Evaluation Metrics Quick Reference (Week 9–10)</a></h1>
 <h2 id="what-are-evaluation-metrics"><a class="header" href="#what-are-evaluation-metrics">What are Evaluation Metrics?</a></h2>
 <p><strong>Evaluation metrics</strong> are quantitative measures that help us assess the usability and effectiveness of interactive systems. Rather than relying on assumptions or opinions about whether an interface works well, metrics provide <strong>evidence-based data</strong> to identify problems, track improvements, and justify design decisions.</p>
